@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+{% block title %}hi {{ user.username }} {% endblock %}
+{% block privi_check %} 
+{% if user.is_authenticated %}
+{% block content %}
+	 <p>hi,{{ user.username }}</p>
+	 项目添加页面
+{% endblock %}
+ {% else %} <p><center>对不起您无权限查看该页面,请在页面<b style='color:blue;'>个人设置</b>点击<b style='color:blue;'><a href='/'>登录</a></b></center></p>
+ {% endif %} 
+{% endblock %}

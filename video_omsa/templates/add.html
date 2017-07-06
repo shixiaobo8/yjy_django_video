@@ -1,0 +1,33 @@
+{% extends "base/base.html" %}
+{% block title %}ajax测试页面{% endblock %}
+{% block content %}
+
+<p>请输入两个数字</p>
+<form action="/add" method="post">
+    a: <input type="text" id="a" name="a"> <br>
+    b: <input type="text" id="b" name="b"> <br>
+    <p>result: <span id='result'></span></p>
+    <button type="button" id='sum'>提交</button>
+    <button type="button" id='sum1'>测试提交</button>
+</form>
+
+<script>
+    $(document).ready(function(){
+      $("#sum").click(function(){
+        var a = $("#a").val();
+        var b = $("#b").val();
+
+        $.get("/add",{'a':a,'b':b}, function(ret){
+            $('#result').html(ret)
+        })
+      });
+      $("#sum1").click(function(){
+        var a = $("#a").val();
+        var b = $("#b").val();
+        $.get("/add",{'a':a,'b':b}, function(ret){
+            $('#result').html(ret)
+        })
+      });
+    });
+</script>
+{% endblock %}

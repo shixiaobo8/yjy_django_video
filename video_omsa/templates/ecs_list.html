@@ -1,0 +1,55 @@
+{% extends "base/base.html" %}
+{% block title %}云服务器列表{% endblock %}
+{% block content %}
+<style>
+	.table th, .table td { 
+			text-align: center; 
+			vertical-align: middle; 
+	}
+	caption {
+			text-align: center; 
+			vertical-align: middle; 
+	}
+</style>
+<table class="table table-bordered">
+  <caption><h2>医教园服务器信息列表</h2></caption>
+  <thead>
+    <tr>
+      <th>内网ip</th>
+      <th>公网ip</th>
+      <th>状态:</th>
+      <th>镜像id:</th>
+      <th>实例类型组:</th>
+      <th>实例id:</th>
+      <th>内存大小:</th>
+      <th>cpu核数:</th>
+      <th>所属安全组:</th>
+      <th>网络类型:</th>
+      <th>实例名称:</th>
+      <th>实例类型:</th>
+      <th>实例创建时间:</th>
+      <th>区域:</th>
+      <th>过期时间:</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for ecs in ecses %}
+<td>{{ ecs.InnerIpAddress.IpAddress }}</td>
+<td>{{ ecs.PublicIpAddress.IpAddress }}</td>
+<td>{% if ecs.DeviceAvailable %}<span style='color:green;'>运行</span>{% else %}<span style='color:yellow;'>停止</span>{% endif %}</td>
+<td>{{ ecs.ImageId }}</td>
+<td>{{ ecs.InstanceTypeFamily }}</td>
+<td>{{ ecs.InstanceId }}</td>
+<td>{{ ecs.Memory }}</td>
+<td>{{ ecs.Cpu }}</td>
+<td>{{ ecs.SecurityGroupIds.SecurityGroupId }}</td>
+<td>{{ ecs.InstanceNetworkType }}</td>
+<td>{{ ecs.InstanceName }}</td>
+<td>{{ ecs.InstanceType }}</td>
+<td>{{ ecs.CreationTime }}</td>
+<td>{{ ecs.RegionId }}</td>
+<td>{{ ecs.ExpiredTime }}</td>
+</tbody>
+{% endfor %}
+</table>
+{% endblock %}

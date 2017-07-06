@@ -1,0 +1,11 @@
+{% extends "base/base.html" %}
+
+{% block title %}文件上传页面{% endblock %}
+
+{% block content %}
+<form enctype='multipart/form-data' action="/up_recive" method='post'>{% csrf_token %}
+	<input type='file' name='up_file' />
+	<br/>
+	<input type='submit' value='upload' />
+</form>
+{% endblock %}

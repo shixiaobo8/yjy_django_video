@@ -1,0 +1,109 @@
+{% extends "base/base.html" %}
+{% block title %}接口每日数据列表分析{% endblock %}
+{% block content %}
+<style>
+	.table th, .table td { 
+			text-align: center; 
+			vertical-align: middle; 
+	}
+	caption {
+			text-align: center; 
+			vertical-align: middle; 
+	}
+</style>
+<script>
+	$.ajaxSetup({
+  data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+</script>
+<script>
+   function exportXls() {
+    data = getformvalue();
+    var form = $("<form>");
+    form.attr('style', 'display:none');
+    form.attr('target', '');
+    form.attr('method', 'get'); //请求方式
+    form.attr('action', '/export_cvs');//请求地址
+
+    var input1 = $('<input>');//将你请求的数据模仿成一个input表单
+    input1.attr('type', 'hidden');
+    input1.attr('name', data);//该输入框的name
+    input1.attr('value',JSON.stringify(data));//该输入框的值
+
+    $('body').append(form);
+    form.append(input1);
+    
+    form.submit();
+    form.remove();
+ }	
+ var getformvalue = function getfromvalue(){
+   	var year = $("#id_date_year").val();
+   	var month = $("#id_date_month").val();
+	if(month.length == 1){
+		month = "0" + month;
+	};
+   	var day = $("#id_date_day").val();
+	if(day.length == 1){
+		day = "0" + day;
+	};
+	var d = year + "_" + month + "_" + day;
+   	var top = $("#id_top").val();
+	var res = {'d':d,'top':top};
+	return res;
+}
+ $(document).ready(function() {
+ var getformvalue = function getfromvalue(){
+   	var year = $("#id_date_year").val();
+   	var month = $("#id_date_month").val();
+	if(month.length == 1){
+		month = "0" + month;
+	};
+   	var day = $("#id_date_day").val();
+	if(day.length == 1){
+		day = "0" + day;
+	};
+	var d = year + "_" + month + "_" + day;
+   	var top = $("#id_top").val();
+	var res = {'d':d,'top':top};
+	return res;
+ };
+  var data = getformvalue(); //下面调用不到我的data的top 的值??
+   $("#bt3").click(function(){
+   	data = getformvalue();
+	// 清空原有的error信息
+	$("#err").empty();
+  	$.get('{% url 'inters' %}', {'action':'imge','data':data}, function(ret1){
+	$("#imge").empty();
+      	$('#imge').html(ret1);
+  	});
+     });
+  });
+</script>
+
+<div style='align:center'>
+	<h2>每日接口数据信息</h2>
+	<!-- 选择区域 -->
+	<div style='border:1px solid green'>
+		<form id='f1' name='f1' method='post' action='/inters_data' align='center'>{% csrf_token %}
+			{{ form.date.label}} &nbsp;&nbsp; {{ form.date }}<br/>
+			{{ form.top.label }} &nbsp;&nbsp; {{ form.top }} <br/>
+			<button type="submit" class="btn btn-primary" style="padding-right:10px;margin-right:10px;">查看接口信息</button>
+			<a type='button' class="btn btn-primary" id='bt2' onclick='exportXls()' align='center'>导出excel表格</a> 
+			<button type='button' class="btn btn-primary" id='bt3'  align='center'>查看图表</button>
+		</form>
+	</div>
+	<!-- 图形区域 -->
+	<div id='imge'>
+		<!-- 数据表格区域-->
+		<table align='center'>
+			{% for item in data %}
+				<tr>
+					<th>{{ item.0 }}</th>
+				</tr>
+					<td>{{ item.1 }}</td>
+			{% endfor %}
+			<h4 style='color:red;align:center' id='err'>{{ error_mess }}</h4>
+		</table>
+	</div>
+</div>
+{% endblock %}
