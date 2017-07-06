@@ -1,0 +1,18 @@
+django == 1.9
+mysql-python
+djangorestframework
+markdown
+django-filter
+django-guardian
+django-xadmin
+django-crispy-forms == 1.2.3
+django-reversion
+django-debug-toolbar
+aliyun-python-sdk-core
+aliyun-python-sdk-ecs
+django-users2
+pandas
+matplotlib
+xlwt
+bpython
+django-highcharts
