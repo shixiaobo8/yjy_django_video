@@ -4,6 +4,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from video import views as video_views
 from aliyun import views as aliyun_views
+from zabbix import views as zabbix_views
 #import xadmin
 #xadmin.autodiscover()
 #from xadmin.plugins import xversion
@@ -34,6 +35,7 @@ urlpatterns = [
     url(r'^get_imge$', video_views.get_imge),
     url(r'^export_cvs$', video_views.export_cvs),
     url(r'^add', video_views.add),
+    url(r'^monitor/zabbix', zabbix_views.host_index),
 
 ]
 handler404 = video_views.page_not_found

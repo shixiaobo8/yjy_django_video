@@ -26,7 +26,7 @@ SECRET_KEY = '#_7im+_2o+@)gt+h9ve2q0u8-2c0wde=hh5y8m&&b^c=a5r!n$'
 TIME_ZONE = 'Asia/Shanghai'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 # auth system

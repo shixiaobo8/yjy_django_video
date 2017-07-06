@@ -16,3 +16,4 @@ matplotlib
 xlwt
 bpython
 django-highcharts
+zabbix_api
