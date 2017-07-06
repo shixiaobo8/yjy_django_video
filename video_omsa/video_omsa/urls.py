@@ -36,3 +36,5 @@ urlpatterns = [
     url(r'^add', video_views.add),
 
 ]
+handler404 = video_views.page_not_found
+handler500 = video_views.page_error

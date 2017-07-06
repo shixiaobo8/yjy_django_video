@@ -7,10 +7,20 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponse,JsonResponse
 from video.forms import videoForm,LoginForm,registerForm,ImEditForm,NewForm,intersForm
+from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
 import json,os,sys
 #navs = list(Nav.objects.all())
+
+@csrf_exempt
+def page_not_found(request):
+ 	return render_to_response('404.html')
+
+@csrf_exempt
+def page_error(request):
+	return render_to_response('500.html')
 
 # Create your views here.
 def addIm(request):
