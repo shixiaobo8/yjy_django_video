@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+{% block title %}zabbix api 服务器信息列表{% endblock %}
+{% block content %}
+<style>
+	.table th, .table td { 
+			text-align: center; 
+			vertical-align: middle; 
+	}
+	caption {
+			text-align: center; 
+			vertical-align: middle; 
+	}
+</style>
+<table class="table table-bordered">
+  <caption><h2>zabbix api 服务器信息列表(共{{ host_info | length }}个)</h2></caption>
+  <thead>
+    <tr>
+      <th>zabbix主机id:</th>
+      <th>zabbix主机名称</th>
+      <th>所用模板:</th>
+    </tr>
+  </thead>
+  <tbody>
+{% for host in host_info %}
+<td>{{ host.hostid }}</td>
+<td>{{ host.name }}</td>
+<td>
+    {% for template in host.parentTemplates %}
+        {{ template }}
+    {% endfor %}
+</td>
+</tbody>
+{% endfor %}
+</table>
+{% endblock %}
