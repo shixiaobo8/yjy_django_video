@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'video',
     'aliyun',
+    'zabbix',
 # xadmin 项目配置
 #    'xadmin',
 #    'crispy_forms',
