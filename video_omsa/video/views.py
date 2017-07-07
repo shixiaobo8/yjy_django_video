@@ -11,7 +11,7 @@ from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
-import json,os,sys
+import json,os,sys,xlwt
 #navs = list(Nav.objects.all())
 
 @csrf_exempt
@@ -136,7 +136,7 @@ def inters_count(date_table,top):
 	cursor = db_conn.cursor()
 	ret = ''
 	try:
-		cursor.execute("select * from (select `key`,`requests` from "+date_table+"_history_data limit "+top+") as top order by `requests`+0 desclimit "+top+";")
+		cursor.execute("select * from (select `key`,`requests` from "+date_table+"_history_data limit "+top+") as top order by `requests`+0 desc limit "+top+";")
 		datas = cursor.fetchall()
 		ret = datas
 		#return HttpResponse(ret)
@@ -180,7 +180,6 @@ def inters_data(request):
 			d_date = f_data['data[d]']
 			top = f_data['data[top]']
 			g_data = inters_count(d_date,top)
-			return HttpResponse(f_data)
 			if f_data['action'] == 'cvs' and g_data:
 				# 自定义httpResponse流
 				xls_name = 'd_date.xls'
