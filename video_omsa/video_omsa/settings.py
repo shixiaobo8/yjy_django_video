@@ -26,7 +26,7 @@ SECRET_KEY = '#_7im+_2o+@)gt+h9ve2q0u8-2c0wde=hh5y8m&&b^c=a5r!n$'
 TIME_ZONE = 'Asia/Shanghai'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 # auth system
@@ -48,6 +48,8 @@ INSTALLED_APPS = (
     'video',
     'aliyun',
     'zabbix',
+   # 'verifycode',
+    'captcha',
 # xadmin 项目配置
 #    'xadmin',
 #    'crispy_forms',
@@ -181,3 +183,20 @@ LOGGING = {
         },  
     },  
 }
+
+# django_simple_captcha 验证码配置   
+# 格式  
+CAPTCHA_OUTPUT_FORMAT = u'%(text_field)s %(hidden_field)s %(image)s'  
+# 噪点样式  
+CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_null', # 没有样式  
+    # 'captcha.helpers.noise_arcs', # 线  
+    # 'captcha.helpers.noise_dots', # 点  
+)  
+# 图片大小  
+CAPTCHA_IMAGE_SIZE = (100, 25)  
+CAPTCHA_BACKGROUND_COLOR = '#ffffff'  
+CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge' # 图片中的文字为随机英文字母，如 mdsh  
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'    # 图片中的文字为数字表达式，如1+2=</span>  
+  
+CAPTCHA_LENGTH = 4 # 字符个数  
+CAPTCHA_TIMEOUT = 1 # 超时(minutes)  

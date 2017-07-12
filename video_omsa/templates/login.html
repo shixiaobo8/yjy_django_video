@@ -18,6 +18,17 @@ input{
 	width: :10%;
 }
 </style>
+<script>
+	$('.js-captcha-refresh').click(function(){
+    $form = $(this).parents('form');
+
+    $.getJSON($(this).data('url'), {}, function(json) {
+        // This should update your captcha image src and captcha hidden input
+    });
+
+    return false;
+});
+</script>
 <div class='login'>
 	<form method="post" action="/login">{% csrf_token %}
 	{% for field in form %}
@@ -30,7 +41,8 @@ input{
     {% if login_mess %}
         <p style="color: red;">{{ login_mess }}</p>
     {% endif %}
-
+	<button class='js-captcha-refresh'></button>
+        </div>
         <div class="checkbox">
         <label>
             <input type="checkbox"> 记住密码
