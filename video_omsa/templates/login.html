@@ -11,13 +11,24 @@
 	margin-left: auto;
 }
 .login{
-	width:15%;
-	margin-left:600px;margin-right:auto;
+	width:18%;
+	margin-left:550px;margin-right:auto;
 }
 input{
 	width: :10%;
 }
 </style>
+<script>
+	$('#verifycode').click(function(){
+    $form = $(this).parents('form');
+
+    $.getJSON($(this).data('url'), {}, function(json) {
+        // This should update your captcha image src and captcha hidden input
+    });
+
+    return false;
+});
+</script>
 <div class='login'>
 	<form method="post" action="/login">{% csrf_token %}
 	{% for field in form %}
@@ -30,7 +41,6 @@ input{
     {% if login_mess %}
         <p style="color: red;">{{ login_mess }}</p>
     {% endif %}
-
         <div class="checkbox">
         <label>
             <input type="checkbox"> 记住密码
