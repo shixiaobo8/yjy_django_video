@@ -5,6 +5,8 @@ from django.contrib import admin
 from video import views as video_views
 from aliyun import views as aliyun_views
 from zabbix import views as zabbix_views
+#from verifycode import views as vc_views
+from captcha import views as vc_views
 #import xadmin
 #xadmin.autodiscover()
 #from xadmin.plugins import xversion
@@ -27,7 +29,6 @@ urlpatterns = [
     url(r'^add_Im$', video_views.add_Im),
     url(r'^im_list.html$', video_views.imList),
     url(r'^projects/create$', video_views.pro_create),
-# 迁移过来的项目
     url(r'^ecs_list$', aliyun_views.ecs_list),
     url(r'^upload$', video_views.upload),
     url(r'^up_recive$', video_views.up_recive),
@@ -36,6 +37,7 @@ urlpatterns = [
     url(r'^export_cvs$', video_views.export_cvs),
     url(r'^add', video_views.add),
     url(r'^monitor/zabbix', zabbix_views.host_index),
+    url(r'^captcha/',include('captcha.urls')),
 
 ]
 handler404 = video_views.page_not_found

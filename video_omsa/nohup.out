@@ -1,0 +1,1090 @@
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 10:12:45] "GET /im_list.html HTTP/1.0" 200 6318
+System check identified no issues (0 silenced).
+July 07, 2017 - 10:12:40
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+20: Set logging level to 30
+20: Set logging level to 30
+[07/Jul/2017 10:12:48] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 10:32:29] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 10:33:15] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /video_m3u8
+Not Found: /video_m3u8
+[07/Jul/2017 10:33:18] "GET /video_m3u8 HTTP/1.0" 404 3940
+[07/Jul/2017 10:33:21] "GET /addIm HTTP/1.0" 200 5800
+[07/Jul/2017 10:33:22] "GET /im_list.html HTTP/1.0" 200 6318
+[07/Jul/2017 10:33:26] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 10:33:28] "GET /logout HTTP/1.0" 302 0
+[07/Jul/2017 10:33:28] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 10:33:35] "GET /upload HTTP/1.0" 200 1919
+[07/Jul/2017 10:33:38] "GET /inters_data HTTP/1.0" 200 6238
+[07/Jul/2017 10:33:42] "GET /add HTTP/1.0" 200 2455
+/www/web/django_video/env/lib/python2.7/site-packages/aliyunsdkcore/client.py:269: DeprecationWarning: do_action() method is deprecated, please use do_action_with_exception() instead.
+  DeprecationWarning)
+
+/www/web/django_video/env/lib/python2.7/site-packages/aliyunsdkcore/client.py:269: DeprecationWarning: do_action() method is deprecated, please use do_action_with_exception() instead.
+  DeprecationWarning)
+
+[07/Jul/2017 10:33:46] "GET /ecs_list HTTP/1.0" 200 6541
+[07/Jul/2017 10:42:18] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 11:08:09] "GET /inters_data HTTP/1.0" 200 6238
+[07/Jul/2017 11:08:19] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:08:26] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:08:32] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:08:33] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:08:33] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:08:46] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:13:52] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222016_12_12%22%2C%22top%22%3A%2222%22%7D HTTP/1.0" 200 24
+[07/Jul/2017 11:13:55] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:14:01] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:14:04] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:14:06] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:18:31] "POST /inters_data HTTP/1.0" 200 6349
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:34:17] "POST /inters_data HTTP/1.0" 200 49
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:34:00
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:34:41] "POST /inters_data HTTP/1.0" 200 198
+[07/Jul/2017 11:34:41] "POST /inters_data HTTP/1.0" 200 198
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:34:38
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:34:52] "POST /inters_data HTTP/1.0" 200 141
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:34:50
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:35:37] "POST /inters_data HTTP/1.0" 200 0
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:35:35
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:35:56] "POST /inters_data HTTP/1.0" 200 5
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:35:54
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+Internal Server Error: /inters_data
+Traceback (most recent call last):
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/django_video/video_omsa/video/views.py", line 229, in inters_data
+    datas = inters_count(d_date,top)
+  File "/www/web/django_video/video_omsa/video/views.py", line 153, in inters_count
+    return render(request,'inters_count.html',{'data':datas})
+NameError: global name 'request' is not defined
+Internal Server Error: /inters_data
+Traceback (most recent call last):
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/django_video/video_omsa/video/views.py", line 229, in inters_data
+    datas = inters_count(d_date,top)
+  File "/www/web/django_video/video_omsa/video/views.py", line 153, in inters_count
+    return render(request,'inters_count.html',{'data':datas})
+NameError: global name 'request' is not defined
+[07/Jul/2017 11:37:27] "POST /inters_data HTTP/1.0" 500 74347
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:37:23
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:37:36
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:38:44] "POST /inters_data HTTP/1.0" 200 5
+[07/Jul/2017 11:38:45] "POST /inters_data HTTP/1.0" 200 5
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:38:39
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:39:08] "POST /inters_data HTTP/1.0" 200 120
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:39:05
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'desclimit 22' at line 1")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:40:34] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:40:37] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:40:42] "POST /inters_data HTTP/1.0" 200 8269
+Internal Server Error: /export_cvs
+Traceback (most recent call last):
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/django_video/video_omsa/video/views.py", line 249, in export_cvs
+    workbook = xlwt.Workbook(encoding='utf-8')
+NameError: global name 'xlwt' is not defined
+Internal Server Error: /export_cvs
+Traceback (most recent call last):
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/django_video/env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/django_video/video_omsa/video/views.py", line 249, in export_cvs
+    workbook = xlwt.Workbook(encoding='utf-8')
+NameError: global name 'xlwt' is not defined
+[07/Jul/2017 11:44:01] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222016_12_22%22%2C%22top%22%3A%2222%22%7D HTTP/1.0" 500 69526
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:40:29
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'all_web_data_history.2016_12_12_history_data' doesn't exist")
+(1146, "Table 'all_web_data_history.2016_12_12_history_data' doesn't exist")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:44:32] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222016_12_22%22%2C%22top%22%3A%2222%22%7D HTTP/1.0" 200 5632
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:44:30
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 11:46:10] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222016_12_22%22%2C%22top%22%3A%2222%22%7D HTTP/1.0" 200 5632
+[07/Jul/2017 11:48:22] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:48:27] "POST /inters_data HTTP/1.0" 200 8247
+[07/Jul/2017 11:48:41] "POST /inters_data HTTP/1.0" 200 8247
+[07/Jul/2017 11:48:45] "POST /inters_data HTTP/1.0" 200 6349
+[07/Jul/2017 11:48:48] "POST /inters_data HTTP/1.0" 200 8270
+[07/Jul/2017 11:49:15] "GET /inters_data?csrfmiddlewaretoken=FNMY0gnZG0JNXy3TB6aFOrhYiQLtghJX&action=imge&data%5Bd%5D=2016_12_16&data%5Btop%5D=22 HTTP/1.0" 200 30
+[07/Jul/2017 11:49:16] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222016_12_16%22%2C%22top%22%3A%2222%22%7D HTTP/1.0" 200 5632
+[07/Jul/2017 11:49:18] "GET /inters_data?csrfmiddlewaretoken=FNMY0gnZG0JNXy3TB6aFOrhYiQLtghJX&action=imge&data%5Bd%5D=2016_12_16&data%5Btop%5D=22 HTTP/1.0" 200 30
+[07/Jul/2017 11:49:19] "POST /inters_data HTTP/1.0" 200 8270
+System check identified no issues (0 silenced).
+July 07, 2017 - 11:44:55
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'all_web_data_history.2016_12_10_history_data' doesn't exist")
+(1146, "Table 'all_web_data_history.2016_12_08_history_data' doesn't exist")
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+[07/Jul/2017 12:21:17] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 12:21:54] "GET / HTTP/1.0" 200 7386
+Not Found: /monitor/now
+Not Found: /monitor/now
+[07/Jul/2017 12:21:57] "GET /monitor/now HTTP/1.0" 404 3943
+System check identified no issues (0 silenced).
+July 07, 2017 - 12:00:16
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+20: Set logging level to 30
+20: Set logging level to 30
+[07/Jul/2017 12:22:00] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+Not Found: /backup/web
+[07/Jul/2017 12:22:35] "GET /backup/web HTTP/1.0" 200 68
+Not Found: /video/zhongyi
+[07/Jul/2017 12:22:39] "GET /video/zhongyi HTTP/1.0" 200 68
+/www/web/django_video/env/lib/python2.7/site-packages/aliyunsdkcore/client.py:269: DeprecationWarning: do_action() method is deprecated, please use do_action_with_exception() instead.
+  DeprecationWarning)
+
+[07/Jul/2017 12:22:42] "GET /ecs_list HTTP/1.0" 200 6541
+System check identified no issues (0 silenced).
+July 07, 2017 - 12:22:33
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+20: Set logging level to 30
+20: Set logging level to 30
+[07/Jul/2017 12:22:46] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /monitor/now
+[07/Jul/2017 12:22:49] "GET /monitor/now HTTP/1.0" 200 68
+[07/Jul/2017 12:22:53] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 12:23:16] "GET /addIm HTTP/1.0" 200 5800
+[07/Jul/2017 12:23:19] "GET /projects/create HTTP/1.0" 200 6477
+Not Found: /projects/progress
+[07/Jul/2017 12:23:25] "GET /projects/progress HTTP/1.0" 200 68
+[07/Jul/2017 12:23:28] "GET /projects/create HTTP/1.0" 200 6477
+[07/Jul/2017 12:23:30] "GET /im_list.html HTTP/1.0" 200 6462
+[07/Jul/2017 12:23:34] "GET /projects/create HTTP/1.0" 200 6477
+[07/Jul/2017 12:23:35] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 12:23:36] "POST /login HTTP/1.0" 302 0
+[07/Jul/2017 12:23:36] "GET /im_list.html HTTP/1.0" 200 6318
+[07/Jul/2017 12:23:38] "GET /projects/create HTTP/1.0" 200 9285
+[07/Jul/2017 12:52:18] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /video_m3u8
+[07/Jul/2017 12:52:20] "GET /video_m3u8 HTTP/1.0" 200 68
+[07/Jul/2017 12:52:24] "GET /inters_data HTTP/1.0" 200 6238
+[07/Jul/2017 12:52:26] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /video/zhongyi
+[07/Jul/2017 12:52:30] "GET /video/zhongyi HTTP/1.0" 200 68
+[07/Jul/2017 12:52:35] "GET /im_list.html HTTP/1.0" 200 6318
+[07/Jul/2017 12:52:36] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 12:53:03] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 12:53:12] "GET /ecs_list HTTP/1.0" 200 6541
+[07/Jul/2017 12:53:23] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 12:53:24] "GET /logout HTTP/1.0" 302 0
+[07/Jul/2017 12:53:24] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 12:53:27] "GET /projects/create HTTP/1.0" 200 6477
+[07/Jul/2017 12:53:29] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 12:53:30] "POST /login HTTP/1.0" 302 0
+[07/Jul/2017 12:53:30] "GET /im_list.html HTTP/1.0" 200 6318
+[07/Jul/2017 12:53:31] "GET /projects/create HTTP/1.0" 200 9285
+[07/Jul/2017 12:56:00] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 12:56:02] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /projects/progress
+[07/Jul/2017 12:56:05] "GET /projects/progress HTTP/1.0" 200 68
+[07/Jul/2017 15:35:19] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:35:19] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:35:19] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:35:20] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:35:20] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:35:29] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:35:30] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:36:02] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:36:14] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:36:15] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:36:31] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:37:40] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:37:45] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:37:49] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[07/Jul/2017 15:37:50] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:37:52] "GET /projects/create HTTP/1.0" 200 9285
+[07/Jul/2017 15:37:56] "GET /logout HTTP/1.0" 302 0
+[07/Jul/2017 15:37:56] "GET / HTTP/1.0" 200 7386
+Not Found: /projects/progress
+[07/Jul/2017 15:37:57] "GET /projects/progress HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[07/Jul/2017 15:37:57] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:37:58] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:38:01] "GET /reg HTTP/1.0" 200 3429
+Not Found: /video/xiyi
+[07/Jul/2017 15:38:15] "GET /video/xiyi HTTP/1.0" 200 68
+[07/Jul/2017 15:38:21] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 15:38:57] "GET /addIm HTTP/1.0" 200 5800
+[07/Jul/2017 15:39:03] "GET /getChapterById?id=3&apptype=tcmsq&csrfmiddlewaretoken=024XNjW5TiM0ACe8Xp4i0Sq6Wf4mWIzB HTTP/1.0" 200 516
+[07/Jul/2017 15:39:24] "GET /im_list.html HTTP/1.0" 200 6462
+[07/Jul/2017 15:40:23] "GET /upload HTTP/1.0" 200 1919
+[07/Jul/2017 15:40:28] "GET /ecs_list HTTP/1.0" 200 6541
+[07/Jul/2017 15:40:40] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:40:44] "GET /im_list.html HTTP/1.0" 200 6462
+[07/Jul/2017 15:40:59] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 15:40:59] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 15:41:08] "GET /monitor/zabbix HTTP/1.0" 200 8127
+[07/Jul/2017 15:41:12] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:41:15] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /projects/progress
+[07/Jul/2017 15:43:30] "GET /projects/progress HTTP/1.0" 200 68
+[07/Jul/2017 15:47:09] "GET / HTTP/1.0" 200 7386
+[07/Jul/2017 15:52:53] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[07/Jul/2017 15:52:57] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:53:05] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[07/Jul/2017 15:53:05] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:53:10] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[07/Jul/2017 15:53:10] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:53:14] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[07/Jul/2017 15:53:14] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[07/Jul/2017 15:53:21] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:53:23] "GET /im_list.html HTTP/1.0" 200 6462
+Not Found: /favicon.ico
+[07/Jul/2017 15:53:23] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/progress
+[07/Jul/2017 15:53:26] "GET /projects/progress HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[07/Jul/2017 15:53:26] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:53:51] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[07/Jul/2017 15:53:54] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:56:19] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[07/Jul/2017 15:56:19] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:56:36] "POST /login HTTP/1.0" 302 0
+[07/Jul/2017 15:56:36] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[07/Jul/2017 15:56:36] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:56:46] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /favicon.ico
+[07/Jul/2017 15:56:46] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[07/Jul/2017 15:56:48] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:56:53] "GET /addIm HTTP/1.0" 200 5800
+Not Found: /favicon.ico
+[07/Jul/2017 15:56:53] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:57:01] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:01] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:57:05] "GET /add HTTP/1.0" 200 2455
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:05] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:07] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:57:09] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:10] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:13] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:57:17] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:17] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:19] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:57:22] "GET /inters_data HTTP/1.0" 200 6238
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:22] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 15:57:34] "POST /inters_data HTTP/1.0" 200 9320
+Not Found: /favicon.ico
+[07/Jul/2017 15:57:34] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 16:18:32] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[07/Jul/2017 16:18:34] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 16:19:24] "POST /inters_data HTTP/1.0" 200 9320
+Not Found: /favicon.ico
+[07/Jul/2017 16:19:24] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 16:19:26] "POST /inters_data HTTP/1.0" 200 9320
+Not Found: /favicon.ico
+[07/Jul/2017 16:19:26] "GET /favicon.ico HTTP/1.0" 200 68
+[07/Jul/2017 16:20:37] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222017_05_04%22%2C%22top%22%3A%2233%22%7D HTTP/1.0" 200 9728
+[07/Jul/2017 20:03:38] "GET / HTTP/1.0" 200 7386
+[08/Jul/2017 09:04:48] "GET / HTTP/1.0" 200 7386
+[08/Jul/2017 10:03:10] "GET / HTTP/1.0" 200 7386
+[08/Jul/2017 16:44:58] "GET /?id=1'+union+select+user+from+mysql.user+where+user='<script></script> HTTP/1.1" 200 7386
+Not Found: /cache/global/img/gs.gif
+[08/Jul/2017 17:52:28] "GET /cache/global/img/gs.gif HTTP/1.0" 200 68
+[09/Jul/2017 02:33:39] "GET / HTTP/1.0" 200 7386
+[09/Jul/2017 16:02:08] "GET / HTTP/1.0" 200 7386
+Not Found: /HNAP1/
+[09/Jul/2017 16:02:08] "GET /HNAP1/ HTTP/1.0" 200 68
+[09/Jul/2017 22:27:38] "GET / HTTP/1.0" 200 7386
+[10/Jul/2017 10:21:47] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 10:21:47] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 10:22:04] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 10:22:06] "POST /login HTTP/1.0" 302 0
+[10/Jul/2017 10:22:06] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[10/Jul/2017 10:22:06] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 10:22:08] "GET /upload HTTP/1.0" 200 1919
+Not Found: /favicon.ico
+[10/Jul/2017 10:22:08] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:23:32] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:32] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:23:33] "POST /login HTTP/1.0" 302 0
+[10/Jul/2017 11:23:33] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:33] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:23:37] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:37] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:23:43] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:43] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:23:45] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:45] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:23:46] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:46] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:47] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /monitor/now
+[10/Jul/2017 11:23:49] "GET /monitor/now HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:49] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:23:54] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:05] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /backup/file
+[10/Jul/2017 11:24:08] "GET /backup/file HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:08] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:10] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:24:14] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:15] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:25] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:24:28] "GET /add HTTP/1.0" 200 2455
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:28] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:29] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:24:32] "GET /inters_data HTTP/1.0" 200 6238
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:32] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:24:39] "POST /inters_data HTTP/1.0" 200 8109
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:39] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:24:42] "POST /inters_data HTTP/1.0" 200 8109
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:42] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:24:44] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222017_03_01%22%2C%22top%22%3A%2222%22%7D HTTP/1.0" 200 5632
+[10/Jul/2017 11:24:46] "GET /inters_data?csrfmiddlewaretoken=fxCrgphN4u6ulIAA39MAqJfBzGr9KFbr&action=imge&data%5Bd%5D=2017_03_01&data%5Btop%5D=22 HTTP/1.0" 200 30
+[10/Jul/2017 11:24:48] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222017_03_01%22%2C%22top%22%3A%2222%22%7D HTTP/1.0" 200 5632
+[10/Jul/2017 11:24:49] "POST /inters_data HTTP/1.0" 200 8109
+Not Found: /favicon.ico
+[10/Jul/2017 11:24:49] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:02] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:03] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:03] "GET /inters_data HTTP/1.0" 200 6238
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:03] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:03] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:03] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:04] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:04] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:07] "GET /logout HTTP/1.0" 302 0
+[10/Jul/2017 11:25:07] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:08] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /changeUserInfo
+[10/Jul/2017 11:25:10] "GET /changeUserInfo HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:10] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:12] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:13] "GET /projects/create HTTP/1.0" 200 6477
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:13] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:15] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:15] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:16] "POST /login HTTP/1.0" 302 0
+[10/Jul/2017 11:25:16] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:16] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:18] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:18] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:20] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:20] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:24] "GET /addIm HTTP/1.0" 200 5800
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:24] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 11:25:25] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[10/Jul/2017 11:25:25] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 14:42:28] "GET / HTTP/1.0" 200 7386
+[10/Jul/2017 23:01:14] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:15] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:01:16] "POST /login HTTP/1.0" 302 0
+[10/Jul/2017 23:01:16] "GET /im_list.html HTTP/1.0" 200 6316
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:16] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:01:19] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:20] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:01:25] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:25] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:28] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:01:30] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:30] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:34] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:01:36] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:01:36] "GET /favicon.ico HTTP/1.0" 200 68
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:02:33] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:02:33] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:02:33] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:02:33] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:02:33] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:02:33] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:02:34] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:02:34] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:02:34] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:02:34] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /projects/monitor/zabbix
+[10/Jul/2017 23:02:34] "GET /projects/monitor/zabbix HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:02:34] "GET /favicon.ico HTTP/1.0" 200 68
+System check identified no issues (0 silenced).
+July 10, 2017 - 23:02:32
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+Performing system checks...
+
+Starting logging
+Starting logging
+Using native json library
+Using native json library
+Not Found: /admin
+[10/Jul/2017 23:03:23] "GET /admin HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:03:23] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /admin
+[10/Jul/2017 23:03:28] "GET /admin HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:03:28] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /admin
+[10/Jul/2017 23:03:31] "GET /admin HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:03:31] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /admin
+[10/Jul/2017 23:03:34] "GET /admin HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:03:34] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:03:50] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:03:50] "GET /favicon.ico HTTP/1.0" 200 68
+System check identified no issues (0 silenced).
+July 10, 2017 - 23:03:11
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+20: Set logging level to 30
+20: Set logging level to 30
+[10/Jul/2017 23:03:53] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[10/Jul/2017 23:03:54] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:01] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:01] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:02] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:03] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /backup/web
+[10/Jul/2017 23:04:06] "GET /backup/web HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:06] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:07] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /video/xiyi
+[10/Jul/2017 23:04:09] "GET /video/xiyi HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:09] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:10] "GET /favicon.ico HTTP/1.0" 200 68
+/www/web/django_video/env/lib/python2.7/site-packages/aliyunsdkcore/client.py:269: DeprecationWarning: do_action() method is deprecated, please use do_action_with_exception() instead.
+  DeprecationWarning)
+
+[10/Jul/2017 23:04:12] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:12] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:14] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:17] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:17] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:19] "GET /logout HTTP/1.0" 302 0
+[10/Jul/2017 23:04:19] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:19] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:20] "POST /login HTTP/1.0" 302 0
+[10/Jul/2017 23:04:20] "GET /im_list.html HTTP/1.0" 200 6316
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:20] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:22] "GET /logout HTTP/1.0" 302 0
+[10/Jul/2017 23:04:22] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:22] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:25] "GET /addIm HTTP/1.0" 200 5800
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:25] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:04:37] "GET /getChapterById?id=2&apptype=yjy_zhongyizonghe&csrfmiddlewaretoken=nTRY9rRfrOwHJjIXmdglQX9D1KskqiRP HTTP/1.0" 200 278
+[10/Jul/2017 23:04:41] "GET /getChapterById?id=4&apptype=yjy_zhongyizonghe&csrfmiddlewaretoken=nTRY9rRfrOwHJjIXmdglQX9D1KskqiRP HTTP/1.0" 200 2
+[10/Jul/2017 23:04:42] "GET /getChapterById?id=5&apptype=yjy_zhongyizonghe&csrfmiddlewaretoken=nTRY9rRfrOwHJjIXmdglQX9D1KskqiRP HTTP/1.0" 200 28
+[10/Jul/2017 23:04:44] "GET /getChapterById?id=1&apptype=yjy_zhongyizonghe&csrfmiddlewaretoken=nTRY9rRfrOwHJjIXmdglQX9D1KskqiRP HTTP/1.0" 200 28
+[10/Jul/2017 23:04:46] "GET /getChapterById?id=3&apptype=yjy_zhongyizonghe&csrfmiddlewaretoken=nTRY9rRfrOwHJjIXmdglQX9D1KskqiRP HTTP/1.0" 200 174
+[10/Jul/2017 23:04:48] "GET /getChapterById?id=2&apptype=yjy_zhongyizonghe&csrfmiddlewaretoken=nTRY9rRfrOwHJjIXmdglQX9D1KskqiRP HTTP/1.0" 200 278
+[10/Jul/2017 23:04:52] "GET /getChapterById?id=3&apptype=yjy_zhongyizonghe&csrfmiddlewaretoken=nTRY9rRfrOwHJjIXmdglQX9D1KskqiRP HTTP/1.0" 200 174
+Not Found: /favicon.ico
+[10/Jul/2017 23:04:57] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /video_m3u8
+[10/Jul/2017 23:05:00] "GET /video_m3u8 HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:00] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:02] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /auto_videos
+[10/Jul/2017 23:05:03] "GET /auto_videos HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:03] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:05] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:05:15] "GET /im_list.html HTTP/1.0" 200 6462
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:15] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:05:20] "GET /projects/create HTTP/1.0" 200 6477
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:20] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:05:22] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:22] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:05:24] "POST /login HTTP/1.0" 302 0
+[10/Jul/2017 23:05:24] "GET /im_list.html HTTP/1.0" 200 6316
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:24] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:05:25] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:25] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:05:27] "GET /im_list.html HTTP/1.0" 200 6316
+Not Found: /favicon.ico
+[10/Jul/2017 23:05:27] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:07:47] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:07:47] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:08:21] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:08:25] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:08:54] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:08:55] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:09:15] "GET /reg HTTP/1.0" 200 3429
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:15] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:09:30] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:31] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:09:35] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:36] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:39] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:09:44] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:44] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:49] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:09:52] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:52] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:54] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:09:56] "GET /upload HTTP/1.0" 200 1919
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:56] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:09:57] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:01] "GET /inters_data HTTP/1.0" 200 6238
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:01] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:10] "POST /inters_data HTTP/1.0" 200 15190
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:10] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:18] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:18] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:22] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222017_04_01%22%2C%22top%22%3A%228%22%7D HTTP/1.0" 200 5632
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:22] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:35] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:37] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:38] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:38] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:39] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:39] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:40] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:42] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:43] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:43] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:44] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:44] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:45] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:45] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:46] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:46] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:46] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:47] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:47] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:48] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:49] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:50] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:50] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:51] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:51] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:51] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:52] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:52] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:53] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:53] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:53] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:54] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:54] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:54] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:55] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+[10/Jul/2017 23:10:56] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:56] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:57] "POST /inters_data HTTP/1.0" 200 6892
+Not Found: /favicon.ico
+[10/Jul/2017 23:10:57] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:10:58] "GET /inters_data?csrfmiddlewaretoken=kIzBlb7Y5T0osPiQAOOAmgbTmUl7pLGU&action=imge&data%5Bd%5D=2017_04_01&data%5Btop%5D=8 HTTP/1.0" 200 30
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:00] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:00] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:01] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:01] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:01] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:02] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:02] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:02] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:03] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:03] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:03] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:03] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:03] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:04] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:04] "GET /inters_data HTTP/1.0" 200 6238
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:04] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:04] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:06] "GET /add HTTP/1.0" 200 2455
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:07] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:09] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:12] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:12] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:13] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:15] "GET /addIm HTTP/1.0" 200 5800
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:16] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:22] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /auto_videos
+[10/Jul/2017 23:11:24] "GET /auto_videos HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:24] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:26] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:28] "GET /logout HTTP/1.0" 302 0
+[10/Jul/2017 23:11:28] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:28] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:31] "GET /logout HTTP/1.0" 302 0
+[10/Jul/2017 23:11:31] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:31] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:31] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:31] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:35] "GET /projects/create HTTP/1.0" 200 6477
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:35] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:37] "GET /im_list.html HTTP/1.0" 200 6462
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:37] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:38] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:38] "GET /favicon.ico HTTP/1.0" 200 68
+[10/Jul/2017 23:11:42] "GET /reg HTTP/1.0" 200 3429
+Not Found: /favicon.ico
+[10/Jul/2017 23:11:43] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 07:29:02] "GET / HTTP/1.0" 200 7386
+[11/Jul/2017 11:45:43] "GET / HTTP/1.0" 200 7386
+[11/Jul/2017 14:23:08] "GET / HTTP/1.0" 200 7386
+[11/Jul/2017 15:15:30] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[11/Jul/2017 15:15:30] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 15:15:32] "POST /login HTTP/1.0" 302 0
+[11/Jul/2017 15:15:32] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[11/Jul/2017 15:15:32] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 15:15:34] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[11/Jul/2017 15:15:34] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 18:55:57] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[11/Jul/2017 18:55:57] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 18:55:58] "POST /login HTTP/1.0" 302 0
+[11/Jul/2017 18:55:58] "GET /im_list.html HTTP/1.0" 200 6318
+Not Found: /favicon.ico
+[11/Jul/2017 18:55:58] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 18:56:00] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /favicon.ico
+[11/Jul/2017 18:56:00] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 18:56:03] "GET /addIm HTTP/1.0" 200 5800
+Not Found: /favicon.ico
+[11/Jul/2017 18:56:04] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 18:56:07] "GET /getChapterById?id=3&apptype=yjy_xiyizonghe&csrfmiddlewaretoken=3DCXKSrewNGh3TVpwYdaapbOeJeZbECb HTTP/1.0" 200 166
+[11/Jul/2017 18:56:10] "GET /getChapterById?id=2&apptype=yjy_xiyizonghe&csrfmiddlewaretoken=3DCXKSrewNGh3TVpwYdaapbOeJeZbECb HTTP/1.0" 200 166
+[11/Jul/2017 21:04:37] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:37] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:04:40] "POST /login HTTP/1.0" 302 0
+[11/Jul/2017 21:04:40] "GET /im_list.html HTTP/1.0" 200 6316
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:40] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:04:44] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:44] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:04:49] "GET /addIm HTTP/1.0" 200 5800
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:50] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:04:52] "GET /projects/create HTTP/1.0" 200 9285
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:52] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /auto_videos
+[11/Jul/2017 21:04:54] "GET /auto_videos HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:54] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:56] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:04:59] "GET /inters_data HTTP/1.0" 200 6238
+Not Found: /favicon.ico
+[11/Jul/2017 21:04:59] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:05:03] "POST /inters_data HTTP/1.0" 200 6351
+Not Found: /favicon.ico
+[11/Jul/2017 21:05:03] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:05:08] "POST /inters_data HTTP/1.0" 200 277307
+Not Found: /favicon.ico
+[11/Jul/2017 21:05:10] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:05:26] "GET /export_cvs?%5Bobject+Object%5D=%7B%22d%22%3A%222017_01_01%22%2C%22top%22%3A%222323%22%7D HTTP/1.0" 200 269824
+[11/Jul/2017 21:05:54] "GET /inters_data?csrfmiddlewaretoken=HYKihJE5bM8y4n2HLo3kZaPHu349Mod1&action=imge&data%5Bd%5D=2017_01_01&data%5Btop%5D=2323 HTTP/1.0" 200 30
+[11/Jul/2017 21:05:56] "POST /inters_data HTTP/1.0" 200 277307
+Not Found: /favicon.ico
+[11/Jul/2017 21:05:58] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:06:07] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:06:14] "POST /inters_data HTTP/1.0" 200 8271
+Not Found: /favicon.ico
+[11/Jul/2017 21:06:15] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:07:09] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:09] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:07:15] "GET /logout HTTP/1.0" 302 0
+[11/Jul/2017 21:07:15] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:15] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:07:18] "GET / HTTP/1.0" 200 7386
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:18] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /changeUserInfo
+[11/Jul/2017 21:07:20] "GET /changeUserInfo HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:20] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:22] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:07:26] "GET /monitor/zabbix HTTP/1.0" 200 8127
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:26] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:38] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /backup/file
+[11/Jul/2017 21:07:41] "GET /backup/file HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:41] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:43] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /video/zhongyi
+[11/Jul/2017 21:07:46] "GET /video/zhongyi HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:46] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:48] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:07:50] "GET /ecs_list HTTP/1.0" 200 6541
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:51] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:07:55] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:21] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:08:25] "GET /add HTTP/1.0" 200 2455
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:25] "GET /favicon.ico HTTP/1.0" 200 68
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:27] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:08:29] "GET /inters_data HTTP/1.0" 200 6238
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:29] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:08:31] "POST /inters_data HTTP/1.0" 200 6338
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:31] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:08:35] "POST /inters_data HTTP/1.0" 200 6348
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:35] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:08:36] "GET /inters_data?csrfmiddlewaretoken=HYKihJE5bM8y4n2HLo3kZaPHu349Mod1&action=imge&data%5Bd%5D=2016_01_01&data%5Btop%5D=2 HTTP/1.0" 200 24
+[11/Jul/2017 21:08:39] "POST /inters_data HTTP/1.0" 200 6348
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:39] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:08:44] "GET /inters_data?csrfmiddlewaretoken=HYKihJE5bM8y4n2HLo3kZaPHu349Mod1&action=imge&data%5Bd%5D=2017_01_01&data%5Btop%5D=2 HTTP/1.0" 200 30
+[11/Jul/2017 21:08:45] "POST /inters_data HTTP/1.0" 200 6447
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:46] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:08:55] "POST /inters_data HTTP/1.0" 200 6448
+Not Found: /favicon.ico
+[11/Jul/2017 21:08:55] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 21:09:00] "GET /inters_data?csrfmiddlewaretoken=HYKihJE5bM8y4n2HLo3kZaPHu349Mod1&action=imge&data%5Bd%5D=2017_07_01&data%5Btop%5D=2 HTTP/1.0" 200 30
+[11/Jul/2017 21:09:02] "POST /inters_data HTTP/1.0" 200 6448
+Not Found: /favicon.ico
+[11/Jul/2017 21:09:02] "GET /favicon.ico HTTP/1.0" 200 68
+[11/Jul/2017 22:47:43] "GET / HTTP/1.0" 200 7386
+[12/Jul/2017 09:17:21] "GET / HTTP/1.0" 200 7386
+[12/Jul/2017 09:48:23] "GET / HTTP/1.0" 200 7386
+Not Found: /cache/global/img/gs.gif
+[12/Jul/2017 10:45:54] "GET /cache/global/img/gs.gif HTTP/1.0" 200 68

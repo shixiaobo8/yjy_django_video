@@ -64,6 +64,7 @@ def login(request):
                 username = data['username']
                 password = data['password']
                 if form.is_valid():
+			human = True
                         #return HttpResponse(data.items())
                         user = authenticate(username=username,password=password)
                         if user is not None and user.is_active:

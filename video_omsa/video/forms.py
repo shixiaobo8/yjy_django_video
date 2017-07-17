@@ -6,6 +6,12 @@ from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from django.forms.extras.widgets import SelectDateWidget
 from django.db import connection,transaction
+from captcha.fields import CaptchaField
+from django.views.generic.edit import CreateView
+from captcha.models import CaptchaStore
+from captcha.helpers import captcha_image_url
+from django.http import HttpResponse
+import json
 import re
 
 YEARS_CHOICES = ('2016','2017')
@@ -74,6 +80,7 @@ class ImEditForm(forms.Form):
 class LoginForm(forms.Form):
 	username = forms.CharField(label='用户名',max_length=16,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'用户名'},),)
 	password = forms.CharField(max_length=100,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'密码'},),)
+	captcha = CaptchaField(error_messages={"invalid": u"验证码错误"})
 
 class registerForm(forms.Form):
 	username = forms.CharField(label='用户名',max_length=16,error_messages={'required':"用户名不能为空"},widget=forms.TextInput(attrs={'class':'form-control','placeholder':'用户名'},),)
@@ -91,3 +98,4 @@ class NewForm(forms.Form):
         phone = forms.CharField(validators=[PhoneValidate,],error_messages={'required':'手机号码不能为空'},
         widget=forms.TextInput(attrs={'class':'form-control','placeholder':'手机号'},),)
         email = forms.EmailField(required=True,label='电子邮箱',max_length=100,error_messages={'required':'邮箱不>能为空!'},widget=forms.TextInput(attrs={'class':'form-control','placeholder':'email'},))
+
