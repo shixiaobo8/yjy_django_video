@@ -193,10 +193,10 @@ CAPTCHA_NOISE_FUNCTIONS = ('captcha.helpers.noise_null', # 没有样式
     # 'captcha.helpers.noise_dots', # 点  
 )  
 # 图片大小  
-CAPTCHA_IMAGE_SIZE = (100, 25)  
+CAPTCHA_IMAGE_SIZE = (200, 25)
 CAPTCHA_BACKGROUND_COLOR = '#ffffff'  
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.random_char_challenge' # 图片中的文字为随机英文字母，如 mdsh  
 # CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'    # 图片中的文字为数字表达式，如1+2=</span>  
   
-CAPTCHA_LENGTH = 4 # 字符个数  
+CAPTCHA_LENGTH = 5 # 字符个数
 CAPTCHA_TIMEOUT = 1 # 超时(minutes)  
