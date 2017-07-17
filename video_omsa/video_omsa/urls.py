@@ -5,13 +5,7 @@ from django.contrib import admin
 from video import views as video_views
 from aliyun import views as aliyun_views
 from zabbix import views as zabbix_views
-#from verifycode import views as vc_views
-from captcha import views as vc_views
-#import xadmin
-#xadmin.autodiscover()
-#from xadmin.plugins import xversion
-#xversion.registe_models()
-
+from verifycode import views as vc_views
 
 urlpatterns = [
     # Examples:
@@ -37,7 +31,9 @@ urlpatterns = [
     url(r'^export_cvs$', video_views.export_cvs),
     url(r'^add', video_views.add),
     url(r'^monitor/zabbix', zabbix_views.host_index),
-    url(r'^captcha/',include('captcha.urls')),
+    url(r'^captcha/', include('captcha.urls')),
+    url('^ajax_val/', vc_views.ajax_val, name='ajax_val'),
+    url(r'^refresh/$', vc_views.refresh_captcha, name='refresh_captcha'),
 
 ]
 handler404 = video_views.page_not_found
