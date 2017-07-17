@@ -19,7 +19,7 @@ input{
 }
 </style>
 <script>
-	$('.js-captcha-refresh').click(function(){
+	$('#verifycode').click(function(){
     $form = $(this).parents('form');
 
     $.getJSON($(this).data('url'), {}, function(json) {
@@ -41,7 +41,6 @@ input{
     {% if login_mess %}
         <p style="color: red;">{{ login_mess }}</p>
     {% endif %}
-	<button class='js-captcha-refresh'></button>
         </div>
         <div class="checkbox">
         <label>
