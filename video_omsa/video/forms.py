@@ -80,7 +80,7 @@ class ImEditForm(forms.Form):
 class LoginForm(forms.Form):
 	username = forms.CharField(label='用户名',max_length=16,widget=forms.TextInput(attrs={'class':'form-control','placeholder':'用户名'},),)
 	password = forms.CharField(max_length=100,widget=forms.PasswordInput(attrs={'class':'form-control','placeholder':'密码'},),)
-	captcha = CaptchaField(error_messages={"invalid": u"验证码错误"})
+	captcha = CaptchaField(label='验证码',error_messages={"invalid": u"验证码错误"})
 
 class registerForm(forms.Form):
 	username = forms.CharField(label='用户名',max_length=16,error_messages={'required':"用户名不能为空"},widget=forms.TextInput(attrs={'class':'form-control','placeholder':'用户名'},),)
