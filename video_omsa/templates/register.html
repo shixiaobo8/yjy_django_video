@@ -3,61 +3,45 @@
 {% block title %}登录页面{% endblock %}
 
 {% block login %}
-<style type="text/css">
-.container{
-	padding-right: 35px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto;
-}
-.login{
-	width:15%;
-	margin-left:600px;margin-right:auto;
-}
-input{
-	width: :10%;
-}
-.btn btn-default{
-}
-</style>
-<div class='login'>
-	<form method="post" action="/register">{% csrf_token %}
-{#<!-- 		<div class="form-group">#}
-{#			<label >用户名:</label>#}
-{#			{{ form.username }}#}
-{#			{{ reg_error.username }}#}
-{#		</div>#}
-{#		<div class="form-group">#}
-{#			<label >密码:</label>#}
-{#			{{ form.password }}#}
-{#			{{ reg_error.password }}#}
-{#		</div>#}
-{#		<div class="form-group">#}
-{#			<label >邮箱:</label>#}
-{#			{{ form.email }}#}
-{#			{{ reg_error.email }}#}
-{#		</div>#}
-{#		<div class="form-group">#}
-{#			<label>手机号 :</label>#}
-{#			{{ form.phone }}#}
-{#			{{ reg_error.phone }}#}
-{#		</div> -->#}
-		 {% for field in form %}
- 		<div class="form-group">
-			<label>{{ field.label }}</label>
-			{{ field }}
-		</div>
-		{% endfor %}
-		{% if reg_error %}
-		<div color='red'> {{ reg_error }} </div>
-		{% endif %}
-  <!-- <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" id="exampleInputFile">
-    <p class="help-block">Example block-level help text here.</p>
-</div> -->
-	<button type="submit" class="btn btn-default" style="padding-right:50px;margin-right:34px;">注册</button>
-	<a class="btn btn-default" href="/" role="button" style="padding-right:50px;">登录</a>
+    <style type="text/css">
+        .container {
+            padding-right: 35px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .login {
+            width: 15%;
+            margin-left: 530px;
+            margin-right: auto;
+        }
+
+        .btn {;
+            padding-left: 1px;
+            text-align: center;;
+        }
+
+        input {
+            width:: 10%;
+        }
+
+    </style>
+    <div class='login'>
+        <form method="post" action="/register">{% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                </div>
+            {% endfor %}
+            {% if reg_error %}
+                <div color='red'> {{ reg_error }} </div>
+            {% endif %}
+            <div class="btn">
+                <button type="submit" class="btn btn-default" style="padding-right:50px;margin-right:34px;">注册</button>
+                <a class="btn btn-default" href="/" role="button" style="padding-right:50px;">登录</a>
+            </div>
         </form>
-</div>
+    </div>
 {% endblock %}
