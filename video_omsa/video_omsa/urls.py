@@ -32,7 +32,7 @@ urlpatterns = [
     url(r'^add', video_views.add),
     url(r'^monitor/zabbix', zabbix_views.host_index),
     url(r'^captcha/', include('captcha.urls')),
-    url('^ajax_val/', vc_views.ajax_val, name='ajax_val'),
+    url('^ajax_val', vc_views.ajax_val, name='ajax_val'),
     url(r'^refresh/$', vc_views.refresh_captcha, name='refresh_captcha'),
 
 ]
