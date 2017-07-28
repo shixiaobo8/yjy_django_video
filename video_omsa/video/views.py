@@ -202,7 +202,12 @@ def inters_data(request):
 				workbook.save(response)
 				return response
 			elif f_data['action'] == 'imge' and g_data:
-				return HttpResponse('页面正在开发中。。。')
+				server_url = [ data[0] for data in g_data ]
+				server_count = [ int(data[1]) for data in g_data ]
+				da = json.dumps({'top':top,'date':d_date,'server_url':server_url,'server_count':server_count})
+				# da = [server_url,server_count]
+				# return render(request,'inters_count.html',{'form':form,'server_url':server_url,'server_count':server_count,'date',d_date})
+				return HttpResponse(da)
 			else:
 				return HttpResponse('检索的数据不存在')
 		else:
@@ -265,6 +270,7 @@ def export_cvs(request):
 				return HttpResponse('检索的信息不存在')
 
 def get_imge(request):
+	data = inters_count()
 	return HttpResponse('頁面正在開發中。。。')
 
 def add(request):
