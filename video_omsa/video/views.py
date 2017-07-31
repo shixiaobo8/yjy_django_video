@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse,JsonResponse
 from video.forms import videoForm,LoginForm,registerForm,ImEditForm,NewForm,intersForm
 from django.shortcuts import render_to_response
+from django.core.paginator import Paginator,InvalidPage,EmptyPage,PageNotAnInteger
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
@@ -181,6 +182,20 @@ def inters_data(request):
 			d_date = f_data['data[d]']
 			top = f_data['data[top]']
 			g_data = inters_count(d_date,top)
+			if f_data['action'] == 'pagination' and g_data:
+				try:
+					page = int(request.GET.get('page',1))
+					if page < 1:
+						page = 1
+				except ValueError:
+					page =1
+				paginator = Paginator(g_data,6)
+				try:
+					page_data = paginator.page(page)
+				except (EmptyPage,InvalidPage,PageNotAnInteger):
+					page_data = paginator.page(1)
+				return render(request,'inters_count.html',{'form':form,'data':page_data,'page':page,'d_date':d_date,'top':top})
+				# return render(request,'inters_count.html',{'form':form,'data':page_data,'page':page})
 			if f_data['action'] == 'cvs' and g_data:
 				# 自定义httpResponse流
 				xls_name = 'd_date.xls'
@@ -234,7 +249,20 @@ def inters_data(request):
 				datas = inters_count(d_date,top)	
 				#return HttpResponse(datas)
 				if datas:
-					return render(request,'inters_count.html',{'form':form,'data':datas})
+					paginator = Paginator(datas,6)
+					try:
+						page = request.GET.get('page')
+					except:
+						page = 1
+					try:
+						page_data = paginator.page(page)
+					except PageNotAnInteger:
+						page_data = paginator.page(1)
+					except EmptyPage:
+						page_data = paginator.page(paginator.num_pages)
+
+					return render(request,'inters_count.html',{'form':form,'data':page_data,'page':page,'d_date':d_date,'top':top})
+						# return render('inters_count.html',{'form':form,'data':datas})
 				else:
 					return render(request,'inters_count.html',{'form':form,'error_mess':err_mess })
 

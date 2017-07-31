@@ -115,7 +115,14 @@
             form.remove();
         }
     </script>
-
+{#    <script>#}
+{#    // 分页数据显示#}
+{#    var getPageData = function getPageData(obj){#}
+{#        var page = $(obj).attr('value');#}
+{##}
+{#        console.log(page);#}
+{#    }#}
+{#    </script>#}
 
     <div style='align:center'>
         <h2>每日接口数据信息</h2>
@@ -131,17 +138,45 @@
             </form>
         </div>
         <!-- 图形区域 -->
-        <div id='imge'>
-            <!-- 数据表格区域-->
-            <table align='center'>
-                {% for item in data %}
+        <div id='imge' style="text-align: center;">
+            <h4 style='color:red;align:center' id='err'>{{ error_mess }}</h4>
+            <!-- 数据表格分页显示区域-->
+            {% if data %}
+                <table class="table table-hover" >
+                    <thead>
                     <tr>
-                        <th>{{ item.0 }}</th>
+                        <th>域名</th>
+                        <th>访问统计量</th>
                     </tr>
-                    <td>{{ item.1 }}</td>
-                {% endfor %}
-                <h4 style='color:red;align:center' id='err'>{{ error_mess }}</h4>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for item in data %}
+                        <tr>
+                            <td>{{ item.0 }}</td>
+                            <td>{{ item.1 }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            <!-- 如果当前是第一页，就不显示【上一页】链接 -->
+                <span class="step-links">
+                {% if data.has_previous %}
+                    <a type="button" class="btn btn-info" id='prePage'   href="/inters_data?action=pagination&page={{data.number|add:-1}}&d={{ d_date }}&top={{ top }}">上一页</a>
+                {% endif %}
+                </span>
+
+                <span class="current">
+                    当前页： {{ data.number }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总页数: {{ data.paginator.num_pages }}
+                </span>
+
+                {% if data.has_next %}
+                             <a type="button" class="btn btn-info" id='prePage'  href="/inters_data?action=pagination&page={{data.number|add:1}}&data[d]={{ d_date }}&data[top]={{ top }}">下一页</a>
+                             {% ifnotequal data.paginator.num_pages data.number|add:1  %}
+                                dsfasdfdsaf
+                             {% endifnotequal %}
+
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 {% endblock %}
