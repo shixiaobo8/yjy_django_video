@@ -161,7 +161,10 @@
             <!-- 如果当前是第一页，就不显示【上一页】链接 -->
                 <span class="step-links">
                 {% if data.has_previous %}
-                    <a type="button" class="btn btn-info" id='prePage'   href="/inters_data?action=pagination&page={{data.number|add:-1}}&d={{ d_date }}&top={{ top }}">上一页</a>
+                    {% ifnotequal 1 data.number|add:-1  %}
+                                <a type="button" class="btn btn-info" id='prePage'  href="/inters_data?action=pagination&page=1&data[d]={{ d_date }}&data[top]={{ top }}">首页</a>
+                    {% endifnotequal %}
+                    <a type="button" class="btn btn-info" id='prePage'   href="/inters_data?action=pagination&page={{data.number|add:-1}}&data[d]={{ d_date }}&data[top]={{ top }}">上一页</a>
                 {% endif %}
                 </span>
 
@@ -172,7 +175,7 @@
                 {% if data.has_next %}
                              <a type="button" class="btn btn-info" id='prePage'  href="/inters_data?action=pagination&page={{data.number|add:1}}&data[d]={{ d_date }}&data[top]={{ top }}">下一页</a>
                              {% ifnotequal data.paginator.num_pages data.number|add:1  %}
-                                dsfasdfdsaf
+                                <a type="button" class="btn btn-info" id='prePage'  href="/inters_data?action=pagination&page={{data.paginator.num_pages}}&data[d]={{ d_date }}&data[top]={{ top }}">尾页</a>
                              {% endifnotequal %}
 
                 {% endif %}
