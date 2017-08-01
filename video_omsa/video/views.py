@@ -9,6 +9,7 @@ from django.http import HttpResponse,JsonResponse
 from video.forms import videoForm,LoginForm,registerForm,ImEditForm,NewForm,intersForm
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator,InvalidPage,EmptyPage,PageNotAnInteger
+from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
@@ -127,6 +128,27 @@ def pro_create(request):
 	navs = list(Nav.objects.all())
         return render(request,'projects_create.html',{'navs':navs,"form":form})
 
+# def inters_count(date_table,top):
+# 	"""
+# 		date_table: 形如2017_05_13
+# 		top: 查询的条数
+# 	"""
+# 	import  MySQLdb as mdb
+# 	import datetime
+# 	db_conn = mdb.connect('59.110.11.16','web_data','web_data@2017','all_web_data_history')
+# 	cursor = db_conn.cursor()
+# 	ret = ''
+# 	try:
+# 		cursor.execute("select * from (select `key`,`requests` from "+date_table+"_history_data limit "+top+") as top order by `requests`+0 desc limit "+top+";")
+# 		datas = cursor.fetchall()
+# 		ret = datas
+# 	except mdb.Error,e:
+# 		print e
+# 	db_conn.close()
+# 	# 内部调用数据返回
+# 	return ret
+# 	# 外部调用接口数据返回
+
 def inters_count(date_table,top):
 	"""
 		date_table: 形如2017_05_13
@@ -136,25 +158,37 @@ def inters_count(date_table,top):
 	import datetime
 	db_conn = mdb.connect('59.110.11.16','web_data','web_data@2017','all_web_data_history')
 	cursor = db_conn.cursor()
-	ret = ''
+	res1 = ''
 	try:
-		cursor.execute("select * from (select `key`,`requests` from "+date_table+"_history_data limit "+top+") as top order by `requests`+0 desc limit "+top+";")
-		datas = cursor.fetchall()
-		ret = datas
-		#return HttpResponse(ret)
-		#data_js = dict()
-		#for data in datas:
-		#	data_js[data[0]] = data[1]
+		cursor.execute("select * from "+date_table+"_history_data")
+		data = cursor.fetchall()
+		statics_files = ['jpg','png','html','js','css','ts','m3u8','txt','gif']
+                statics = []
+                res = dict()
+                res[u'静态文件'] = 0
+                data = [ (d[2],int(d[6])) for d in data if d[1] == 'server_url' ]
+                for d in data:
+                        if d[0].split('.')[-1] in statics_files:
+                                statics.append(d[0])
+                                res[u'静态文件'] += d[1]
+                        else:
+                                if len(d[0].split('/')) > 5:
+                                        key = ('/'.join(d[0].split('/')[:5])).lower()
+                                else:
+                                        key = d[0].lower()
+
+                                if res.has_key(key):
+                                        res[key] = res[key] + d[1]
+                                else:
+                                        res[key] = d[1]
+                res1 = sorted(res.iteritems(),key = lambda d:d[1] ,reverse=True)
 	except mdb.Error,e:
 		print e
-		#db_conn.close()
 	db_conn.close()
+	# return (top,'tttt')
 	# 内部调用数据返回
-	return ret
+	return res1[:int(top)]
 	# 外部调用接口数据返回
-	#return render(request,'inters_count.html',{'data':datas})
-	#return render(request,'inters_count.html',{'data':data_js})
-
 
 def upload(request):
 	#if request.method == 'GET':
@@ -181,7 +215,11 @@ def inters_data(request):
 		if f_data:
 			d_date = f_data['data[d]']
 			top = f_data['data[top]']
-			g_data = inters_count(d_date,top)
+			cache_key = d_date + "_requests"
+			if read_from_cache(cache_key) == None:
+					datas = inters_count(d_date,top)
+					write_to_cache(cache_key,datas)
+			g_data = read_from_cache(cache_key)
 			if f_data['action'] == 'pagination' and g_data:
 				try:
 					page = int(request.GET.get('page',1))
@@ -189,7 +227,7 @@ def inters_data(request):
 						page = 1
 				except ValueError:
 					page =1
-				paginator = Paginator(g_data,6)
+				paginator = Paginator(g_data,10)
 				try:
 					page_data = paginator.page(page)
 				except (EmptyPage,InvalidPage,PageNotAnInteger):
@@ -246,10 +284,14 @@ def inters_data(request):
 				if date_month in d:
 					date_month = '0' + date_month
 				d_date = date_year + '_' + date_month + '_' + date_day
-				datas = inters_count(d_date,top)	
-				#return HttpResponse(datas)
+				cache_key = d_date + "_requests"
+				if read_from_cache(cache_key) == None:
+					datas = inters_count(d_date,top)
+					write_to_cache(cache_key,datas)
+				datas = read_from_cache(cache_key)
+				# return HttpResponse(datas)
 				if datas:
-					paginator = Paginator(datas,6)
+					paginator = Paginator(datas,10)
 					try:
 						page = request.GET.get('page')
 					except:
@@ -308,3 +350,16 @@ def add(request):
 			return HttpResponse(int(data['a'])+int(data['b']))
 		else:
 			return render(request,'add.html')
+
+# read cache
+def read_from_cache(keys):
+    value = cache.get(keys)
+    if value == None:
+        data = None
+    else:
+        data = json.loads(value)
+    return data
+
+#write cache
+def write_to_cache(keys,value):
+    cache.set(keys, json.dumps(value), timeout=None)

@@ -18,4 +18,4 @@ bpython
 django-highcharts
 zabbix_api
 django-simple-captcha
-django-redis
+django-redis == 4.7.0
