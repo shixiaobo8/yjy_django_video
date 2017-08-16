@@ -175,10 +175,10 @@
             <form id='f1' name='f1' method='post' action='/inters_data' align='center'>{% csrf_token %}
                 {{ form.date.label }} &nbsp;&nbsp; {{ form.date }}<br/>
                 {{ form.top.label }} &nbsp;&nbsp; {{ form.top }} <br/>
-                <button type="submit" class="btn btn-primary" style="padding-right:10px;margin-right:10px;">查看接口信息
+                <button type="submit" class="btn btn-primary" style="padding-right:10px;margin-right:10px;">按日期查看历史接口信息
                 </button>
-                <a type='button' class="btn btn-primary" id='bt2' onclick='exportXls()' align='center'>导出excel表格</a>
-                <button type='button' class="btn btn-primary" id='bt3' onclick="catImage()" align='center'>查看图表</button>
+                <a type='button' class="btn btn-primary" id='bt2' onclick='exportXls()' align='center'>导出历史接口信息xcel表格</a>
+                <button type='button' class="btn btn-primary" id='bt3' onclick="catImage()" align='center'>图表显示历史接口信息</button>
                 <button type='button' class="btn btn-primary" id='bt4' onclick="getCurInfo()" align='center'>查看接口实时统计信息</button>
             </form>
         </div>
