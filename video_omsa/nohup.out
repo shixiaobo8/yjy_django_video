@@ -48,3 +48,5 @@ Starting logging
 Starting logging
 Using native json library
 Using native json library
+[16/Aug/2017 11:50:20] "GET / HTTP/1.0" 200 4896
+[16/Aug/2017 11:50:22] "GET /captcha/image/1cf498f04e81822ba709ca113c2be4de558f2fe6/ HTTP/1.0" 200 4051
