@@ -150,9 +150,21 @@ def pro_create(request):
 # 	# 外部调用接口数据返回
 
 def inters_info(request):
+	import types
 	data = nginxData()
-	#return HttpResponse("最大值")
-	return HttpResponse(json.dumps(data.items()))
+	#return HttpResponse(json.dumps(data))
+	res = ''
+	for k,v in data.items():
+		tmp = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>"+ str(k) +"</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
+		if type(v) is types.ListType:
+			tmp += "<th>域名/接口url</th><th>" + "访问量" + "</th></tr></thead><tbody>"
+			for v1 in v:
+				tmp += "<tr><th scope='row'><code>" + str(v1[0])+ "</code></th><td>" + str(v1[1]) + "</td></tr>"
+			tmp += "</tbody></table><hr/>"
+		elif type(v) is types.IntType:
+			res += tmp + "<th>" + str(k) + "</th><th>" +  str(v) + "</th></tr></thead><tbody></tbody></table><hr/>"
+	res += tmp
+	return HttpResponse(res)
 
 def nginxData():
 	ng_url = 'http://api.letiku.net:888/yjy_req_status'
@@ -171,10 +183,10 @@ def nginxData():
 				max_actives[d1[1]] = d1[2]
 				top_actives[d1[1]] = d1[6]
 	maxs = sorted(max_actives.iteritems(),key = lambda d:d[1] ,reverse=True)
-	active_tops = sorted(max_actives.iteritems(),key = lambda d:d[1] ,reverse=True)
-	res['当前总并发值'] = total_active
-	res['当前最大并发值前十接口'] = maxs[:10]
-	res['当前并发值前十接口'] = active_tops[:10]
+	active_tops = sorted(top_actives.iteritems(),key = lambda d:d[1] ,reverse=True)
+	res['当前实时总并发值'] = total_active
+	res['今日最大并发值前十接口'] = maxs[:10]
+	res['当前实时并发值前十接口'] = active_tops[:10]
 	return  res
 	
 
