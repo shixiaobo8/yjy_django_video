@@ -97,6 +97,50 @@
             });
         }
     </script>
+
+    <script>
+    	function createTable(div,data){
+	    var $table=$('<table class="table table-hover table-striped table-bordered"></table>');
+	    $("div").append($table);
+	    var $caption=$('<caption style="text-align:center;">jquery生成bootstrap表格</caption>');
+	    $table.append($caption);
+	    var $thead=$('<thead></thead>');
+	    var $trs=$('<tr></tr>');
+	    var $th1=$('<th>姓名</th>');
+	    var $th2=$('<th>年龄</th>');
+	    $trs.append($th1);
+	    $trs.append($th2);
+	    $thead.append($trs);
+	    $table.append($thead);
+	    for(var i=0;i<11;i++){
+		    var $tr=$('<tr class="tr_content"></tr>');
+		    $table.append($tr);
+		    var $td1=$('<td class="td_content1">张三'+i+'</td>');
+		    $tr.append($td1);
+		    var $td2=$('<td class="td_content2">2'+i+'</td>');
+		    $tr.append($td2);
+		    $tr.on("click",".td_content2",function(){
+				    });
+	    }
+	    for(var i=0;i<data;i++){
+		    create_tbody();
+	    }
+	    $thread=$('</table>');
+    	    }
+	
+	function create_tbody(){
+	}	
+	
+	function getCurInfo() {
+	var data = getformvalue();
+	// 清空原有的error信息
+	$("#err").empty();
+	$.get('{% url 'CurInfo' %}', {'data': data}, function (ret1) {
+		$('#imge').html(ret1); //ajax页面调试数据使用
+		//createTable("#imge",ret1);		
+	});
+	}
+    </script>
     <script>
         function exportXls() {
             data = getformvalue();
@@ -135,6 +179,7 @@
                 </button>
                 <a type='button' class="btn btn-primary" id='bt2' onclick='exportXls()' align='center'>导出excel表格</a>
                 <button type='button' class="btn btn-primary" id='bt3' onclick="catImage()" align='center'>查看图表</button>
+                <button type='button' class="btn btn-primary" id='bt4' onclick="getCurInfo()" align='center'>查看接口实时统计信息</button>
             </form>
         </div>
         <!-- 图形区域 -->

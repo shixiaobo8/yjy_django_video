@@ -1,0 +1,156 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Customization &mdash; django-crispy-forms 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-crispy-forms 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="FAQ" href="faq.html" />
+    <link rel="prev" title="Updating layouts on the go" href="dynamic_layouts.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="faq.html" title="FAQ"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="dynamic_layouts.html" title="Updating layouts on the go"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-crispy-forms 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="customization">
+<h1>Customization<a class="headerlink" href="#customization" title="Permalink to this headline">¶</a></h1>
+<p>Some ways to customize the behavior of django-crispy-forms.</p>
+<div class="section" id="customizations-on-required-fields-optional">
+<h2>Customizations on &#8216;*&#8217; required fields (optional)<a class="headerlink" href="#customizations-on-required-fields-optional" title="Permalink to this headline">¶</a></h2>
+<p>If you don&#8217;t like the use of &#8216;*&#8217; (asterisk) to denote required fields you have two options:</p>
+<ul>
+<li><p class="first">Asterisks have an &#8216;asteriskField&#8217; class set. So you can hide it using CSS rule:</p>
+<div class="highlight-python"><pre>.asteriskField {
+    display: none;
+}</pre>
+</div>
+</li>
+<li><p class="first">You can always override templates. Create your own template for <tt class="docutils literal"><span class="pre">field.html</span></tt>.</p>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3 style="font-size: 30px;"><a href="index.html">crispy-forms</a></h3>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=maraujop&repo=django-crispy-forms&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+<p>
+  django-crispy-forms is a Django application that lets you easily build, customize and reuse forms using your favorite CSS framework, without writing template code and without having to take care of annoying details. You are currently looking at the documentation of the development release.
+</p>
+
+
+<h3>Support</h3>
+<p>
+    If you love django-crispy-forms, consider making a small donation <a href="http://flattr.com/thing/512037/django-crispy-forms">on Flattr</a>:
+</p>
+<p>
+    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://django-crispy-forms.rtfd.org"></a>
+    <noscript><a href="http://flattr.com/thing/512037/django-crispy-forms" target="_blank">
+    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Click to flattr django-crispy-forms" border="0" /></a></noscript>
+</p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Customization</a><ul>
+<li><a class="reference internal" href="#customizations-on-required-fields-optional">Customizations on &#8216;*&#8217; required fields (optional)</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="dynamic_layouts.html" title="previous chapter">Updating layouts on the go</a></li>
+      <li>Next: <a href="faq.html" title="next chapter">FAQ</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/customization.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        (function() {
+            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+            t.parentNode.insertBefore(s, t);
+        })();
+    /* ]]> */</script>
+
+    <div class="footer">
+      &copy; Copyright 2009-2011, Miguel Araujo and Daniel Greenfeld.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

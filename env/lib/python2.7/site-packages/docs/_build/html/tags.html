@@ -1,0 +1,402 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>{% crispy %} tag &mdash; django-crispy-forms 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-crispy-forms 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Layouts" href="layouts.html" />
+    <link rel="prev" title="crispy filter" href="filters.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="layouts.html" title="Layouts"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="filters.html" title="crispy filter"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-crispy-forms 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="crispy-tag">
+<span id="form-helpers"></span><h1>{% crispy %} tag<a class="headerlink" href="#crispy-tag" title="Permalink to this headline">¶</a></h1>
+<p>django-crispy-forms implements a class called <tt class="docutils literal"><span class="pre">FormHelper</span></tt> that defines the form rendering behavior. Helpers give you a way to control form attributes and its layout, doing this in a programatic way using Python. This way you write as little HTML as possible, and all your logic stays in the forms and views files.</p>
+<div class="section" id="fundamentals">
+<h2>Fundamentals<a class="headerlink" href="#fundamentals" title="Permalink to this headline">¶</a></h2>
+<p>For the rest of this document we will use the following example form of how to use a helper. This form is in charge of gathering some user information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ExampleForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="n">like_website</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">TypedChoiceField</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;Do you like this website?&quot;</span><span class="p">,</span>
+        <span class="n">choices</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Yes&quot;</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&quot;No&quot;</span><span class="p">)),</span>
+        <span class="nb">coerce</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">bool</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span>
+        <span class="n">widget</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">RadioSelect</span><span class="p">,</span>
+        <span class="n">initial</span> <span class="o">=</span> <span class="s">&#39;1&#39;</span><span class="p">,</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">favorite_food</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;What is your favorite food?&quot;</span><span class="p">,</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">favorite_color</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;What is your favorite color?&quot;</span><span class="p">,</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="mi">80</span><span class="p">,</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">favorite_number</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;Favorite number&quot;</span><span class="p">,</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">notes</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;Additional notes or feedback&quot;</span><span class="p">,</span>
+        <span class="n">required</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p>Let&#8217;s see how helpers works step by step, with some examples explained. First you will need to import <tt class="docutils literal"><span class="pre">FormHelper</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+</pre></div>
+</div>
+<p>Your helper can be a class level variable or an instance level variable, if you don&#8217;t know what this means you might want to read the article &#8220;<a class="reference external" href="http://tothinkornottothink.com/post/7157151391/be-careful-how-you-use-static-variables-in-forms">Be careful how you use static variables in forms</a>&#8221;. As a rule of thumb, if you are not going to manipulate a <cite>FormHelper</cite> in your code, like in a view, you should be using a static helper, otherwise you should be using an instance level helper. If you still don&#8217;t understand the subtle differences between both, use an instance level helper, because you won&#8217;t end up suffering side effects. As in the next steps I will show you how to manipulate the form helper, so we will create an instance level helper. This is how you would do it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+
+<span class="k">class</span> <span class="nc">ExampleForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As you can see you need to override the constructor and call the base class constructor using <tt class="docutils literal"><span class="pre">super</span></tt>. This helper doesn&#8217;t set any form attributes, so it&#8217;s useless. Let&#8217;s see how to set up some basic <cite>FormHelper</cite> attributes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.layout</span> <span class="kn">import</span> <span class="n">Submit</span>
+
+<span class="k">class</span> <span class="nc">ExampleForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_id</span> <span class="o">=</span> <span class="s">&#39;id-exampleForm&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_class</span> <span class="o">=</span> <span class="s">&#39;blueForms&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_method</span> <span class="o">=</span> <span class="s">&#39;post&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="s">&#39;submit_survey&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">add_input</span><span class="p">(</span><span class="n">Submit</span><span class="p">(</span><span class="s">&#39;submit&#39;</span><span class="p">,</span> <span class="s">&#39;Submit&#39;</span><span class="p">))</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that we are importing a class called <tt class="docutils literal"><span class="pre">Submit</span></tt> that is a layout object. We will see what layout objects are in detail later on, for now on let&#8217;s just say that this adds a submit button to our form, so people can send their survey.</p>
+<p>We&#8217;ve also done some helper magic. <tt class="docutils literal"><span class="pre">FormHelper</span></tt> has a list of attributes that can be set, that effect mainly form attributes. Our form will have as DOM id <tt class="docutils literal"><span class="pre">id-exampleForm</span></tt>, it will have as DOM CSS class <tt class="docutils literal"><span class="pre">blueForms</span></tt>, it will use http <tt class="docutils literal"><span class="pre">POST</span></tt> to send information and its action will be set to <tt class="docutils literal"><span class="pre">reverse(submit_survey)</span></tt>.</p>
+<p>Let&#8217;s see how to render the form in a template. Supposing we have the form in the template context as <tt class="docutils literal"><span class="pre">example_form</span></tt>, we would render it doing:</p>
+<div class="highlight-python"><pre>{% load crispy_forms_tags %}
+{% crispy example_form example_form.helper %}</pre>
+</div>
+<p>Notice that the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">crispy</span> <span class="pre">%}</span></tt> tags expects two parameters: first the form variable and then the helper. In this case we use the <tt class="docutils literal"><span class="pre">FormHelper</span></tt> attached to the form, but you could also create a <tt class="docutils literal"><span class="pre">FormHelper</span></tt> instance and pass it as a context variable. Most of the time, you will want to use the helper attached. Note that if you name your <tt class="docutils literal"><span class="pre">FormHelper</span></tt> attribute <tt class="docutils literal"><span class="pre">helper</span></tt> you will only need to do:</p>
+<div class="highlight-python"><pre>{% crispy form %}</pre>
+</div>
+<p>This is exactly the html that you would get:</p>
+<div class="highlight-python"><pre>&lt;form action="/submit/survey/" class="uniForm blueForms" method="post" id="id-exampleForm"&gt;
+    &lt;div style='display:none'&gt;
+        &lt;input type='hidden' name='csrfmiddlewaretoken' value='a643fab735d5ce6377ff456e73c4b1af' /&gt;
+    &lt;/div&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;&lt;/legend&gt;
+        &lt;div id="div_id_like_website" class="ctrlHolder"&gt;
+            &lt;label for="id_like_website" class="requiredField"&gt;¿Do you like this website?&lt;span class="asteriskField"&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;label for="id_like_website_0"&gt;&lt;input checked="checked" name="like_website" value="1" id="id_like_website_0" type="radio" class="radioselect" /&gt; Yes&lt;/label&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;label for="id_like_website_1"&gt;&lt;input value="0" type="radio" class="radioselect" name="like_website" id="id_like_website_1" /&gt; No&lt;/label&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;div id="div_id_favorite_food" class="ctrlHolder"&gt;
+            &lt;label for="id_favorite_food" class="requiredField"&gt;What is you favorite food?&lt;span class="asteriskField"&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;input id="id_favorite_food" class="textinput textInput" type="text" name="favorite_food" maxlength="80" required="required" /&gt;
+        &lt;/div&gt;
+        &lt;div id="div_id_favorite_color" class="ctrlHolder"&gt;
+            &lt;label for="id_favorite_color" class="requiredField"&gt;What is you favorite color?&lt;span class="asteriskField"&gt;*&lt;/span&gt;&lt;/label&gt;
+            &lt;input id="id_favorite_color" class="textinput textInput" type="text" name="favorite_color" maxlength="80" required="required" /&gt;
+        &lt;/div&gt;
+        &lt;div id="div_id_favorite_number" class="ctrlHolder"&gt;
+            &lt;label for="id_favorite_number"&gt;Favorite number&lt;/label&gt;
+            &lt;input id="id_favorite_number" type="text" name="favorite_number" class="textinput textInput" /&gt;
+        &lt;/div&gt;
+        &lt;div id="div_id_notes" class="ctrlHolder"&gt;
+            &lt;label for="id_notes"&gt;Additional notes or feedback&lt;/label&gt;
+            &lt;input id="id_notes" type="text" name="notes" class="textinput textInput" /&gt;
+        &lt;/div&gt;
+    &lt;/fieldset&gt;
+    &lt;div class="buttonHolder"&gt;
+        &lt;input type="submit" name="submit" value="Submit" class="submit submitButton" id="submit-id-submit" /&gt;
+    &lt;/div&gt;
+&lt;/form&gt;</pre>
+</div>
+<p>What you&#8217;ll get is the form rendered as HTML with awesome bits. Specifically...</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Opening and closing form tags, with id, class, action and method set as in the helper:</p>
+<div class="highlight-python"><pre>&lt;form action="/submit/survey/" class="uniForm blueForms" method="post" id="id-exampleForm"&gt;
+    [...]
+&lt;/form&gt;</pre>
+</div>
+</li>
+<li><p class="first">Django&#8217;s CSRF controls:</p>
+<div class="highlight-python"><pre>&lt;div style='display:none'&gt;
+    &lt;input type='hidden' name='csrfmiddlewaretoken' value='a643fab735d5ce6377ff456e73c4b1af' /&gt;
+&lt;/div&gt;</pre>
+</div>
+</li>
+<li><p class="first">Submit button:</p>
+<div class="highlight-python"><pre>&lt;div class="buttonHolder"&gt;
+    &lt;input type="submit" name="submit" value="Submit" class="submit submitButton" id="submit-id-submit" /&gt;
+&lt;/div&gt;</pre>
+</div>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="manipulating-a-helper-in-a-view">
+<h2>Manipulating a helper in a view<a class="headerlink" href="#manipulating-a-helper-in-a-view" title="Permalink to this headline">¶</a></h2>
+<p>Let&#8217;s see how we could change any helper property in a view:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@login_required</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">inbox</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">template_name</span><span class="p">):</span>
+    <span class="n">example_form</span> <span class="o">=</span> <span class="n">ExampleForm</span><span class="p">()</span>
+    <span class="n">redirect_url</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;next&#39;</span><span class="p">)</span>
+
+    <span class="c"># Form handling logic</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">redirect_url</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">example_form</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_action</span> <span class="o">=</span> <span class="n">reverse</span><span class="p">(</span><span class="s">&#39;submit_survey&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;?next=&#39;</span> <span class="o">+</span> <span class="n">redirectUrl</span>
+
+    <span class="k">return</span> <span class="n">render_to_response</span><span class="p">(</span><span class="n">template_name</span><span class="p">,</span> <span class="p">{</span><span class="s">&#39;example_form&#39;</span><span class="p">:</span> <span class="n">example_form</span><span class="p">},</span> <span class="n">context_instance</span><span class="o">=</span><span class="n">RequestContext</span><span class="p">(</span><span class="n">request</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>We are changing <tt class="docutils literal"><span class="pre">form_action</span></tt> helper property in case the view was called with a <tt class="docutils literal"><span class="pre">next</span></tt> GET parameter.</p>
+</div>
+<div class="section" id="rendering-several-forms-with-helpers">
+<h2>Rendering several forms with helpers<a class="headerlink" href="#rendering-several-forms-with-helpers" title="Permalink to this headline">¶</a></h2>
+<p>Often we get asked: &#8220;How do you render two or more forms, with their respective helpers, using <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">crispy</span> <span class="pre">%}</span></tt> tag, without having <tt class="docutils literal"><span class="pre">&lt;form&gt;</span></tt> tags rendered twice?&#8221; Easy, you need to set <tt class="docutils literal"><span class="pre">form_tag</span></tt> helper property to <tt class="docutils literal"><span class="pre">False</span></tt> in every helper:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_tag</span> <span class="o">=</span> <span class="bp">False</span>
+</pre></div>
+</div>
+<p>Then you will have to write a little of html code surrounding the forms:</p>
+<div class="highlight-python"><pre>&lt;form action="{% url submit_survey %}" class="uniForm" method="post"&gt;
+    {% crispy first_form %}
+    {% crispy second_form %}
+&lt;/form&gt;</pre>
+</div>
+<p>You can read a list of <a class="reference internal" href="#helper-attributes"><em>Helper attributes you can set</em></a> and what they are for.</p>
+</div>
+<div class="section" id="make-django-crispy-forms-fail-loud">
+<h2>Make django-crispy-forms fail loud<a class="headerlink" href="#make-django-crispy-forms-fail-loud" title="Permalink to this headline">¶</a></h2>
+<p>By default when django-crispy-forms encounters errors, it fails silently, logs them and continues working if possible. A settings variable called <tt class="docutils literal"><span class="pre">CRISPY_FAIL_SILENTLY</span></tt> has been added so that you can control this behavior. If you want to raise exceptions instead of logging, telling you what’s going on when you are developing in debug mode, you can set it to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CRISPY_FAIL_SILENTLY</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">DEBUG</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="rendering-formsets">
+<h2>Rendering formsets<a class="headerlink" href="#rendering-formsets" title="Permalink to this headline">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">crispy</span> <span class="pre">%}</span></tt> tag supports formsets rendering too. All the previous stated things apply to formsets the same way. Imagine you create a formset using the previous <tt class="docutils literal"><span class="pre">ExampleForm</span></tt> form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">django.forms.models</span> <span class="kn">import</span> <span class="n">formset_factory</span>
+
+<span class="n">ExampleFormset</span> <span class="o">=</span> <span class="n">formset_factory</span><span class="p">(</span><span class="n">ExampleForm</span><span class="p">,</span> <span class="n">extra</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">example_formset</span> <span class="o">=</span> <span class="n">ExampleFormset</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is how you would render the formset. Note that this time you need to specify the helper explicitly:</p>
+<div class="highlight-python"><pre>{% crispy example_formset example_formset.form.helper %}</pre>
+</div>
+<p>If your formset&#8217;s forms have different layouts, because you manipulated them, you will have to do:</p>
+<div class="highlight-python"><pre>{% for form in example_formset %}
+    {% crispy form %}
+{% endfor %}</pre>
+</div>
+<p>Note, make sure that you have <tt class="docutils literal"><span class="pre">form_tag</span></tt> attribute set to <tt class="docutils literal"><span class="pre">False</span></tt> in your formset&#8217;s forms, otherwise you will get 3 individual forms rendered:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ExampleForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">form_tag</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Note that you can still use a helper (in this case we are using the helper of the form used for building the formset). The main difference here is that helper attributes are applied to the form structure, while the layout is applied to the formset’s forms. Rendering formsets injects some extra context in the layout rendering so that you can do things like:</p>
+<div class="highlight-python"><pre>HTML("{% if forloop.first %}Message displayed only in the first form of a formset forms list{% endif %}",
+Fieldset("Item {{ forloop.counter }}", 'field-1', [...])</pre>
+</div>
+<p>Basically you can access a <tt class="docutils literal"><span class="pre">forloop</span></tt> Django node, as if you were rendering your formsets forms using a for loop.</p>
+</div>
+<div class="section" id="helper-attributes-you-can-set">
+<span id="helper-attributes"></span><h2>Helper attributes you can set<a class="headerlink" href="#helper-attributes-you-can-set" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><strong>form_method = &#8216;POST&#8217;</strong></dt>
+<dd>Specifies form method attribute. You can see it to ‘POST’ or ‘GET’. Defaults to ‘POST’</dd>
+<dt><strong>form_action</strong></dt>
+<dd><p class="first">Applied to the form action attribute. Can be a named url in your URLconf that can be executed via the {% url %} template tag. Example: ‘show_my_profile’. In your URLconf you could have something like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">url</span><span class="p">(</span><span class="s">r&#39;^show/profile/$&#39;</span><span class="p">,</span> <span class="s">&#39;show_my_profile_view&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;show_my_profile&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="last">You can also point it to a URL ‘/whatever/blabla/’.</p>
+</dd>
+<dt><strong>attrs</strong></dt>
+<dd><p class="first">Added in 1.2.0, a dictionary to set any kind of form attributes. Underscores in keys are translated into hyphens. The recommended way when you need to set several form attributes in order to keep your helper tidy:</p>
+<div class="last highlight-python"><pre>``{'id': 'form-id', 'data_id': '/whatever'}``
+&lt;form id="form-id" data-id="/whatever" ...&gt;</pre>
+</div>
+</dd>
+<dt><strong>form_id</strong></dt>
+<dd>Specifies form DOM id attribute. If no id provided then no id attribute is created on the form.</dd>
+<dt><strong>form_class</strong></dt>
+<dd>String containing separated CSS clases to be applied to form class attribute. The form will always have by default ‘uniForm’ class.</dd>
+<dt><strong>form_tag = True</strong></dt>
+<dd>It specifies if <tt class="docutils literal"><span class="pre">&lt;form&gt;&lt;/form&gt;</span></tt> tags should be rendered when using a Layout. If set to <tt class="docutils literal"><span class="pre">False</span></tt> it renders the form without the <tt class="docutils literal"><span class="pre">&lt;form&gt;&lt;/form&gt;</span></tt> tags. Defaults to <tt class="docutils literal"><span class="pre">True</span></tt>.</dd>
+<dt><strong>form_error_title</strong></dt>
+<dd>If you are rendering a form using <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">crispy</span> <span class="pre">%}</span></tt> tag and it has <tt class="docutils literal"><span class="pre">non_field_errors</span></tt> to display, they are rendered in a div. You can set the title of the div with this attribute. Example: “Form Errors”.</dd>
+<dt><strong>formset_error_title</strong></dt>
+<dd>If you are rendering a formset using <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">crispy</span> <span class="pre">%}</span></tt> tag and it has <tt class="docutils literal"><span class="pre">non_form_errors</span></tt> to display, they are rendered in a div. You can set the title of the div with this attribute. Example: “Formset Errors”.</dd>
+<dt><strong>form_style = &#8216;default&#8217;</strong></dt>
+<dd>Helper attribute for uni_form template pack. Uni-form has two different form styles built-in. You can choose which one to use, setting this variable to <tt class="docutils literal"><span class="pre">default</span></tt> or <tt class="docutils literal"><span class="pre">inline</span></tt>.</dd>
+<dt><strong>form_show_errors = True</strong></dt>
+<dd>Default set to <tt class="docutils literal"><span class="pre">True</span></tt>. It decides wether to render or not form errors. If set to <tt class="docutils literal"><span class="pre">False</span></tt>, form.errors will not be visible even if they happen. You have to manually render them customizing your template. This allows you to customize error output.</dd>
+<dt><strong>render_unmentioned_fields = False</strong></dt>
+<dd>By default django-crispy-forms renders the layout specified if it exists strictly, which means it only renders what the layout mentions, unless your form has <tt class="docutils literal"><span class="pre">Meta.fields</span></tt> and <tt class="docutils literal"><span class="pre">Meta.exclude</span></tt> defined, in that case it uses them. If you want to render unmentioned fields in the layout, for example if you are worried about forgetting mentioning them you have to set this property to <tt class="docutils literal"><span class="pre">True</span></tt>. It defaults to <tt class="docutils literal"><span class="pre">False</span></tt>.</dd>
+</dl>
+</div>
+<div class="section" id="bootstrap-helper-attributes">
+<h2>Bootstrap Helper attributes<a class="headerlink" href="#bootstrap-helper-attributes" title="Permalink to this headline">¶</a></h2>
+<p>There are currently some helper attributes that only have functionality for a specific template pack. These doesn&#8217;t necessarily mean that they won&#8217;t be supported for other template packs in the future.</p>
+<dl class="docutils">
+<dt><strong>help_text_inline = False</strong></dt>
+<dd>Sets whether help texts should be rendered inline or block. If set to <tt class="docutils literal"><span class="pre">True</span></tt> help texts will be rendered <tt class="docutils literal"><span class="pre">help-inline</span></tt> class, otherwise using <tt class="docutils literal"><span class="pre">help-block</span></tt>. By default text messages are rendered in block mode.</dd>
+<dt><strong>error_text_inline = True</strong></dt>
+<dd>Sets whether to render error messages inline or block. If set to <tt class="docutils literal"><span class="pre">True</span></tt> errors will be rendered using <tt class="docutils literal"><span class="pre">help-inline</span></tt> class, otherwise using <tt class="docutils literal"><span class="pre">help-block</span></tt>. By default error messages are rendered in inline mode.</dd>
+<dt><strong>html5_required = False</strong></dt>
+<dd>When set to <tt class="docutils literal"><span class="pre">True</span></tt> all required fields inputs will be rendered with HTML5 <tt class="docutils literal"><span class="pre">required=required</span></tt> attribute.</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3 style="font-size: 30px;"><a href="index.html">crispy-forms</a></h3>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=maraujop&repo=django-crispy-forms&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+<p>
+  django-crispy-forms is a Django application that lets you easily build, customize and reuse forms using your favorite CSS framework, without writing template code and without having to take care of annoying details. You are currently looking at the documentation of the development release.
+</p>
+
+
+<h3>Support</h3>
+<p>
+    If you love django-crispy-forms, consider making a small donation <a href="http://flattr.com/thing/512037/django-crispy-forms">on Flattr</a>:
+</p>
+<p>
+    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://django-crispy-forms.rtfd.org"></a>
+    <noscript><a href="http://flattr.com/thing/512037/django-crispy-forms" target="_blank">
+    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Click to flattr django-crispy-forms" border="0" /></a></noscript>
+</p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">{% crispy %} tag</a><ul>
+<li><a class="reference internal" href="#fundamentals">Fundamentals</a></li>
+<li><a class="reference internal" href="#manipulating-a-helper-in-a-view">Manipulating a helper in a view</a></li>
+<li><a class="reference internal" href="#rendering-several-forms-with-helpers">Rendering several forms with helpers</a></li>
+<li><a class="reference internal" href="#make-django-crispy-forms-fail-loud">Make django-crispy-forms fail loud</a></li>
+<li><a class="reference internal" href="#rendering-formsets">Rendering formsets</a></li>
+<li><a class="reference internal" href="#helper-attributes-you-can-set">Helper attributes you can set</a></li>
+<li><a class="reference internal" href="#bootstrap-helper-attributes">Bootstrap Helper attributes</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="filters.html" title="previous chapter">crispy filter</a></li>
+      <li>Next: <a href="layouts.html" title="next chapter">Layouts</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/tags.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        (function() {
+            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+            t.parentNode.insertBefore(s, t);
+        })();
+    /* ]]> */</script>
+
+    <div class="footer">
+      &copy; Copyright 2009-2011, Miguel Araujo and Daniel Greenfeld.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

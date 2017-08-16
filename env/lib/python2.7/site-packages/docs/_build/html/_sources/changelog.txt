@@ -1,0 +1,7 @@
+===========
+Change Log
+===========
+
+* You can find a detailed history of the project in `Github's CHANGELOG`_
+
+.. _`Github's CHANGELOG`: https://github.com/maraujop/django-crispy-forms/blob/dev/CHANGELOG.md

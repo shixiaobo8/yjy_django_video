@@ -1,0 +1,194 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; django-crispy-forms 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-crispy-forms 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Moving from django-uni-form to django-crispy-forms" href="migration.html" />
+    <link rel="prev" title="Forms have never been this crispy" href="index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="migration.html" title="Moving from django-uni-form to django-crispy-forms"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Forms have never been this crispy"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-crispy-forms 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installing-django-crispy-forms">
+<h2>Installing django-crispy-forms<a class="headerlink" href="#installing-django-crispy-forms" title="Permalink to this headline">¶</a></h2>
+<p>Install latest stable version into your python path using pip or easy_install:</p>
+<div class="highlight-python"><pre>pip install --upgrade django-crispy-forms</pre>
+</div>
+<p>If you want to install development version (unstable), you can do so doing:</p>
+<div class="highlight-python"><pre>pip install django-crispy-forms==dev</pre>
+</div>
+<p>Add <tt class="docutils literal"><span class="pre">crispy_forms</span></tt> to your <tt class="docutils literal"><span class="pre">INSTALLED_APPS</span></tt> in settings.py:</p>
+<div class="highlight-python"><pre>INSTALLED_APPS = (
+    ...
+    'crispy_forms',
+)</pre>
+</div>
+</div>
+<div class="section" id="template-packs">
+<h2>Template packs<a class="headerlink" href="#template-packs" title="Permalink to this headline">¶</a></h2>
+<p>Since version 1.1.0 of django-crispy-forms has built-in support for two different CSS frameworks, known as template packs within django-crispy-forms:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://twitter.github.com/bootstrap/index.html">Bootstrap</a> The default template pack. The popular simple and flexible HTML, CSS, and Javascript for user interfaces from Twitter.</li>
+<li><a class="reference external" href="http://sprawsm.com/uni-form">Uni-form</a> Nice looking, well structured, highly customizable, accessible and usable forms.</li>
+</ul>
+<p>If your form CSS framework is not supported, you can create a template pack for it and submit a pull request in github. You can easily switch between both using <tt class="docutils literal"><span class="pre">CRISPY_TEMPLATE_PACK</span></tt> setting variable, setting it to <tt class="docutils literal"><span class="pre">bootstrap</span></tt> or <tt class="docutils literal"><span class="pre">uni_form</span></tt>.</p>
+</div>
+<div class="section" id="setting-media-files">
+<h2>Setting media files<a class="headerlink" href="#setting-media-files" title="Permalink to this headline">¶</a></h2>
+<p>You will need to include the proper media files, depending on what CSS framework you are using. This might involve one or more CSS and JS files. Read CSS framework&#8217;s docs for help on how to set it up.</p>
+</div>
+<div class="section" id="uni-form-static-files">
+<h2>Uni-form static files<a class="headerlink" href="#uni-form-static-files" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://sprawsm.com/uni-form">Uni-form</a> files are composed of two CSS files and one JS library based on jQuery. Uni-form&#8217;s JS library provides some nice interactions, but you will need to link a copy of jQuery. Preferably you should use a <a class="reference external" href="http://scriptsrc.net/.">version hosted</a> on Google&#8217;s CDN servers since the user&#8217;s browser might already have it cached.</p>
+<p>For linking <a class="reference external" href="http://sprawsm.com/uni-form">Uni-form</a> static files add the proper lines to your HTML head. This is an example on how to do it if you are using <tt class="docutils literal"><span class="pre">STATIC_URL</span></tt>:</p>
+<div class="highlight-python"><pre>&lt;!-- note that there's also blue.uni-form.css and dark.uni-form.css available if you want to try changing defaults up --&gt;
+&lt;link rel="stylesheet" href="{{ STATIC_URL }}uni_form/uni-form.css" type="text/css" /&gt;
+&lt;link rel="stylesheet" href="{{ STATIC_URL }}uni_form/default.uni-form.css" type="text/css" /&gt;
+&lt;!-- uni-form JS library, optional --&gt;
+&lt;script src="{{ STATIC_URL }}uni_form/uni-form.jquery.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
+</div>
+</div>
+<div class="section" id="activate-uni-form-jquery">
+<h2>Activate uni-form.jquery<a class="headerlink" href="#activate-uni-form-jquery" title="Permalink to this headline">¶</a></h2>
+<p>If you link <a class="reference external" href="http://sprawsm.com/uni-form">Uni-form</a> JS library do not forget to activate given forms:</p>
+<div class="highlight-python"><pre>&lt;script&gt;
+  $(function(){
+    $('form.uniForm').uniform();
+  });
+&lt;/script&gt;</pre>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3 style="font-size: 30px;"><a href="index.html">crispy-forms</a></h3>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=maraujop&repo=django-crispy-forms&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+<p>
+  django-crispy-forms is a Django application that lets you easily build, customize and reuse forms using your favorite CSS framework, without writing template code and without having to take care of annoying details. You are currently looking at the documentation of the development release.
+</p>
+
+
+<h3>Support</h3>
+<p>
+    If you love django-crispy-forms, consider making a small donation <a href="http://flattr.com/thing/512037/django-crispy-forms">on Flattr</a>:
+</p>
+<p>
+    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://django-crispy-forms.rtfd.org"></a>
+    <noscript><a href="http://flattr.com/thing/512037/django-crispy-forms" target="_blank">
+    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Click to flattr django-crispy-forms" border="0" /></a></noscript>
+</p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#installing-django-crispy-forms">Installing django-crispy-forms</a></li>
+<li><a class="reference internal" href="#template-packs">Template packs</a></li>
+<li><a class="reference internal" href="#setting-media-files">Setting media files</a></li>
+<li><a class="reference internal" href="#uni-form-static-files">Uni-form static files</a></li>
+<li><a class="reference internal" href="#activate-uni-form-jquery">Activate uni-form.jquery</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Forms have never been this crispy</a></li>
+      <li>Next: <a href="migration.html" title="next chapter">Moving from django-uni-form to django-crispy-forms</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/install.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        (function() {
+            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+            t.parentNode.insertBefore(s, t);
+        })();
+    /* ]]> */</script>
+
+    <div class="footer">
+      &copy; Copyright 2009-2011, Miguel Araujo and Daniel Greenfeld.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

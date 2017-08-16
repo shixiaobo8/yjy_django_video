@@ -13,7 +13,7 @@ from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
-import json,os,sys,xlwt
+import json,os,sys,xlwt,requests
 #navs = list(Nav.objects.all())
 
 @csrf_exempt
@@ -148,6 +148,35 @@ def pro_create(request):
 # 	# 内部调用数据返回
 # 	return ret
 # 	# 外部调用接口数据返回
+
+def inters_info(request):
+	data = nginxData()
+	#return HttpResponse("最大值")
+	return HttpResponse(json.dumps(data.items()))
+
+def nginxData():
+	ng_url = 'http://api.letiku.net:888/yjy_req_status'
+	r = requests.get(ng_url)
+	data = r.text.split('\n')
+	total_active = 0
+	res = dict()
+	max_actives = dict()
+	top_actives = dict()
+	# 当前最大并发值
+	for d in data:
+		if d != data[0]:
+			d1 = d.split('\t')
+			if len(d1) == 8:
+				total_active += int(d1[6])
+				max_actives[d1[1]] = d1[2]
+				top_actives[d1[1]] = d1[6]
+	maxs = sorted(max_actives.iteritems(),key = lambda d:d[1] ,reverse=True)
+	active_tops = sorted(max_actives.iteritems(),key = lambda d:d[1] ,reverse=True)
+	res['当前总并发值'] = total_active
+	res['当前最大并发值前十接口'] = maxs[:10]
+	res['当前并发值前十接口'] = active_tops[:10]
+	return  res
+	
 
 def inters_count(date_table,top):
 	"""

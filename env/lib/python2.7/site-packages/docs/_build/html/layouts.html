@@ -1,0 +1,461 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Layouts &mdash; django-crispy-forms 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="django-crispy-forms 1.0.0 documentation" href="index.html" />
+    <link rel="next" title="Updating layouts on the go" href="dynamic_layouts.html" />
+    <link rel="prev" title="{% crispy %} tag" href="tags.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="dynamic_layouts.html" title="Updating layouts on the go"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="tags.html" title="{% crispy %} tag"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">django-crispy-forms 1.0.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="layouts">
+<h1>Layouts<a class="headerlink" href="#layouts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="fundamentals">
+<h2>Fundamentals<a class="headerlink" href="#fundamentals" title="Permalink to this headline">¶</a></h2>
+<p>Django-crispy-forms defines another powerful class called <tt class="docutils literal"><span class="pre">Layout</span></tt>, which allows you to change the way the form fields are rendered. This allows you to set the order of the fields, wrap them in divs or other structures, add html, set ids, classes or attributes to whatever you want, etc. And all that without writing a custom form template, using programmatic layouts. Just attach the layout to a helper, layouts are optional, but probably the most powerful thing django-crispy-forms has to offer.</p>
+<p>A <tt class="docutils literal"><span class="pre">Layout</span></tt> is constructed by layout objects, which can be thought of as form components.</p>
+<p>All these components are explained later in <a class="reference internal" href="#layout-objects"><em>Universal layout objects</em></a>, what you need to know now about them is that every component renders a different template and has a different purpose. Let’s write a couple of different layouts for our form, continuing with our form class example (note that the full form is not shown again).</p>
+<p>Some layout objects are specific to a template pack. For example <tt class="docutils literal"><span class="pre">ButtonHolder</span></tt> is for <tt class="docutils literal"><span class="pre">uni_form</span></tt> template_pack, while <tt class="docutils literal"><span class="pre">FormActions</span></tt> is for <tt class="docutils literal"><span class="pre">bootstrap</span></tt> template pack.</p>
+<p>Let&#8217;s add a layout to our helper:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+<span class="kn">from</span> <span class="nn">crispy_forms.layout</span> <span class="kn">import</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">Fieldset</span><span class="p">,</span> <span class="n">ButtonHolder</span><span class="p">,</span> <span class="n">Submit</span>
+
+<span class="k">class</span> <span class="nc">ExampleForm</span><span class="p">(</span><span class="n">forms</span><span class="o">.</span><span class="n">Form</span><span class="p">):</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">FormHelper</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+            <span class="n">Fieldset</span><span class="p">(</span>
+                <span class="s">&#39;first arg is the legend of the fieldset&#39;</span><span class="p">,</span>
+                <span class="s">&#39;like_website&#39;</span><span class="p">,</span>
+                <span class="s">&#39;favorite_number&#39;</span><span class="p">,</span>
+                <span class="s">&#39;favorite_color&#39;</span><span class="p">,</span>
+                <span class="s">&#39;favorite_food&#39;</span><span class="p">,</span>
+                <span class="s">&#39;notes&#39;</span>
+            <span class="p">),</span>
+            <span class="n">ButtonHolder</span><span class="p">(</span>
+                <span class="n">Submit</span><span class="p">(</span><span class="s">&#39;submit&#39;</span><span class="p">,</span> <span class="s">&#39;Submit&#39;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s">&#39;button white&#39;</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExampleForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>When we render the form now using:</p>
+<div class="highlight-python"><pre>{% load crispy_forms_tags %}
+{% crispy example_form %}</pre>
+</div>
+<p>We will get the fields wrapped in a fieldset, whose legend will be set to &#8216;first arg is the legend of the fieldset&#8217;. The fields&#8217; order will be: <tt class="docutils literal"><span class="pre">like_website</span></tt>, <tt class="docutils literal"><span class="pre">favorite_number</span></tt>, <tt class="docutils literal"><span class="pre">favorite_color</span></tt>, <tt class="docutils literal"><span class="pre">favorite_food</span></tt> and <tt class="docutils literal"><span class="pre">notes</span></tt>. We also get a submit button wrapped in a <tt class="docutils literal"><span class="pre">&lt;div</span> <span class="pre">class=&quot;buttonHolder&quot;&gt;</span></tt> which uni-form CSS positions in a nice way. That button has its CSS class set to <tt class="docutils literal"><span class="pre">button</span> <span class="pre">white</span></tt>.</p>
+<p>This is just the tip of the iceberg: now imagine you want to add an explanation for what notes are, you can use <tt class="docutils literal"><span class="pre">HTML</span></tt> layout object:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Layout</span><span class="p">(</span>
+    <span class="n">Fieldset</span><span class="p">(</span>
+        <span class="s">&#39;Tell us your favorite stuff {{ username }}&#39;</span><span class="p">,</span>
+        <span class="s">&#39;like_website&#39;</span><span class="p">,</span>
+        <span class="s">&#39;favorite_number&#39;</span><span class="p">,</span>
+        <span class="s">&#39;favorite_color&#39;</span><span class="p">,</span>
+        <span class="s">&#39;favorite_food&#39;</span><span class="p">,</span>
+        <span class="n">HTML</span><span class="p">(</span><span class="s">&quot;&quot;&quot;</span>
+<span class="s">            &lt;p&gt;We use notes to get better, &lt;strong&gt;please help us {{ username }}&lt;/strong&gt;&lt;/p&gt;</span>
+<span class="s">        &quot;&quot;&quot;</span><span class="p">),</span>
+        <span class="s">&#39;notes&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>As you&#8217;ll notice the fieldset legend is context aware and you can write it as if it were a chunk of a template where the form will be rendered. The <tt class="docutils literal"><span class="pre">HTML</span></tt> object will add a message before the notes input and it&#8217;s also context aware. Note how you can wrap layout objects into other layout objects. Layout objects <tt class="docutils literal"><span class="pre">Fieldset</span></tt>, <tt class="docutils literal"><span class="pre">Div</span></tt>, <tt class="docutils literal"><span class="pre">MultiField</span></tt> and <tt class="docutils literal"><span class="pre">ButtonHolder</span></tt> can hold other Layout objects within. Let&#8217;s do an alternative layout for the same form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Layout</span><span class="p">(</span>
+    <span class="n">MultiField</span><span class="p">(</span>
+        <span class="s">&#39;Tell us your favorite stuff {{ username }}&#39;</span><span class="p">,</span>
+        <span class="n">Div</span><span class="p">(</span>
+            <span class="s">&#39;like_website&#39;</span><span class="p">,</span>
+            <span class="s">&#39;favorite_number&#39;</span><span class="p">,</span>
+            <span class="n">css_id</span> <span class="o">=</span> <span class="s">&#39;special-fields&#39;</span>
+        <span class="p">),</span>
+        <span class="s">&#39;favorite_color&#39;</span><span class="p">,</span>
+        <span class="s">&#39;favorite_food&#39;</span><span class="p">,</span>
+        <span class="s">&#39;notes&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>This time we are using a <tt class="docutils literal"><span class="pre">MultiField</span></tt>, which is a layout object that as a general rule can be used in the same places as <tt class="docutils literal"><span class="pre">Fieldset</span></tt>. The main difference is that this renders all the fields wrapped in a div and when there are errors in the form submission, they are shown in a list instead of each one surrounding the field. Sometimes the best way to see what layout objects do, is just try them and play with them a little bit.</p>
+</div>
+<div class="section" id="universal-layout-objects">
+<span id="layout-objects"></span><h2>Universal layout objects<a class="headerlink" href="#universal-layout-objects" title="Permalink to this headline">¶</a></h2>
+<p>These ones live in module <tt class="docutils literal"><span class="pre">crispy_forms.layout</span></tt>. These are layout objects that are not specific to a template pack. We&#8217;ll go one by one, showing usage examples:</p>
+<ul>
+<li><p class="first"><strong>Div</strong>: It wraps fields in a <tt class="docutils literal"><span class="pre">&lt;div&gt;</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Div</span><span class="p">(</span><span class="s">&#39;form_field_1&#39;</span><span class="p">,</span> <span class="s">&#39;form_field_2&#39;</span><span class="p">,</span> <span class="s">&#39;form_field_3&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p><strong>NOTE</strong> Mainly in all layout objects you can set kwargs that will be used as HTML attributes. As <tt class="docutils literal"><span class="pre">class</span></tt> is a reserved keyword in Python, for it you will have to use <tt class="docutils literal"><span class="pre">css_class</span></tt>. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Div</span><span class="p">(</span><span class="s">&#39;form_field_1&#39;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s">&quot;background: white;&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Explication title&quot;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s">&quot;bigdivs&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul>
+<li><p class="first"><strong>HTML</strong>: A very powerful layout object. Use it to render pure html code. In fact it behaves as a Django template and it has access to the whole context of the page where the form is being rendered. This layout object doesn&#8217;t accept any extra parameters than the html to render, you cannot set html attributes like in <tt class="docutils literal"><span class="pre">Div</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">HTML</span><span class="p">(</span><span class="s">&quot;{</span><span class="si">% i</span><span class="s">f success %} &lt;p&gt;Operation was successful&lt;/p&gt; {</span><span class="si">% e</span><span class="s">ndif %}&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Field</strong>: Extremely useful layout object. You can use it to set attributes in a field or render a specific field with a custom template. This way you avoid having to explicitly override the field&#8217;s widget and pass an ugly <tt class="docutils literal"><span class="pre">attrs</span></tt> dictionary:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Field</span><span class="p">(</span><span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="s">&quot;password-field&quot;</span><span class="p">,</span> <span class="n">css_class</span><span class="o">=</span><span class="s">&quot;passwordfields&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">&quot;Explanation&quot;</span><span class="p">)</span>
+<span class="n">Field</span><span class="p">(</span><span class="s">&#39;slider&#39;</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s">&quot;custom-slider.html&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>This layout object can be used to easily extend Django&#8217;s widgets.</p>
+<ul>
+<li><p class="first"><strong>Submit</strong>: Used to create a submit button. First parameter is the <tt class="docutils literal"><span class="pre">name</span></tt> attribute of the button, second parameter is the <tt class="docutils literal"><span class="pre">value</span></tt> attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Submit</span><span class="p">(</span><span class="s">&#39;search&#39;</span><span class="p">,</span> <span class="s">&#39;SEARCH&#39;</span><span class="p">)</span>
+<span class="n">Submit</span><span class="p">(</span><span class="s">&#39;search&#39;</span><span class="p">,</span> <span class="s">&#39;SEARCH&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>Renders to:</p>
+<div class="highlight-python"><pre>&lt;input type="submit" name="search" value="SEARCH" class="submit submitButton" id="submit-id-search" /&gt;</pre>
+</div>
+<ul>
+<li><p class="first"><strong>Hidden</strong>: Used to create a hidden input:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Hidden</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Button</strong>: Creates a button:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Button</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Reset</strong>: Used to create a reset input:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">reset</span> <span class="o">=</span> <span class="n">Reset</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Fieldset</strong>: It wraps fields in a <tt class="docutils literal"><span class="pre">&lt;fieldset&gt;</span></tt>. The first parameter is the text for the fieldset legend, as we&#8217;ve said it behaves like a Django template:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Fieldset</span><span class="p">(</span><span class="s">&quot;Text for the legend {{ username }}&quot;</span><span class="p">,</span>
+    <span class="s">&#39;form_field_1&#39;</span><span class="p">,</span>
+    <span class="s">&#39;form_field_2&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="uni-form-layout-objects">
+<h2>Uni-form layout objects<a class="headerlink" href="#uni-form-layout-objects" title="Permalink to this headline">¶</a></h2>
+<p>These ones live in module <tt class="docutils literal"><span class="pre">crispy_forms.layout</span></tt>. Probably in the future they will be moved out to a <tt class="docutils literal"><span class="pre">uni_form</span></tt> module:</p>
+<ul>
+<li><p class="first"><strong>ButtonHolder</strong>: It wraps fields in a <tt class="docutils literal"><span class="pre">&lt;div</span> <span class="pre">class=”buttonHolder”&gt;</span></tt>, which uni-form positions in a nice way. This is where form&#8217;s submit buttons go in uni-form:</p>
+<div class="highlight-python"><pre>ButtonHolder(
+    HTML("&lt;span class="hidden"&gt;✓ Saved data&lt;/span&gt;"),
+    Submit('save', 'Save')
+)</pre>
+</div>
+</li>
+<li><p class="first"><strong>MultiField</strong>: It wraps fields in a <tt class="docutils literal"><span class="pre">&lt;div&gt;</span></tt> with a label on top. When there are errors in the form submission it renders them in a list instead of each one surrounding the field:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">MultiField</span><span class="p">(</span><span class="s">&quot;Text for the label {{ username }}&quot;</span><span class="p">,</span>
+    <span class="s">&#39;form_field_1&#39;</span><span class="p">,</span>
+    <span class="s">&#39;form_field_2&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="bootstrap-layout-objects">
+<h2>Bootstrap Layout objects<a class="headerlink" href="#bootstrap-layout-objects" title="Permalink to this headline">¶</a></h2>
+<p>These ones live under module <tt class="docutils literal"><span class="pre">crispy_forms.bootstrap</span></tt>.</p>
+<ul>
+<li><p class="first"><strong>FormActions</strong>: It wraps fields in a <tt class="docutils literal"><span class="pre">&lt;div</span> <span class="pre">class=&quot;form-actions&quot;&gt;</span></tt>. It is usually used to wrap form&#8217;s buttons:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">FormActions</span><span class="p">(</span>
+    <span class="n">Submit</span><span class="p">(</span><span class="s">&#39;save&#39;</span><span class="p">,</span> <span class="s">&#39;Save changes&#39;</span><span class="p">),</span>
+    <span class="n">Button</span><span class="p">(</span><span class="s">&#39;cancel&#39;</span><span class="p">,</span> <span class="s">&#39;Cancel&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<img alt="_images/form_actions.png" class="align-center" src="_images/form_actions.png" />
+<ul>
+<li><p class="first"><strong>AppendedText</strong>: It renders a bootstrap appended text input. The first parameter is the name of the field to add appended text to, then the appended text which can be HTML like. There is an optional parameter <tt class="docutils literal"><span class="pre">active</span></tt>, by default set to <tt class="docutils literal"><span class="pre">False</span></tt>, that you can set to a boolean to render appended text active:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AppendedText</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">,</span> <span class="s">&#39;appended text to show&#39;</span><span class="p">)</span>
+<span class="n">AppendedText</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">,</span> <span class="s">&#39;$&#39;</span><span class="p">,</span> <span class="n">active</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<img alt="_images/appended_text.png" class="align-center" src="_images/appended_text.png" />
+<ul>
+<li><p class="first"><strong>PrependedText</strong>: It renders a bootstrap prepended text input. The first parameter is the name of the field to add prepended text to, then the prepended text which can be HTML like. There is an optional parameter <tt class="docutils literal"><span class="pre">active</span></tt>, by default set to <tt class="docutils literal"><span class="pre">False</span></tt>, that you can set to a boolean to render prepended text active:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PrependedText</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">,</span> <span class="s">&#39;&lt;b&gt;Prepended text&lt;/b&gt; to show&#39;</span><span class="p">)</span>
+<span class="n">PrependedText</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">,</span> <span class="s">&#39;@&#39;</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">=</span><span class="s">&quot;username&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<img alt="_images/prepended_text.png" class="align-center" src="_images/prepended_text.png" />
+<ul>
+<li><p class="first"><strong>PrependedAppendedText</strong>: It renders a combined prepended and appended text. The first parameter is the name of the field, then the prepended text and finally the appended text:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PrependedAppendedText</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">,</span> <span class="s">&#39;$&#39;</span><span class="p">,</span> <span class="s">&#39;.00&#39;</span><span class="p">),</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<img alt="_images/appended_prepended_text.png" class="align-center" src="_images/appended_prepended_text.png" />
+<ul>
+<li><p class="first"><strong>InlineCheckboxes</strong>: It renders a Django <tt class="docutils literal"><span class="pre">forms.MultipleChoiceField</span></tt> field using inline checkboxes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">InlineCheckboxes</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<img alt="_images/inline_checkboxes.png" class="align-center" src="_images/inline_checkboxes.png" />
+<ul>
+<li><p class="first"><strong>InlineRadios</strong>: It renders a Django <tt class="docutils literal"><span class="pre">forms.ChoiceField</span></tt> field with its widget set to <tt class="docutils literal"><span class="pre">forms.RadioSelect</span></tt> using inline radio buttons:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">InlineRadios</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<img alt="_images/inline_radios.jpg" class="align-center" src="_images/inline_radios.jpg" />
+<ul>
+<li><p class="first"><strong>StrictButton</strong>: It renders a button using <tt class="docutils literal"><span class="pre">&lt;button&gt;</span></tt> html, not <tt class="docutils literal"><span class="pre">input</span></tt>. By default <tt class="docutils literal"><span class="pre">type</span></tt> is set to <tt class="docutils literal"><span class="pre">button</span></tt> and <tt class="docutils literal"><span class="pre">class</span></tt> is set to <tt class="docutils literal"><span class="pre">btn</span></tt>:</p>
+<div class="highlight-python"><pre>StrictButton('Button's content', name="go", value="go", css_class="extra")
+StrictButton('Success', css_class="btn-success")</pre>
+</div>
+</li>
+</ul>
+<img alt="_images/strict_button.png" class="align-center" src="_images/strict_button.png" />
+<ul>
+<li><p class="first"><strong>FieldWithButtons</strong>: You can create an input connected with buttons:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">FieldWithButtons</span><span class="p">(</span><span class="s">&#39;field_name&#39;</span><span class="p">,</span> <span class="n">StrictButton</span><span class="p">(</span><span class="s">&quot;Go!&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<img alt="_images/field_with_buttons.png" class="align-center" src="_images/field_with_buttons.png" />
+<ul>
+<li><p class="first"><strong>Tab &amp; TabHolder</strong>: <tt class="docutils literal"><span class="pre">Tab</span></tt> renders a tab, different tabs need to be wrapped in a <tt class="docutils literal"><span class="pre">TabHolder</span></tt> for automatic javascript functioning, also you will need <tt class="docutils literal"><span class="pre">bootstrap-tab.js</span></tt> included in your static files:</p>
+<div class="highlight-python"><pre>TabHolder(
+    Tab('First Tab',
+        'field_name_1'
+        Div('field_name_2')
+    ),
+    Tab('Second Tab',
+        Field('field_name_3', css_class="extra")
+    )
+)</pre>
+</div>
+</li>
+</ul>
+<img alt="_images/tab_and_tabholder.jpg" class="align-center" src="_images/tab_and_tabholder.jpg" />
+</div>
+<div class="section" id="overriding-layout-objects-templates">
+<h2>Overriding layout objects templates<a class="headerlink" href="#overriding-layout-objects-templates" title="Permalink to this headline">¶</a></h2>
+<p>The mentioned set of <a class="reference internal" href="#layout-objects"><em>Universal layout objects</em></a> has been thoroughly designed to be flexible, standard compatible and support Django form features. Every Layout object is associated to a different template that lives in <tt class="docutils literal"><span class="pre">templates/{{</span> <span class="pre">TEMPLATE_PACK_NAME</span> <span class="pre">}}/layout/</span></tt> directory.</p>
+<p>Some advanced users may want to use their own templates, to adapt the layout objects to their use or necessities. There are three ways to override the template that a layout object uses.</p>
+<ul>
+<li><p class="first"><strong>Globally</strong>: You override the template of the layout object, for all instances of that layout object you use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">crispy_forms.layout</span> <span class="kn">import</span> <span class="n">Div</span>
+<span class="n">Div</span><span class="o">.</span><span class="n">template</span> <span class="o">=</span> <span class="s">&#39;my_div_template.html&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Individually</strong>: You can override the template for a specific layout object in a layout:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Layout</span><span class="p">(</span>
+    <span class="n">Div</span><span class="p">(</span>
+        <span class="s">&#39;field1&#39;</span><span class="p">,</span>
+        <span class="s">&#39;field2&#39;</span><span class="p">,</span>
+        <span class="n">template</span> <span class="o">=</span> <span class="s">&#39;my_div_template.html&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first"><strong>Overriding templates directory</strong>: This means copying the templates directory into your project and overriding the templates editing them.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="overriding-project-templates">
+<h2>Overriding project templates<a class="headerlink" href="#overriding-project-templates" title="Permalink to this headline">¶</a></h2>
+<p>You need to differentiate between layout objects&#8217; templates and django-crispy-forms templates. There are some templates that live in <tt class="docutils literal"><span class="pre">templates/{{</span> <span class="pre">TEMPLATE_PACK_NAME</span> <span class="pre">}}</span></tt> that define the form/formset structure, how a field or errors are rendered, etc. They add very little logic and are pretty much basic wrappers for the rest of django-crispy-forms power.</p>
+<p>You can overwrite the templates that django-crispy-forms comes geared with using your own. If you have a template pack based on a CSS library, submit it so more people can benefit from it.</p>
+</div>
+<div class="section" id="creating-your-own-layout-objects">
+<h2>Creating your own layout objects<a class="headerlink" href="#creating-your-own-layout-objects" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#layout-objects"><em>Universal layout objects</em></a> bundled with django-crispy-forms are a set of the most seen components that build a form. You will probably be able to do anything you need combining them. Anyway, you may want to create your own components, for doing that, you will need a good grasp of django-crispy-forms. Every layout object must have a method called <tt class="docutils literal"><span class="pre">render</span></tt>. Its prototype should be:</p>
+<div class="highlight-python"><pre>def render(self, form, form_style, context):</pre>
+</div>
+<p>The official layout objects live in <tt class="docutils literal"><span class="pre">layout.py</span></tt> and <tt class="docutils literal"><span class="pre">bootstrap.py</span></tt>, you may want to have a look at them to fully understand how to proceed. But in general terms, a layout object is a template rendered with some parameters passed.</p>
+<p>If you come up with a good idea and design a layout object you think others could benefit from, please open an issue or send a pull request, so django-crispy-forms gets better.</p>
+</div>
+<div class="section" id="inheriting-layouts">
+<h2>Inheriting layouts<a class="headerlink" href="#inheriting-layouts" title="Permalink to this headline">¶</a></h2>
+<p>Imagine you have several forms that share a big chunk of the same layout. There is a way you can create a <tt class="docutils literal"><span class="pre">Layout</span></tt>, reuse and extend it in an easy way. You can have a <tt class="docutils literal"><span class="pre">Layout</span></tt> as a component of another <tt class="docutils literal"><span class="pre">Layout</span></tt>, let&#8217;s see an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">common_layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+    <span class="n">MultiField</span><span class="p">(</span><span class="s">&quot;User data&quot;</span><span class="p">,</span>
+        <span class="s">&#39;username&#39;</span><span class="p">,</span>
+        <span class="s">&#39;lastname&#39;</span><span class="p">,</span>
+        <span class="s">&#39;age&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">example_layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+    <span class="n">common_layout</span><span class="p">,</span>
+    <span class="n">Div</span><span class="p">(</span>
+        <span class="s">&#39;favorite_food&#39;</span><span class="p">,</span>
+        <span class="s">&#39;favorite_bread&#39;</span><span class="p">,</span>
+        <span class="n">css_id</span> <span class="o">=</span> <span class="s">&#39;favorite-stuff&#39;</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">example_layout2</span> <span class="o">=</span> <span class="n">Layout</span><span class="p">(</span>
+    <span class="n">common_layout</span><span class="p">,</span>
+    <span class="n">Div</span><span class="p">(</span>
+        <span class="s">&#39;professional_interests&#39;</span><span class="p">,</span>
+        <span class="s">&#39;job_description&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>We have defined a <tt class="docutils literal"><span class="pre">common_layout</span></tt> that is used as a base for two different layouts: <tt class="docutils literal"><span class="pre">example_layout</span></tt> and <tt class="docutils literal"><span class="pre">example_layout2</span></tt>, which means that those two layouts will start the same way and then extend the layout in different ways.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3 style="font-size: 30px;"><a href="index.html">crispy-forms</a></h3>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=maraujop&repo=django-crispy-forms&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+<p>
+  django-crispy-forms is a Django application that lets you easily build, customize and reuse forms using your favorite CSS framework, without writing template code and without having to take care of annoying details. You are currently looking at the documentation of the development release.
+</p>
+
+
+<h3>Support</h3>
+<p>
+    If you love django-crispy-forms, consider making a small donation <a href="http://flattr.com/thing/512037/django-crispy-forms">on Flattr</a>:
+</p>
+<p>
+    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://django-crispy-forms.rtfd.org"></a>
+    <noscript><a href="http://flattr.com/thing/512037/django-crispy-forms" target="_blank">
+    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Click to flattr django-crispy-forms" border="0" /></a></noscript>
+</p>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Layouts</a><ul>
+<li><a class="reference internal" href="#fundamentals">Fundamentals</a></li>
+<li><a class="reference internal" href="#universal-layout-objects">Universal layout objects</a></li>
+<li><a class="reference internal" href="#uni-form-layout-objects">Uni-form layout objects</a></li>
+<li><a class="reference internal" href="#bootstrap-layout-objects">Bootstrap Layout objects</a></li>
+<li><a class="reference internal" href="#overriding-layout-objects-templates">Overriding layout objects templates</a></li>
+<li><a class="reference internal" href="#overriding-project-templates">Overriding project templates</a></li>
+<li><a class="reference internal" href="#creating-your-own-layout-objects">Creating your own layout objects</a></li>
+<li><a class="reference internal" href="#inheriting-layouts">Inheriting layouts</a></li>
+</ul>
+</li>
+</ul>
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="tags.html" title="previous chapter">{% crispy %} tag</a></li>
+      <li>Next: <a href="dynamic_layouts.html" title="next chapter">Updating layouts on the go</a></li>
+  </ul></li>
+</ul>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/layouts.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        (function() {
+            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+            t.parentNode.insertBefore(s, t);
+        })();
+    /* ]]> */</script>
+
+    <div class="footer">
+      &copy; Copyright 2009-2011, Miguel Araujo and Daniel Greenfeld.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>

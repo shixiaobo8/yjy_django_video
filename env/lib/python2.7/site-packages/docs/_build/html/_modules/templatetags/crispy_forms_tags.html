@@ -1,0 +1,324 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>templatetags.crispy_forms_tags &mdash; django-crispy-forms 1.0.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/flasky.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="django-crispy-forms 1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <link media="only screen and (max-device-width: 480px)" href="../../_static/small_flask.css" type= "text/css" rel="stylesheet" />
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">django-crispy-forms 1.0.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for templatetags.crispy_forms_tags</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">django.conf</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">django.forms.formsets</span> <span class="kn">import</span> <span class="n">BaseFormSet</span>
+<span class="kn">from</span> <span class="nn">django.template</span> <span class="kn">import</span> <span class="n">Context</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">get_template</span>
+<span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+
+<span class="kn">from</span> <span class="nn">crispy_forms.helper</span> <span class="kn">import</span> <span class="n">FormHelper</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+<span class="c"># We import the filters, so they are available when doing load crispy_forms_tags</span>
+<span class="kn">from</span> <span class="nn">crispy_forms_filters</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">TEMPLATE_PACK</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">settings</span><span class="p">,</span> <span class="s">&#39;CRISPY_TEMPLATE_PACK&#39;</span><span class="p">,</span> <span class="s">&#39;bootstrap&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ForLoopSimulator"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.ForLoopSimulator">[docs]</a><span class="k">class</span> <span class="nc">ForLoopSimulator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Simulates a forloop tag, precisely:: </span>
+<span class="sd">        </span>
+<span class="sd">        {% for form in formset.forms %}</span>
+
+<span class="sd">    If `{% crispy %}` is rendering a formset with a helper, We inject a `ForLoopSimulator` object</span>
+<span class="sd">    in the context as `forloop` so that formset forms can do things like::</span>
+<span class="sd">        </span>
+<span class="sd">        Fieldset(&quot;Item {{ forloop.counter }}&quot;, [...])</span>
+<span class="sd">        HTML(&quot;{% if forloop.first %}First form text{% endif %}&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">formset</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">len_values</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">formset</span><span class="o">.</span><span class="n">forms</span><span class="p">)</span>
+    
+        <span class="c"># Shortcuts for current loop iteration number.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter0</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="c"># Reverse counter iteration numbers.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">revcounter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">len_values</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">revcounter0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">len_values</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="c"># Boolean values designating first and last times through loop.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">len_values</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="ForLoopSimulator.iterate"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.ForLoopSimulator.iterate">[docs]</a>    <span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates values as if we had iterated over the for</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter0</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">revcounter</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">revcounter0</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">revcounter0</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">len_values</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="BasicNode"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.BasicNode">[docs]</a><span class="k">class</span> <span class="nc">BasicNode</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">Node</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">    Basic Node object that we can rely on for Node objects in normal</span>
+<span class="sd">    template tags. I created this because most of the tags we&#39;ll be using</span>
+<span class="sd">    will need both the form object and the helper string. This handles</span>
+<span class="sd">    both the form object and parses out the helper string into attributes</span>
+<span class="sd">    that templates can easily handle.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">form</span><span class="p">,</span> <span class="n">helper</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">form</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">helper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Variable</span><span class="p">(</span><span class="n">helper</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="BasicNode.get_render"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.BasicNode.get_render">[docs]</a>    <span class="k">def</span> <span class="nf">get_render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Returns a `Context` object with all the necesarry stuff for rendering the form</span>
+
+<span class="sd">        :param context: `django.template.Context` variable holding the context for the node</span>
+
+<span class="sd">        `self.form` and `self.helper` are resolved into real Python objects resolving them</span>
+<span class="sd">        from the `context`. The `actual_form` can be a form or a formset. If it&#39;s a formset </span>
+<span class="sd">        `is_formset` is set to True. If the helper has a layout we use it, for rendering the</span>
+<span class="sd">        form or the formset&#39;s forms.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">actual_form</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="n">attrs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">helper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">helper</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># If the user names the helper within the form `helper` (standard), we use it</span>
+            <span class="c"># This allows us to have simplified tag syntax: {% crispy form %}</span>
+            <span class="n">helper</span> <span class="o">=</span> <span class="bp">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">actual_form</span><span class="p">,</span> <span class="s">&#39;helper&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="n">actual_form</span><span class="o">.</span><span class="n">helper</span>
+
+        <span class="k">if</span> <span class="n">helper</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">helper</span><span class="p">,</span> <span class="n">FormHelper</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s">&#39;helper object provided to {</span><span class="si">% c</span><span class="s">rispy %} tag must be a crispy.helper.FormHelper object.&#39;</span><span class="p">)</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="n">helper</span><span class="o">.</span><span class="n">get_attributes</span><span class="p">()</span>
+
+        <span class="c"># We get the response dictionary </span>
+        <span class="n">is_formset</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">actual_form</span><span class="p">,</span> <span class="n">BaseFormSet</span><span class="p">)</span>
+        <span class="n">response_dict</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_response_dict</span><span class="p">(</span><span class="n">attrs</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">is_formset</span><span class="p">)</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">response_dict</span><span class="p">)</span>
+
+        <span class="c"># If we have a helper&#39;s layout we use it, for the form or the formset&#39;s forms</span>
+        <span class="k">if</span> <span class="n">helper</span> <span class="ow">and</span> <span class="n">helper</span><span class="o">.</span><span class="n">layout</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">is_formset</span><span class="p">:</span>
+                <span class="n">actual_form</span><span class="o">.</span><span class="n">form_html</span> <span class="o">=</span> <span class="n">helper</span><span class="o">.</span><span class="n">render_layout</span><span class="p">(</span><span class="n">actual_form</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">forloop</span> <span class="o">=</span> <span class="n">ForLoopSimulator</span><span class="p">(</span><span class="n">actual_form</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">form</span> <span class="ow">in</span> <span class="n">actual_form</span><span class="o">.</span><span class="n">forms</span><span class="p">:</span>
+                    <span class="n">context</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;forloop&#39;</span><span class="p">:</span> <span class="n">forloop</span><span class="p">})</span>
+                    <span class="n">form</span><span class="o">.</span><span class="n">form_html</span> <span class="o">=</span> <span class="n">helper</span><span class="o">.</span><span class="n">render_layout</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">context</span><span class="p">)</span>
+                    <span class="n">forloop</span><span class="o">.</span><span class="n">iterate</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">is_formset</span><span class="p">:</span>
+            <span class="n">response_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;formset&#39;</span><span class="p">:</span> <span class="n">actual_form</span><span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response_dict</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&#39;form&#39;</span><span class="p">:</span> <span class="n">actual_form</span><span class="p">})</span>
+
+        <span class="k">return</span> <span class="n">Context</span><span class="p">(</span><span class="n">response_dict</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BasicNode.get_response_dict"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.BasicNode.get_response_dict">[docs]</a>    <span class="k">def</span> <span class="nf">get_response_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">is_formset</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns a dictionary with all the parameters necessary to render the form/formset in a template.</span>
+<span class="sd">        </span>
+<span class="sd">        :param attrs: Dictionary with the helper&#39;s attributes used for rendering the form/formset</span>
+<span class="sd">        :param context: `django.template.Context` for the node</span>
+<span class="sd">        :param is_formset: Boolean value. If set to True, indicates we are working with a formset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">form_type</span> <span class="o">=</span> <span class="s">&quot;form&quot;</span>
+        <span class="k">if</span> <span class="n">is_formset</span><span class="p">:</span>
+            <span class="n">form_type</span> <span class="o">=</span> <span class="s">&quot;formset&quot;</span>
+
+        <span class="c"># We take form/formset parameters from attrs if they are set, otherwise we use defaults</span>
+        <span class="n">response_dict</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s">&#39;</span><span class="si">%s</span><span class="s">_action&#39;</span> <span class="o">%</span> <span class="n">form_type</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;form_action&quot;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+            <span class="s">&#39;</span><span class="si">%s</span><span class="s">_method&#39;</span> <span class="o">%</span> <span class="n">form_type</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;form_method&quot;</span><span class="p">,</span> <span class="s">&#39;post&#39;</span><span class="p">),</span>
+            <span class="s">&#39;</span><span class="si">%s</span><span class="s">_tag&#39;</span> <span class="o">%</span> <span class="n">form_type</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;form_tag&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
+            <span class="s">&#39;</span><span class="si">%s</span><span class="s">_class&#39;</span> <span class="o">%</span> <span class="n">form_type</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;class&quot;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">),</span>
+            <span class="s">&#39;</span><span class="si">%s</span><span class="s">_id&#39;</span> <span class="o">%</span> <span class="n">form_type</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;id&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">),</span>
+            <span class="s">&#39;</span><span class="si">%s</span><span class="s">_style&#39;</span> <span class="o">%</span> <span class="n">form_type</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;form_style&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+            <span class="s">&#39;form_error_title&#39;</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;form_error_title&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+            <span class="s">&#39;formset_error_title&#39;</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;formset_error_title&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span>
+            <span class="s">&#39;form_show_errors&#39;</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;form_show_errors&quot;</span><span class="p">,</span> <span class="bp">True</span><span class="p">),</span>
+            <span class="s">&#39;help_text_inline&#39;</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&quot;help_text_inline&quot;</span><span class="p">,</span> <span class="bp">False</span><span class="p">),</span>
+            <span class="s">&#39;inputs&#39;</span><span class="p">:</span> <span class="n">attrs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;inputs&#39;</span><span class="p">,</span> <span class="p">[]),</span>
+            <span class="s">&#39;is_formset&#39;</span><span class="p">:</span> <span class="n">is_formset</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="c"># Handles custom attributes added to helpers</span>
+        <span class="k">for</span> <span class="n">attribute_name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">attribute_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response_dict</span><span class="p">:</span>
+                <span class="n">response_dict</span><span class="p">[</span><span class="n">attribute_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">has_key</span><span class="p">(</span><span class="s">&#39;csrf_token&#39;</span><span class="p">):</span>
+            <span class="n">response_dict</span><span class="p">[</span><span class="s">&#39;csrf_token&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">context</span><span class="p">[</span><span class="s">&#39;csrf_token&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">response_dict</span>
+
+</div></div>
+<span class="n">whole_uni_formset_template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">/whole_uni_formset.html&#39;</span> <span class="o">%</span> <span class="n">TEMPLATE_PACK</span><span class="p">)</span>
+<span class="n">whole_uni_form_template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">/whole_uni_form.html&#39;</span> <span class="o">%</span> <span class="n">TEMPLATE_PACK</span><span class="p">)</span>
+
+<div class="viewcode-block" id="UniFormNode"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.UniFormNode">[docs]</a><span class="k">class</span> <span class="nc">UniFormNode</span><span class="p">(</span><span class="n">BasicNode</span><span class="p">):</span>
+<div class="viewcode-block" id="UniFormNode.render"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.UniFormNode.render">[docs]</a>    <span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_render</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="s">&#39;is_formset&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+                <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">/whole_uni_formset.html&#39;</span> <span class="o">%</span> <span class="n">TEMPLATE_PACK</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">template</span> <span class="o">=</span> <span class="n">whole_uni_formset_template</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">:</span>
+                <span class="n">template</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s">/whole_uni_form.html&#39;</span> <span class="o">%</span> <span class="n">TEMPLATE_PACK</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">template</span> <span class="o">=</span> <span class="n">whole_uni_form_template</span>
+
+        <span class="k">return</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+
+<span class="c"># {% crispy %} tag</span></div></div>
+<span class="nd">@register.tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;uni_form&quot;</span><span class="p">)</span>
+<span class="nd">@register.tag</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&quot;crispy&quot;</span><span class="p">)</span>
+<div class="viewcode-block" id="do_uni_form"><a class="viewcode-back" href="../../api_templatetags.html#templatetags.crispy_forms_tags.do_uni_form">[docs]</a><span class="k">def</span> <span class="nf">do_uni_form</span><span class="p">(</span><span class="n">parser</span><span class="p">,</span> <span class="n">token</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    You need to pass in at least the form/formset object, and can also pass in the</span>
+<span class="sd">    optional `crispy_forms.helpers.FormHelper` object. </span>
+
+<span class="sd">    helper (optional): A `uni_form.helper.FormHelper` object.</span>
+
+<span class="sd">    Usage::</span>
+<span class="sd">    </span>
+<span class="sd">        {% include crispy_tags %}</span>
+<span class="sd">        {% crispy form form.helper %}</span>
+
+<span class="sd">    If the `FormHelper` attribute is named `helper` you can simply do::</span>
+
+<span class="sd">        {% crispy form %}</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">token</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split_contents</span><span class="p">()</span>
+    <span class="n">form</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">helper</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="n">helper</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">return</span> <span class="n">UniFormNode</span><span class="p">(</span><span class="n">form</span><span class="p">,</span> <span class="n">helper</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3 style="font-size: 30px;"><a href="../../index.html">crispy-forms</a></h3>
+<p>
+  <iframe src="http://ghbtns.com/github-btn.html?user=maraujop&repo=django-crispy-forms&type=watch&count=true&size=large"
+    allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+<p>
+  django-crispy-forms is a Django application that lets you easily build, customize and reuse forms using your favorite CSS framework, without writing template code and without having to take care of annoying details. You are currently looking at the documentation of the development release.
+</p>
+
+
+<h3>Support</h3>
+<p>
+    If you love django-crispy-forms, consider making a small donation <a href="http://flattr.com/thing/512037/django-crispy-forms">on Flattr</a>:
+</p>
+<p>
+    <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://django-crispy-forms.rtfd.org"></a>
+    <noscript><a href="http://flattr.com/thing/512037/django-crispy-forms" target="_blank">
+    <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Click to flattr django-crispy-forms" border="0" /></a></noscript>
+</p><h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <script type="text/javascript">
+    /* <![CDATA[ */
+        (function() {
+            var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+            t.parentNode.insertBefore(s, t);
+        })();
+    /* ]]> */</script>
+
+    <div class="footer">
+      &copy; Copyright 2009-2011, Miguel Araujo and Daniel Greenfeld.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a>.
+    </div>
+  </body>
+</html>
