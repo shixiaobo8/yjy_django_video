@@ -11,10 +11,12 @@ from django.views.generic.edit import CreateView
 from captcha.models import CaptchaStore
 from captcha.helpers import captcha_image_url
 from django.http import HttpResponse
-import json
+import json,time
 import re
 
 YEARS_CHOICES = ('2016','2017')
+t_mon = int(time.strftime('%m',time.localtime(time.time()))) + 1
+HISTORYS_CHOICES = tuple([ (i,'近' + str(i) + '月的访问历史趋势') for i in range(1,t_mon)])
 MONTHS_CHOICES = ('01','02','03','04','05','06','07','08','09','10','11','12')
 DAYS_CHOICES = ('01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31')
 
@@ -91,6 +93,7 @@ class registerForm(forms.Form):
 class intersForm(forms.Form):
         date = forms.DateField(label='请选择日期',widget=SelectDateWidget(years=YEARS_CHOICES))
         top = forms.CharField(label='请填写查询的top条数',max_length=160,widget=forms.TextInput,)
+	history = forms.ChoiceField(choices=HISTORYS_CHOICES,label='请选择历史趋势时间',widget=forms.Select,)
 
 class NewForm(forms.Form):
         username = forms.CharField(label='用户名',max_length=16,error_messages={'required':"用户名不能为空"},widget=forms.TextInput(attrs={'class':'form-control','placeholder':'用户名'},),)

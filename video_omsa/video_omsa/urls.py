@@ -35,6 +35,7 @@ urlpatterns = [
     url('^ajax_val', vc_views.ajax_val, name='ajax_val'),
     url(r'^refresh/$', vc_views.refresh_captcha, name='refresh_captcha'),
     url(r'^inters_info$', video_views.inters_info,name='CurInfo'),
+    url(r'^Hisinters$', video_views.History_inters,name='Hisinters'),
 
 ]
 handler404 = video_views.page_not_found

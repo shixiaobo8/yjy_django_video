@@ -166,6 +166,51 @@ def inters_info(request):
 	res += tmp
 	return HttpResponse(res)
 
+def History_inters(request):
+	import time,calendar
+	if request.method == 'GET':
+		f_data = request.GET
+		his_month = f_data['data[history]']
+		today = time.strftime('%Y_%m_%d',time.localtime(time.time()))
+		months = int(today.split('_')[1][1])
+		year = int(today.split('_')[0])
+		res = []
+		for mon in range(1,months+1):
+			m_days = ''
+			if mon == months:
+				m_days = int(today.split('_')[2])
+			else:
+				m_days = calendar.monthrange(year,mon)[1]
+			for d in range(1,m_days):
+				if d < 10:
+					if mon < 10:
+						date = str(year) + '_0' + str(mon) + '_0' + str(d)
+					else:
+						date = str(year) + '_0' + str(mon) + '_' + str(d)
+				else:
+					if mon < 10:
+						date = str(year) + '_0' + str(mon) + '_' + str(d)
+					else:
+						date = str(year) + '_' + str(mon) + '_' + str(d)
+				requests = getHisData(date)
+				res.append((date,requests))
+		return HttpResponse(res)
+
+def getHisData(date_table):
+	import  MySQLdb as mdb
+	db_conn = mdb.connect('59.110.11.16','web_data','web_data@2017','all_web_data_history')
+        cursor = db_conn.cursor()
+	data = ''
+        try:
+                sql = "select `requests` from "+date_table+"_history_data where `key`="+"'123.57.185.38' limit 1;"
+		cursor.execute(sql)
+                data = cursor.fetchall()
+        except mdb.Error,e:
+                print e
+        db_conn.close()
+	return data[0][0]
+
+
 def nginxData():
 	ng_url = 'http://api.letiku.net:888/yjy_req_status'
 	r = requests.get(ng_url)
