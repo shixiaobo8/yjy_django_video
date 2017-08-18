@@ -241,9 +241,7 @@ def getDates(his_month):
         if mon == months:
             m_days = int(today.split('_')[2])
         else:
-            with open('C:/Users\YJY\Desktop/aaa.log','a+') as f:
-                f.write(str(mon))
-                m_days = calendar.monthrange(year, mon)[1]
+            m_days = calendar.monthrange(year, mon)[1]
         for d in range(1, m_days):
             if d < 10:
                 if mon < 10:
