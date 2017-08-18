@@ -215,19 +215,35 @@ def History_inters(request):
     data['months'] = his_month
     return HttpResponse(json.dumps(data))
 
+def getcalendar(c_mon,month):
+    res = dict()
+    res['year'] = 0
+    res['month'] = int(month)
+    if int(month)/12 > 0:
+        res['year'] -= int(month) / 12
+        res['month'] = int(c_mon) - int(month) % 12
+    elif int(month) / 12 == 0:
+        res['year'] = int(month) / 12
+        res['month'] = int(c_mon) - int(month)
+    elif int(c_mon) - int(month) == 0:
+        res['year'] -= 1
+        res['month'] = 12
+    return  res
 
 def getDates(his_month):
     dates = []
     today = time.strftime('%Y_%m_%d', time.localtime(time.time()))
     months = int(today.split('_')[1][1])
-    start_month = months - int(his_month)
-    year = int(today.split('_')[0])
+    start_month = getcalendar(months,his_month)['month']
+    year = int(today.split('_')[0]) + getcalendar(months,his_month)['year']
     for mon in range(start_month, months + 1):
         m_days = ''
         if mon == months:
             m_days = int(today.split('_')[2])
         else:
-            m_days = calendar.monthrange(year, mon)[1]
+            with open('C:/Users\YJY\Desktop/aaa.log','a+') as f:
+                f.write(str(mon))
+                m_days = calendar.monthrange(year, mon)[1]
         for d in range(1, m_days):
             if d < 10:
                 if mon < 10:
