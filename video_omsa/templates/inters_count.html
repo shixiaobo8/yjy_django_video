@@ -33,7 +33,7 @@
             var d = year + "_" + month + "_" + day;
             var top = $("#id_top").val();
             var history = $("#id_history").val();
-            var res = {'d': d, 'top': top,'history':history};
+            var res = {'d': d, 'top': top, 'history': history};
             return res;
         }
 
@@ -84,21 +84,58 @@
             $("#err").empty();
             $("#imge").empty();
             $.get('{% url 'Hisinters' %}', {'action': 'imge', 'data': data}, function (ret1) {
-                //d1 = JSON.parse(ret1);
-                //d_date = d1['date']
-                $('#imge').html(ret1)});} //ajax页面调试数据使用
-	
+                d1 = JSON.parse(ret1);
+                dates = d1['dates'];
+                months = d1['months'];
+                domains_datas = d1['domains_datas'];
+                $('#imge').highcharts({
+                    title: {
+                        text: '近' + months + '个月各app历史访问量趋势图',
+                        x: -20
+                    },
+                    subtitle: {
+                        text: '注:1.20170808日服务器发生异常导致该日数据不完整  2.(点击右侧栏可隐藏改app数据显示) 3，如果某app曲线图一直未0表示该app在这段期间还未上线 ',
+                        x: -20
+                    },
+                    xAxis: {
+                        categories: dates
+                    },
+                    yAxis: {
+                        title: {
+                            text: '当日访问次数'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+                    },
+                    tooltip: {
+                        valueSuffix: '次'
+                    },
+                    legend: {
+                        layout: 'vertical',
+                        align: 'right',
+                        verticalAlign: 'middle',
+                        borderWidth: 0
+                    },
+                    series: domains_datas
+                });
+
+            });
+        }
+
     </script>
     <script>
-	function getCurInfo() {
-	var data = getformvalue();
-	// 清空原有的error信息
-	$("#err").empty();
-	$.get('{% url 'CurInfo' %}', {'data': data}, function (ret1) {
-		$('#imge').html(ret1); //ajax页面调试数据使用
-		//createTable("#imge",ret1);		
-	});
-	}
+        function getCurInfo() {
+            var data = getformvalue();
+            // 清空原有的error信息
+            $("#err").empty();
+            $.get('{% url 'CurInfo' %}', {'data': data}, function (ret1) {
+                $('#imge').html(ret1)
+            })
+        }
+        ;
     </script>
     <script>
         function exportXls() {
@@ -118,15 +155,6 @@
             form.remove();
         }
     </script>
-{#    <script>#}
-{#    // 分页数据显示#}
-{#    var getPageData = function getPageData(obj){#}
-{#        var page = $(obj).attr('value');#}
-{##}
-{#        console.log(page);#}
-{#    }#}
-{#    </script>#}
-
     <div style='align:center'>
         <h2>每日接口数据信息</h2>
         <!-- 选择区域 -->
@@ -137,10 +165,16 @@
                 {{ form.history.label }} &nbsp;&nbsp; {{ form.history }} <br/>
                 <button type="submit" class="btn btn-primary" style="padding-right:10px;margin-right:10px;">按日期查看历史接口信息
                 </button>
-                <a type='button' class="btn btn-primary" id='bt2' onclick='exportXls()' align='center'>导出历史接口信息xcel表格</a>
-                <button type='button' class="btn btn-primary" id='bt3' onclick="catImage()" align='center'>图表显示历史接口信息</button>
-                <button type='button' class="btn btn-primary" id='bt5' onclick="catHisImage()" align='center'>图表显示每日近三个月总访问量趋势图</button>
-                <button type='button' class="btn btn-primary" id='bt4' onclick="getCurInfo()" align='center'>查看接口实时统计信息</button>
+                <a type='button' class="btn btn-primary" id='bt2' onclick='exportXls()'
+                   align='center'>导出历史接口信息excel表格</a>
+                <button type='button' class="btn btn-primary" id='bt3' onclick="catImage()" align='center'>图表显示历史接口信息
+                </button>
+                <button type='button' class="btn btn-primary" id='bt5' onclick="catHisImage()" align='center'>
+                    图表显示每日近几个月总访问量趋势图
+                </button>
+                <button type='button' class="btn btn-primary" id='bt4' onclick="getCurInfo()" align='center'>
+                    查看接口实时统计信息
+                </button>
             </form>
         </div>
         <!-- 图形区域 -->
@@ -148,7 +182,7 @@
             <h4 style='color:red;align:center' id='err'>{{ error_mess }}</h4>
             <!-- 数据表格分页显示区域-->
             {% if data %}
-                <table class="table table-hover" >
+                <table class="table table-hover">
                     <thead>
                     <tr>
                         <th>域名</th>
@@ -164,13 +198,15 @@
                     {% endfor %}
                     </tbody>
                 </table>
-            <!-- 如果当前是第一页，就不显示【上一页】链接 -->
+                <!-- 如果当前是第一页，就不显示【上一页】链接 -->
                 <span class="step-links">
                 {% if data.has_previous %}
-                    {% ifnotequal 1 data.number|add:-1  %}
-                                <a type="button" class="btn btn-info" id='prePage'  href="/inters_data?action=pagination&page=1&data[d]={{ d_date }}&data[top]={{ top }}">首页</a>
+                    {% ifnotequal 1 data.number|add:-1 %}
+                        <a type="button" class="btn btn-info" id='prePage'
+                           href="/inters_data?action=pagination&page=1&data[d]={{ d_date }}&data[top]={{ top }}">首页</a>
                     {% endifnotequal %}
-                    <a type="button" class="btn btn-info" id='prePage'   href="/inters_data?action=pagination&page={{data.number|add:-1}}&data[d]={{ d_date }}&data[top]={{ top }}">上一页</a>
+                    <a type="button" class="btn btn-info" id='prePage' href="/inters_data?action=pagination&page=
+                            {{ data.number|add:-1}}&data[d]={{ d_date }}&data[top]={{ top }}">上一页</a>
                 {% endif %}
                 </span>
 
@@ -179,10 +215,12 @@
                 </span>
 
                 {% if data.has_next %}
-                             <a type="button" class="btn btn-info" id='prePage'  href="/inters_data?action=pagination&page={{data.number|add:1}}&data[d]={{ d_date }}&data[top]={{ top }}">下一页</a>
-                             {% ifnotequal data.paginator.num_pages data.number|add:1  %}
-                                <a type="button" class="btn btn-info" id='prePage'  href="/inters_data?action=pagination&page={{data.paginator.num_pages}}&data[d]={{ d_date }}&data[top]={{ top }}">尾页</a>
-                             {% endifnotequal %}
+                    <a type="button" class="btn btn-info" id='prePage' href="/inters_data?action=pagination&page=
+                            {{ data.number|add:1}}&data[d]={{ d_date }}&data[top]={{ top }}">下一页</a>
+                    {% ifnotequal data.paginator.num_pages data.number|add:1 %}
+                        <a type="button" class="btn btn-info" id='prePage'
+                           href="/inters_data?action=pagination&page={{ data.paginator.num_pages }}&data[d]={{ d_date }}&data[top]={{ top }}">尾页</a>
+                    {% endifnotequal %}
 
                 {% endif %}
             {% endif %}
