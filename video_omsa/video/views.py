@@ -167,19 +167,22 @@ def pro_create(request):
 def inters_info(request):
     import types
     data = nginxData()
+    total = data['total']
+    detail = data['detail']
     # return HttpResponse(json.dumps(data))
     res = ''
-    for k, v in data.items():
-        tmp = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>" + str(
-            k) + "</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
+    tmp1 = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>" + str(total[0]) + "</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
+    res += tmp1 + "<th>" + str(total[0]) + "</th><th>" + str(total[1]) + "</th></tr></thead><tbody></tbody></table><hr/>"
+    for v in detail:
+        tmp2 = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>" + str(v[0]) + "</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
         if type(v) is types.ListType:
-            tmp += "<th>域名/接口url</th><th>" + "访问量" + "</th></tr></thead><tbody>"
-            for v1 in v:
-                tmp += "<tr><th scope='row'><code>" + str(v1[0]) + "</code></th><td>" + str(v1[1]) + "</td></tr>"
-            tmp += "</tbody></table><hr/>"
-        elif type(v) is types.IntType:
-            res += tmp + "<th>" + str(k) + "</th><th>" + str(v) + "</th></tr></thead><tbody></tbody></table><hr/>"
-    res += tmp
+            tmp2 += "<th>域名/接口url</th><th>" + "访问量" + "</th></tr></thead><tbody>"
+            for v1 in v[1]:
+                tmp2 += "<tr><th scope='row'><code>" + str(v1[0]) + "</code></th><td>" + str(v1[1]) + "</td></tr>"
+            tmp2 += "</tbody></table><hr/>"
+        #elif type(v) is types.IntType:
+        #    res += tmp + "<th>" + str(total[0]) + "</th><th>" + str(total[1]) + "</th></tr></thead><tbody></tbody></table><hr/>"
+    	res += tmp2
     return HttpResponse(res)
 
 
@@ -215,45 +218,63 @@ def History_inters(request):
     data['months'] = his_month
     return HttpResponse(json.dumps(data))
 
-def getcalendar(c_mon,month):
+def getcalendar(c_year,c_mon,month):
     res = dict()
-    res['year'] = 0
+    res['year'] = c_year
     res['month'] = int(month)
-    if int(month)/12 > 0:
-        res['year'] -= int(month) / 12
-        res['month'] = int(c_mon) - int(month) % 12
-    elif int(month) / 12 == 0:
-        res['year'] = int(month) / 12
-        res['month'] = int(c_mon) - int(month)
-    elif int(c_mon) - int(month) == 0:
-        res['year'] -= 1
-        res['month'] = 12
+    if int(c_mon) == int(month):
+	res['month'] = 12
+    	res['year'] = c_year - 1
+    # 查询月份数小于当前月份数
+    if int(c_mon) > int(month):
+	res['month'] = int(c_mon) - int(month)	
+    # 查询月份数大于当前月份数
+    if int(c_mon) < int(month):
+	if int(month)/12 > 0:
+        	res['year'] -= int(month) / 12
+        	res['month'] = int(c_mon) - int(month) % 12
+	if int(month)/12 == 0:
+        	res['month'] = 12 - (int(month) - int(c_mon))
+		res['year'] -= 1
+    #with open('/tmp/dates.log','ab+') as f:
+    #	f.write(json.dumps(res))
     return  res
 
 def getDates(his_month):
     dates = []
     today = time.strftime('%Y_%m_%d', time.localtime(time.time()))
-    months = int(today.split('_')[1][1])
-    start_month = getcalendar(months,his_month)['month']
-    year = int(today.split('_')[0]) + getcalendar(months,his_month)['year']
-    for mon in range(start_month, months + 1):
-        m_days = ''
-        if mon == months:
-            m_days = int(today.split('_')[2])
-        else:
-            m_days = calendar.monthrange(year, mon)[1]
-        for d in range(1, m_days):
-            if d < 10:
-                if mon < 10:
-                    date = str(year) + '_0' + str(mon) + '_0' + str(d)
-                else:
-                    date = str(year) + '_0' + str(mon) + '_' + str(d)
-            else:
-                if mon < 10:
-                    date = str(year) + '_0' + str(mon) + '_' + str(d)
-                else:
-                    date = str(year) + '_' + str(mon) + '_' + str(d)
-            dates.append(date)
+    c_year = int(today.split('_')[0])
+    c_month = int(today.split('_')[1][1])
+    start_month = getcalendar(c_year,c_month,his_month)['month']
+    start_year = getcalendar(c_year,c_month,his_month)['year']
+    for year in range(start_year,c_year + 1):
+	if year == c_year and start_month > c_month:
+		start_month = 1
+		end_month = c_month
+	if year == c_year and start_month < c_month:
+    		end_month = c_month + 1
+	if year != c_year:
+		end_month = 13
+	for mon in range(start_month, end_month):
+		m_days = ''
+        	if mon == c_month:
+            		m_days = int(today.split('_')[2])
+        	else:
+           		m_days = calendar.monthrange(year, mon)[1]
+        	for d in range(1, m_days):
+            		if d < 10:
+                		if mon < 10:
+                    			date = str(year) + '_0' + str(mon) + '_0' + str(d)
+                		else:
+                    			date = str(year) + '_' + str(mon) + '_0' + str(d)
+            		else:
+                		if mon < 10:
+                    			date = str(year) + '_0' + str(mon) + '_' + str(d)
+                		else:
+                    			date = str(year) + '_' + str(mon) + '_' + str(d)
+    			dates.append(date)
+    #with open('/tmp/dates.log','ab+') as f:
+    #	f.write(json.dumps(dates))
     return dates
 
 def getHisData(date_table, domain):
@@ -268,6 +289,7 @@ def getHisData(date_table, domain):
         if not data:
             data = ((('0',),))
     except mdb.Error, e:
+        data = ((('0',),))
         print e
         db_conn.close()
     return data[0][0]
@@ -287,13 +309,14 @@ def nginxData():
             d1 = d.split('\t')
             if len(d1) == 8:
                 total_active += int(d1[6])
-                max_actives[d1[1]] = d1[2]
-                top_actives[d1[1]] = d1[6]
+                max_actives[d1[1]] = int(d1[2])
+                top_actives[d1[1]] = int(d1[6])
     maxs = sorted(max_actives.iteritems(), key=lambda d: d[1], reverse=True)
     active_tops = sorted(top_actives.iteritems(), key=lambda d: d[1], reverse=True)
-    res['当前实时总并发值'] = total_active
-    res['今日最大并发值前十接口'] = maxs[:10]
-    res['当前实时并发值前十接口'] = active_tops[:10]
+    res['detail'] = []
+    res['total'] = ['当前实时总并发值',total_active]
+    res['detail'].append(['当前实时并发值前十接口',active_tops[:10]])
+    res['detail'].append(['今日某一时刻(秒级)最大并发值前十接口',maxs[:10]])
     return res
 
 

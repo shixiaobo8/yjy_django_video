@@ -15,8 +15,10 @@ import json,time
 import re
 
 YEARS_CHOICES = ('2016','2017')
-t_mon = int(time.strftime('%m',time.localtime(time.time()))) + 1
-HISTORYS_CHOICES = tuple([ (i,'近' + str(i) + '月的访问历史趋势') for i in range(1,t_mon)])
+t_mon = int(time.strftime('%m',time.localtime(time.time())))
+t_year = int(time.strftime('%Y',time.localtime(time.time())))
+# 历史日期从2016年12月份11日开始有记录,即从2017的年份的倍数x12+当前月份的值+1
+HISTORYS_CHOICES = tuple([ (i,'近' + str(i) + '个月的访问历史趋势') for i in range(1,(t_year-2017)*12 + 1 + t_mon + 1)])
 MONTHS_CHOICES = ('01','02','03','04','05','06','07','08','09','10','11','12')
 DAYS_CHOICES = ('01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30','31')
 
