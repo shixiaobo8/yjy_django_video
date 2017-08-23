@@ -1,0 +1,69 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block title %}hi {{ user.username }} {% endblock %}
+{% block privi_check %}
+    {#    {% block content %}#}
+    {% if user.is_authenticated %}
+        <br/>
+        <hr/>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <caption>
+                    {{ c_user }}
+                    <img src='{% static "image/bobo.jpg" %}' alt="{{ user.username }}" class="img-circle" height="100"
+                         width="100">
+                    <p class="lead" style="color: green;">{{ user.username }},你好,在这里可以查看和修改您的个人信息</p>
+                </caption>
+                <colgroup>
+                    <col class="col-xs-3">
+                    <col class="col-xs-3">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>用户信息</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">
+                        <code>{{ user.username }}</code>
+                    </th>
+                    <td>
+                        <a class="btn btn-default" role="button"> 修改用户名</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <code>{{ user.app_type }}</code>
+                    </th>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <code>加密信息:{{ user.password }}</code>
+                    </th>
+                    <td>
+                        <a class="btn btn-default" role="button"> 修改密码</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">
+                        <code>{{ user.is_active }}</code>
+                    </th>
+                    <td>
+                        <a class="btn btn-default" role="button">上传或修改头像</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>
+        <center>对不起您无权限查看该页面,请在页面<b style='color:blue;'>个人设置</b>点击<b style='color:blue;'><a href='/'>登录</a></b></center>
+        </p>
+    {% endif %}
+    {#    {% endblock %}#}
+{% endblock %}
