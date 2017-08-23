@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^refresh/$', vc_views.refresh_captcha, name='refresh_captcha'),
     url(r'^inters_info$', video_views.inters_info,name='CurInfo'),
     url(r'^Hisinters$', video_views.History_inters,name='Hisinters'),
+    url(r'^usercenter.html$', video_views.usercenter,name='usercenter'),
 
 ]
 handler404 = video_views.page_not_found

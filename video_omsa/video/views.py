@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from video.forms import videoForm, LoginForm, registerForm, ImEditForm, NewForm, intersForm
 from django.shortcuts import render_to_response
@@ -105,6 +106,7 @@ def register(request):
                 user.apptype = data['app_type']
                 user.save()
                 User.objects.filter(username=data['username']).update(apptype=data['app_type'])
+                request.session['c_user'] = User.objects.filter(username=data['username'])
                 return HttpResponseRedirect('/im_list.html')
         else:
             message = "<b style='color:red;'>invalid</b> please keep slient and keep friendship and keep smile ^_^ and keep doing yourself and belive yourself ! "
@@ -134,6 +136,7 @@ def imList(request):
 
 def logout(request):
     auth.logout(request)
+    del request.session['c_user']
     return HttpResponseRedirect('/')
 
 
@@ -545,3 +548,10 @@ def read_from_cache(keys):
 # write cache
 def write_to_cache(keys, value):
     cache.set(keys, json.dumps(value), timeout=None)
+
+# 用户中心
+@login_required(login_url='/')
+def usercenter(request):
+    navs = list(Nav.objects.all())
+    c_user = request.session.get(key='c_user')
+    return render(request, 'usercenter.html',{'navs':navs,'c_user':c_user})
