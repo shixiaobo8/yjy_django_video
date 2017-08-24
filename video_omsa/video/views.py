@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding:utf8 -*-
 from django.http import HttpResponseRedirect
+from django.template.context import RequestContext
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth import authenticate
@@ -14,8 +15,8 @@ from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
+from django.views.decorators.csrf import csrf_exempt
 import json, os, sys, xlwt, requests, time, calendar
-
 
 # navs = list(Nav.objects.all())
 
@@ -371,8 +372,10 @@ def upload(request):
     form = NewForm(request.GET)
     return render(request, 'upload.html')
 
-
 def up_recive(request):
+    return HttpResponse(request.method)
+
+def up_recive1(request):
     if request.method == 'POST':
         files = request.FILES.get("up_file", None)  # 获取上传的文件,如果没有文件,则默认为None
         if not files:
@@ -554,4 +557,4 @@ def write_to_cache(keys, value):
 def usercenter(request):
     navs = list(Nav.objects.all())
     c_user = request.session.get(key='c_user')
-    return render(request, 'usercenter.html',{'navs':navs,'c_user':c_user})
+    return render(request, 'usercenter.html',{'navs':navs,'c_user':c_user},context_instance=RequestContext(request))

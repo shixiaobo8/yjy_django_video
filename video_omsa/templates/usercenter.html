@@ -3,7 +3,34 @@
 {% load static %}
 {% block title %}hi {{ user.username }} {% endblock %}
 {% block privi_check %}
-    {#    {% block content %}#}
+    <link type="text/css" rel="stylesheet" href='{% static "plugins/bootstrap-fileinput/css/fileinput.css" %}'/>
+    <script type="text/javascript" src='{% static "plugins/bootstrap-fileinput/js/fileinput.js" %}'></script>
+    <script type="text/javascript" src='{% static "plugins/bootstrap-fileinput/js/locales/zh.js" %}'></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            });
+            $("#touxiang").fileinput({
+                'previewFileType': 'any',
+                showUpload: true,
+                language: 'zh',
+                uploadAsync: true,
+                dropZoneEnabled: true,
+                uploadUrl: '/up_recive',
+                maxFileCount: 1,
+                maxImageWidth: 600,
+                resizeImage: true,
+                showCaption: true,
+                showPreview: true,
+                allowedFileExtensions: ['jpg', 'png', 'jpeg'],
+                previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                uploadExtraData:{"X-CSRFtoken":"{{ csrf_token }}"}
+{#                headers:#}
+            });
+        });
+    </script>
     {% if user.is_authenticated %}
         <br/>
         <hr/>
@@ -13,6 +40,7 @@
                     {{ c_user }}
                     <img src='{% static "image/bobo.jpg" %}' alt="{{ user.username }}" class="img-circle" height="100"
                          width="100">
+
                     <p class="lead" style="color: green;">{{ user.username }},你好,在这里可以查看和修改您的个人信息</p>
                 </caption>
                 <colgroup>
@@ -31,7 +59,35 @@
                         <code>{{ user.username }}</code>
                     </th>
                     <td>
-                        <a class="btn btn-default" role="button"> 修改用户名</a>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#chusername">修改用户名
+                        </button>
+                        <div class="modal fade" id="chusername" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel"
+                             aria-hidden="true" style="margin-top:100px;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            修改用户名
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control">
+                                            <span class="input-group-addon">新用户名</span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            提交更改
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -46,7 +102,43 @@
                         <code>加密信息:{{ user.password }}</code>
                     </th>
                     <td>
-                        <a class="btn btn-default" role="button"> 修改密码</a>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#chpwd">修改密码</button>
+                        <div class="modal fade" id="chpwd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true" style="margin-top:100px;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            修改密码
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label class="col-lg- control-label">密码</label>
+
+                                            <div class="col-lg-">
+                                                <input type="password" class="form-control" name="password"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-lg- control-label">确认密码</label>
+
+                                            <div class="col-lg-">
+                                                <input type="password" class="form-control" name="confirmPassword"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            提交更改
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -54,7 +146,30 @@
                         <code>{{ user.is_active }}</code>
                     </th>
                     <td>
-                        <a class="btn btn-default" role="button">上传或修改头像</a>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">上传或修改头像
+                        </button>
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true" style="margin-top:100px;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            修改头像
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <label class="control-label">请选择头像文件</label>
+                                        <input id="touxiang" name="touxiang" type="file" multiple
+                                               class="file-loading">
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -65,5 +180,4 @@
         <center>对不起您无权限查看该页面,请在页面<b style='color:blue;'>个人设置</b>点击<b style='color:blue;'><a href='/'>登录</a></b></center>
         </p>
     {% endif %}
-    {#    {% endblock %}#}
 {% endblock %}
