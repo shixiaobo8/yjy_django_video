@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^ecs_list$', aliyun_views.ecs_list),
     url(r'^upload$', video_views.upload),
     url(r'^up_recive$', video_views.up_recive),
+    url(r'^change_touxiang$', video_views.change_touxiang),
     url(r'^inters_data$', video_views.inters_data,name='inters'),
     url(r'^get_imge$', video_views.get_imge),
     url(r'^export_cvs$', video_views.export_cvs),

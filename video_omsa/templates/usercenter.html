@@ -18,7 +18,7 @@
                 language: 'zh',
                 uploadAsync: true,
                 dropZoneEnabled: true,
-                uploadUrl: '/up_recive',
+                uploadUrl: '/change_touxiang',
                 maxFileCount: 1,
                 maxImageWidth: 600,
                 resizeImage: true,
@@ -26,8 +26,11 @@
                 showPreview: true,
                 allowedFileExtensions: ['jpg', 'png', 'jpeg'],
                 previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-                uploadExtraData:{"X-CSRFtoken":"{{ csrf_token }}"}
-{#                headers:#}
+                uploadExtraData:{data:{csrfmiddlewaretoken: '{{ csrf_token }}'}},
+            }).on("#touxiang",function(event,data){
+                if(data.response){
+                    closeModal('#chtouxiang');
+                }
             });
         });
     </script>
@@ -37,10 +40,8 @@
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
                 <caption>
-                    {{ c_user }}
-                    <img src='{% static "image/bobo.jpg" %}' alt="{{ user.username }}" class="img-circle" height="100"
+                    <img src="{{ touxiang }}" alt="{{ user.username }}" class="img-circle" height="100"
                          width="100">
-
                     <p class="lead" style="color: green;">{{ user.username }},你好,在这里可以查看和修改您的个人信息</p>
                 </caption>
                 <colgroup>
@@ -146,9 +147,9 @@
                         <code>{{ user.is_active }}</code>
                     </th>
                     <td>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">上传或修改头像
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#chtouxiang">上传或修改头像
                         </button>
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        <div class="modal fade" id="chtouxiang" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                              aria-hidden="true" style="margin-top:100px;">
                             <div class="modal-dialog">
                                 <div class="modal-content">

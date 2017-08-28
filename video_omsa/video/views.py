@@ -16,7 +16,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
 from django.views.decorators.csrf import csrf_exempt
-import json, os, sys, xlwt, requests, time, calendar
+import json, os, sys, xlwt, requests, time, calendar,random,shutil
 
 # navs = list(Nav.objects.all())
 
@@ -107,7 +107,7 @@ def register(request):
                 user.apptype = data['app_type']
                 user.save()
                 User.objects.filter(username=data['username']).update(apptype=data['app_type'])
-                request.session['c_user'] = User.objects.filter(username=data['username'])
+                # request.session['c_user'] = User.objects.filter(username=data['username'])
                 return HttpResponseRedirect('/im_list.html')
         else:
             message = "<b style='color:red;'>invalid</b> please keep slient and keep friendship and keep smile ^_^ and keep doing yourself and belive yourself ! "
@@ -137,7 +137,7 @@ def imList(request):
 
 def logout(request):
     auth.logout(request)
-    del request.session['c_user']
+    # del request.session['c_user']
     return HttpResponseRedirect('/')
 
 
@@ -366,25 +366,52 @@ def inters_count(date_table, top):
 
 
 # 外部调用接口数据返回
-
 def upload(request):
-    # if request.method == 'GET':
     form = NewForm(request.GET)
     return render(request, 'upload.html')
 
-def up_recive(request):
-    return HttpResponse(request.method)
+@csrf_exempt
+def change_touxiang(request):
+    data = ''
+    today = time.strftime('%Y_%m_%d',time.localtime(time.time()))
+    image_dir = "uploads/Avatar/"  + today + os.sep
+    random_file = request.user.username + '_' + time.strftime('%H_%M_%S',time.localtime(time.time()))
+    if not os.path.exists(image_dir):
+        os.mkdir(image_dir)
+    if request.method == 'POST':
+        files = request.FILES.get("touxiang", None)  # 获取上传的文件,如果没有文件,则默认为None
+        if not files:
+            return HttpResponse(json.dumps({'data':"没有上传数据"}))
+        save_destination = open(os.path.join( image_dir, files.name), 'wb+')  # 打开特定的文件进行二进制写操作
+        for chunk in files.chunks():
+            save_destination.write(chunk)
+        save_destination.close()
+        save_file = image_dir+random_file + '.' + files.name.split('.')[-1]
+        os.rename(image_dir+files.name,save_file)a
+        # 修改数据库配置
+        try:
+            cursor = connection.cursor()
+            sql = "update auth_user set touxiang='" + save_file + "' where username1='" + request.user.username + "';"
+            cursor.execute(sql)
+            rs = cursor.fetchall()
+            data = '头像修改成功'
+        except Exception,e:
+            # os.rename(image_dir+files.name,save_file.replace(request.user.username,request.user.username+'_fail_'))
+            print e
+            data = '头像修改失败'
+        return HttpResponse(json.dumps({'data':data}))
 
-def up_recive1(request):
+@csrf_exempt
+def up_recive(request):
     if request.method == 'POST':
         files = request.FILES.get("up_file", None)  # 获取上传的文件,如果没有文件,则默认为None
         if not files:
-            return HttpResponse("没有上传数据")
+            return HttpResponse(json.dumps({'data':"没有上传数据"}))
         save_destination = open(os.path.join("uploads", files.name), 'wb+')  # 打开特定的文件进行二进制写操作
         for chunk in files.chunks():
             save_destination.write(chunk)
         save_destination.close()
-        return HttpResponse("上传完毕!")
+        return HttpResponse(json.dumps({'data':"上传完毕!"}))
 
 
 def inters_data(request):
@@ -556,5 +583,16 @@ def write_to_cache(keys, value):
 @login_required(login_url='/')
 def usercenter(request):
     navs = list(Nav.objects.all())
-    c_user = request.session.get(key='c_user')
-    return render(request, 'usercenter.html',{'navs':navs,'c_user':c_user},context_instance=RequestContext(request))
+    data = ''
+    try:
+        cursor = connection.cursor()
+        sql = "select `touxiang` from  auth_user where `username`='" + request.user.username + "';"
+        cursor.execute(sql)
+        data = cursor.fetchall()
+    except Exception, e:
+        print e
+    touxiang = data[0][0]
+    if 'default' in touxiang:
+        touxiang = touxiang.replace('uploads','')
+    touxiang = '/static' + touxiang
+    return render(request, 'usercenter.html',{'navs':navs,'touxiang':touxiang},context_instance=RequestContext(request))
