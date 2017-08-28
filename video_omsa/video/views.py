@@ -387,7 +387,7 @@ def change_touxiang(request):
             save_destination.write(chunk)
         save_destination.close()
         save_file = image_dir+random_file + '.' + files.name.split('.')[-1]
-        os.rename(image_dir+files.name,save_file)a
+        os.rename(image_dir+files.name,save_file)
         # 修改数据库配置
         try:
             cursor = connection.cursor()
