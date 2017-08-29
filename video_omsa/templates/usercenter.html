@@ -203,7 +203,7 @@
                 </tr>
                 <tr>
                     <th scope="row">
-                        <code><a href="http://{{ request.META.HTTP_HOST }}:{{ request.META.SERVER_PORT }}{{ touxiang }}">http://{{ request.META.HTTP_HOST }}:{{ request.META.SERVER_PORT }}{{ touxiang }}</a></code>
+                        <code><a href="http://{{ request.get_host }}{{ touxiang }}">http://{{ request.get_host }}{{ touxiang }}</a></code>
                     </th>
                     <td>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#chtouxiang">上传或修改头像
