@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password, check_password
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from video.forms import videoForm, LoginForm, registerForm, ImEditForm, NewForm, intersForm
@@ -437,13 +438,15 @@ def chusername(request):
 @login_required()
 def chpwd(request):
     res = '修改失败!'
+    i_sql = ''
     if request.method == "POST":
         new_password = request.POST.get("new_password")
         old_username = request.POST.get("old_username")
+        new_password = make_password(new_password, None, 'pbkdf2_sha256')
         try:
             cursor = connection.cursor()
             i_sql = "update auth_user set password='" + new_password + "' where username='" + old_username+ "';"
-            cursor.execute(c_sql)
+            cursor.execute(i_sql)
             data = cursor.fetchall()
             if not data:
                 res = "修改成功!"
