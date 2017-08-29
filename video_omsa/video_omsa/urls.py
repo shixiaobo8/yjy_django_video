@@ -38,7 +38,8 @@ urlpatterns = [
     url(r'^inters_info$', video_views.inters_info,name='CurInfo'),
     url(r'^Hisinters$', video_views.History_inters,name='Hisinters'),
     url(r'^usercenter.html$', video_views.usercenter,name='usercenter'),
-
+    url(r'^chusername$', video_views.chusername,name='chusername'),
+    url(r'^chpwd$', video_views.chpwd,name='chpwd'),
 ]
 handler404 = video_views.page_not_found
 handler500 = video_views.page_error

@@ -12,6 +12,7 @@
             $.ajaxSetup({
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
             });
+            // 修改头像
             $("#touxiang").fileinput({
                 'previewFileType': 'any',
                 showUpload: true,
@@ -26,11 +27,54 @@
                 showPreview: true,
                 allowedFileExtensions: ['jpg', 'png', 'jpeg'],
                 previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-                uploadExtraData:{data:{csrfmiddlewaretoken: '{{ csrf_token }}'}},
-            }).on("#touxiang",function(event,data){
-                if(data.response){
-                    closeModal('#chtouxiang');
+                uploadExtraData: {data: {csrfmiddlewaretoken: '{{ csrf_token }}'}}
+            }).on('fileerror', function (event, data, msg) {
+
+            }).on("fileuploaded", function (event, data) {
+                if (data.response) {
+                    alert("图像修改成功！点击确认2秒后自动刷新页面");
+                    setTimeout("location.href='{{ request.get_full_path }}'", 2000);
                 }
+            })
+        });
+
+        // 修改用戶名
+        $(document).ready(function () {
+            $("#chusernamebt").click(function () {
+                var new_username = $("#chusernametext").val();
+                if(new_username == "{{ request.user.username }}"){
+                    alert("亲，用户名不能重复！！");
+                    return;
+                }
+                $.post("/chusername",{"new_username":new_username,"old_username":"{{ request.user.username}}"},function(res){
+                    var data = JSON.parse(res);
+                    if(data['data'] == '修改成功!'){
+                        alert("用戶名修改成功！点击确认2秒后自动刷新页面");
+                        setTimeout("location.href='{{ request.get_full_path }}'", 2000);
+                    }else{
+                        alert(data['data']);
+                    }
+                })
+            });
+        });
+        // 修改密码
+        $(document).ready(function () {
+            $("#chpwdbt").click(function () {
+                var new_password1 = $("#chpassword1").val();
+                var new_password2 = $("#chpassword2").val();
+                if(new_password1 != new_password2){
+                    alert("亲，两次输入的密码不一致！！");
+                    return;
+                }
+                $.post("/chpwd",{"new_password":new_password1,"old_username":"{{ request.user.username}}"},function(res){
+                    var data = JSON.parse(res);
+                    if(data['data'] == '修改成功!'){
+                        alert("恭喜,密码修改成功！点击确认2秒后自动刷新页面");
+                        setTimeout("location.href='{{ request.get_full_path }}'", 2000);
+                    }else{
+                        alert(data['data']);
+                    }
+                })
             });
         });
     </script>
@@ -42,6 +86,7 @@
                 <caption>
                     <img src="{{ touxiang }}" alt="{{ user.username }}" class="img-circle" height="100"
                          width="100">
+
                     <p class="lead" style="color: green;">{{ user.username }},你好,在这里可以查看和修改您的个人信息</p>
                 </caption>
                 <colgroup>
@@ -77,12 +122,12 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="input-group">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" id="chusernametext">
                                             <span class="input-group-addon">新用户名</span>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" id="chusernamebt">
                                             提交更改
                                         </button>
                                     </div>
@@ -93,9 +138,21 @@
                 </tr>
                 <tr>
                     <th scope="row">
-                        <code>{{ user.app_type }}</code>
+                        <code>{{ app_type }}</code>
                     </th>
                     <td>
+                        {% ifequal app_type "yjy_xiyizonghe"  %}
+                            西医综合
+                        {% endifequal %}
+                        {% ifequal app_type "tcmsq"  %}
+                            中医执业医师
+                        {% endifequal %}
+                        {% ifequal app_type "yjy_zhongyizonghe"  %}
+                            中医综合
+                        {% endifequal %}
+                        {% ifequal app_type "yjy_xiyizhiyeyishi"  %}
+                            西医执业医师
+                        {% endifequal %}
                     </td>
                 </tr>
                 <tr>
@@ -121,19 +178,21 @@
                                             <label class="col-lg- control-label">密码</label>
 
                                             <div class="col-lg-">
-                                                <input type="password" class="form-control" name="password"/>
+                                                <input type="password" class="form-control" name="password"
+                                                       id="chpassword1"/>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label class="col-lg- control-label">确认密码</label>
 
                                             <div class="col-lg-">
-                                                <input type="password" class="form-control" name="confirmPassword"/>
+                                                <input type="password" class="form-control" name="confirmPassword"
+                                                       id="chpassword2"/>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary" id="chpwdbt">
                                             提交更改
                                         </button>
                                     </div>
@@ -144,12 +203,13 @@
                 </tr>
                 <tr>
                     <th scope="row">
-                        <code>{{ user.is_active }}</code>
+                        <code><a href="http://{{ request.get_host }}{{ touxiang }}">http://{{ request.get_host }}{{ touxiang }}</a></code>
                     </th>
                     <td>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#chtouxiang">上传或修改头像
                         </button>
-                        <div class="modal fade" id="chtouxiang" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        <div class="modal fade" id="chtouxiang" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel"
                              aria-hidden="true" style="margin-top:100px;">
                             <div class="modal-dialog">
                                 <div class="modal-content">

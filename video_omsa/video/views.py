@@ -15,6 +15,7 @@ from django.core.cache import cache
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from .models import Nav
+from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import json, os, sys, xlwt, requests, time, calendar,random,shutil
 
@@ -104,10 +105,14 @@ def register(request):
                 user.set_password(data['password'])
                 user.username = data['username']
                 user.email = data['email']
-                user.apptype = data['app_type']
                 user.save()
-                User.objects.filter(username=data['username']).update(apptype=data['app_type'])
-                # request.session['c_user'] = User.objects.filter(username=data['username'])
+                try:
+                    cursor = connection.cursor()
+                    sql = "update auth_user set apptype='" + data['app_type'] + "' where username='" + data['username'] + "'"
+                    cursor.execute(sql)
+                    rs = cursor.fetchall()
+                except Exception,e:
+                    print e
                 return HttpResponseRedirect('/im_list.html')
         else:
             message = "<b style='color:red;'>invalid</b> please keep slient and keep friendship and keep smile ^_^ and keep doing yourself and belive yourself ! "
@@ -374,10 +379,11 @@ def upload(request):
 def change_touxiang(request):
     data = ''
     today = time.strftime('%Y_%m_%d',time.localtime(time.time()))
-    image_dir = "uploads/Avatar/"  + today + os.sep
+    os.chdir("./video/static/")
+    image_dir =  "Avatar" + os.sep + "uploads" + os.sep + today + os.sep
     random_file = request.user.username + '_' + time.strftime('%H_%M_%S',time.localtime(time.time()))
     if not os.path.exists(image_dir):
-        os.mkdir(image_dir)
+        os.makedirs(image_dir)
     if request.method == 'POST':
         files = request.FILES.get("touxiang", None)  # 获取上传的文件,如果没有文件,则默认为None
         if not files:
@@ -391,15 +397,59 @@ def change_touxiang(request):
         # 修改数据库配置
         try:
             cursor = connection.cursor()
-            sql = "update auth_user set touxiang='" + save_file + "' where username1='" + request.user.username + "';"
+            sql = "update auth_user set touxiang='" + save_file + "' where username='" + request.user.username + "';"
+            sql = sql.replace('\\','/')
             cursor.execute(sql)
             rs = cursor.fetchall()
             data = '头像修改成功'
+            os.chdir("../../")
+            return HttpResponse(json.dumps({'data':sql}))
         except Exception,e:
-            # os.rename(image_dir+files.name,save_file.replace(request.user.username,request.user.username+'_fail_'))
+            os.rename(image_dir+files.name,save_file.replace(request.user.username,request.user.username+'_fail_'))
             print e
             data = '头像修改失败'
-        return HttpResponse(json.dumps({'data':data}))
+            os.chdir("../../")
+            return HttpResponse(json.dumps({'error':data}))
+
+@login_required()
+def chusername(request):
+    res = '修改失败!'
+    if request.method == "POST":
+        new_username = request.POST.get("new_username")
+        old_username = request.POST.get("old_username")
+        try:
+            cursor = connection.cursor()
+            c_sql = "select `username` from auth_user where username='" + new_username + "';"
+            cursor.execute(c_sql)
+            user = cursor.fetchall()
+            if user:
+                res = "用户名已被占用!"
+            else:
+                i_sql = "update auth_user set username='" + new_username + "' where username='" + old_username+ "';"
+                cursor.execute(i_sql)
+                data = cursor.fetchall()
+                if not data:
+                     res = "修改成功!"
+        except Exception,e:
+            print e
+    return HttpResponse(json.dumps({"data":res}))
+
+@login_required()
+def chpwd(request):
+    res = '修改失败!'
+    if request.method == "POST":
+        new_password = request.POST.get("new_password")
+        old_username = request.POST.get("old_username")
+        try:
+            cursor = connection.cursor()
+            i_sql = "update auth_user set password='" + new_password + "' where username='" + old_username+ "';"
+            cursor.execute(c_sql)
+            data = cursor.fetchall()
+            if not data:
+                res = "修改成功!"
+        except Exception,e:
+            print e
+    return HttpResponse(json.dumps({"data":res}))
 
 @csrf_exempt
 def up_recive(request):
@@ -586,13 +636,15 @@ def usercenter(request):
     data = ''
     try:
         cursor = connection.cursor()
-        sql = "select `touxiang` from  auth_user where `username`='" + request.user.username + "';"
+        sql = "select `touxiang`,`apptype` from  auth_user where `username`='" + request.user.username + "';"
         cursor.execute(sql)
         data = cursor.fetchall()
     except Exception, e:
         print e
     touxiang = data[0][0]
+    app_type = data[0][1]
     if 'default' in touxiang:
-        touxiang = touxiang.replace('uploads','')
-    touxiang = '/static' + touxiang
-    return render(request, 'usercenter.html',{'navs':navs,'touxiang':touxiang},context_instance=RequestContext(request))
+        touxiang = touxiang.replace('uploads/','')
+    touxiang = '/static/' + touxiang
+    # return HttpResponse(data)
+    return render(request, 'usercenter.html',{'navs':navs,'touxiang':touxiang,'app_type':app_type},context_instance=RequestContext(request))
