@@ -77,8 +77,8 @@ def login(request):
         data = form.data
         username = data['username']
         password = data['password']
-        captcha_0 = data['captcha_0']
-        if captcha_0 == '':
+        captcha_1 = data['captcha_1']
+        if captcha_1 != '':
             if form.is_valid():
                 human = True
                 user = authenticate(username=username, password=password)
