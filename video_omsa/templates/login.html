@@ -71,6 +71,7 @@
                     'hashkey': $('#id_captcha_0').val()
                 }
                 $.getJSON('/ajax_val', json_data, function (data) { //ajax发送
+                    $('#login_mess').empty();
                     $('#captcha_status').empty();
                     if (data['status']) { //status返回1为验证码正确， status返回0为验证码错误， 在输入框的后面写入提示信息
                         $('#captcha_status').text('*验证码正确');
@@ -104,7 +105,7 @@
             {% endfor %}
             <div id="captcha_status" style="color:red"></div>
             {% if login_mess %}
-                <p style="color: red;">{{ login_mess }}</p>
+                <p style="color: red;" id="login_mess">{{ login_mess }}</p>
             {% endif %}
             <div class="checkbox">
                 <label>
