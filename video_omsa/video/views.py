@@ -77,17 +77,20 @@ def login(request):
         data = form.data
         username = data['username']
         password = data['password']
-        if form.is_valid():
-            human = True
-            # return HttpResponse(data.items())
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_active:
-                auth.login(request, user)
-                # return render(request,'im_list.html',{'user':user,'navs':navs})
-                return redirect('im_list.html')
-            else:
-                login_mess = '用户名或者密码不正确'
-                return render(request, 'login.html', {'form': form, 'login_mess': login_mess})
+        captcha_0 = data['captcha_0']
+        if captcha_0 == '':
+            if form.is_valid():
+                human = True
+                user = authenticate(username=username, password=password)
+                if user is not None and user.is_active:
+                    auth.login(request, user)
+                    return redirect('im_list.html')
+                else:
+                    login_mess = '用户名或者密码不正确'
+                    return render(request, 'login.html', {'form': form, 'login_mess': login_mess})
+        else:
+            login_mess = '验证码不能为空!'
+            return render(request, 'login.html', {'form': form, 'login_mess': login_mess})
     else:
         login_mess = 'http method not allowed'
         return HttpResponse(login_mess)
