@@ -40,6 +40,9 @@ urlpatterns = [
     url(r'^usercenter.html$', video_views.usercenter,name='usercenter'),
     url(r'^chusername$', video_views.chusername,name='chusername'),
     url(r'^chpwd$', video_views.chpwd,name='chpwd'),
+    url(r'^video/list.html$', video_views.video_list,name='video_list'),
+    url(r'^video/cut$', video_views.video_cut,name='video_cut'),
+    url(r'^video/toonline$', video_views.video_toonline,name='video_toonline'),
 ]
 handler404 = video_views.page_not_found
 handler500 = video_views.page_error

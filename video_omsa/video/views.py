@@ -18,7 +18,8 @@ from django.db import connection
 from .models import Nav
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-import json, os, sys, xlwt, requests, time, calendar,random,shutil
+import json, os, sys, xlwt, requests, time, calendar, random, shutil
+
 
 # navs = list(Nav.objects.all())
 
@@ -112,10 +113,11 @@ def register(request):
                 user.save()
                 try:
                     cursor = connection.cursor()
-                    sql = "update auth_user set apptype='" + data['app_type'] + "' where username='" + data['username'] + "'"
+                    sql = "update auth_user set apptype='" + data['app_type'] + "' where username='" + data[
+                        'username'] + "'"
                     cursor.execute(sql)
                     rs = cursor.fetchall()
-                except Exception,e:
+                except Exception, e:
                     print e
                 return HttpResponseRedirect('/im_list.html')
         else:
@@ -184,23 +186,26 @@ def inters_info(request):
     detail = data['detail']
     # return HttpResponse(json.dumps(data))
     res = ''
-    tmp1 = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>" + str(total[0]) + "</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
-    res += tmp1 + "<th>" + str(total[0]) + "</th><th>" + str(total[1]) + "</th></tr></thead><tbody></tbody></table><hr/>"
+    tmp1 = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>" + str(
+        total[0]) + "</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
+    res += tmp1 + "<th>" + str(total[0]) + "</th><th>" + str(
+        total[1]) + "</th></tr></thead><tbody></tbody></table><hr/>"
     for v in detail:
-        tmp2 = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>" + str(v[0]) + "</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
+        tmp2 = "<table class='table table-bordered table-striped'><caption style='color:green;font:40px;'>" + str(
+            v[0]) + "</caption><colgroup><col class='col-xs-1'><col class='col-xs-3'></colgroup><thead><tr>"
         if type(v) is types.ListType:
             tmp2 += "<th>域名/接口url</th><th>" + "访问量" + "</th></tr></thead><tbody>"
             for v1 in v[1]:
                 tmp2 += "<tr><th scope='row'><code>" + str(v1[0]) + "</code></th><td>" + str(v1[1]) + "</td></tr>"
             tmp2 += "</tbody></table><hr/>"
-        #elif type(v) is types.IntType:
+        # elif type(v) is types.IntType:
         #    res += tmp + "<th>" + str(total[0]) + "</th><th>" + str(total[1]) + "</th></tr></thead><tbody></tbody></table><hr/>"
-    	res += tmp2
+        res += tmp2
     return HttpResponse(res)
 
 
 def History_inters(request):
-    domains = ['tiku.letiku.net', 'tcmsq.letiku.net', 'tcms.letiku.net',  'www.letiku.net',
+    domains = ['tiku.letiku.net', 'tcmsq.letiku.net', 'tcms.letiku.net', 'www.letiku.net',
                'srcmock.letiku.net', 'zhongxiyijiehe.letiku.net', '123.57.185.38', 'api.yijiaoyuan.net',
                'kouqiangzonghe.letiku.net', 'kouqiangzyys.letiku.net', 'passport.letiku.net', 'political.letiku.net',
                'xiyizhiyeyishi.letiku.net', 'xiyizhulizyys.letiku.net', 'yijiaoyuan.letiku.net']
@@ -222,7 +227,7 @@ def History_inters(request):
                 reqs = read_from_cache(redis_key)
                 if not reqs:
                     reqs = getHisData(date, do)
-                    write_to_cache(redis_key,reqs)
+                    write_to_cache(redis_key, reqs)
                 domain_datas.append(int(reqs))
             do_data['data'] = domain_datas
             domain_data.append(do_data)
@@ -231,64 +236,67 @@ def History_inters(request):
     data['months'] = his_month
     return HttpResponse(json.dumps(data))
 
-def getcalendar(c_year,c_mon,month):
+
+def getcalendar(c_year, c_mon, month):
     res = dict()
     res['year'] = c_year
     res['month'] = int(month)
     if int(c_mon) == int(month):
-	res['month'] = 12
-    	res['year'] = c_year - 1
+        res['month'] = 12
+        res['year'] = c_year - 1
     # 查询月份数小于当前月份数
     if int(c_mon) > int(month):
-	res['month'] = int(c_mon) - int(month)	
+        res['month'] = int(c_mon) - int(month)
     # 查询月份数大于当前月份数
     if int(c_mon) < int(month):
-	if int(month)/12 > 0:
-        	res['year'] -= int(month) / 12
-        	res['month'] = int(c_mon) - int(month) % 12
-	if int(month)/12 == 0:
-        	res['month'] = 12 - (int(month) - int(c_mon))
-		res['year'] -= 1
-    #with open('/tmp/dates.log','ab+') as f:
+        if int(month) / 12 > 0:
+            res['year'] -= int(month) / 12
+            res['month'] = int(c_mon) - int(month) % 12
+        if int(month) / 12 == 0:
+            res['month'] = 12 - (int(month) - int(c_mon))
+            res['year'] -= 1
+    # with open('/tmp/dates.log','ab+') as f:
     #	f.write(json.dumps(res))
-    return  res
+    return res
+
 
 def getDates(his_month):
     dates = []
     today = time.strftime('%Y_%m_%d', time.localtime(time.time()))
     c_year = int(today.split('_')[0])
     c_month = int(today.split('_')[1][1])
-    start_month = getcalendar(c_year,c_month,his_month)['month']
-    start_year = getcalendar(c_year,c_month,his_month)['year']
-    for year in range(start_year,c_year + 1):
-	if year == c_year and start_month > c_month:
-		start_month = 1
-		end_month = c_month
-	if year == c_year and start_month < c_month:
-    		end_month = c_month + 1
-	if year != c_year:
-		end_month = 13
-	for mon in range(start_month, end_month):
-		m_days = ''
-        	if mon == c_month:
-            		m_days = int(today.split('_')[2])
-        	else:
-           		m_days = calendar.monthrange(year, mon)[1]
-        	for d in range(1, m_days):
-            		if d < 10:
-                		if mon < 10:
-                    			date = str(year) + '_0' + str(mon) + '_0' + str(d)
-                		else:
-                    			date = str(year) + '_' + str(mon) + '_0' + str(d)
-            		else:
-                		if mon < 10:
-                    			date = str(year) + '_0' + str(mon) + '_' + str(d)
-                		else:
-                    			date = str(year) + '_' + str(mon) + '_' + str(d)
-    			dates.append(date)
-    #with open('/tmp/dates.log','ab+') as f:
+    start_month = getcalendar(c_year, c_month, his_month)['month']
+    start_year = getcalendar(c_year, c_month, his_month)['year']
+    for year in range(start_year, c_year + 1):
+        if year == c_year and start_month > c_month:
+            start_month = 1
+            end_month = c_month
+        if year == c_year and start_month < c_month:
+            end_month = c_month + 1
+        if year != c_year:
+            end_month = 13
+        for mon in range(start_month, end_month):
+            m_days = ''
+            if mon == c_month:
+                m_days = int(today.split('_')[2])
+            else:
+                m_days = calendar.monthrange(year, mon)[1]
+            for d in range(1, m_days):
+                if d < 10:
+                    if mon < 10:
+                        date = str(year) + '_0' + str(mon) + '_0' + str(d)
+                    else:
+                        date = str(year) + '_' + str(mon) + '_0' + str(d)
+                else:
+                    if mon < 10:
+                        date = str(year) + '_0' + str(mon) + '_' + str(d)
+                    else:
+                        date = str(year) + '_' + str(mon) + '_' + str(d)
+                dates.append(date)
+    # with open('/tmp/dates.log','ab+') as f:
     #	f.write(json.dumps(dates))
     return dates
+
 
 def getHisData(date_table, domain):
     import MySQLdb as mdb
@@ -327,9 +335,9 @@ def nginxData():
     maxs = sorted(max_actives.iteritems(), key=lambda d: d[1], reverse=True)
     active_tops = sorted(top_actives.iteritems(), key=lambda d: d[1], reverse=True)
     res['detail'] = []
-    res['total'] = ['当前实时总并发值',total_active]
-    res['detail'].append(['当前实时并发值前十接口',active_tops[:10]])
-    res['detail'].append(['今日某一时刻(秒级)最大并发值前十接口',maxs[:10]])
+    res['total'] = ['当前实时总并发值', total_active]
+    res['detail'].append(['当前实时并发值前十接口', active_tops[:10]])
+    res['detail'].append(['今日某一时刻(秒级)最大并发值前十接口', maxs[:10]])
     return res
 
 
@@ -379,41 +387,44 @@ def upload(request):
     form = NewForm(request.GET)
     return render(request, 'upload.html')
 
+
 @csrf_exempt
 def change_touxiang(request):
     data = ''
-    today = time.strftime('%Y_%m_%d',time.localtime(time.time()))
+    today = time.strftime('%Y_%m_%d', time.localtime(time.time()))
     os.chdir("./video/static/")
-    image_dir =  "Avatar" + os.sep + "uploads" + os.sep + today + os.sep
-    random_file = request.user.username + '_' + time.strftime('%H_%M_%S',time.localtime(time.time()))
+    image_dir = "Avatar" + os.sep + "uploads" + os.sep + today + os.sep
+    random_file = request.user.username + '_' + time.strftime('%H_%M_%S', time.localtime(time.time()))
     if not os.path.exists(image_dir):
         os.makedirs(image_dir)
     if request.method == 'POST':
         files = request.FILES.get("touxiang", None)  # 获取上传的文件,如果没有文件,则默认为None
         if not files:
-            return HttpResponse(json.dumps({'data':"没有上传数据"}))
-        save_destination = open(os.path.join( image_dir, files.name), 'wb+')  # 打开特定的文件进行二进制写操作
+            return HttpResponse(json.dumps({'data': "没有上传数据"}))
+        save_destination = open(os.path.join(image_dir, files.name), 'wb+')  # 打开特定的文件进行二进制写操作
         for chunk in files.chunks():
             save_destination.write(chunk)
         save_destination.close()
-        save_file = image_dir+random_file + '.' + files.name.split('.')[-1]
-        os.rename(image_dir+files.name,save_file)
+        save_file = image_dir + random_file + '.' + files.name.split('.')[-1]
+        os.rename(image_dir + files.name, save_file)
         # 修改数据库配置
         try:
             cursor = connection.cursor()
             sql = "update auth_user set touxiang='" + save_file + "' where username='" + request.user.username + "';"
-            sql = sql.replace('\\','/')
+            sql = sql.replace('\\', '/')
             cursor.execute(sql)
             rs = cursor.fetchall()
             data = '头像修改成功'
             os.chdir("../../")
-            return HttpResponse(json.dumps({'data':sql}))
-        except Exception,e:
-            os.rename(image_dir+files.name,save_file.replace(request.user.username,request.user.username+'_fail_'))
+            return HttpResponse(json.dumps({'data': sql}))
+        except Exception, e:
+            os.rename(image_dir + files.name,
+                      save_file.replace(request.user.username, request.user.username + '_fail_'))
             print e
             data = '头像修改失败'
             os.chdir("../../")
-            return HttpResponse(json.dumps({'error':data}))
+            return HttpResponse(json.dumps({'error': data}))
+
 
 @login_required()
 def chusername(request):
@@ -429,14 +440,15 @@ def chusername(request):
             if user:
                 res = "用户名已被占用!"
             else:
-                i_sql = "update auth_user set username='" + new_username + "' where username='" + old_username+ "';"
+                i_sql = "update auth_user set username='" + new_username + "' where username='" + old_username + "';"
                 cursor.execute(i_sql)
                 data = cursor.fetchall()
                 if not data:
-                     res = "修改成功!"
-        except Exception,e:
+                    res = "修改成功!"
+        except Exception, e:
             print e
-    return HttpResponse(json.dumps({"data":res}))
+    return HttpResponse(json.dumps({"data": res}))
+
 
 @login_required()
 def chpwd(request):
@@ -448,26 +460,27 @@ def chpwd(request):
         new_password = make_password(new_password, None, 'pbkdf2_sha256')
         try:
             cursor = connection.cursor()
-            i_sql = "update auth_user set password='" + new_password + "' where username='" + old_username+ "';"
+            i_sql = "update auth_user set password='" + new_password + "' where username='" + old_username + "';"
             cursor.execute(i_sql)
             data = cursor.fetchall()
             if not data:
                 res = "修改成功!"
-        except Exception,e:
+        except Exception, e:
             print e
-    return HttpResponse(json.dumps({"data":res}))
+    return HttpResponse(json.dumps({"data": res}))
+
 
 @csrf_exempt
 def up_recive(request):
     if request.method == 'POST':
         files = request.FILES.get("up_file", None)  # 获取上传的文件,如果没有文件,则默认为None
         if not files:
-            return HttpResponse(json.dumps({'data':"没有上传数据"}))
+            return HttpResponse(json.dumps({'data': "没有上传数据"}))
         save_destination = open(os.path.join("uploads", files.name), 'wb+')  # 打开特定的文件进行二进制写操作
         for chunk in files.chunks():
             save_destination.write(chunk)
         save_destination.close()
-        return HttpResponse(json.dumps({'data':"上传完毕!"}))
+        return HttpResponse(json.dumps({'data': "上传完毕!"}))
 
 
 def inters_data(request):
@@ -635,6 +648,7 @@ def read_from_cache(keys):
 def write_to_cache(keys, value):
     cache.set(keys, json.dumps(value), timeout=None)
 
+
 # 用户中心
 @login_required(login_url='/')
 def usercenter(request):
@@ -650,7 +664,73 @@ def usercenter(request):
     touxiang = data[0][0]
     app_type = data[0][1]
     if 'default' in touxiang:
-        touxiang = touxiang.replace('uploads/','')
+        touxiang = touxiang.replace('uploads/', '')
     touxiang = '/static/' + touxiang
     # return HttpResponse(data)
-    return render(request, 'usercenter.html',{'navs':navs,'touxiang':touxiang,'app_type':app_type},context_instance=RequestContext(request))
+    return render(request, 'usercenter.html', {'navs': navs, 'touxiang': touxiang, 'app_type': app_type},
+                  context_instance=RequestContext(request))
+
+
+def tupleToStr(tuple):
+    return tuple[0] + tuple[1] + '<br/>'
+
+
+def getMp4Files(parent_dir, files):
+    mp4files = []
+    for file in files:
+        file = parent_dir + '/' + file
+        if os.path.isfile(file):
+            file_t = (file, 'file')
+            mp4files.append(tupleToStr(file_t))
+        elif os.path.isdir(file):
+            file_t = (file, 'dir')
+            mp4files.append(tupleToStr(file_t))
+            subdir = file
+            subfiles = os.listdir(subdir)
+            subfiles = getMp4Files(subdir, subfiles)
+            mp4files.extend(subfiles)
+        else:
+            file_t = (file, 'otherfile')
+            mp4files.append(tupleToStr(file_t))
+    return mp4files
+
+
+def categoryFile(files):
+    res = []
+    for file in files:
+        if '.mp4' in file:
+            res.append(file.encode('utf8').replace('file', '').replace('<br/>',''))
+    return res
+
+
+@login_required(login_url='/')
+def video_list(request):
+    if request.method == 'GET':
+        mp4ParentDirs = 'D:/bjyjy' + u"/要上传的视频"
+        files = os.listdir(mp4ParentDirs)
+        mp4files = getMp4Files(mp4ParentDirs, files)
+        # return HttpResponse(mp4files)
+        res_files = categoryFile(mp4files)
+        paginator = Paginator(res_files, 10)
+        try:
+            page = request.GET.get('page')
+        except:
+            page = 1
+        try:
+            page_data = paginator.page(page)
+        except PageNotAnInteger:
+            page_data = paginator.page(1)
+        except EmptyPage:
+            page_data = paginator.page(paginator.num_pages)
+        return render(request, 'mp4_list.html', {"mp4_file": page_data})
+        return HttpResponse(res_files)
+
+
+@login_required(login_url='/')
+def video_cut(request):
+    pass
+
+
+@login_required(login_url='/')
+def video_toonline(request):
+    pass

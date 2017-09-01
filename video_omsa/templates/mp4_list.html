@@ -1,0 +1,83 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block title %}hi {{ user.username }} {% endblock %}
+{% block privi_check %}
+    {% if user.is_authenticated %}
+        <p>
+            {% if 'now "H"' >= 19 and 'now "H"' < 24 %}
+                {{ user.username }},晚上好
+            {% endif %}
+            {% if 'now "H"' < 19 and 'now "H"' > 12 %}
+                {{ user.username }},下午好
+            {% endif %}
+            {% if 'now "H"' <= 12 and 'now "H"' > 0 %}
+                {{ user.username }},早上好
+            {% endif %}
+        </p>
+        {#        {% block content %}#}
+        <div class="col-sm-3 col-md-3">
+            <a href="#" class="thumbnail">
+                <img src='{% static "video/2011N121B.mp4" %}'
+                     alt="通用的占位符缩略图">
+            </a>
+        </div>
+        <div id='imge' style="text-align: center;">
+            <!-- 数据表格分页显示区域-->
+            {% if mp4_file %}
+                <table class="table table-hover" style="text-align: center">
+                    <caption>视频资源列表</caption>
+                    <thead>
+                    <tr>
+                        <th>路径</th>
+                        <th>名称</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for file in mp4_file %}
+                        <tr>
+                            <td>{{ file }}</td>
+                            <td>{{ file }}</td>
+                            <td>
+                                <a class="btn btn-danger" disabled="disabled" href="#" role="button"
+                                   style="padding-right:50px;">删除</a>
+                                <a class="btn btn-info" href="#" role="button" style="padding-right:50px;">替换</a>
+                                <a class="btn btn-success" href="#" role="button" style="padding-right:50px;">更改名字</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <!-- 如果当前是第一页，就不显示【上一页】链接 -->
+                <span class="step-links">
+                {% if mp4_file.has_previous %}
+                    {% ifnotequal 1 mp4_file.number|add:-1 %}
+                        <a type="button" class="btn btn-info" id='prePage'
+                           href="/video/list.html?action=pagination&page=1">首页</a>
+                    {% endifnotequal %}
+                    <a type="button" class="btn btn-info" id='prePage'
+                       href="/video/list.html?action=pagination&page={{ mp4_file.number|add:-1}}">上一页</a>
+                {% endif %}
+                </span>
+
+                <span class="current">
+                    当前页： {{ mp4_file.number }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总页数: {{ mp4_file.paginator.num_pages }}
+                </span>
+
+                {% if mp4_file.has_next %}
+                    <a type="button" class="btn btn-info" id='prePage'
+                       href="/video/list.html?action=pagination&page={{ mp4_file.number|add:1}}">下一页</a>
+                    {% ifnotequal mp4_file.paginator.num_pages mp4_file.number|add:1 %}
+                        <a type="button" class="btn btn-info" id='prePage'
+                           href="/video/list.html?action=pagination&page={{ mp4_file.paginator.num_pages }}">尾页</a>
+                    {% endifnotequal %}
+                {% endif %}
+            {% endif %}
+        </div>
+        {#        {% endblock %}#}
+    {% else %}<p>
+        <center>对不起您无权限查看该页面,请在页面<b style='color:blue;'>个人设置</b>点击<b style='color:blue;'><a href='/'>登录</a></b></center>
+        </p>
+    {% endif %}
+{% endblock %}
