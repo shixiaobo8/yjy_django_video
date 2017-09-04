@@ -699,7 +699,7 @@ def categoryFile(files):
     res = []
     for file in files:
         if '.mp4' in file:
-            res.append(file.encode('utf8').replace('file', '').replace('<br/>',''))
+            res.append(file.replace('file', '').replace('<br/>',''))
     return res
 
 
