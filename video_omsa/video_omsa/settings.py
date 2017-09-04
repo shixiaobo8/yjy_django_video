@@ -16,8 +16,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+SERVER_DOMAIN = "http://www.devops89.cn:81"
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -214,3 +213,7 @@ CACHES = {
 REDIS_TIMEOUT=7*24*60*60
 CUBES_REDIS_TIMEOUT=60*60
 NEVER_REDIS_TIMEOUT=365*24*60*60
+
+#### 全局配置文件 #####
+## mp4 服务器视频上传资源位置
+MP4_SERVER_DIR = 'D:/bjyjy' + u"/要上传的视频"

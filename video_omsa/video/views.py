@@ -706,7 +706,7 @@ def categoryFile(files):
 @login_required(login_url='/')
 def video_list(request):
     if request.method == 'GET':
-        mp4ParentDirs = 'D:/bjyjy' + u"/要上传的视频"
+        mp4ParentDirs = settings.MP4_SERVER_DIR
         files = os.listdir(mp4ParentDirs)
         mp4files = getMp4Files(mp4ParentDirs, files)
         # return HttpResponse(mp4files)
