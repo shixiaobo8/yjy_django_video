@@ -46,6 +46,10 @@
                     alert("亲，用户名不能重复！！");
                     return;
                 }
+                if(new_username == ""){
+                    alert("亲，用户名不能为空！！");
+                    return;
+                }
                 $.post("/chusername",{"new_username":new_username,"old_username":"{{ request.user.username}}"},function(res){
                     var data = JSON.parse(res);
                     if(data['data'] == '修改成功!'){
@@ -64,6 +68,10 @@
                 var new_password2 = $("#chpassword2").val();
                 if(new_password1 != new_password2){
                     alert("亲，两次输入的密码不一致！！");
+                    return;
+                }
+                if(new_password1.length <6 || new_password1.length>15){
+                    alert("亲，密码长度应该再6到15位之间！！");
                     return;
                 }
                 $.post("/chpwd",{"new_password":new_password1,"old_username":"{{ request.user.username}}"},function(res){
