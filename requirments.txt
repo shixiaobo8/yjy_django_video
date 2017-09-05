@@ -19,3 +19,4 @@ django-highcharts
 zabbix_api
 django-simple-captcha
 django-redis == 4.7.0
+simplejson
