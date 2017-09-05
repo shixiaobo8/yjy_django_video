@@ -4,6 +4,63 @@
 {% block title %}hi {{ user.username }} {% endblock %}
 {% block privi_check %}
     {% if user.is_authenticated %}
+        <link type="text/css" rel="stylesheet" href='{% static "plugins/bootstrap-fileinput/css/fileinput.css" %}'/>
+        <script type="text/javascript" src='{% static "plugins/bootstrap-fileinput/js/fileinput.js" %}'></script>
+        <script type="text/javascript" src='{% static "plugins/bootstrap-fileinput/js/locales/zh.js" %}'></script>
+        <script>
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+                var parentId = $("#id_parent_id").val();
+                var apptype = $("#id_app_type").val();
+                var chapter_id = $("select[name=id_chapter_id]").val();
+                // 修改头像
+                $("#new-mp4").fileinput({
+                    'previewFileType': 'any',
+                    showUpload: true,
+                    language: 'zh',
+                    uploadAsync: true,
+                    dropZoneEnabled: true,
+                    uploadUrl: '/video/upload',
+                    maxFileCount: 100,
+                    showCaption: true,
+                    showPreview: true,
+                    allowedFileExtensions: ['mp4'],
+                    previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                    uploadExtraData: {"parentId":parentId,"apptype":apptype,"chapter_id":chapter_id}
+                }).on('fileerror', function (event, data, msg) {
+
+                }).on("fileuploaded", function (event, data) {
+                    if (data.response) {
+                        alert("图像修改成功！点击确认2秒后自动刷新页面");
+                        setTimeout("location.href='{{ request.get_full_path }}'", 2000);
+                    }
+                })
+            });
+            function getChapters() {
+                var parentId = $("#id_parent_id").val();
+                var apptype = $("#id_app_type").val();
+                $.ajax({
+                    url: "/getChapterById?id=" + parentId + "&apptype=" + apptype,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        chapter_id = $("#id_chapter_id");
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_chapter_id").show();
+                            $("#id_chapter_id").empty();
+                            for (i = 0; i < data.length; i++) {
+                                chapter_id.append("<option value=" + i + ">" + data[i] + "</option>");
+                            }
+                        } else {
+                            $("#id_chapter_id").hide();
+                        }
+                    }
+                });
+            }
+        </script>
         <p>
             {% if 'now "H"' >= 19 and 'now "H"' < 24 %}
                 {{ user.username }},晚上好
@@ -19,16 +76,50 @@
         <center><h3> 视频资源搜索列表以及修改 </h3></center>
         <div class="row">
         <div class="form-inline">
-            <div class="col-lg-8" >
+            <div class="col-lg-8">
                 <input type="text" style="width: 60%" id="mp4-search" class="form-control"
                        placeholder="输入要搜索的视频命令代号，支持*通配符搜索  例如:xyky*">&nbsp;&nbsp;&nbsp;
                 <a type="button" class="btn btn-info" id='search-mp4' href="/video/upload">搜索</a>
             </div>
             <div class="col-lg-4" align="center">
-                <div class="col-lg-6">
-                    <a type="button" class="btn btn-success" id='new-mp4' href="/video/upload">上传新的视频资源请点击这里</a>
+                <div class="col-lg-6" id="upload_new_video">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-uploads">上传新的视频资源请点击这里
+                    </button>
+                    <div class="modal fade" id="new-uploads" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true" style="margin-top:100px;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">×
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        上传新的视频文件
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-inline">
+                                        <div class="col-lg-5" style="width: 100%;">
+                                            {{ form.app_type.label }}:&nbsp;&nbsp;{{ form.app_type }}
+                                            {{ form.parent_id.label }}:&nbsp;&nbsp;{{ form.parent_id }}
+                                         </div>
+                                        <div class="col-lg-5" style="width: 100%;">
+                                            {{ form.chapter_id.label }}:&nbsp;&nbsp;{{ form.chapter_id }}
+                                            {#                                            {{ form.name.label }}{{ form.name }}#}
+                                        </div>
+                                    </div>
+                                    <label class="control-label">请选择视频文件</label>
+                                    <input id="new-mp4" name="new-mp4" type="file" multiple
+                                           class="file-loading">
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6" id="list_precutmp4">
                     <a type="button" class="btn btn-warning" id='selected-mp4' href="/video/cut">查看标记为预切片的视频资源</a>
                 </div>
             </div>

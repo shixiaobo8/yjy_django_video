@@ -29,13 +29,9 @@ def PhoneValidate(value):
 
 class videoForm(forms.Form):
 	chapters = []
-	PARENT_ID = (
-		(1,'直播'),
-		(2,'精讲'),
-		(3,'技能'),
-		(4,'冲刺'),
-		(5,'专题'),
-	)
+	PARENT_ID2 = [ (i,str(i) + "年真题") for i in range(1988,t_year + 1)]
+	PARENT_ID1 = PARENT_ID2.extend([(1,'直播'),(2,'精讲'),(3,'技能'),(4,'冲刺'),(5,'专题')])
+	PARENT_ID = tuple(PARENT_ID2)[::-1]
 	STATUS_CHOICES = (
 		(0,'关闭'),
 		(1,'直播'),

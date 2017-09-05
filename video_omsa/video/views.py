@@ -18,7 +18,8 @@ from django.db import connection
 from .models import Nav
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-import json, os, sys, xlwt, requests, time, calendar, random, shutil
+import json, os, sys, xlwt, requests, time, calendar, random, shutil,simplejson
+import MySQLdb as mdb
 
 
 # navs = list(Nav.objects.all())
@@ -699,13 +700,14 @@ def categoryFile(files):
     res = []
     for file in files:
         if '.mp4' in file:
-            res.append(file.replace('file', '').replace('<br/>',''))
+            res.append(file.replace('file', '').replace('<br/>', ''))
     return res
 
 
 @login_required(login_url='/')
 def video_list(request):
     if request.method == 'GET':
+        form = videoForm(request.GET)
         mp4ParentDirs = settings.MP4_SERVER_DIR
         files = os.listdir(mp4ParentDirs)
         mp4files = getMp4Files(mp4ParentDirs, files)
@@ -722,7 +724,7 @@ def video_list(request):
             page_data = paginator.page(1)
         except EmptyPage:
             page_data = paginator.page(paginator.num_pages)
-        return render(request, 'mp4_list.html', {"mp4_file": page_data})
+        return render(request, 'mp4_list.html', {"mp4_file": page_data, 'form': form})
         return HttpResponse(res_files)
 
 
@@ -734,3 +736,58 @@ def video_cut(request):
 @login_required(login_url='/')
 def video_toonline(request):
     pass
+
+
+class dbUtil():
+    reload(sys)
+    sys.setdefaultencoding('utf8')
+    def __init__(self, dbname):
+        try:
+            self.dbname = dbname
+            self.conn = mdb.connect(host='localhost', port=3306, user='root', passwd='123456', db=self.dbname,charset="utf8" )
+            self.cursor = self.conn.cursor()
+        except Exception, e:
+            print e
+
+
+def getSqls(request):
+    res = []
+    data = 'aaa'
+    dbnames = ['yjy_xiyizonghe', 'yjy_xiyizhiyeyishi', 'yjy_zhongyizonghe','tcmsq']
+    t_year = int(time.strftime('%Y', time.localtime(time.time())))
+    PARENT_IDS = [(i, str(i) + '年真题') for i in range(1988, t_year + 1)]
+    for dbname in dbnames:
+        db = dbUtil(dbname)
+        try:
+            t_sql = "select distinct `title`,`app_type` from yjy_im_category where `parent_id` != 0 and `is_del` = 0;"
+            db.cursor.execute(t_sql)
+            titles = db.cursor.fetchall()
+            for parent_id in PARENT_IDS:
+                p_sql = "insert into `%s`.yjy_im_category(`id`,`title`,`parent_id`,`app_type`,`is_del`,`order`) values('%d','%s','0','','0','0');" % (
+                db.dbname,int(parent_id[0]), parent_id[1])
+                res.append(p_sql)
+                # db.cursor.execute(p_sql)
+                for title in titles:
+                    i_sql = "insert into `%s`.yjy_im_category(`title`,`parent_id`,`app_type`,`is_del`,`order`) values('%s','%s','%s','0','0');" % (db.dbname,title[0],parent_id[0],title[1])
+        except Exception, e:
+            pass
+    for r in res:
+        with open("C:/Users/YJY/Desktop/add_chapter",'ab+') as f:
+            f.write(str(r))
+            f.write("\r")
+    return HttpResponse(len(res))
+
+# mp4视频上传处理
+@csrf_exempt
+def video_upload(request):
+    if request.method == 'POST':
+        # data = json.loads(request.POST.get('data',None))
+        apptype = request.POST['apptype']
+        chapter_id = request.POST['chapter_id']
+        parentId = request.POST['parentId']
+        files = request.FILES.get("new-mp4", None)
+        if files:
+            filename = files.name
+            return HttpResponse(filename+chapter_id+parentId+apptype)
+        else:
+            return HttpResponse('没有上传文件')

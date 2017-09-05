@@ -42,7 +42,9 @@ urlpatterns = [
     url(r'^chpwd$', video_views.chpwd,name='chpwd'),
     url(r'^video/list.html$', video_views.video_list,name='video_list'),
     url(r'^video/cut$', video_views.video_cut,name='video_cut'),
+    url(r'^video/upload$', video_views.video_upload,name='video_upload'),
     url(r'^video/toonline$', video_views.video_toonline,name='video_toonline'),
+    url(r'^getSqls$', video_views.getSqls,name='getSqls'),
 ]
 handler404 = video_views.page_not_found
 handler500 = video_views.page_error
