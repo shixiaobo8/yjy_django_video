@@ -14,7 +14,6 @@
                 });
                 var parentId = $("#id_parent_id").val();
                 var apptype = $("#id_app_type").val();
-                var chapter_id = $("select[name=id_chapter_id]").val();
                 // 修改头像
                 $("#new-mp4").fileinput({
                     'previewFileType': 'any',
@@ -28,8 +27,12 @@
                     showPreview: true,
                     allowedFileExtensions: ['mp4'],
                     previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-                    uploadExtraData: {"parentId":parentId,"apptype":apptype,"chapter_id":chapter_id}
-                }).on('fileerror', function (event, data, msg) {
+                    uploadExtraData:  function() {
+                        var chapter_id = $("#id_chapter_id").val();
+                        var data = {"parentId": parentId, "apptype":apptype,"chapter_id":chapter_id };
+                        return data;
+                        }
+                    }).on('fileerror', function (event, data, msg) {
 
                 }).on("fileuploaded", function (event, data) {
                     if (data.response) {
