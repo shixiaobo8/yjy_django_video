@@ -18,7 +18,7 @@ from django.db import connection
 from .models import Nav
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-import json, os, sys, xlwt, requests, time, calendar, random, shutil,simplejson
+import json, os, sys, xlwt, requests, time, calendar, random, shutil, simplejson
 import MySQLdb as mdb
 
 
@@ -48,18 +48,39 @@ def getChapterById(request):
         chapters1 = []
         chaps = getChapters(apptype, int(parentId))
         for i in range(0, len(chaps)):
-            chapters1.append(chaps[i][0])
-        return HttpResponse(json.dumps(chapters1))
+            chapters1.append(chaps)
+        return HttpResponse(json.dumps(chapters1[0]))
 
 
 def getChapters(apptype, id):
     try:
         cursor = connection.cursor()
         chapters = []
-        sql = "select title from %s.yjy_im_category where parent_id=%d" % (apptype, id)
+        sql = "select `id`,`title` from %s.yjy_im_category where parent_id=%d" % (apptype, id)
         cursor.execute(sql)
         titles = cursor.fetchall()
         return titles
+    except Exception, e:
+        print e
+
+
+def getappCategory(request):
+    if request.method == 'GET':
+        apptype = request.GET['apptype']
+        res = []
+        appCategorys = getCategorys(apptype)
+        for i in range(0, len(appCategorys)):
+            res.append(list(appCategorys[i]))
+        return HttpResponse(json.dumps(res))
+
+
+def getCategorys(apptype):
+    try:
+        cursor = connection.cursor()
+        sql = "select `id`,`title` from `%s`.yjy_im_category where `parent_id`=0 and `is_del`=0 " % (apptype)
+        cursor.execute(sql)
+        appCategorys = cursor.fetchall()
+        return appCategorys
     except Exception, e:
         print e
 
@@ -741,10 +762,12 @@ def video_toonline(request):
 class dbUtil():
     reload(sys)
     sys.setdefaultencoding('utf8')
+
     def __init__(self, dbname):
         try:
             self.dbname = dbname
-            self.conn = mdb.connect(host='localhost', port=3306, user='root', passwd='123456', db=self.dbname,charset="utf8" )
+            self.conn = mdb.connect(host='localhost', port=3306, user='root', passwd='123456', db=self.dbname,
+                                    charset="utf8")
             self.cursor = self.conn.cursor()
         except Exception, e:
             print e
@@ -753,7 +776,7 @@ class dbUtil():
 def getSqls(request):
     res = []
     data = 'aaa'
-    dbnames = ['yjy_xiyizonghe', 'yjy_xiyizhiyeyishi', 'yjy_zhongyizonghe','tcmsq']
+    dbnames = ['yjy_xiyizonghe', 'yjy_xiyizhiyeyishi', 'yjy_zhongyizonghe', 'tcmsq']
     t_year = int(time.strftime('%Y', time.localtime(time.time())))
     PARENT_IDS = [(i, str(i) + '年真题') for i in range(1988, t_year + 1)]
     for dbname in dbnames:
@@ -764,30 +787,72 @@ def getSqls(request):
             titles = db.cursor.fetchall()
             for parent_id in PARENT_IDS:
                 p_sql = "insert into `%s`.yjy_im_category(`id`,`title`,`parent_id`,`app_type`,`is_del`,`order`) values('%d','%s','0','','0','0');" % (
-                db.dbname,int(parent_id[0]), parent_id[1])
+                    db.dbname, int(parent_id[0]), parent_id[1])
                 res.append(p_sql)
                 # db.cursor.execute(p_sql)
                 for title in titles:
-                    i_sql = "insert into `%s`.yjy_im_category(`title`,`parent_id`,`app_type`,`is_del`,`order`) values('%s','%s','%s','0','0');" % (db.dbname,title[0],parent_id[0],title[1])
+                    i_sql = "insert into `%s`.yjy_im_category(`title`,`parent_id`,`app_type`,`is_del`,`order`) values('%s','%s','%s','0','0');" % (
+                    db.dbname, title[0], parent_id[0], title[1])
+                    res.append(i_sql)
         except Exception, e:
             pass
     for r in res:
-        with open("C:/Users/YJY/Desktop/add_chapter",'ab+') as f:
+        with open("C:/Users/YJY/Desktop/add_chapter.sql", 'ab+') as f:
             f.write(str(r))
             f.write("\r")
     return HttpResponse(len(res))
 
-# mp4视频上传处理
+
+# mp4视频同步上传处理
 @csrf_exempt
 def video_upload(request):
+    res = dict()
+    filenames = []
+    upload_time = time.time()
+    c_time = time.strftime('%Y_%m_%d_%H_%S_%M', time.localtime(upload_time))
     if request.method == 'POST':
-        # data = json.loads(request.POST.get('data',None))
-        apptype = request.POST['apptype']
-        chapter_id = request.POST['chapter_id']
-        parentId = request.POST['parentId']
-        files = request.FILES.get("new-mp4", None)
-        if files:
-            filename = files.name
-            return HttpResponse(filename+chapter_id+parentId+apptype)
-        else:
-            return HttpResponse('没有上传文件')
+        files = request.FILES.getlist("new-mp4")
+        # 将操作写入数据库
+        try:
+            if files:
+                for file in files:
+                    filename = file.name
+                    filenames.append(filename)
+                    apptype = request.POST['apptype']
+                    chapter_id = request.POST['chapter_id']
+                    parentId = request.POST['parentId']
+                    mp4_save_dir = getUploadDir(apptype, chapter_id, parentId)
+                    save_filename = mp4_save_dir + '/' + request.user.username + '_' + c_time + '_' + filename
+                    save_destination = open(save_filename, 'wb+')  # 打开特定的文件进行二进制写操作
+                    for chunk in file.chunks():
+                        save_destination.write(chunk)
+                    save_destination.close()
+                    sql = "insert into `yjy_mp4`(`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`parent_id`,`mp4_download_url`) values('%s','%s','%s','%s','%s','%s')"%(save_filename,upload_time,chapter_id,apptype,parentId,request.META['SERVER_NAME']+request.META['SERVER_PORT'])
+                    rs = executeSql(sql)
+                res['data'] =  "".join(filenames) + "上传成功!"
+            else:
+                res['error'] = "".join(filenames) + '上传文件失败！'
+        except Exception, e:
+            print e
+        finally:
+            return HttpResponse(json.dumps(res))
+
+
+def getUploadDir(apptype, chapter_id, parent_id):
+    today = time.strftime('%Y_%m_%d', time.localtime(time.time()))
+    dir = settings.MP4_UPLOAD_DIR + '/' + apptype + '/' + parent_id + '/' + chapter_id + '/' + today + '/'
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    return dir
+
+
+def executeSql(sql):
+    res = ''
+    try:
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        res = data
+    except Exception, e:
+        print e
+    return res

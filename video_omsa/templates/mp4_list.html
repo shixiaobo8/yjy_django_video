@@ -12,34 +12,46 @@
                 $.ajaxSetup({
                     data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
                 });
-                var parentId = $("#id_parent_id").val();
-                var apptype = $("#id_app_type").val();
                 // 修改头像
                 $("#new-mp4").fileinput({
                     'previewFileType': 'any',
                     showUpload: true,
                     language: 'zh',
-                    uploadAsync: true,
+                    uploadAsync: false, // 使用同步上传
                     dropZoneEnabled: true,
                     uploadUrl: '/video/upload',
                     maxFileCount: 100,
+                    maxFileSize:307200,
                     showCaption: true,
                     showPreview: true,
                     allowedFileExtensions: ['mp4'],
                     previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
-                    uploadExtraData:  function() {
+                    uploadExtraData: function () {
+                        var apptype = $("#id_app_type").val();
                         var chapter_id = $("#id_chapter_id").val();
-                        var data = {"parentId": parentId, "apptype":apptype,"chapter_id":chapter_id };
+                        var parentId = $("#id_parent_id").val();
+                        var data = {"parentId": parentId, "apptype": apptype, "chapter_id": chapter_id};
                         return data;
-                        }
-                    }).on('fileerror', function (event, data, msg) {
-
-                }).on("fileuploaded", function (event, data) {
+                    }
+{#                }).on('fileerror', function (event, data, msg) { // 异步上传失败#}
+{#                    if (data.response) {#}
+{#                        alert(data.response.data);#}
+{#                    }#}
+{#                }).on("fileuploaded", function (event, data) { // 异步上传成功#}
+{#                    if (data.response) {#}
+{#                        alert(data.response.data);#}
+{#                    }#}
+                }).on('filebatchuploadsuccess', function(event, data, previewId, index) { // 同步上传成功
                     if (data.response) {
-                        alert("图像修改成功！点击确认2秒后自动刷新页面");
+                        alert(data.response.data);
                         setTimeout("location.href='{{ request.get_full_path }}'", 2000);
                     }
-                })
+                }).on('filebatchuploaderror', function(event, data, msg) {
+                    if (data.response) {
+                        alert(data.response.data);
+                        setTimeout("location.href='{{ request.get_full_path }}'", 2000);
+                    }
+                });
             });
             function getChapters() {
                 var parentId = $("#id_parent_id").val();
@@ -55,7 +67,7 @@
                             $("#id_chapter_id").show();
                             $("#id_chapter_id").empty();
                             for (i = 0; i < data.length; i++) {
-                                chapter_id.append("<option value=" + i + ">" + data[i] + "</option>");
+                                chapter_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
                             }
                         } else {
                             $("#id_chapter_id").hide();
@@ -63,6 +75,31 @@
                     }
                 });
             }
+            // 获取app章节类型
+            function getCategorys() {
+                var apptype = $("#id_app_type").val();
+                $.ajax({
+                    url: "/getCategorys?apptype=" + apptype,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        parent_id = $("#id_parent_id");
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_parent_id").show();
+                            $("#id_parent_id").empty();
+                            for (i = 0; i < data.length; i++) {
+                                parent_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+                            }
+                        } else {
+                            $("#id_parent_id").hide();
+                        }
+                    }
+                });
+            }
+        function createModal(){
+
+        }
         </script>
         <p>
             {% if 'now "H"' >= 19 and 'now "H"' < 24 %}
@@ -106,12 +143,13 @@
                                         <div class="col-lg-5" style="width: 100%;">
                                             {{ form.app_type.label }}:&nbsp;&nbsp;{{ form.app_type }}
                                             {{ form.parent_id.label }}:&nbsp;&nbsp;{{ form.parent_id }}
-                                         </div>
+                                        </div>
                                         <div class="col-lg-5" style="width: 100%;">
                                             {{ form.chapter_id.label }}:&nbsp;&nbsp;{{ form.chapter_id }}
                                             {#                                            {{ form.name.label }}{{ form.name }}#}
                                         </div>
                                     </div>
+                                    <div id="alert_mess"></div>
                                     <label class="control-label">请选择视频文件</label>
                                     <input id="new-mp4" name="new-mp4" type="file" multiple
                                            class="file-loading">

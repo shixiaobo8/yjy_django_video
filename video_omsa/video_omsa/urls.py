@@ -19,6 +19,7 @@ urlpatterns = [
     url(r'^logout$', video_views.logout),
     url(r'^reg$', video_views.reg),
     url(r'^getChapterById', video_views.getChapterById),
+    url(r'^getCategorys', video_views.getappCategory),
     url(r'^addIm$', video_views.addIm),
     url(r'^add_Im$', video_views.add_Im),
     url(r'^im_list.html$', video_views.imList),
