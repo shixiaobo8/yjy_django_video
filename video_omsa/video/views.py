@@ -20,6 +20,8 @@ from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
 import json, os, sys, xlwt, requests, time, calendar, random, shutil, simplejson
 import MySQLdb as mdb
+from django.http import StreamingHttpResponse
+
 
 
 # navs = list(Nav.objects.all())
@@ -792,7 +794,7 @@ def getSqls(request):
                 # db.cursor.execute(p_sql)
                 for title in titles:
                     i_sql = "insert into `%s`.yjy_im_category(`title`,`parent_id`,`app_type`,`is_del`,`order`) values('%s','%s','%s','0','0');" % (
-                    db.dbname, title[0], parent_id[0], title[1])
+                        db.dbname, title[0], parent_id[0], title[1])
                     res.append(i_sql)
         except Exception, e:
             pass
@@ -827,9 +829,11 @@ def video_upload(request):
                     for chunk in file.chunks():
                         save_destination.write(chunk)
                     save_destination.close()
-                    sql = "insert into `yjy_mp4`(`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`parent_id`,`mp4_download_url`) values('%s','%s','%s','%s','%s','%s')"%(save_filename,upload_time,chapter_id,apptype,parentId,request.META['SERVER_NAME']+request.META['SERVER_PORT'])
+                    sql = "insert into `yjy_mp4`(`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`parent_id`,`mp4_download_url`) values('%s','%s','%s','%s','%s','%s')" % (
+                    save_filename, upload_time, chapter_id, apptype, parentId,
+                    request.META['SERVER_NAME'] + request.META['SERVER_PORT'])
                     rs = executeSql(sql)
-                res['data'] =  "".join(filenames) + "上传成功!"
+                res['data'] = "".join(filenames) + "上传成功!"
             else:
                 res['error'] = "".join(filenames) + '上传文件失败！'
         except Exception, e:
@@ -856,3 +860,84 @@ def executeSql(sql):
     except Exception, e:
         print e
     return res
+
+
+def getUserProperties(username):
+    res = dict()
+    sql = "select `id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`,`apptype`,`touxiang` from auth_user where username='%s'" % (
+    username)
+    rs = executeSql(sql)
+    if rs:
+        res['id'] = rs[0][0]
+        res['password'] = rs[0][1]
+        res['last_login'] = rs[0][2]
+        res['is_superuser'] = rs[0][3]
+        res['username'] = rs[0][4]
+        res['first_name'] = rs[0][5]
+        res['last_name'] = rs[0][6]
+        res['email'] = rs[0][7]
+        res['is_staff'] = rs[0][8]
+        res['is_active'] = rs[0][9]
+        res['date_joined'] = rs[0][10]
+        res['apptype'] = rs[0][11]
+        res['touxiang'] = rs[0][12]
+    return res
+
+
+def getAppMp4(apptype):
+    res = dict()
+    sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name` from yjy_mp4 where original_sava_path like '%" + apptype + "%'"
+    rs = executeSql(sql)
+    res['count'] = len(rs)
+    res['list'] = []
+    # return  rs
+    for i in range(0,len(rs)):
+        tmp = dict()
+        tmp['id'] = rs[i][0]
+        tmp['original_save_path'] = rs[i][1]
+        tmp['upload_save_time'] = rs[i][2]
+        tmp['chapter_id'] = rs[i][3]
+        tmp['apptype'] = rs[i][4]
+        tmp['cut_status'] = rs[i][5]
+        tmp['is_del'] = rs[i][6]
+        tmp['cut_id'] = rs[i][7]
+        tmp['video_name'] = rs[i][8]
+        tmp['mp4_download_url'] = rs[i][9]
+        tmp['section_id'] = rs[i][10]
+        tmp['is_named'] = rs[i][11]
+        tmp['is_category'] = rs[i][12]
+        tmp['chinese_name'] = rs[i][13]
+        res['list'].append(tmp)
+    return res
+
+# 获取章节名称
+def getAppTitle(apptype,id):
+    sql = ''
+    return sql
+
+@login_required(login_url='/')
+def getMyAppMp4(request):
+    User = getUserProperties(request.user.username)
+    MyVideos = getAppMp4(User['apptype'])
+    return render(request, 'MyAppMp4.html', {'user1': User,'MyVideos':MyVideos})
+
+
+def mp4_file_download(request):
+    if request.method == 'GET':
+        the_file_name = request.GET['download_file_name']
+        if the_file_name:
+            response = StreamingHttpResponse(file_iterator(the_file_name))
+            response['Content-Type'] = 'application/octet-stream'
+            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+            return response
+        else:
+            return HttpResponse(json.dumps({'code':'555','data':'参数错误'}))
+
+def file_iterator(file_name, chunk_size=512):
+    with open(file_name) as f:
+        while True:
+            c = f.read(chunk_size)
+            if c:
+                yield c
+            else:
+                break

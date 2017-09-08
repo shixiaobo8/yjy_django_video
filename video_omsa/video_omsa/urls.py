@@ -46,6 +46,8 @@ urlpatterns = [
     url(r'^video/upload$', video_views.video_upload,name='video_upload'),
     url(r'^video/toonline$', video_views.video_toonline,name='video_toonline'),
     url(r'^getSqls$', video_views.getSqls,name='getSqls'),
+    url(r'^video/getMyAppMp4.html',video_views.getMyAppMp4,name='getMyAppMp4'),
+    url(r'^video/mp4_file_download',video_views.mp4_file_download,name='mp4_file_download'),
 ]
 handler404 = video_views.page_not_found
 handler500 = video_views.page_error

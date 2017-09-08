@@ -97,9 +97,6 @@
                     }
                 });
             }
-        function createModal(){
-
-        }
         </script>
         <p>
             {% if 'now "H"' >= 19 and 'now "H"' < 24 %}
@@ -113,7 +110,7 @@
         {#        {% block content %}#}
         <hr/>
         <!-- mp4 资源搜索 -->
-        <center><h3> 视频资源搜索列表以及修改 </h3></center>
+        <center><h3> 视频服务器所有MP4资源搜索列表以及修改 </h3></center>
         <div class="row">
         <div class="form-inline">
             <div class="col-lg-8">
@@ -162,6 +159,9 @@
                 </div>
                 <div class="col-lg-6" id="list_precutmp4">
                     <a type="button" class="btn btn-warning" id='selected-mp4' href="/video/cut">查看标记为预切片的视频资源</a>
+                </div>
+                <div class="col-lg-6" id="list_MyAppMp4">
+                    <a type="button" class="btn btn-warning" id='MyApp-mp4' href="/video/listMyAppMp4">查看所有视频资源</a>
                 </div>
             </div>
         </div>
