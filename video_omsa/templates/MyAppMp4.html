@@ -1,10 +1,38 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
 {% load static %}
-{% block title %}hi {{ user.username }} {% endblock %}
+{% block title %}hi {{ user.username }} 视频管理页面 {% endblock %}
 {% block privi_check %}
     {% if user.is_authenticated %}
         <script>
+            // 修改视频中文名
+            function chVideoNameById(bt_id, old_cname, text_id) {
+                $(document).ready(function () {
+                    var new_videoname = $("#" + text_id.id).val();
+                    var old_videoname = $("#" + old_cname.id).text();
+                    var video_id = $("#" + text_id.id).attr("name");
+                    if (new_videoname == "") {
+                        alert("亲，视频中文名不能为空！！");
+                        return;
+                    }
+                    if (new_videoname == old_videoname) {
+                        alert("视频名称相同了，请重新填写！！");
+                        return;
+                    }
+                    $.post("chvideoname", {
+                        "new_videoname": new_videoname,
+                        "video_id": video_id
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("视频修改成功！点击确认1秒后自动刷新页面");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
             $(function () {
                 function initTableCheckbox() {
                     var $thr = $('table thead tr');
@@ -54,7 +82,7 @@
         <div class="panel-group">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    列表
+                    {{ apptype }}的视频mp4视频列表
                 </div>
                 <div class="panel-body">
                     <div class="list-op" id="list_op">
@@ -70,42 +98,90 @@
                     </div>
                 </div>
                 <table class="table table-bordered table-hover">
+                    <caption align="center"><h4>{{ apptype }}下共找到{{ count }}个文件</h4></caption>
                     <thead>
                     <tr class="success">
                         <th>视频id</th>
-                        <th>所属app</th>
-                        <th>是否已删除</th>
+                        <th>删除状态</th>
                         <th>视频中文名</th>
-                        <th>所属章节</th>
-                        <th>服务器存储地址</th>
                         <th>章节分类</th>
+                        <th>所属章节</th>
+                        <th>章节内部分类</th>
+                        <th>服务器存储地址</th>
                         <th>mp4下载地址</th>
                         <th>切片状态</th>
-                        <th>是否命令</th>
                         <th>上传时间</th>
-                        <th>切片id</th>
-                        <th>视频名称</th>
-                        <th>是否分类</th>
                     </tr>
                     </thead>
                     <tbody>
-                    共找到{{ MyVideos.count }}个文件
-                    {% for video in MyVideos.list %}
+                    {% for video in MyVideos %}
                         <tr>
                             <td>{{ video.id }}</td>
-                            <td>{{ video.apptype }}</td>
-                            <td>{{ video.is_del }}</td>
-                            <td>{{ video.chinsee_name }}</td>
-                            <td>{{ video.chapter_id }}</td>
+                            {% if video.is_del == 0 %}
+                                <td style="color: green">正常</td>
+                            {% endif %}
+                            {% if video.is_del != 0 %}
+                                <td style="color: red">已删除</td>
+                            {% endif %}
+                            <td>
+                                <button class="btn btn-default" data-toggle="modal" id="chinese_name{{ video.id }}"
+                                        data-target="#chvideoname{{ video.id }}">{{ video.chinese_name }}</button>
+                                <div class="modal fade" id="chvideoname{{ video.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel"
+                                     aria-hidden="true" style="margin-top:100px;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">×
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    修改视频中文名
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="chvideonametext{{ video.id }}">
+                                                    <span class="input-group-addon">视频名称</span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chvideonamebt{{ video.id }}"
+                                                        onclick="chVideoNameById(chvideonamebt{{ video.id }},chinese_name{{ video.id }},chvideonametext{{ video.id }})">
+                                                    提交更改
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="?parent_id={{ video.parent_id.id }}">{{ video.parent_id.name }}</a>
+                            </td>
+                            <td>
+                                <a href="?chapter_id={{ video.chapter_id.id }}">{{ video.chapter_id.name }}</a>
+                            </td>
+                            <td>
+                                {% if video.section_id %}
+                                    {{ video.section_id }}
+                                {% endif %}
+                                {% if not video.section_id %}
+                                    暂未分类
+                                {% endif %}
+                            </td>
                             <td>{{ video.original_save_path }}</td>
-                            <td>{{ video.section_id }}</td>
-                            <td><a href="mp4_file_download?download_file_name={{ video.original_save_path }}">点击下载</a></td>
-                            <td>{{ video.cut_status }}</td>
-                            <td>{{ video.is_named }}</td>
+                            <td><a href="mp4_file_download?id={{ video.id }}">点击下载</a></td>
+                            <td>
+                                {% if video.cut_id == 0 %}
+                                    <a type="button" class="btn btn-info" href="start_cut?id={{ video.id }}">加入到切片队列</a>
+                                {% endif %}
+                                {% if video.cut_id != 0 %}
+                                    {{ video.id }} 查看切片详情
+                                {% endif %}
+                            </td>
                             <td>{{ video.upload_save_time }}</td>
-                            <td>{{ video.cut_id }}</td>
-                            <td>{{ video.video_name }}</td>
-                            <td>{{ video.is_category }}</td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -115,20 +191,58 @@
                         <ul class="pagination pagination-sm">
                             <li class="disabled">
                                 <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
-                                </a>
-                            </li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                                <a href="#" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
+                                    <span aria-hidden="true"></span>
                                 </a>
                             </li>
                         </ul>
+                    </nav>
+                    <nav>
+                        <!-- 如果当前是第一页，就不显示【上一页】链接 -->
+                        <span class="step-links">
+                            {% if MyVideos.has_previous %}
+                                {% ifnotequal 1 MyVideos.number|add:-1 %}
+                                    {% if '?' in c_url %}
+                                        <a type="button" class="btn btn-info" id='prePage'
+                                           href="{{ c_url }}&page=1">首页</a>
+                                    {% endif %}
+                                    {% if "?" not in c_url %}
+                                        <a type="button" class="btn btn-info" id='prePage'
+                                           href="{{ c_url }}?page=1">首页</a>
+                                    {% endif %}
+                                {% endifnotequal %}
+                                {% if '?' in c_url %}
+                                    <a type="button" class="btn btn-info" id='prePage'
+                                       href="{{ c_url }}&page={{ MyVideos.number|add:-1}}">上一页</a>
+                                {% endif %}
+                                {% if "?" not in c_url %}
+                                    <a type="button" class="btn btn-info" id='prePage'
+                                       href="{{ c_url }}?page={{ MyVideos.number|add:-1}}">上一页</a>
+                                {% endif %}
+                            {% endif %}
+                                </span>
+                                <span class="current">
+                                    当前页： {{ MyVideos.number }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总页数: {{ MyVideos.paginator.num_pages }}
+                        </span>
+                        {% if MyVideos.has_next %}
+                            {% if '?' in c_url %}
+                                <a type="button" class="btn btn-info" id='prePage'
+                                   href="{{ c_url }}&page={{ MyVideos.number|add:1}}">下一页</a>
+                            {% endif %}
+                            {% if "?" not in c_url %}
+                                <a type="button" class="btn btn-info" id='prePage'
+                                   href="{{ c_url }}?page={{ MyVideos.number|add:1}}">下一页</a>
+                            {% endif %}
+                            {% ifnotequal MyVideos.paginator.num_pages MyVideos.number|add:1 %}
+                                {% if "?" in c_url %}
+                                    <a type="button" class="btn btn-info" id='prePage'
+                                       href="{{ c_url }}&page={{ MyVideos.paginator.num_pages }}">尾页</a>
+                                {% endif %}
+                                {% if "?" not in c_url %}
+                                    <a type="button" class="btn btn-info" id='prePage'
+                                       href="{{ c_url }}?page={{ MyVideos.paginator.num_pages }}">尾页</a>
+                                {% endif %}
+                            {% endifnotequal %}
+                        {% endif %}
                     </nav>
                 </div><!-- end of panel-footer -->
             </div><!-- end of panel -->

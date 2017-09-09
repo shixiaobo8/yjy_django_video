@@ -21,7 +21,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json, os, sys, xlwt, requests, time, calendar, random, shutil, simplejson
 import MySQLdb as mdb
 from django.http import StreamingHttpResponse
-
+from collections import OrderedDict
 
 
 # navs = list(Nav.objects.all())
@@ -830,8 +830,8 @@ def video_upload(request):
                         save_destination.write(chunk)
                     save_destination.close()
                     sql = "insert into `yjy_mp4`(`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`parent_id`,`mp4_download_url`) values('%s','%s','%s','%s','%s','%s')" % (
-                    save_filename, upload_time, chapter_id, apptype, parentId,
-                    request.META['SERVER_NAME'] + request.META['SERVER_PORT'])
+                        save_filename, upload_time, chapter_id, apptype, parentId,
+                        settings.SERVER_DOMAIN)
                     rs = executeSql(sql)
                 res['data'] = "".join(filenames) + "上传成功!"
             else:
@@ -865,7 +865,7 @@ def executeSql(sql):
 def getUserProperties(username):
     res = dict()
     sql = "select `id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`,`apptype`,`touxiang` from auth_user where username='%s'" % (
-    username)
+        username)
     rs = executeSql(sql)
     if rs:
         res['id'] = rs[0][0]
@@ -884,20 +884,23 @@ def getUserProperties(username):
     return res
 
 
-def getAppMp4(apptype):
+def getAppMp4(apptype,where):
     res = dict()
-    sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name` from yjy_mp4 where original_sava_path like '%" + apptype + "%'"
+    sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id` from yjy_mp4 where original_sava_path like '%" + apptype + "%'"
+    if where:
+        for k,v in where.items():
+            sql += " and " + k + "=" + v
     rs = executeSql(sql)
     res['count'] = len(rs)
     res['list'] = []
     # return  rs
-    for i in range(0,len(rs)):
+    for i in range(0, len(rs)):
         tmp = dict()
         tmp['id'] = rs[i][0]
-        tmp['original_save_path'] = rs[i][1]
-        tmp['upload_save_time'] = rs[i][2]
-        tmp['chapter_id'] = rs[i][3]
-        tmp['apptype'] = rs[i][4]
+        tmp['original_save_path'] = "/".join(rs[i][1].split('/')[4:])
+        tmp['upload_save_time'] = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(rs[i][2]))
+        tmp['chapter_id'] = {"id":rs[i][3],"name":getAppTitle(rs[i][4],rs[i][3])}
+        tmp['apptype'] = getApptypeName(rs[i][4])
         tmp['cut_status'] = rs[i][5]
         tmp['is_del'] = rs[i][6]
         tmp['cut_id'] = rs[i][7]
@@ -907,37 +910,99 @@ def getAppMp4(apptype):
         tmp['is_named'] = rs[i][11]
         tmp['is_category'] = rs[i][12]
         tmp['chinese_name'] = rs[i][13]
+        tmp['parent_id'] = {"id":rs[i][14],"name":getAppTitle(rs[i][4],rs[i][14])}
         res['list'].append(tmp)
     return res
 
 # 获取章节名称
-def getAppTitle(apptype,id):
-    sql = ''
-    return sql
+def getAppTitle(apptype, id):
+    sql = "select title from " + apptype + ".yjy_im_category where id='" + str(id) + "'"
+    rs = executeSql(sql)
+    return rs[0][0]
+
+def getApptypeName(apptype):
+    data = {
+        "yjy_xiyizonghe":"西医综合",
+        "xiyizonghe":"西医综合",
+        "yjy_xiyizhiyeyishi":"西医执业医师",
+        "tcmsq":"中医执业医师",
+        "yjy_zhongyizonghe":"中医综合"
+    }
+    return data[apptype]
 
 @login_required(login_url='/')
 def getMyAppMp4(request):
-    User = getUserProperties(request.user.username)
-    MyVideos = getAppMp4(User['apptype'])
-    return render(request, 'MyAppMp4.html', {'user1': User,'MyVideos':MyVideos})
+    if request.method == 'GET':
+        where = dict()
+        page = request.GET.get('page','None')
+        chapter_id = request.GET.get('chapter_id','None')
+        if chapter_id != 'None':
+            where['chapter_id'] = chapter_id
+        parent_id = request.GET.get('parent_id','None')
+        if parent_id != 'None':
+            where['parent_id'] = parent_id
+        section_id = request.GET.get('section_id','None')
+        if section_id != 'None':
+            where['section_id'] = section_id
+        User = getUserProperties(request.user.username)
+        t_MyVideos = getAppMp4(User['apptype'],where)
+        c_url = getUniqUrl(request.get_full_path(),page)
+        paginator = Paginator(t_MyVideos['list'], 3)
+        try:
+            page = request.GET.get('page')
+        except:
+            page = 1
+        try:
+            MyVideos = paginator.page(page)
+        except PageNotAnInteger:
+            MyVideos = paginator.page(1)
+        except EmptyPage:
+            MyVideos = paginator.page(paginator.num_pages)
+        return render(request, 'MyAppMp4.html', {'user1': User, 'MyVideos': MyVideos,"count":t_MyVideos['count'],"apptype":getApptypeName(User['apptype']),"c_url":c_url})
+    else:
+        return HttpResponse(json.dumps({'code':'555','data':'参数错误'}))
 
+def getUniqUrl(url,page_id):
+    # if len(url.split('page')) > 1:
+    url = url.replace("&page="+page_id,'').replace("page="+page_id + "?",'').replace("?page="+page_id,'')
+    # if len(url.split('?')) > 1:
+    #     url = url.split('?')[0].replace("?","&") + "?" + url.split('?')[1]
+    return url
 
 def mp4_file_download(request):
     if request.method == 'GET':
-        the_file_name = request.GET['download_file_name']
-        if the_file_name:
-            response = StreamingHttpResponse(file_iterator(the_file_name))
+        id = request.GET['id']
+        sql = "select original_sava_path from yjy_mp4 where id='%s'"%(id)
+        file_name = executeSql(sql)[0][0]
+        if id and file_name:
+            def file_iterator(file_name):
+                with open(file_name,'rb') as f:
+                    while True:
+                        c = f.read()
+                        if c:
+                           yield c
+                        else:
+                            break
+            response = StreamingHttpResponse(file_iterator(file_name))
             response['Content-Type'] = 'application/octet-stream'
-            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+            # response['Content-Type'] = 'video/x-mpg'
+            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_name.split('/')[-1].split('_')[9:][0])
             return response
         else:
-            return HttpResponse(json.dumps({'code':'555','data':'参数错误'}))
+            return HttpResponse(json.dumps({'code': '555', 'data': '参数错误'}))
 
-def file_iterator(file_name, chunk_size=512):
-    with open(file_name) as f:
-        while True:
-            c = f.read(chunk_size)
-            if c:
-                yield c
-            else:
-                break
+@csrf_exempt
+def chvideoname(request):
+    data = dict()
+    if request.method == 'POST':
+        video_id = request.POST['video_id']
+        new_videoname = request.POST['new_videoname']
+        if video_id and new_videoname:
+            sql = "update yjy_mp4 set chinese_name='%s' where id='%s'"%(new_videoname,video_id)
+            rs = executeSql(sql)
+            data['code'] = 200
+            data['data'] = '视频名称修改成功'
+        else:
+            data['code'] = 555
+            data['data'] = '参数错误'
+        return HttpResponse(json.dumps(data))

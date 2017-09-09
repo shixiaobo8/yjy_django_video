@@ -98,15 +98,6 @@
                 });
             }
         </script>
-        <p>
-            {% if 'now "H"' >= 19 and 'now "H"' < 24 %}
-                {{ user.username }},晚上好
-            {% elif 'now "H"' < 19 and 'now "H"' > 12 %}
-                {{ user.username }},下午好
-            {% elif 'now "H"' <= 12 and 'now "H"' > 0 %}
-                {{ user.username }},早上好
-            {% endif %}
-        </p>
         {#        {% block content %}#}
         <hr/>
         <!-- mp4 资源搜索 -->
