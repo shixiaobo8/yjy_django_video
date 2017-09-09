@@ -730,6 +730,7 @@ def categoryFile(files):
 @login_required(login_url='/')
 def video_list(request):
     if request.method == 'GET':
+        apptype = getApptypeName(getUserProperties(request.user.username)['apptype'])
         form = videoForm(request.GET)
         mp4ParentDirs = settings.MP4_SERVER_DIR
         files = os.listdir(mp4ParentDirs)
@@ -747,7 +748,7 @@ def video_list(request):
             page_data = paginator.page(1)
         except EmptyPage:
             page_data = paginator.page(paginator.num_pages)
-        return render(request, 'mp4_list.html', {"mp4_file": page_data, 'form': form})
+        return render(request, 'mp4_list.html', {"mp4_file": page_data, 'form': form,"apptype":apptype})
         return HttpResponse(res_files)
 
 
@@ -934,6 +935,7 @@ def getApptypeName(apptype):
 def getMyAppMp4(request):
     if request.method == 'GET':
         where = dict()
+        form = videoForm(request.GET)
         page = request.GET.get('page','None')
         chapter_id = request.GET.get('chapter_id','None')
         if chapter_id != 'None':
@@ -958,7 +960,7 @@ def getMyAppMp4(request):
             MyVideos = paginator.page(1)
         except EmptyPage:
             MyVideos = paginator.page(paginator.num_pages)
-        return render(request, 'MyAppMp4.html', {'user1': User, 'MyVideos': MyVideos,"count":t_MyVideos['count'],"apptype":getApptypeName(User['apptype']),"c_url":c_url})
+        return render(request, 'MyAppMp4.html', {'form':form,'user1': User, 'MyVideos': MyVideos,"count":t_MyVideos['count'],"apptype":getApptypeName(User['apptype']),"c_url":c_url})
     else:
         return HttpResponse(json.dumps({'code':'555','data':'参数错误'}))
 

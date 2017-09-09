@@ -4,7 +4,91 @@
 {% block title %}hi {{ user.username }} 视频管理页面 {% endblock %}
 {% block privi_check %}
     {% if user.is_authenticated %}
+        <link type="text/css" rel="stylesheet" href='{% static "plugins/bootstrap-fileinput/css/fileinput.css" %}'/>
+        <script type="text/javascript" src='{% static "plugins/bootstrap-fileinput/js/fileinput.js" %}'></script>
+        <script type="text/javascript" src='{% static "plugins/bootstrap-fileinput/js/locales/zh.js" %}'></script>
         <script>
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+                // 上传视频
+                $("#new-mp4").fileinput({
+                    'previewFileType': 'any',
+                    showUpload: true,
+                    language: 'zh',
+                    uploadAsync: false, // 使用同步上传
+                    dropZoneEnabled: true,
+                    uploadUrl: '/video/upload',
+                    maxFileCount: 100,
+                    maxFileSize:307200,
+                    showCaption: true,
+                    showPreview: true,
+                    allowedFileExtensions: ['mp4'],
+                    previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+                    uploadExtraData: function () {
+                        var apptype = $("#id_app_type").val();
+                        var chapter_id = $("#id_chapter_id").val();
+                        var parentId = $("#id_parent_id").val();
+                        var data = {"parentId": parentId, "apptype": apptype, "chapter_id": chapter_id};
+                        return data;
+                    }
+                }).on('filebatchuploadsuccess', function(event, data, previewId, index) { // 同步上传成功
+                    if (data.response) {
+                        alert(data.response.data);
+                        setTimeout("location.href='{{ request.get_full_path }}'", 2000);
+                    }
+                }).on('filebatchuploaderror', function(event, data, msg) {
+                    if (data.response) {
+                        alert(data.response.data);
+                        setTimeout("location.href='{{ request.get_full_path }}'", 2000);
+                    }
+                });
+            });
+            function getChapters() {
+                var parentId = $("#id_parent_id").val();
+                var apptype = $("#id_app_type").val();
+                $.ajax({
+                    url: "/getChapterById?id=" + parentId + "&apptype=" + apptype,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        chapter_id = $("#id_chapter_id");
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_chapter_id").show();
+                            $("#id_chapter_id").empty();
+                            for (i = 0; i < data.length; i++) {
+                                chapter_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+                            }
+                        } else {
+                            $("#id_chapter_id").hide();
+                        }
+                    }
+                });
+            }
+            // 获取app章节类型
+            function getCategorys() {
+                var apptype = $("#id_app_type").val();
+                $.ajax({
+                    url: "/getCategorys?apptype=" + apptype,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        parent_id = $("#id_parent_id");
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_parent_id").show();
+                            $("#id_parent_id").empty();
+                            for (i = 0; i < data.length; i++) {
+                                parent_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+                            }
+                        } else {
+                            $("#id_parent_id").hide();
+                        }
+                    }
+                });
+            }
             // 修改视频中文名
             function chVideoNameById(bt_id, old_cname, text_id) {
                 $(document).ready(function () {
@@ -96,6 +180,44 @@
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                         </button>
                     </div>
+                    <div class="col-lg-6" id="upload_new_video">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-uploads">上传新的视频资源请点击这里
+                    </button>
+                    <div class="modal fade" id="new-uploads" tabindex="-1" role="dialog"
+                         aria-labelledby="myModalLabel"
+                         aria-hidden="true" style="margin-top:100px;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">×
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">
+                                        上传新的视频文件
+                                    </h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-inline">
+                                        <div class="col-lg-5" style="width: 100%;">
+                                            {{ form.app_type.label }}:&nbsp;&nbsp;{{ form.app_type }}
+                                            {{ form.parent_id.label }}:&nbsp;&nbsp;{{ form.parent_id }}
+                                        </div>
+                                        <div class="col-lg-5" style="width: 100%;">
+                                            {{ form.chapter_id.label }}:&nbsp;&nbsp;{{ form.chapter_id }}
+                                            {#                                            {{ form.name.label }}{{ form.name }}#}
+                                        </div>
+                                    </div>
+                                    <div id="alert_mess"></div>
+                                    <label class="control-label">请选择视频文件</label>
+                                    <input id="new-mp4" name="new-mp4" type="file" multiple
+                                           class="file-loading">
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </div>
                 <table class="table table-bordered table-hover">
                     <caption align="center"><h4>{{ apptype }}下共找到{{ count }}个文件</h4></caption>
@@ -190,9 +312,9 @@
                     <nav>
                         <ul class="pagination pagination-sm">
                             <li class="disabled">
-                                <a href="#" aria-label="Previous">
-                                    <span aria-hidden="true"></span>
-                                </a>
+                                  <div class="col-lg-6" id="list_MyAppMp4">
+                                        <a type="button" class="btn btn-warning" id='MyApp-mp4' href="/video/list.html">查看服务器所有mp4资源</a>
+                                    </div>
                             </li>
                         </ul>
                     </nav>
