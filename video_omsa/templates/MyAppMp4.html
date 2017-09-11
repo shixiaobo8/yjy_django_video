@@ -21,7 +21,7 @@
                     dropZoneEnabled: true,
                     uploadUrl: '/video/upload',
                     maxFileCount: 100,
-                    maxFileSize:307200,
+                    maxFileSize: 307200,
                     showCaption: true,
                     showPreview: true,
                     allowedFileExtensions: ['mp4'],
@@ -33,12 +33,12 @@
                         var data = {"parentId": parentId, "apptype": apptype, "chapter_id": chapter_id};
                         return data;
                     }
-                }).on('filebatchuploadsuccess', function(event, data, previewId, index) { // 同步上传成功
+                }).on('filebatchuploadsuccess', function (event, data, previewId, index) { // 同步上传成功
                     if (data.response) {
                         alert(data.response.data);
                         setTimeout("location.href='{{ request.get_full_path }}'", 2000);
                     }
-                }).on('filebatchuploaderror', function(event, data, msg) {
+                }).on('filebatchuploaderror', function (event, data, msg) {
                     if (data.response) {
                         alert(data.response.data);
                         setTimeout("location.href='{{ request.get_full_path }}'", 2000);
@@ -117,6 +117,141 @@
                     })
                 });
             }
+            // 获取章节1
+            function getChapters1(obj,video_id) {
+                var parentId = $("#id_parent_id"+video_id).val();
+                var apptype = $("#id_app_type"+video_id).val();
+                $.ajax({
+                    url: "/getChapterById?id=" + parentId + "&apptype=" + apptype,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        var chapter_id = $("#id_chapter_id"+video_id);
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_chapter_id1").show();
+                            $("#id_chapter_id1").empty();
+                            for (i = 0; i < data.length; i++) {
+                                chapter_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+                            }
+                        } else {
+                            $("#id_chapter_id"+video_id).hide();
+                        }
+                    }
+                });
+            }
+            // 获取app章节类型
+            function getCategorys1(obj,video_id) {
+                var apptype = $("#id_app_type"+video_id).val();
+                $.ajax({
+                    url: "/getCategorys?apptype=" + apptype,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        var parent_id = $("#id_parent_id"+video_id);
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_parent_id"+video_id).show();
+                            $("#id_parent_id"+video_id).empty();
+                            for (i = 0; i < data.length; i++) {
+                                parent_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+                            }
+                        } else {
+                            $("#id_parent_id"+video_id).hide();
+                        }
+                    }
+                });
+            }
+            // 获取app章篇名称
+            function getSections() {
+                var apptype = $("#id_app_type").val();
+                var chapter_id = $("#id_chapter_id").val();
+                $.ajax({
+                    url: "/getAppSections?apptype=" + apptype + "&chapter_id=" + chapter_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        var id_section_id = $("#id_section_id");
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_section_id").show();
+                            $("#id_section_id").empty();
+                            for (i = 0; i < data.length; i++) {
+                                id_section_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+                            }
+                        } else {
+                            $("#id_section_id").hide();
+                        }
+                    }
+                });
+            }
+            function getSections1(obj,video_id) {
+                var apptype = $("#id_app_type" +video_id).val();
+                var chapter_id = $("#id_chapter_id"+video_id).val();
+                $.ajax({
+                    url: "/getAppSections?apptype=" + apptype + "&chapter_id=" + chapter_id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        var id_section_id1 = $("#id_section_id"+video_id);
+                        if (data.length > 0) {
+                            //console.log(data);
+                            $("#id_section_id"+video_id).show();
+                            $("#id_section_id"+video_id).empty();
+                            for (i = 0; i < data.length; i++) {
+                                id_section_id1.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+                            }
+                        } else {
+                            $("#id_section_id"+video_id).hide();
+                        }
+                    }
+                });
+            }
+            //  给mp4分类
+            function CategoryMp4(video_id) {
+                $(document).ready(function () {
+                    var id = video_id;
+                    var v_name = $("#id_name"+video_id).val();
+                    var apptype = $("#id_app_type"+video_id).val();
+                    var parent_id = $("#id_parent_id"+video_id).val();
+                    var chapter_id = $("#id_chapter_id"+video_id).val();
+                    var section_id = $("#id_section_id"+video_id).val();
+                    if (section_id != 'undefined') {
+                        $.get("CategoryMp4", {
+                            "name":v_name,
+                            "id":id,
+                            "app_type": apptype,
+                            "parent_id": parent_id,
+                            "chapter_id": chapter_id,
+                            "section_id": section_id
+                        }, function (res) {
+                            var data = JSON.parse(res);
+                            if (data['code'] == '200') {
+                                alert("视频修改成功！点击确认1秒后自动刷新页面");
+                                setTimeout("location.href=''", 1000);
+                            } else {
+                                alert(data['data']);
+                            }
+                        })
+                    } else {
+                        $.get("CategoryMp4", {
+                            "app_type": apptype,
+                            "parent_id": parent_id,
+                            "chapter_id": chapter_id,
+                            "id":id,
+                            "name":v_name
+                        }, function (res) {
+                            var data = JSON.parse(res);
+                            if (data['code'] == '200') {
+                                alert("视频修改成功！点击确认1秒后自动刷新页面");
+                                setTimeout("location.href=''", 1000);
+                            } else {
+                                alert(data['data']);
+                            }
+                        })
+                    }
+                });
+            }
             $(function () {
                 function initTableCheckbox() {
                     var $thr = $('table thead tr');
@@ -181,43 +316,43 @@
                         </button>
                     </div>
                     <div class="col-lg-6" id="upload_new_video">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#new-uploads">上传新的视频资源请点击这里
-                    </button>
-                    <div class="modal fade" id="new-uploads" tabindex="-1" role="dialog"
-                         aria-labelledby="myModalLabel"
-                         aria-hidden="true" style="margin-top:100px;">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"
-                                            aria-hidden="true">×
-                                    </button>
-                                    <h4 class="modal-title" id="myModalLabel">
-                                        上传新的视频文件
-                                    </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-inline">
-                                        <div class="col-lg-5" style="width: 100%;">
-                                            {{ form.app_type.label }}:&nbsp;&nbsp;{{ form.app_type }}
-                                            {{ form.parent_id.label }}:&nbsp;&nbsp;{{ form.parent_id }}
-                                        </div>
-                                        <div class="col-lg-5" style="width: 100%;">
-                                            {{ form.chapter_id.label }}:&nbsp;&nbsp;{{ form.chapter_id }}
-                                            {#                                            {{ form.name.label }}{{ form.name }}#}
-                                        </div>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#new-uploads">上传新的视频资源请点击这里
+                        </button>
+                        <div class="modal fade" id="new-uploads" tabindex="-1" role="dialog"
+                             aria-labelledby="myModalLabel"
+                             aria-hidden="true" style="margin-top:100px;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal"
+                                                aria-hidden="true">×
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            上传新的视频文件
+                                        </h4>
                                     </div>
-                                    <div id="alert_mess"></div>
-                                    <label class="control-label">请选择视频文件</label>
-                                    <input id="new-mp4" name="new-mp4" type="file" multiple
-                                           class="file-loading">
-                                </div>
-                                <div class="modal-footer">
+                                    <div class="modal-body">
+                                        <div class="form-inline">
+                                            <div class="col-lg-5" style="width: 100%;">
+                                                {{ form.app_type.label }}:&nbsp;&nbsp;{{ form.app_type }}
+                                                {{ form.parent_id.label }}:&nbsp;&nbsp;{{ form.parent_id }}
+                                            </div>
+                                            <div class="col-lg-5" style="width: 100%;">
+                                                {{ form.chapter_id.label }}:&nbsp;&nbsp;{{ form.chapter_id }}
+                                                {#                                            {{ form.name.label }}{{ form.name }}#}
+                                            </div>
+                                        </div>
+                                        <div id="alert_mess"></div>
+                                        <label class="control-label">请选择视频文件</label>
+                                        <input id="new-mp4" name="new-mp4" type="file" multiple
+                                               class="file-loading">
+                                    </div>
+                                    <div class="modal-footer">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 </div>
                 <table class="table table-bordered table-hover">
                     <caption align="center"><h4>{{ apptype }}下共找到{{ count }}个文件</h4></caption>
@@ -280,7 +415,75 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="?parent_id={{ video.parent_id.id }}">{{ video.parent_id.name }}</a>
+                                {% if not video.parent_id.id %}
+                                    <button class="btn btn-default" data-toggle="modal"
+                                            data-target="#category_mp4{{ video.id }}">给这个视频分类
+                                    </button>
+                                    <div class="modal fade" id="category_mp4{{ video.id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel"
+                                         aria-hidden="true" style="margin-top:100px;">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">×
+                                                    </button>
+                                                    <h4 class="modal-title" id="myModalLabel">
+                                                        视频分类
+                                                    </h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="form-inline">
+                                                        <div class="col-lg-5" style="width: 100%;">
+                                                            app类型:&nbsp;&nbsp;<select class="form-control"
+                                                                                      id="id_app_type{{ video.id }}"
+                                                                                      name="app_type{{ video.id }}"
+                                                                                      onChange="getCategorys1(this,{{ video.id }})"
+                                                                                      required>
+                                                            <option value="yjy_xiyizonghe">西医综合</option>
+                                                            <option value="tcmsq">中医执业医师</option>
+                                                            <option value="yjy_zhongyizonghe">中医综合</option>
+                                                            <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
+                                                        </select>
+                                                            科目:&nbsp;&nbsp;<select class="form-control"
+                                                                                   id="id_parent_id{{ video.id }}"
+                                                                                   name="parent_id{{ video.id }}"
+                                                                                   onChange="getChapters1(this,{{ video.id }})"
+                                                                                   required>
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-lg-5" style="width: 100%;">
+                                                            章节名称:&nbsp;&nbsp;<select class="form-control"
+                                                                                     id="id_chapter_id{{ video.id }}"
+                                                                                     name="chapter_id{{ video.id }}"
+                                                                                     onChange="getSections1(this,{{ video.id }})"
+                                                                                     required>
+                                                        </select>
+                                                            章篇名称:&nbsp;&nbsp;<select class="form-control"
+                                                                                     id="id_section_id{{ video.id }}"
+                                                                                     name="section_id{{ video.id }}"
+                                                                                     required>
+                                                        </select>
+                                                        </div>
+                                                        <div class="col-lg-5" style="width: 100%;">
+                                                            视频名称:&nbsp;&nbsp;<input class="form-control" id="id_name{{ video.id }}" name="name{{ video.id }}" placeholder="请输入中文名称" type="text" required />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-primary"
+                                                            id="CategoryMp4{{ video.id }}"
+                                                            onclick="CategoryMp4({{ video.id }})">
+                                                        提交更改
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                {% if video.parent_id.id %}
+                                    <a href="?parent_id={{ video.parent_id.id }}">{{ video.parent_id.name }}</a>
+                                {% endif %}
                             </td>
                             <td>
                                 <a href="?chapter_id={{ video.chapter_id.id }}">{{ video.chapter_id.name }}</a>
@@ -294,7 +497,10 @@
                                 {% endif %}
                             </td>
                             <td>{{ video.original_save_path }}</td>
-                            <td><a href="mp4_file_download?id={{ video.id }}">点击下载</a></td>
+                            <td>
+                                <a href="mp4_file_download?id={{ video.id }}">点击下载</a>&nbsp;&nbsp;&nbsp;|
+                                <a class="btn btn-file" href="#" role="button" style="color:#a94442;">在线预览这个视频</a>
+                            </td>
                             <td>
                                 {% if video.cut_id == 0 %}
                                     <a type="button" class="btn btn-info" href="start_cut?id={{ video.id }}">加入到切片队列</a>
@@ -312,9 +518,9 @@
                     <nav>
                         <ul class="pagination pagination-sm">
                             <li class="disabled">
-                                  <div class="col-lg-6" id="list_MyAppMp4">
-                                        <a type="button" class="btn btn-warning" id='MyApp-mp4' href="/video/list.html">查看服务器所有mp4资源</a>
-                                    </div>
+                                <div class="col-lg-6" id="list_MyAppMp4">
+                                    <a type="button" class="btn btn-warning" id='MyApp-mp4' href="/video/list.html">查看服务器所有mp4资源</a>
+                                </div>
                             </li>
                         </ul>
                     </nav>

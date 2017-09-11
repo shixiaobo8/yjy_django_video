@@ -33,6 +33,7 @@ def PhoneValidate(value):
 
 class videoForm(forms.Form):
     chapters = []
+    sections = []
     PARENT_ID = []
     # PARENT_ID2 = [ (i,str(i) + "年真题") for i in range(1988,t_year + 1)]
     # PARENT_ID1 = PARENT_ID2.extend([(1,'直播'),(2,'精讲'),(3,'技能'),(4,'冲刺'),(5,'专题')])
@@ -56,7 +57,7 @@ class videoForm(forms.Form):
     :True}))
     room_id = forms.IntegerField(label='聊天室id',
                                  widget=forms.TextInput(attrs={'class': 'form-control', 'required': True}))
-    name = forms.CharField(label='视频名称', widget=forms.TextInput(attrs={'class': 'form-control', 'required': True}))
+    name = forms.CharField(label='视频名称', widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': '请输入中文名称', 'required': True}))
     status = forms.ChoiceField(widget=forms.RadioSelect({'required': True}), choices=STATUS_CHOICES, required=True,
                                label='状态')
     sort = forms.ChoiceField(widget=forms.RadioSelect, choices=SORT_CHOICES, required=True, label='分类')
@@ -77,6 +78,8 @@ class videoForm(forms.Form):
     parent_id = forms.ChoiceField(choices=PARENT_ID, label='科目', widget=forms.Select(
         attrs={'class': 'form-control', 'onChange': 'getChapters(this.value)', 'required': True}))
     chapter_id = forms.ChoiceField(choices=chapters, label='章节名称',
+                                   widget=forms.Select(attrs={'class': 'form-control','onChange': 'getSections(this.value)', 'required': True}))
+    section_id = forms.ChoiceField(choices=sections, label='章篇名称',
                                    widget=forms.Select(attrs={'class': 'form-control', 'required': True}))
     file_size = forms.CharField(label='视频大小', widget=forms.TextInput(attrs={'class': 'form-control', 'required': True}))
 

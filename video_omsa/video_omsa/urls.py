@@ -20,6 +20,7 @@ urlpatterns = [
     url(r'^reg$', video_views.reg),
     url(r'^getChapterById', video_views.getChapterById),
     url(r'^getCategorys', video_views.getappCategory),
+    url(r'^getAppSections', video_views.getAppSections),
     url(r'^addIm$', video_views.addIm),
     url(r'^add_Im$', video_views.add_Im),
     url(r'^im_list.html$', video_views.imList),
@@ -49,6 +50,8 @@ urlpatterns = [
     url(r'^video/getMyAppMp4.html',video_views.getMyAppMp4,name='getMyAppMp4'),
     url(r'^video/mp4_file_download',video_views.mp4_file_download,name='mp4_file_download'),
     url(r'^video/chvideoname',video_views.chvideoname,name='chvideoname'),
+    url(r'^video/CategoryMp4',video_views.CategoryMp4,name='CategoryMp4'),
+    url(r'^getMp4s',video_views.getMp4s,name='getMp4s'),
 ]
 handler404 = video_views.page_not_found
 handler500 = video_views.page_error
