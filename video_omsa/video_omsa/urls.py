@@ -52,6 +52,8 @@ urlpatterns = [
     url(r'^video/chvideoname',video_views.chvideoname,name='chvideoname'),
     url(r'^video/CategoryMp4',video_views.CategoryMp4,name='CategoryMp4'),
     url(r'^getMp4s',video_views.getMp4s,name='getMp4s'),
+    url(r'^video/delete_video',video_views.delete_video,name='delete_video'),
+    url(r'^video/recovery_video',video_views.recovery_video,name='recovery_video'),
 ]
 handler404 = video_views.page_not_found
 handler500 = video_views.page_error

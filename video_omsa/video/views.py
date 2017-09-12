@@ -22,6 +22,7 @@ import json, os, sys, xlwt, requests, time, calendar, random, shutil, simplejson
 import MySQLdb as mdb
 from django.http import StreamingHttpResponse
 from collections import OrderedDict
+import urllib
 
 
 # navs = list(Nav.objects.all())
@@ -930,7 +931,7 @@ def getAppMp4(apptype, where):
         tmp['cut_id'] = rs[i][7]
         tmp['video_name'] = rs[i][8]
         tmp['mp4_download_url'] = rs[i][9]
-        tmp['section_id'] = rs[i][10]
+        tmp['section_id'] = {"id":rs[i][10],"name":getAppSectionOneTitle(rs[i][4],rs[i][10])}
         tmp['is_named'] = rs[i][11]
         tmp['is_category'] = rs[i][12]
         tmp['chinese_name'] = rs[i][13]
@@ -965,6 +966,7 @@ def getMyAppMp4(request):
     if request.method == 'GET':
         where = dict()
         form = videoForm(request.GET)
+        page_nums = request.GET.get('page_nums', '10')
         page = request.GET.get('page', 'None')
         chapter_id = request.GET.get('chapter_id', 'None')
         if chapter_id != 'None':
@@ -978,7 +980,7 @@ def getMyAppMp4(request):
         User = getUserProperties(request.user.username)
         t_MyVideos = getAppMp4(User['apptype'], where)
         c_url = getUniqUrl(request.get_full_path(), page)
-        paginator = Paginator(t_MyVideos['list'], 3)
+        paginator = Paginator(t_MyVideos['list'], page_nums)
         try:
             page = request.GET.get('page')
         except:
@@ -991,7 +993,7 @@ def getMyAppMp4(request):
             MyVideos = paginator.page(paginator.num_pages)
         return render(request, 'MyAppMp4.html',
                       {'form': form, 'user1': User, 'MyVideos': MyVideos, "count": t_MyVideos['count'],
-                       "apptype": getApptypeName(User['apptype']), "c_url": c_url})
+                       "apptype": getApptypeName(User['apptype']), "c_url": c_url,"page_nums":page_nums,"apptype_v":User['apptype']})
     else:
         return HttpResponse(json.dumps({'code': '555', 'data': '参数错误'}))
 
@@ -1001,7 +1003,7 @@ def getUniqUrl(url, page_id):
     url = url.replace("&page=" + page_id, '').replace("page=" + page_id + "?", '').replace("?page=" + page_id, '')
     # if len(url.split('?')) > 1:
     #     url = url.split('?')[0].replace("?","&") + "?" + url.split('?')[1]
-    return url
+    return urllib.unquote(url)
 
 
 def mp4_file_download(request):
@@ -1052,7 +1054,7 @@ def CategoryMp4(request):
         apptype = request.GET.get('app_type', None)
         parent_id = request.GET.get('parent_id', None)
         chapter_id = request.GET.get('chapter_id', None)
-        section_id = request.GET.get('section_id', None)
+        section_id = request.GET.get('section_id', '0')
         id = request.GET.get('id', None)
         name = request.GET.get('name', None)
         if apptype and parent_id and chapter_id and section_id and name and id:
@@ -1092,3 +1094,46 @@ def getAppSectionTitle(apptype, chapter_id):
     sql = "select `id`,`title` from `%s`.yjy_im_chapter where category_id='%s'" % (apptype, chapter_id)
     rs = executeSql(sql)
     return rs
+
+def getAppSectionOneTitle(apptype, section_id):
+    sql = "select `id`,`title` from `%s`.yjy_im_chapter where id='%s'" % (apptype, section_id)
+    try:
+        rs = executeSql(sql)
+        return rs[0][1]
+    except Exception,e:
+        return 'None'
+
+@csrf_exempt
+def delete_video(request):
+    res = dict()
+    res['code'] = '555'
+    res['data'] = '参数错误'
+    if request.method == 'GET':
+        id = request.GET.get('id',None)
+        if id:
+            try:
+                sql = "update yjy_mp4 set is_del=1 where id='%s'"%(str(id))
+                rs = executeSql(sql)
+                res['code'] = '200'
+                res['data'] = 'ok'
+            except Exception,e:
+                res['code'] = '555'
+                res['data'] = '参数错误'
+        return HttpResponse(json.dumps(res))
+
+def recovery_video(request):
+    res = dict()
+    res['code'] = '555'
+    res['data'] = '参数错误'
+    if request.method == 'GET':
+        id = request.GET.get('id',None)
+        if id:
+            try:
+                sql = "update yjy_mp4 set is_del=0 where id='%s'"%(str(id))
+                rs = executeSql(sql)
+                res['code'] = '200'
+                res['data'] = 'ok'
+            except Exception,e:
+                res['code'] = '555'
+                res['data'] = '参数错误'
+        return HttpResponse(json.dumps(res))

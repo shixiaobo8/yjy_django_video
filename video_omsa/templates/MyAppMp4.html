@@ -45,6 +45,39 @@
                     }
                 });
             });
+            // 删除视频
+            function delete_videoById(id) {
+                $.ajax({
+                    url: "delete_video?id=" + id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        if (data.code == '200') {
+                            alert('已成功逻辑删除该视频 1秒后自动跳转返回');
+                            setTimeout("location.href='{{ request.get_full_path }}'", 1000);
+                        } else {
+                            alert(data.data);
+                        }
+                    }
+                });
+            }
+            // 恢复视频
+            function recovery_videoById(id) {
+                $.ajax({
+                    url: "recovery_video?id=" + id,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus) {
+                        if (data.code == '200') {
+                            alert('已成功恢复该视频 1秒后自动跳转返回');
+                            setTimeout("location.href='{{ request.get_full_path }}'", 1000);
+                        } else {
+                            alert(data.data);
+                        }
+                    }
+                });
+            }
+            // 获取章节
             function getChapters() {
                 var parentId = $("#id_parent_id").val();
                 var apptype = $("#id_app_type").val();
@@ -89,7 +122,7 @@
                     }
                 });
             }
-            // 修改视频中文名
+            // 修改视频中文名chSectionById
             function chVideoNameById(bt_id, old_cname, text_id) {
                 $(document).ready(function () {
                     var new_videoname = $("#" + text_id.id).val();
@@ -117,16 +150,36 @@
                     })
                 });
             }
+            // 设置章篇
+            function chSectionById(parent_id, chapter_id, secion_id) {
+                $(document).ready(function () {
+                    var new_videoname = $("#" + text_id.id).val();
+                    var old_videoname = $("#" + old_cname.id).text();
+                    var video_id = $("#" + text_id.id).attr("name");
+                    $.post("chvideoname", {
+                        "new_videoname": new_videoname,
+                        "video_id": video_id
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("视频修改成功！点击确认1秒后自动刷新页面");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
             // 获取章节1
-            function getChapters1(obj,video_id) {
-                var parentId = $("#id_parent_id"+video_id).val();
-                var apptype = $("#id_app_type"+video_id).val();
+            function getChapters1(obj, video_id) {
+                var parentId = $("#id_parent_id" + video_id).val();
+                var apptype = $("#id_app_type" + video_id).val();
                 $.ajax({
                     url: "/getChapterById?id=" + parentId + "&apptype=" + apptype,
                     type: 'GET',
                     dataType: 'json',
                     success: function (data, textStatus) {
-                        var chapter_id = $("#id_chapter_id"+video_id);
+                        var chapter_id = $("#id_chapter_id" + video_id);
                         if (data.length > 0) {
                             //console.log(data);
                             $("#id_chapter_id1").show();
@@ -135,29 +188,29 @@
                                 chapter_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
                             }
                         } else {
-                            $("#id_chapter_id"+video_id).hide();
+                            $("#id_chapter_id" + video_id).hide();
                         }
                     }
                 });
             }
             // 获取app章节类型
-            function getCategorys1(obj,video_id) {
-                var apptype = $("#id_app_type"+video_id).val();
+            function getCategorys1(obj, video_id) {
+                var apptype = $("#id_app_type" + video_id).val();
                 $.ajax({
                     url: "/getCategorys?apptype=" + apptype,
                     type: 'GET',
                     dataType: 'json',
                     success: function (data, textStatus) {
-                        var parent_id = $("#id_parent_id"+video_id);
+                        var parent_id = $("#id_parent_id" + video_id);
                         if (data.length > 0) {
                             //console.log(data);
-                            $("#id_parent_id"+video_id).show();
-                            $("#id_parent_id"+video_id).empty();
+                            $("#id_parent_id" + video_id).show();
+                            $("#id_parent_id" + video_id).empty();
                             for (i = 0; i < data.length; i++) {
                                 parent_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
                             }
                         } else {
-                            $("#id_parent_id"+video_id).hide();
+                            $("#id_parent_id" + video_id).hide();
                         }
                     }
                 });
@@ -185,25 +238,102 @@
                     }
                 });
             }
-            function getSections1(obj,video_id) {
-                var apptype = $("#id_app_type" +video_id).val();
-                var chapter_id = $("#id_chapter_id"+video_id).val();
+            function getSections1(obj, video_id) {
+                var apptype = $("#id_app_type" + video_id).val();
+                var chapter_id = $("#id_chapter_id" + video_id).val();
                 $.ajax({
                     url: "/getAppSections?apptype=" + apptype + "&chapter_id=" + chapter_id,
                     type: 'GET',
                     dataType: 'json',
                     success: function (data, textStatus) {
-                        var id_section_id1 = $("#id_section_id"+video_id);
+                        var id_section_id1 = $("#id_section_id" + video_id);
                         if (data.length > 0) {
                             //console.log(data);
-                            $("#id_section_id"+video_id).show();
-                            $("#id_section_id"+video_id).empty();
+                            $("#id_section_id" + video_id).show();
+                            $("#id_section_id" + video_id).empty();
                             for (i = 0; i < data.length; i++) {
                                 id_section_id1.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
                             }
                         } else {
-                            $("#id_section_id"+video_id).hide();
+                            $("#id_section_id" + video_id).hide();
                         }
+                    }
+                });
+            }
+            // 按章节搜索视频
+            function category_select() {
+                var apptype = $("#id_app_type_A").val();
+                var parent_id = $("#id_parent_id_A").val();
+                var chapter_id = $("#id_chapter_id_A").val();
+                var section_id = $("#id_section_id_A").val();
+                $.get("{{ request.get_full_path }}", {
+                    "app_type": apptype,
+                    "parent_id": parent_id,
+                    "chapter_id": chapter_id,
+                    "section_id": section_id
+                }, function (res) {
+                    {#                            alert(typeof(res));#}
+                    {#                            alert(res);#}
+                    document.write(res);
+                    {#                            setTimeout("location.href=''", 1000);#}
+                })
+            }
+            // 按照章节选择
+{#            function StartCategorys(){#}
+{#                var apptype = $("#id_app_type_A").val();#}
+{#                $.ajax({#}
+{#                    url: "/getCategorys?apptype=" + apptype,#}
+{#                    type: 'GET',#}
+{#                    dataType: 'json',#}
+{#                    success: function (data, textStatus) {#}
+{#                        parent_id = $("#id_parent_id_A");#}
+{#                        if (data.length > 0) {#}
+{#                            //console.log(data);#}
+{#                            $("#id_parent_id").show();#}
+{#                            $("#id_parent_id").empty();#}
+{#                            for (i = 0; i < data.length; i++) {#}
+{#                                parent_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");#}
+{#                            }#}
+{#                        } else {#}
+{#                            $("#id_parent_id").hide();#}
+{#                        }#}
+{#                    }#}
+{#                });#}
+{#            }#}
+
+            // 获取当前页面url
+            function getCurl(url, page_nums) {
+                if (url.indexOf('?') >= 0) {
+                    if (url.indexOf('page_nums=') >= 0) {
+                        if (url.indexOf('?page_nums=') >= 0) {
+                            var old_page_nums = url.slice(url.indexOf('page_nums=') + 10, url.indexOf('page_nums=') + 12);
+                            var new_url = url.replace('page_nums=' + old_page_nums, 'page_nums=' + page_nums);
+                            return new_url;
+                        } else {
+                            var old_page_nums = url.slice(url.indexOf('page_nums=') + 10, url.indexOf('page_nums=') + 12);
+                            var new_url = url.replace('page_nums=' + old_page_nums, '').replace('&amp;', '') + '&' + 'page_nums=' + page_nums;
+                            return new_url;
+                        }
+                    } else {
+                        var new_url = url + '&' + 'page_nums=' + page_nums;
+                        return new_url;
+                    }
+                } else {
+                    var new_url = url + '?' + 'page_nums=' + page_nums;
+                    return new_url;
+                }
+            }
+            // 分页数目显示
+            function refreshByPageNums() {
+                var page_nums = $("#pager_nums").val();
+                var new_url = getCurl("{{ request.get_full_path }}", page_nums);
+                $.ajax({
+                    url: new_url,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function (data, textStatus) {
+                        window.location.href = new_url;
+                        {#                        document.write(data);#}
                     }
                 });
             }
@@ -211,45 +341,29 @@
             function CategoryMp4(video_id) {
                 $(document).ready(function () {
                     var id = video_id;
-                    var v_name = $("#id_name"+video_id).val();
-                    var apptype = $("#id_app_type"+video_id).val();
-                    var parent_id = $("#id_parent_id"+video_id).val();
-                    var chapter_id = $("#id_chapter_id"+video_id).val();
-                    var section_id = $("#id_section_id"+video_id).val();
-                    if (section_id != 'undefined') {
-                        $.get("CategoryMp4", {
-                            "name":v_name,
-                            "id":id,
-                            "app_type": apptype,
-                            "parent_id": parent_id,
-                            "chapter_id": chapter_id,
-                            "section_id": section_id
-                        }, function (res) {
-                            var data = JSON.parse(res);
-                            if (data['code'] == '200') {
-                                alert("视频修改成功！点击确认1秒后自动刷新页面");
-                                setTimeout("location.href=''", 1000);
-                            } else {
-                                alert(data['data']);
-                            }
-                        })
-                    } else {
-                        $.get("CategoryMp4", {
-                            "app_type": apptype,
-                            "parent_id": parent_id,
-                            "chapter_id": chapter_id,
-                            "id":id,
-                            "name":v_name
-                        }, function (res) {
-                            var data = JSON.parse(res);
-                            if (data['code'] == '200') {
-                                alert("视频修改成功！点击确认1秒后自动刷新页面");
-                                setTimeout("location.href=''", 1000);
-                            } else {
-                                alert(data['data']);
-                            }
-                        })
+                    var v_name = $("#id_name" + video_id).val();
+                    var apptype = $("#id_app_type" + video_id).val();
+                    var parent_id = $("#id_parent_id" + video_id).val();
+                    var chapter_id = $("#id_chapter_id" + video_id).val();
+                    var section_id = $("#id_section_id" + video_id).val();
+                    if (section_id == 'null') {
+                        section_id = '0';
                     }
+                        $.get("CategoryMp4", {
+                            "app_type": apptype,
+                            "parent_id": parent_id,
+                            "chapter_id": chapter_id,
+                            "id": id,
+                            "name": v_name
+                        }, function (res) {
+                            var data = JSON.parse(res);
+                            if (data['code'] == '200') {
+                                alert("视频修改成功！点击确认1秒后自动刷新页面");
+                                setTimeout("location.href=''", 1000);
+                            } else {
+                                alert(data['data']);
+                            }
+                        })
                 });
             }
             $(function () {
@@ -299,25 +413,59 @@
             });
         </script>
         <div class="panel-group">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    {{ apptype }}的视频mp4视频列表
-                </div>
-                <div class="panel-body">
-                    <div class="list-op" id="list_op">
-                        <button type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                        </button>
-                        <button type="button" class="btn btn-default btn-sm">
-                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
-                        </button>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                {{ apptype }}的视频mp4视频列表
+            </div>
+            <div class="panel-body">
+                <div class="list-op" id="list_op">
+                    {#                        <button type="button" class="btn btn-default btn-sm">#}
+                    {#                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>批量删除视频#}
+                    {#                        </button>#}
+                    {#                        <button type="button" class="btn btn-default btn-sm">#}
+                    {#                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>批量恢复视频#}
+                    {#                        </button>#}
+                    {#                        <button type="button" class="btn btn-default btn-sm">#}
+                    {#                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除#}
+                    {#                        </button>#}
+                    {#                        <div class="container">#}
+                    <div class="row">
+                        <div class="form-inline">
+                            <div class="col-lg-8">
+                                <input type="text" style="width: 60%" id="mp4-search" class="form-control"
+                                       placeholder="输入要搜索的视频命令代号，支持*通配符搜索  例如:xyky*">&nbsp;&nbsp;&nbsp;
+                                <a type="button" class="btn btn-info" id='search-mp4' href="/video/upload">搜索</a>
+                            </div>
+                            <div class="col-lg-4" align="center">
+                                按章节选择:
+                                <div class="form-inline">
+                                    <div class="col-lg-5" style="width: 100%;">
+                                        app类型:&nbsp;&nbsp;<select class="form-control" id="id_app_type" name="app_type"
+                                                                  onclick="getCategorys(this.value)" required>
+                                        <option value="{{ apptype_v }}">{{ apptype }}</option>
+                                        <option value="{{ apptype_v }}">{{ apptype }}</option>
+                                    </select>
+                                        科目:&nbsp;&nbsp;<select class="form-control" id="id_parent_id" name="parent_id"
+                                                               onchange="getChapters(this.value)" required>
+                                    </select>
+                                    </div>
+                                    <div class="col-lg-5" style="width: 100%;">
+                                        章节名称:&nbsp;&nbsp;<select class="form-control" id="id_chapter_id"
+                                                                 onchange="getSections(this.value)" name="chapter_id"
+                                                                 required>
+                                    </select>
+                                        章篇名称:&nbsp;&nbsp;<select class="form-control" id="id_section_id"
+                                                                 name="section_id" required>
+                                    </select>
+
+                                    </div>
+                                </div>
+                                <a type="button" id="category_select" class="btn btn-mini"
+                                   style="border:1px solid red;" onclick="category_select()">选好了，开始搜索</a>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-lg-6" id="upload_new_video">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#new-uploads">上传新的视频资源请点击这里
-                        </button>
                         <div class="modal fade" id="new-uploads" tabindex="-1" role="dialog"
                              aria-labelledby="myModalLabel"
                              aria-hidden="true" style="margin-top:100px;">
@@ -355,7 +503,22 @@
                     </div>
                 </div>
                 <table class="table table-bordered table-hover">
-                    <caption align="center"><h4>{{ apptype }}下共找到{{ count }}个文件</h4></caption>
+                    <caption align="center">
+                        <h4>{{ apptype }}下共找到{{ count }}个文件</h4>
+                        每页显示条目数量<select id="pager_nums" class="form-inline" onchange="refreshByPageNums(this.value)">
+                        <option value="{{ page_nums }}">{{ page_nums }}</option>
+                        <option value="10" {% ifequal "10" page_nums %} disabled="disabled" {% endifequal %} >10
+                        </option>
+                        <option value="15" {% ifequal "15" page_nums %} disabled="disabled" {% endifequal %} >15
+                        </option>
+                        <option value="20" {% ifequal "20" page_nums %} disabled="disabled" {% endifequal %} >20
+                        </option>
+                        <option value="25" {% ifequal "25" page_nums %} disabled="disabled" {% endifequal %} >25
+                        </option>
+                        <option value="30" {% ifequal "30" page_nums %} disabled="disabled" {% endifequal %} >30
+                        </option>
+                    </select>
+                    </caption>
                     <thead>
                     <tr class="success">
                         <th>视频id</th>
@@ -363,7 +526,7 @@
                         <th>视频中文名</th>
                         <th>章节分类</th>
                         <th>所属章节</th>
-                        <th>章节内部分类</th>
+                        <th>章篇名称</th>
                         <th>服务器存储地址</th>
                         <th>mp4下载或在线预览</th>
                         <th>切片状态</th>
@@ -372,13 +535,23 @@
                     </thead>
                     <tbody>
                     {% for video in MyVideos %}
-                        <tr>
+                        <tr style="text-align: center">
                             <td>{{ video.id }}</td>
                             {% if video.is_del == 0 %}
-                                <td style="color: green">正常</td>
+                                <td style="color: green;text-align: center;">正常&nbsp;&nbsp;&nbsp;|<a type="button"
+                                                                                                     class="btn badge-important"
+                                                                                                     style="color: darkred;"
+                                                                                                     id="d_video{{ video.id }}"
+                                                                                                     onclick="delete_videoById({{ video.id }})">删除</a>
+                                </td>
                             {% endif %}
                             {% if video.is_del != 0 %}
-                                <td style="color: red">已删除</td>
+                                <td style="color: red;text-align: center;">已删除&nbsp;&nbsp;&nbsp;|<a type="button"
+                                                                                                    class="btn badge-important"
+                                                                                                    style="color: green;"
+                                                                                                    id="r_video{{ video.id }}"
+                                                                                                    onclick="recovery_videoById({{ video.id }})">恢复</a>
+                                </td>
                             {% endif %}
                             <td>
                                 <button class="btn btn-default" data-toggle="modal" id="chinese_name{{ video.id }}"
@@ -466,7 +639,11 @@
                                                         </select>
                                                         </div>
                                                         <div class="col-lg-5" style="width: 100%;">
-                                                            视频名称:&nbsp;&nbsp;<input class="form-control" id="id_name{{ video.id }}" name="name{{ video.id }}" placeholder="请输入中文名称" type="text" required />
+                                                            视频名称:&nbsp;&nbsp;<input class="form-control"
+                                                                                    id="id_name{{ video.id }}"
+                                                                                    name="name{{ video.id }}"
+                                                                                    placeholder="请输入中文名称" type="text"
+                                                                                    required/>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -489,17 +666,50 @@
                                 <a href="?chapter_id={{ video.chapter_id.id }}">{{ video.chapter_id.name }}</a>
                             </td>
                             <td>
-                                {% if video.section_id %}
-                                    {{ video.section_id }}
+                                {% if video.section_id.id %}
+                                    <a href="?section_id={{ video.section_id.id }}">{{ video.section_id.name }}</a>
                                 {% endif %}
-                                {% if not video.section_id %}
-                                    暂未分类
-                                {% endif %}
+                                {% ifequal video.section_id.name 'None'  %}
+                                        <button class="btn btn-default" data-toggle="modal" id="section{{ video.id }}"
+                                        data-target="#chsection{{ video.id }}">设置篇章</button>
+                                <div class="modal fade" id="chchsection{{ video.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel"
+                                     aria-hidden="true" style="margin-top:100px;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">×
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    给{{ video.chinese_name }}设置篇章
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="chsectiontext{{ video.id }}">
+                                                    <span class="input-group-addon">视频名称</span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chsectionbt{{ video.id }}"
+                                                        onclick="chSectionById(chsectionbt{{ video.id }},section{{ video.id }},chsectiontext{{ video.id }})">
+                                                    提交更改
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endifequal %}
                             </td>
                             <td>{{ video.original_save_path }}</td>
                             <td>
                                 <a href="mp4_file_download?id={{ video.id }}">点击下载</a>&nbsp;&nbsp;&nbsp;|
-                                <a class="btn btn-file" href="http://lubo.letiku.net:18989{{ video.original_save_path }}" target="_blank" role="button" style="color:#a94442;">在线预览这个视频</a>
+                                <a class="btn btn-file"
+                                   href="http://lubo.letiku.net:18989{{ video.original_save_path }}" target="_blank"
+                                   role="button" style="color:#a94442;">在线预览这个视频</a>
                             </td>
                             <td>
                                 {% if video.cut_id == 0 %}
@@ -518,8 +728,19 @@
                     <nav>
                         <ul class="pagination pagination-sm">
                             <li class="disabled">
-                                <div class="col-lg-6" id="list_MyAppMp4">
-                                    <a type="button" class="btn btn-warning" id='MyApp-mp4' href="/video/list.html">查看服务器所有mp4资源</a>
+                                <div class="row">
+                                    <div class="form-inline">
+                                        <div class="col-lg-6" id="list_MyAppMp4">
+                                            <a type="button" class="btn btn-warning" id='MyApp-mp4'
+                                               href="/video/getMyAppMp4.html">返回查看服务器{{ apptype }}上所有mp4资源</a>
+                                        </div>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div class="col-lg-3" id="list_MyAppMp4">
+                                            <button class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#new-uploads" style="margin-right: 50%;">上传新的视频资源请点击这里
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
