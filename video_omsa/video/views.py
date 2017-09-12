@@ -921,7 +921,7 @@ def getAppMp4(apptype, where):
     for i in range(0, len(rs)):
         tmp = dict()
         tmp['id'] = rs[i][0]
-        tmp['original_save_path'] = "/".join(rs[i][1].split('/')[4:])
+        tmp['original_save_path'] = rs[i][1].replace(settings.MP4_SERVER_DIR,'')
         tmp['upload_save_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(rs[i][2]))
         tmp['chapter_id'] = {"id": rs[i][3], "name": getAppTitle(rs[i][4], rs[i][3])}
         tmp['apptype'] = getApptypeName(rs[i][4])
