@@ -908,13 +908,19 @@ def getUserProperties(username):
     return res
 
 
-def getAppMp4(apptype, where):
+def getAppMp4(apptype, where,search_key,search_time_range,sort):
     res = dict()
     # sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id` from yjy_mp4 where original_sava_path like '%" + apptype + "%'"
     sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id` from yjy_mp4 where apptype='" + apptype + "'"
     if where:
         for k, v in where.items():
             sql += " and " + k + "=" + v
+    if search_key != 'None':
+        sql += search_key
+    if search_time_range != 'None':
+        sql += search_time_range
+    if sort:
+        sql += sort
     rs = executeSql(sql)
     res['count'] = len(rs)
     res['list'] = []
@@ -964,11 +970,16 @@ def getApptypeName(apptype):
 @login_required(login_url='/')
 def getMyAppMp4(request):
     if request.method == 'GET':
+        User = getUserProperties(request.user.username)
         where = dict()
         form = videoForm(request.GET)
         page_nums = request.GET.get('page_nums', '10')
         page = request.GET.get('page', 'None')
         chapter_id = request.GET.get('chapter_id', 'None')
+        search_time_range = request.GET.get('search_time_range', 'None')
+        search_time_sort = request.GET.get('search_time_sort', '0')
+        search_app_type = request.GET.get('app_type', User['apptype'])
+        search_key = request.GET.get('search_key', 'None')
         if chapter_id != 'None':
             where['chapter_id'] = chapter_id
         parent_id = request.GET.get('parent_id', 'None')
@@ -977,8 +988,15 @@ def getMyAppMp4(request):
         section_id = request.GET.get('section_id', 'None')
         if section_id != 'None':
             where['section_id'] = section_id
-        User = getUserProperties(request.user.username)
-        t_MyVideos = getAppMp4(User['apptype'], where)
+        if search_key != 'None':
+            search_key = "and `original_sava_path` like '%" + search_key + "'%"
+        if search_time_range != 'None':
+            search_time_range = ' and search_time_range in ('+ search_time_range +')'
+        if search_time_sort == '0':
+            search_time_sort = ' order by `upload_save_time` desc'
+        if search_time_sort == '1':
+            search_time_sort = ' order by `upload_save_time` asc'
+        t_MyVideos = getAppMp4(search_app_type, where,search_key,search_time_range,search_time_sort)
         c_url = getUniqUrl(request.get_full_path(), page)
         paginator = Paginator(t_MyVideos['list'], page_nums)
         try:
@@ -1024,7 +1042,7 @@ def mp4_file_download(request):
             response['Content-Type'] = 'application/octet-stream'
             # response['Content-Type'] = 'video/x-mpg'
             response['Content-Disposition'] = 'attachment;filename="{0}"'.format(
-                file_name.split('/')[-1].split('_')[9:][0])
+                file_name.split('/')[-1].split('_')[-2:][0])
             return response
         else:
             return HttpResponse(json.dumps({'code': '555', 'data': '参数错误'}))
@@ -1136,4 +1154,25 @@ def recovery_video(request):
             except Exception,e:
                 res['code'] = '555'
                 res['data'] = '参数错误'
+        return HttpResponse(json.dumps(res))
+
+def chVideoSection(request):
+    res = dict()
+    res['code'] = '555'
+    res['data'] = '参数错误'
+    if request.method == 'POST':
+        new_section_id = request.POST.get('new_section_id',None)
+        video_id = request.POST.get('video_id',None)
+        if video_id and new_section_id:
+            try:
+                sql = "update yjy_mp4 set section_id='%s' where id='%s'"%(str(new_section_id),str(video_id))
+                rs = executeSql(sql)
+                res['code'] = '200'
+                res['data'] = 'ok'
+            except Exception,e:
+                res['code'] = '500'
+                res['data'] = '修改失败'
+        else:
+            res['code'] = '555'
+            res['data'] = '参数错误'
         return HttpResponse(json.dumps(res))
