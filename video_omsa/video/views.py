@@ -1041,8 +1041,8 @@ def mp4_file_download(request):
             response = StreamingHttpResponse(file_iterator(file_name))
             response['Content-Type'] = 'application/octet-stream'
             # response['Content-Type'] = 'video/x-mpg'
-            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(
-                file_name.split('/')[-1].split('_')[-2:][0])
+            response['Content-Disposition'] = 'attachment;filename="{0}"'.format("_".join(
+                file_name.split('/')[-1].split('_')[-2:]))
             return response
         else:
             return HttpResponse(json.dumps({'code': '555', 'data': '参数错误'}))
