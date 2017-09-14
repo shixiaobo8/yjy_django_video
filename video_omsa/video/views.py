@@ -989,9 +989,10 @@ def getMyAppMp4(request):
         if section_id != 'None':
             where['section_id'] = section_id
         if search_key != 'None':
-            search_key = "and `original_sava_path` like '%" + search_key + "'%"
+            search_key.strip('\\*')
+            search_key = " and `original_sava_path` like '%" + search_key + "%'"
         if search_time_range != 'None':
-            search_time_range = ' and search_time_range in ('+ search_time_range +')'
+            search_time_range = ' and `upload_save_time` in ('+ search_time_range +')'
         if search_time_sort == '0':
             search_time_sort = ' order by `upload_save_time` desc'
         if search_time_sort == '1':

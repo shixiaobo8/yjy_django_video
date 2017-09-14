@@ -222,11 +222,11 @@
              * param2 : seciton_select_id : 该视频的选择篇章select id
              * param3 : video_id : 该视频的id
              */
-            function getSections2(chapter_id, seciton_select_id,sectionIdBt) {
+            function getSections2(chapter_id, seciton_select_id, sectionIdBt) {
                 var select_id = seciton_select_id.id;
                 if (chapter_id == 'None') {
                     alert("请先给该mp4资源添加章节 或者请重新给该视频分类");
-                    $('#'+sectionIdBt).hide();
+                    $('#' + sectionIdBt).hide();
                     return;
                 } else {
                     $.ajax({
@@ -361,35 +361,35 @@
                 });
             }
             // 搜索url
-            function getSearchUrl(apptype, parent_id, chapter_id, section_id,search_key) {
-                    new_url = "{{ request.get_full_path }}".replace('/&amp;/g','');
-                    if (new_url.indexOf('?') >= 0) {
-                        if (!( !apptype && typeof(apptype)!="undefined" && apptype!=0)) {
-                            new_url += '&app_type=' + apptype;
-                        }
-                        if (!(!parent_id && typeof(parent_id)!="undefined" && parent_id!=0)) {
-                            new_url += '&parent_id=' + parent_id;
-                        }
-                        if (!(!chapter_id && typeof(chapter_id)!="undefined" && chapter_id!=0)) {
-                            new_url += '&chapter_id=' + chapter_id;
-                        }
-                        if (!(!section_id && typeof(section_id)!="undefined" && section_id!=0)) {
-                            new_url += '&section_id=' + section_id;
-                        }
-                    }else{
-                        if ( !(!apptype && typeof(apptype)!="undefined" && apptype!=0)) {
-                            new_url += '?app_type=' + apptype;
-                        }
-                        if (!(!parent_id && typeof(parent_id)!="undefined" && parent_id!=0)) {
-                            new_url += '&parent_id=' + parent_id;
-                        }
-                        if (!(!chapter_id && typeof(chapter_id)!="undefined" && chapter_id!=0)) {
-                            new_url += '&chapter_id=' + chapter_id;
-                        }
-                        if (!(!section_id && typeof(section_id)!="undefined" && section_id!=0)) {
-                            new_url += '&section_id=' + section_id;
-                        }
+            function getSearchUrl(apptype, parent_id, chapter_id, section_id, search_key) {
+                new_url = "{{ request.get_full_path }}".replace('/&amp;/g', '');
+                if (new_url.indexOf('?') >= 0) {
+                    if (!( !apptype && typeof(apptype) != "undefined" && apptype != 0)) {
+                        new_url += '&app_type=' + apptype;
                     }
+                    if (!(!parent_id && typeof(parent_id) != "undefined" && parent_id != 0)) {
+                        new_url += '&parent_id=' + parent_id;
+                    }
+                    if (!(!chapter_id && typeof(chapter_id) != "undefined" && chapter_id != 0)) {
+                        new_url += '&chapter_id=' + chapter_id;
+                    }
+                    if (!(!section_id && typeof(section_id) != "undefined" && section_id != 0)) {
+                        new_url += '&section_id=' + section_id;
+                    }
+                } else {
+                    if (!(!apptype && typeof(apptype) != "undefined" && apptype != 0)) {
+                        new_url += '?app_type=' + apptype;
+                    }
+                    if (!(!parent_id && typeof(parent_id) != "undefined" && parent_id != 0)) {
+                        new_url += '&parent_id=' + parent_id;
+                    }
+                    if (!(!chapter_id && typeof(chapter_id) != "undefined" && chapter_id != 0)) {
+                        new_url += '&chapter_id=' + chapter_id;
+                    }
+                    if (!(!section_id && typeof(section_id) != "undefined" && section_id != 0)) {
+                        new_url += '&section_id=' + section_id;
+                    }
+                }
                 return new_url;
             }
             // 按章节搜索视频
@@ -523,186 +523,165 @@
                 initTableCheckbox();
             });
             // 按命令规则搜索
-        function searchByName(){
-            alert("功能正在开发中..");
-
-        }
+            function searchByName() {
+                var search_key = $("#mp4-search").val();
+                search_key = search_key.replace(/\*/g,'');
+                if(!search_key){
+                    alert('输入的命令代号不能为空且不能为中文');return;
+                }
+                var old_url = "{{ request.get_full_path }}";
+                var new_url = old_url.replace(/&amp;/g, '');
+                if (new_url.indexOf('?') >= 0){
+                    new_url += "&search_key=" + search_key;
+                }else{
+                    new_url += "?search_key=" + search_key;
+                }
+                window.location.href = new_url;
+            }
         </script>
         <div class="panel-group">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                服务器mp4视频列表管理
-            </div>
-            <div class="panel-body">
-                <div class="list-op" id="list_op">
-                    <div class="row">
-                        <div class="form-inline">
-                            <div class="col-lg-8">
-                                <input type="text" style="width: 60%" id="mp4-search" class="form-control"
-                                       placeholder="输入要搜索的视频命令代号，支持*通配符搜索  例如:xyky*">&nbsp;&nbsp;&nbsp;
-                                <a type="button" class="btn btn-info" id='search-mp4' onclick="searchByName()">搜索</a>
-                            </div>
-                            <div class="col-lg-4" align="center">
-                                按章节选择:
-                                <div class="form-inline">
-                                    <div class="col-lg-5" style="width: 100%;">
-                                        app类型:&nbsp;&nbsp;<select class="form-control" id="id_app_type_S"
-                                                                  name="app_type"
-                                                                  onclick="getCategorys_S(this.value)" required>
-                                        <option value="{{ apptype_v }}">{{ apptype }}</option>
-                                        <option value="yjy_xiyizonghe">西医综合</option>
-                                        <option value="tcmsq">中医执业医师</option>
-                                        <option value="yjy_zhongyizonghe">中医综合</option>
-                                        <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
-                                    </select>
-                                        科目:&nbsp;&nbsp;<select class="form-control" id="id_parent_id_S" name="parent_id"
-                                                               onchange="getChapters_S(this.value)" required>
-                                    </select>
-                                    </div>
-                                    <div class="col-lg-5" style="width: 100%;">
-                                        章节名称:&nbsp;&nbsp;<select class="form-control" id="id_chapter_id_S"
-                                                                 onchange="getSections_S(this.value)" name="chapter_id"
-                                                                 required>
-                                    </select>
-                                        章篇名称:&nbsp;&nbsp;<select class="form-control" id="id_section_id_S"
-                                                                 name="section_id" required>
-                                    </select>
-
-                                    </div>
-                                </div>
-                                <a type="button" id="category_select" class="btn btn-mini"
-                                   style="border:1px solid red;" onclick="category_select()">选好了，开始搜索</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="upload_new_video">
-                        <div class="modal fade" id="new-uploads" tabindex="-1" role="dialog"
-                             aria-labelledby="myModalLabel"
-                             aria-hidden="true" style="margin-top:100px;">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal"
-                                                aria-hidden="true">×
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">
-                                            上传新的视频文件
-                                        </h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-inline">
-                                            <div class="col-lg-5" style="width: 100%;">
-                                                {{ form.app_type.label }}:&nbsp;&nbsp;{{ form.app_type }}
-                                                {{ form.parent_id.label }}:&nbsp;&nbsp;{{ form.parent_id }}
-                                            </div>
-                                            <div class="col-lg-5" style="width: 100%;">
-                                                {{ form.chapter_id.label }}:&nbsp;&nbsp;{{ form.chapter_id }}
-                                                {#                                            {{ form.name.label }}{{ form.name }}#}
-                                            </div>
-                                        </div>
-                                        <div id="alert_mess"></div>
-                                        <label class="control-label">请选择视频文件</label>
-                                        <input id="new-mp4" name="new-mp4" type="file" multiple
-                                               class="file-loading">
-                                    </div>
-                                    <div class="modal-footer">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    服务器mp4视频列表管理
                 </div>
-                <table class="table table-bordered table-hover">
-                    <caption align="center">
-                        <h4>{{ apptype }}下共找到{{ count }}个文件</h4>
-                        每页显示条目数量<select id="pager_nums" class="form-inline" onchange="refreshByPageNums(this.value)">
-                        <option value="{{ page_nums }}">{{ page_nums }}</option>
-                        <option value="10" {% ifequal "10" page_nums %} disabled="disabled" {% endifequal %} >10
-                        </option>
-                        <option value="15" {% ifequal "15" page_nums %} disabled="disabled" {% endifequal %} >15
-                        </option>
-                        <option value="20" {% ifequal "20" page_nums %} disabled="disabled" {% endifequal %} >20
-                        </option>
-                        <option value="25" {% ifequal "25" page_nums %} disabled="disabled" {% endifequal %} >25
-                        </option>
-                        <option value="30" {% ifequal "30" page_nums %} disabled="disabled" {% endifequal %} >30
-                        </option>
-                    </select>
-                    </caption>
-                    <thead>
-                    <tr class="success">
-                        <th>视频id</th>
-                        <th>删除状态</th>
-                        <th>视频中文名</th>
-                        <th>章节分类</th>
-                        <th>所属章节</th>
-                        <th>章篇名称</th>
-                        <th>服务器存储地址</th>
-                        <th>mp4下载或在线预览</th>
-                        <th>切片状态</th>
-                        <th>上传时间</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for video in MyVideos %}
-                        <tr style="text-align: center">
-                            <td>{{ video.id }}</td>
-                            {% if video.is_del == 0 %}
-                                <td style="color: green;text-align: center;">正常&nbsp;&nbsp;&nbsp;|<a type="button"
-                                                                                                     class="btn badge-important"
-                                                                                                     style="color: darkred;"
-                                                                                                     id="d_video{{ video.id }}"
-                                                                                                     onclick="delete_videoById({{ video.id }})">删除</a>
-                                </td>
-                            {% endif %}
-                            {% if video.is_del != 0 %}
-                                <td style="color: red;text-align: center;">已删除&nbsp;&nbsp;&nbsp;|<a type="button"
-                                                                                                    class="btn badge-important"
-                                                                                                    style="color: green;"
-                                                                                                    id="r_video{{ video.id }}"
-                                                                                                    onclick="recovery_videoById({{ video.id }})">恢复</a>
-                                </td>
-                            {% endif %}
-                            <td>
-                                <button class="btn btn-default" data-toggle="modal" id="chinese_name{{ video.id }}"
-                                        data-target="#chvideoname{{ video.id }}">{{ video.chinese_name }}</button>
-                                <div class="modal fade" id="chvideoname{{ video.id }}" tabindex="-1" role="dialog"
-                                     aria-labelledby="myModalLabel"
-                                     aria-hidden="true" style="margin-top:100px;">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-hidden="true">×
-                                                </button>
-                                                <h4 class="modal-title" id="myModalLabel">
-                                                    修改视频中文名
-                                                </h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="input-group">
-                                                    <input type="text" name="{{ video.id }}" class="form-control"
-                                                           id="chvideonametext{{ video.id }}">
-                                                    <span class="input-group-addon">视频名称</span>
+                <div class="panel-body">
+                    <div class="list-op" id="list_op">
+                        <div class="row">
+                            <div class="form-inline">
+                                <div class="col-lg-8">
+                                    <input type="text" style="width: 60%" id="mp4-search" class="form-control"
+                                           placeholder="输入要搜索的视频命令代号，支持*通配符搜索  例如:xyky*">&nbsp;&nbsp;&nbsp;
+                                    <a type="button" class="btn btn-info" id='search-mp4'
+                                       onclick="searchByName()">搜索</a>
+                                </div>
+                                <div class="col-lg-4" align="center">
+                                    按章节选择:
+                                    <div class="form-inline">
+                                        <div class="col-lg-5" style="width: 100%;">
+                                            app类型:&nbsp;&nbsp;<select class="form-control" id="id_app_type_S"
+                                                                      name="app_type"
+                                                                      onclick="getCategorys_S(this.value)" required>
+                                            <option value="{{ apptype_v }}">{{ apptype }}</option>
+                                            <option value="yjy_xiyizonghe">西医综合</option>
+                                            <option value="tcmsq">中医执业医师</option>
+                                            <option value="yjy_zhongyizonghe">中医综合</option>
+                                            <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
+                                        </select>
+                                            科目:&nbsp;&nbsp;<select class="form-control" id="id_parent_id_S"
+                                                                   name="parent_id"
+                                                                   onchange="getChapters_S(this.value)" required>
+                                        </select>
+                                        </div>
+                                        <div class="col-lg-5" style="width: 100%;">
+                                            章节名称:&nbsp;&nbsp;<select class="form-control" id="id_chapter_id_S"
+                                                                     onchange="getSections_S(this.value)"
+                                                                     name="chapter_id"
+                                                                     required>
+                                        </select>
+                                            章篇名称:&nbsp;&nbsp;<select class="form-control" id="id_section_id_S"
+                                                                     name="section_id" required>
+                                        </select>
+
+                                        </div>
+                                    </div>
+                                    <a type="button" id="category_select" class="btn btn-mini"
+                                       style="border:1px solid red;" onclick="category_select()">选好了，开始搜索</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6" id="upload_new_video">
+                            <div class="modal fade" id="new-uploads" tabindex="-1" role="dialog"
+                                 aria-labelledby="myModalLabel"
+                                 aria-hidden="true" style="margin-top:100px;">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                    aria-hidden="true">×
+                                            </button>
+                                            <h4 class="modal-title" id="myModalLabel">
+                                                上传新的视频文件
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-inline">
+                                                <div class="col-lg-5" style="width: 100%;">
+                                                    {{ form.app_type.label }}:&nbsp;&nbsp;{{ form.app_type }}
+                                                    {{ form.parent_id.label }}:&nbsp;&nbsp;{{ form.parent_id }}
+                                                </div>
+                                                <div class="col-lg-5" style="width: 100%;">
+                                                    {{ form.chapter_id.label }}:&nbsp;&nbsp;{{ form.chapter_id }}
+                                                    {#                                            {{ form.name.label }}{{ form.name }}#}
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-primary"
-                                                        id="chvideonamebt{{ video.id }}"
-                                                        onclick="chVideoNameById(chvideonamebt{{ video.id }},chinese_name{{ video.id }},chvideonametext{{ video.id }})">
-                                                    提交更改
-                                                </button>
-                                            </div>
+                                            <div id="alert_mess"></div>
+                                            <label class="control-label">请选择视频文件</label>
+                                            <input id="new-mp4" name="new-mp4" type="file" multiple
+                                                   class="file-loading">
+                                        </div>
+                                        <div class="modal-footer">
                                         </div>
                                     </div>
                                 </div>
-                            </td>
-                            <td>
-                                {% if not video.parent_id.id %}
-                                    <button class="btn btn-default" data-toggle="modal"
-                                            data-target="#category_mp4{{ video.id }}">给这个视频分类
-                                    </button>
-                                    <div class="modal fade" id="category_mp4{{ video.id }}" tabindex="-1" role="dialog"
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <caption align="center">
+                            <h4>{{ apptype }}下共找到{{ count }}个文件</h4>
+                            每页显示条目数量<select id="pager_nums" class="form-inline"
+                                            onchange="refreshByPageNums(this.value)">
+                            <option value="{{ page_nums }}">{{ page_nums }}</option>
+                            <option value="10" {% ifequal "10" page_nums %} disabled="disabled" {% endifequal %} >10
+                            </option>
+                            <option value="15" {% ifequal "15" page_nums %} disabled="disabled" {% endifequal %} >15
+                            </option>
+                            <option value="20" {% ifequal "20" page_nums %} disabled="disabled" {% endifequal %} >20
+                            </option>
+                            <option value="25" {% ifequal "25" page_nums %} disabled="disabled" {% endifequal %} >25
+                            </option>
+                            <option value="30" {% ifequal "30" page_nums %} disabled="disabled" {% endifequal %} >30
+                            </option>
+                        </select>
+                        </caption>
+                        <thead>
+                        <tr class="success">
+                            <th>视频id</th>
+                            <th>删除状态</th>
+                            <th>视频中文名</th>
+                            <th>章节分类</th>
+                            <th>所属章节</th>
+                            <th>章篇名称</th>
+                            <th>服务器存储地址</th>
+                            <th>mp4下载或在线预览</th>
+                            <th>切片状态</th>
+                            <th>上传时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for video in MyVideos %}
+                            <tr style="text-align: center">
+                                <td>{{ video.id }}</td>
+                                {% if video.is_del == 0 %}
+                                    <td style="color: green;text-align: center;">正常&nbsp;&nbsp;&nbsp;|<a type="button"
+                                                                                                         class="btn badge-important"
+                                                                                                         style="color: darkred;"
+                                                                                                         id="d_video{{ video.id }}"
+                                                                                                         onclick="delete_videoById({{ video.id }})">删除</a>
+                                    </td>
+                                {% endif %}
+                                {% if video.is_del != 0 %}
+                                    <td style="color: red;text-align: center;">已删除&nbsp;&nbsp;&nbsp;|<a type="button"
+                                                                                                        class="btn badge-important"
+                                                                                                        style="color: green;"
+                                                                                                        id="r_video{{ video.id }}"
+                                                                                                        onclick="recovery_videoById({{ video.id }})">恢复</a>
+                                    </td>
+                                {% endif %}
+                                <td>
+                                    <button class="btn btn-default" data-toggle="modal" id="chinese_name{{ video.id }}"
+                                            data-target="#chvideoname{{ video.id }}">{{ video.chinese_name }}</button>
+                                    <div class="modal fade" id="chvideoname{{ video.id }}" tabindex="-1" role="dialog"
                                          aria-labelledby="myModalLabel"
                                          aria-hidden="true" style="margin-top:100px;">
                                         <div class="modal-dialog">
@@ -712,157 +691,198 @@
                                                             aria-hidden="true">×
                                                     </button>
                                                     <h4 class="modal-title" id="myModalLabel">
-                                                        视频分类
-                                                    </h4>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="form-inline">
-                                                        <div class="col-lg-5" style="width: 100%;">
-                                                            app类型:&nbsp;&nbsp;<select class="form-control"
-                                                                                      id="id_app_type{{ video.id }}"
-                                                                                      name="app_type{{ video.id }}"
-                                                                                      onChange="getCategorys1(this,{{ video.id }})"
-                                                                                      required>
-                                                            <option value="yjy_xiyizonghe">西医综合</option>
-                                                            <option value="tcmsq">中医执业医师</option>
-                                                            <option value="yjy_zhongyizonghe">中医综合</option>
-                                                            <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
-                                                        </select>
-                                                            科目:&nbsp;&nbsp;<select class="form-control"
-                                                                                   id="id_parent_id{{ video.id }}"
-                                                                                   name="parent_id{{ video.id }}"
-                                                                                   onChange="getChapters1(this,{{ video.id }})"
-                                                                                   required>
-                                                        </select>
-                                                        </div>
-                                                        <div class="col-lg-5" style="width: 100%;">
-                                                            章节名称:&nbsp;&nbsp;<select class="form-control"
-                                                                                     id="id_chapter_id{{ video.id }}"
-                                                                                     name="chapter_id{{ video.id }}"
-                                                                                     onChange="getSections1(this,{{ video.id }})"
-                                                                                     required>
-                                                        </select>
-                                                            章篇名称:&nbsp;&nbsp;<select class="form-control"
-                                                                                     id="id_section_id{{ video.id }}"
-                                                                                     name="section_id{{ video.id }}"
-                                                                                     required>
-                                                        </select>
-                                                        </div>
-                                                        <div class="col-lg-5" style="width: 100%;">
-                                                            视频名称:&nbsp;&nbsp;<input class="form-control"
-                                                                                    id="id_name{{ video.id }}"
-                                                                                    name="name{{ video.id }}"
-                                                                                    placeholder="请输入中文名称" type="text"
-                                                                                    required/>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary"
-                                                            id="CategoryMp4{{ video.id }}"
-                                                            onclick="CategoryMp4({{ video.id }})">
-                                                        提交更改
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                                {% if video.parent_id.id %}
-                                    <a href="?parent_id={{ video.parent_id.id }}">{{ video.parent_id.name }}</a>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="?chapter_id={{ video.chapter_id.id }}">{{ video.chapter_id.name }}</a>
-                            </td>
-                            <td>
-                                {% if video.section_id.id %}
-                                    <a href="?section_id={{ video.section_id.id }}">{{ video.section_id.name }}</a>
-                                {% endif %}
-                                {% ifequal video.section_id.name 'None' %}
-                                    <button class="btn btn-default" data-toggle="modal" id="sectionIdBt{{ video.id }}"
-                                            data-target="#chsection{{ video.id }}"
-                                            onclick="getSections2('{{ video.chapter_id.id }}',id_section_id_reset{{ video.id }},'chsection{{ video.id }}')">
-                                        设置篇章
-                                    </button>
-                                    <div class="modal fade" id="chsection{{ video.id }}" tabindex="-1" role="dialog"
-                                         aria-labelledby="myModalLabel"
-                                         aria-hidden="true" style="margin-top:100px;">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-hidden="true">×
-                                                    </button>
-                                                    <h4 class="modal-title" id="myModalLabel">
-                                                        给{{ video.chinese_name }}设置篇章
+                                                        修改视频中文名
                                                     </h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="input-group">
-                                                        请选择篇章名称:&nbsp;&nbsp;<select class="form-control"
-                                                                                    id="id_section_id_reset{{ video.id }}"
-                                                                                    name="section_id_reset{{ video.id }}"
-                                                                                    required>
-                                                    </select>
-
+                                                        <input type="text" name="{{ video.id }}" class="form-control"
+                                                               id="chvideonametext{{ video.id }}">
+                                                        <span class="input-group-addon">视频名称</span>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-primary"
-                                                            id="chsectionbt{{ video.id }}"
-                                                            onclick="chSectionById({{ video.id }},id_section_id_reset{{ video.id }})">
+                                                            id="chvideonamebt{{ video.id }}"
+                                                            onclick="chVideoNameById(chvideonamebt{{ video.id }},chinese_name{{ video.id }},chvideonametext{{ video.id }})">
                                                         提交更改
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                {% endifequal %}
-                            </td>
-                            <td>{{ video.original_save_path }}</td>
-                            <td>
-                                <a href="mp4_file_download?id={{ video.id }}">点击下载</a>&nbsp;&nbsp;&nbsp;|
-                                <a class="btn btn-file"
-                                   href="http://lubo.letiku.net:18989{{ video.original_save_path }}" target="_blank"
-                                   role="button" style="color:#a94442;">在线预览这个视频</a>
-                            </td>
-                            <td>
-                                {% if video.cut_id == 0 %}
-                                    <a type="button" class="btn btn-info" href="start_cut?id={{ video.id }}">加入到切片队列</a>
-                                {% endif %}
-                                {% if video.cut_id != 0 %}
-                                    {{ video.id }} 查看切片详情
-                                {% endif %}
-                            </td>
-                            <td>{{ video.upload_save_time }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                <div class="panel-footer">
-                    <nav>
-                        <ul class="pagination pagination-sm">
-                            <li class="disabled">
-                                <div class="row">
-                                    <div class="form-inline">
-                                        <div class="col-lg-6" id="list_MyAppMp4">
-                                            <a type="button" class="btn btn-warning" id='MyApp-mp4'
-                                               href="/video/getMyAppMp4.html">返回查看服务器{{ apptype }}上所有mp4资源</a>
+                                </td>
+                                <td>
+                                    {% if not video.parent_id.id %}
+                                        <button class="btn btn-default" data-toggle="modal"
+                                                data-target="#category_mp4{{ video.id }}">给这个视频分类
+                                        </button>
+                                        <div class="modal fade" id="category_mp4{{ video.id }}" tabindex="-1"
+                                             role="dialog"
+                                             aria-labelledby="myModalLabel"
+                                             aria-hidden="true" style="margin-top:100px;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">×
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">
+                                                            视频分类
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-inline">
+                                                            <div class="col-lg-5" style="width: 100%;">
+                                                                app类型:&nbsp;&nbsp;<select class="form-control"
+                                                                                          id="id_app_type{{ video.id }}"
+                                                                                          name="app_type{{ video.id }}"
+                                                                                          onChange="getCategorys1(this,{{ video.id }})"
+                                                                                          required>
+                                                                <option value="yjy_xiyizonghe">西医综合</option>
+                                                                <option value="tcmsq">中医执业医师</option>
+                                                                <option value="yjy_zhongyizonghe">中医综合</option>
+                                                                <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
+                                                            </select>
+                                                                科目:&nbsp;&nbsp;<select class="form-control"
+                                                                                       id="id_parent_id{{ video.id }}"
+                                                                                       name="parent_id{{ video.id }}"
+                                                                                       onChange="getChapters1(this,{{ video.id }})"
+                                                                                       required>
+                                                            </select>
+                                                            </div>
+                                                            <div class="col-lg-5" style="width: 100%;">
+                                                                章节名称:&nbsp;&nbsp;<select class="form-control"
+                                                                                         id="id_chapter_id{{ video.id }}"
+                                                                                         name="chapter_id{{ video.id }}"
+                                                                                         onChange="getSections1(this,{{ video.id }})"
+                                                                                         required>
+                                                            </select>
+                                                                章篇名称:&nbsp;&nbsp;<select class="form-control"
+                                                                                         id="id_section_id{{ video.id }}"
+                                                                                         name="section_id{{ video.id }}"
+                                                                                         required>
+                                                            </select>
+                                                            </div>
+                                                            <div class="col-lg-5" style="width: 100%;">
+                                                                视频名称:&nbsp;&nbsp;<input class="form-control"
+                                                                                        id="id_name{{ video.id }}"
+                                                                                        name="name{{ video.id }}"
+                                                                                        placeholder="请输入中文名称"
+                                                                                        type="text"
+                                                                                        required/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary"
+                                                                id="CategoryMp4{{ video.id }}"
+                                                                onclick="CategoryMp4({{ video.id }})">
+                                                            提交更改
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <div class="col-lg-3" id="list_MyAppMp4">
-                                            <button class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#new-uploads" style="margin-right: 50%;">上传新的视频资源请点击这里
-                                            </button>
+                                    {% endif %}
+                                    {% if video.parent_id.id %}
+                                        <a href="?parent_id={{ video.parent_id.id }}">{{ video.parent_id.name }}</a>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="?chapter_id={{ video.chapter_id.id }}">{{ video.chapter_id.name }}</a>
+                                </td>
+                                <td>
+                                    {% if video.section_id.id %}
+                                        <a href="?section_id={{ video.section_id.id }}">{{ video.section_id.name }}</a>
+                                    {% endif %}
+                                    {% ifequal video.section_id.name 'None' %}
+                                        <button class="btn btn-default" data-toggle="modal"
+                                                id="sectionIdBt{{ video.id }}"
+                                                data-target="#chsection{{ video.id }}"
+                                                onclick="getSections2('{{ video.chapter_id.id }}',id_section_id_reset{{ video.id }},'chsection{{ video.id }}')">
+                                            设置篇章
+                                        </button>
+                                        <div class="modal fade" id="chsection{{ video.id }}" tabindex="-1" role="dialog"
+                                             aria-labelledby="myModalLabel"
+                                             aria-hidden="true" style="margin-top:100px;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">×
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">
+                                                            给{{ video.chinese_name }}设置篇章
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="input-group">
+                                                            请选择篇章名称:&nbsp;&nbsp;<select class="form-control"
+                                                                                        id="id_section_id_reset{{ video.id }}"
+                                                                                        name="section_id_reset{{ video.id }}"
+                                                                                        required>
+                                                        </select>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary"
+                                                                id="chsectionbt{{ video.id }}"
+                                                                onclick="chSectionById({{ video.id }},id_section_id_reset{{ video.id }})">
+                                                            提交更改
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endifequal %}
+                                </td>
+                                <td>{{ video.original_save_path }}</td>
+                                <td>
+                                    <a href="mp4_file_download?id={{ video.id }}">点击下载</a>&nbsp;&nbsp;&nbsp;|
+                                    <a class="btn btn-file"
+                                       href="http://lubo.letiku.net:18989{{ video.original_save_path }}" target="_blank"
+                                       role="button" style="color:#a94442;">在线预览这个视频</a>
+                                </td>
+                                <td>
+                                    {% if video.cut_id == 0 %}
+                                        <a type="button" class="btn btn-info"
+                                           href="start_cut?id={{ video.id }}">加入到切片队列</a>
+                                    {% endif %}
+                                    {% if video.cut_id != 0 %}
+                                        {{ video.id }} 查看切片详情
+                                    {% endif %}
+                                </td>
+                                <td>{{ video.upload_save_time }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="panel-footer">
+                        <nav>
+                            <ul class="pagination pagination-sm">
+                                <li class="disabled">
+                                    <div class="row">
+                                        <div class="form-inline">
+                                            <div class="col-lg-6" id="list_MyAppMp4">
+                                                <a type="button" class="btn btn-warning" id='MyApp-mp4'
+                                                   href="/video/getMyAppMp4.html">返回查看服务器{{ apptype }}上所有mp4资源</a>
+                                            </div>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <div class="col-lg-3" id="list_MyAppMp4">
+                                                <button class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#new-uploads" style="margin-right: 50%;">
+                                                    上传新的视频资源请点击这里
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </nav>
-                    <nav>
-                        <!-- 如果当前是第一页，就不显示【上一页】链接 -->
+                                </li>
+                            </ul>
+                        </nav>
+                        <nav>
+                            <!-- 如果当前是第一页，就不显示【上一页】链接 -->
                         <span class="step-links">
                             {% if MyVideos.has_previous %}
                                 {% ifnotequal 1 MyVideos.number|add:-1 %}
@@ -888,29 +908,30 @@
                                 <span class="current">
                                     当前页： {{ MyVideos.number }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总页数: {{ MyVideos.paginator.num_pages }}
                         </span>
-                        {% if MyVideos.has_next %}
-                            {% if '?' in c_url %}
-                                <a type="button" class="btn btn-info" id='prePage'
-                                   href="{{ c_url }}&page={{ MyVideos.number|add:1}}">下一页</a>
-                            {% endif %}
-                            {% if "?" not in c_url %}
-                                <a type="button" class="btn btn-info" id='prePage'
-                                   href="{{ c_url }}?page={{ MyVideos.number|add:1}}">下一页</a>
-                            {% endif %}
-                            {% ifnotequal MyVideos.paginator.num_pages MyVideos.number|add:1 %}
-                                {% if "?" in c_url %}
+                            {% if MyVideos.has_next %}
+                                {% if '?' in c_url %}
                                     <a type="button" class="btn btn-info" id='prePage'
-                                       href="{{ c_url }}&page={{ MyVideos.paginator.num_pages }}">尾页</a>
+                                       href="{{ c_url }}&page={{ MyVideos.number|add:1}}">下一页</a>
                                 {% endif %}
                                 {% if "?" not in c_url %}
                                     <a type="button" class="btn btn-info" id='prePage'
-                                       href="{{ c_url }}?page={{ MyVideos.paginator.num_pages }}">尾页</a>
+                                       href="{{ c_url }}?page={{ MyVideos.number|add:1}}">下一页</a>
                                 {% endif %}
-                            {% endifnotequal %}
-                        {% endif %}
-                    </nav>
-                </div><!-- end of panel-footer -->
-            </div><!-- end of panel -->
+                                {% ifnotequal MyVideos.paginator.num_pages MyVideos.number|add:1 %}
+                                    {% if "?" in c_url %}
+                                        <a type="button" class="btn btn-info" id='prePage'
+                                           href="{{ c_url }}&page={{ MyVideos.paginator.num_pages }}">尾页</a>
+                                    {% endif %}
+                                    {% if "?" not in c_url %}
+                                        <a type="button" class="btn btn-info" id='prePage'
+                                           href="{{ c_url }}?page={{ MyVideos.paginator.num_pages }}">尾页</a>
+                                    {% endif %}
+                                {% endifnotequal %}
+                            {% endif %}
+                        </nav>
+                    </div><!-- end of panel-footer -->
+                </div><!-- end of panel -->
+            </div>
         </div>
     {% endif %}
 {% endblock %}
