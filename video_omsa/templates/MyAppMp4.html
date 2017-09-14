@@ -624,7 +624,7 @@
                     </div>
                     <table class="table table-bordered table-hover">
                         <caption align="center">
-                            <h4>{{ apptype }}下共找到{{ count }}个文件</h4>
+                            <h4><span style="color: #761c19"><b>{{ apptype }}</b></span>下共找到<span style="color:indianred;"><b>{{ count }}</b></span>个文件</h4>
                             每页显示条目数量<select id="pager_nums" class="form-inline"
                                             onchange="refreshByPageNums(this.value)">
                             <option value="{{ page_nums }}">{{ page_nums }}</option>
@@ -872,7 +872,7 @@
                                             </div>
                                             <div class="col-lg-1" id="list_MyCutSchedules">
                                                 <a type="button" class="btn btn-success" id='MyCutSchedules'
-                                                   onclick="list_MyCutSchedules()">查看我的切片任务队列表</a>
+                                                   onclick="list_MyCutSchedules()">查看{{ user1.username }}的切片任务队列表</a>
                                             </div>
                                         </div>
                                     </div>
