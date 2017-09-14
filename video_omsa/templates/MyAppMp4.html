@@ -529,9 +529,8 @@
             }
         // 查看我的切片任务表
         function  list_MyCutSchedules(){
-                    alert("正在加紧建设中...");
-                    return;
-{#                window.location.href = new_url;#}
+               var new_url = "/video/cutCenter";
+               window.location.href = new_url;
         }
 
         </script>
@@ -639,6 +638,8 @@
                             <option value="30" {% ifequal "30" page_nums %} disabled="disabled" {% endifequal %} >30
                             </option>
                         </select>
+                        <a type="button" style="padding-left: 60%;" class="btn btn-group-xs" id='MyApp-mp4'
+                                                   href="/video/project?app_type={{ user1.apptype }}">查看{{ user_apptype_v }}的视频更新进度</a>
                         </caption>
                         <thead>
                         <tr class="success">
@@ -861,7 +862,7 @@
                                         <div class="form-inline">
                                             <div class="col-lg-8" id="list_MyAppMp4">
                                                 <a type="button" class="btn btn-warning" id='MyApp-mp4'
-                                                   href="/video/getMyAppMp4.html">返回查看服务器{{ apptype }}上所有mp4资源</a>
+                                                   href="/video/getMyAppMp4.html?app_type={{ user1.apptype }}">返回查看服务器{{ user_apptype_v }}上所有mp4资源</a>
                                             </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <div class="col-lg-2" id="list_MyAppMp4">

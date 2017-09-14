@@ -688,13 +688,16 @@ def usercenter(request):
         print e
     touxiang = data[0][0]
     app_type = data[0][1]
-    if 'default' in touxiang:
-        touxiang = touxiang.replace('uploads/', '')
-    touxiang = '/static/' + touxiang
+    touxiang = getTouxiang(touxiang)
     # return HttpResponse(data)
     return render(request, 'usercenter.html', {'navs': navs, 'touxiang': touxiang, 'app_type': app_type},
                   context_instance=RequestContext(request))
 
+def getTouxiang(touxiang):
+    if 'default' in touxiang:
+        touxiang = touxiang.replace('uploads/', '')
+    touxiang = '/static/' + touxiang
+    return touxiang
 
 def tupleToStr(tuple):
     return tuple[0] + tuple[1] + '<br/>'
@@ -1012,7 +1015,7 @@ def getMyAppMp4(request):
             MyVideos = paginator.page(paginator.num_pages)
         return render(request, 'MyAppMp4.html',
                       {'form': form, 'user1': User, 'MyVideos': MyVideos, "count": t_MyVideos['count'],
-                       "apptype": getApptypeName(search_app_type), "c_url": c_url,"page_nums":page_nums,"apptype_v":search_app_type})
+                       "apptype": getApptypeName(search_app_type), "c_url": c_url,"page_nums":page_nums,"apptype_v":search_app_type,"user_apptype_v": getApptypeName(User['apptype'])})
     else:
         return HttpResponse(json.dumps({'code': '555', 'data': '参数错误'}))
 
@@ -1176,4 +1179,40 @@ def chVideoSection(request):
         else:
             res['code'] = '555'
             res['data'] = '参数错误'
+        return HttpResponse(json.dumps(res))
+
+@login_required(login_url="/")
+@csrf_exempt
+def cutCenter(request):
+    User = getUserProperties(request.user.username)
+    if request.method == 'POST':
+        res={'code': 0,
+          'msg': "",
+          'count': 1000,
+          'data': [{
+              'id':1,
+              'username':'bobo'
+          },{
+              'id':2,
+              'username':'admin'
+          }
+          ]}
+        return HttpResponse(json.dumps(res))
+    elif request.method == 'GET':
+        return render(request,"videoCenter_listCut.html",{'user1':User,'touxiang':getTouxiang(User['touxiang'])})
+
+@csrf_exempt
+def cutCenterList(request):
+    if request.method == 'POST':
+        res={'code': 0,
+          'msg': "",
+          'count': 1000,
+          'data': [{
+              'id':1,
+              'username':'bobo'
+          },{
+              'id':2,
+              'username':'admin'
+          }
+          ]}
         return HttpResponse(json.dumps(res))
