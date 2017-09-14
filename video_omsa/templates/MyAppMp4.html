@@ -529,7 +529,9 @@
             }
         // 查看我的切片任务表
         function  list_MyCutSchedules(){
-                window.location.href = new_url;
+                    alert("正在加紧建设中...");
+                    return;
+{#                window.location.href = new_url;#}
         }
 
         </script>
@@ -855,31 +857,27 @@
                     </table>
                     <div class="panel-footer">
                         <nav>
-                            <ul class="pagination pagination-sm">
-                                <li class="disabled">
                                     <div class="row">
                                         <div class="form-inline">
-                                            <div class="col-lg-6" id="list_MyAppMp4">
+                                            <div class="col-lg-8" id="list_MyAppMp4">
                                                 <a type="button" class="btn btn-warning" id='MyApp-mp4'
                                                    href="/video/getMyAppMp4.html">返回查看服务器{{ apptype }}上所有mp4资源</a>
                                             </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <div class="col-lg-6" id="list_MyCutSchedules">
-                                                <a type="button" class="btn btn-warning" id='MyCutSchedules'
-                                                   onclick="list_MyCutSchedules()">查看我的切片任务表</a>
-                                            </div>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <div class="col-lg-3" id="list_MyAppMp4">
+                                            <div class="col-lg-2" id="list_MyAppMp4">
                                                 <button class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#new-uploads" style="margin-right: 50%;">
+                                                        data-target="#new-uploads" >
                                                     上传新的视频资源请点击这里
                                                 </button>
                                             </div>
+                                            <div class="col-lg-1" id="list_MyCutSchedules">
+                                                <a type="button" class="btn btn-success" id='MyCutSchedules'
+                                                   onclick="list_MyCutSchedules()">查看我的切片任务队列表</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </li>
-                            </ul>
                         </nav>
+                        <hr/>
                         <nav>
                             <!-- 如果当前是第一页，就不显示【上一页】链接 -->
                         <span class="step-links">
