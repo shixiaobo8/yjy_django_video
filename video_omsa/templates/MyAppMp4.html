@@ -134,6 +134,7 @@
                             //console.log(data);
                             $("#id_parent_id_S").show();
                             $("#id_parent_id_S").empty();
+                            parent_id.append("<option value=" + 'null' + ">" + '不选择这个选项' + "</option>");
                             for (i = 0; i < data.length; i++) {
                                 parent_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
                             }
@@ -157,6 +158,7 @@
                             //console.log(data);
                             $("#id_section_id_S").show();
                             $("#id_section_id_S").empty();
+                            id_section_id.append("<option value=" + 'null' + ">" + '不选择这个选项' + "</option>");
                             for (i = 0; i < data.length; i++) {
                                 id_section_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
                             }
@@ -180,6 +182,7 @@
                             //console.log(data);
                             $("#id_chapter_id_S").show();
                             $("#id_chapter_id_S").empty();
+                            chapter_id.append("<option value=" + 'null' + ">" + '不选择这个选项' + "</option>");
                             for (i = 0; i < data.length; i++) {
                                 chapter_id.append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
                             }
@@ -362,34 +365,22 @@
             }
             // 搜索url
             function getSearchUrl(apptype, parent_id, chapter_id, section_id, search_key) {
-                new_url = "{{ request.get_full_path }}".replace('/&amp;/g', '');
-                if (new_url.indexOf('?') >= 0) {
-                    if (!( !apptype && typeof(apptype) != "undefined" && apptype != 0)) {
-                        new_url += '&app_type=' + apptype;
+                var new_url = "{{ request.get_full_path }}".replace(/&amp;/, '').split('?')[0] + '?';
+                    if (!( !apptype && typeof(apptype) != "undefined" && apptype != 0) && apptype!= 'null') {
+                        new_url += 'app_type=' + apptype;
                     }
-                    if (!(!parent_id && typeof(parent_id) != "undefined" && parent_id != 0)) {
+                    if (!(!parent_id && typeof(parent_id) != "undefined" && parent_id != 0) && parent_id!= 'null') {
                         new_url += '&parent_id=' + parent_id;
                     }
-                    if (!(!chapter_id && typeof(chapter_id) != "undefined" && chapter_id != 0)) {
+                    if (!(!chapter_id && typeof(chapter_id) != "undefined" && chapter_id != 0) && chapter_id!= 'null') {
                         new_url += '&chapter_id=' + chapter_id;
                     }
-                    if (!(!section_id && typeof(section_id) != "undefined" && section_id != 0)) {
+                    if (!(!section_id && typeof(section_id) != "undefined" && section_id != 0) && section_id!= 'null') {
                         new_url += '&section_id=' + section_id;
                     }
-                } else {
-                    if (!(!apptype && typeof(apptype) != "undefined" && apptype != 0)) {
-                        new_url += '?app_type=' + apptype;
+                    if (search_key) {
+                        new_url += '&search_key=' + search_key.replace(/\*/g,'');
                     }
-                    if (!(!parent_id && typeof(parent_id) != "undefined" && parent_id != 0)) {
-                        new_url += '&parent_id=' + parent_id;
-                    }
-                    if (!(!chapter_id && typeof(chapter_id) != "undefined" && chapter_id != 0)) {
-                        new_url += '&chapter_id=' + chapter_id;
-                    }
-                    if (!(!section_id && typeof(section_id) != "undefined" && section_id != 0)) {
-                        new_url += '&section_id=' + section_id;
-                    }
-                }
                 return new_url;
             }
             // 按章节搜索视频
@@ -398,13 +389,14 @@
                 var parent_id = $("#id_parent_id_S").val();
                 var chapter_id = $("#id_chapter_id_S").val();
                 var section_id = $("#id_section_id_S").val();
-                var search_url = getSearchUrl(apptype, parent_id, chapter_id, section_id);
+                var search_key = $("#mp4-search").val();
+                var search_url = getSearchUrl(apptype, parent_id, chapter_id, section_id,search_key);
                 $.ajax({
                     url: search_url,
                     type: 'GET',
                     dataType: 'html',
                     success: function (data, textStatus) {
-                        window.location.href = new_url;
+                        window.location.href = search_url;
                     }
                 });
             }
@@ -441,7 +433,6 @@
                     dataType: 'html',
                     success: function (data, textStatus) {
                         window.location.href = new_url;
-                        {#                        document.write(data);#}
                     }
                 });
             }
@@ -454,10 +445,8 @@
                     var parent_id = $("#id_parent_id" + video_id).val();
                     var chapter_id = $("#id_chapter_id" + video_id).val();
                     var section_id = $("#id_section_id" + video_id).val();
-                    alert(section_id);
                     if (!section_id) {
                         section_id = '0';
-                        alert(section_id);
                     }
                     $.get("CategoryMp4", {
                         "app_type": apptype,
@@ -538,6 +527,11 @@
                 }
                 window.location.href = new_url;
             }
+        // 查看我的切片任务表
+        function  list_MyCutSchedules(){
+                window.location.href = new_url;
+        }
+
         </script>
         <div class="panel-group">
             <div class="panel panel-primary">
@@ -868,6 +862,11 @@
                                             <div class="col-lg-6" id="list_MyAppMp4">
                                                 <a type="button" class="btn btn-warning" id='MyApp-mp4'
                                                    href="/video/getMyAppMp4.html">返回查看服务器{{ apptype }}上所有mp4资源</a>
+                                            </div>
+                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <div class="col-lg-6" id="list_MyCutSchedules">
+                                                <a type="button" class="btn btn-warning" id='MyCutSchedules'
+                                                   onclick="list_MyCutSchedules()">查看我的切片任务表</a>
                                             </div>
                                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <div class="col-lg-3" id="list_MyAppMp4">

@@ -1012,7 +1012,7 @@ def getMyAppMp4(request):
             MyVideos = paginator.page(paginator.num_pages)
         return render(request, 'MyAppMp4.html',
                       {'form': form, 'user1': User, 'MyVideos': MyVideos, "count": t_MyVideos['count'],
-                       "apptype": getApptypeName(User['apptype']), "c_url": c_url,"page_nums":page_nums,"apptype_v":User['apptype']})
+                       "apptype": getApptypeName(search_app_type), "c_url": c_url,"page_nums":page_nums,"apptype_v":search_app_type})
     else:
         return HttpResponse(json.dumps({'code': '555', 'data': '参数错误'}))
 
