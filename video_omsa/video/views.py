@@ -1199,7 +1199,31 @@ def VideoCenter(request):
           ]}
         return HttpResponse(json.dumps(res))
     elif request.method == 'GET':
-        return render(request,"videoCenter_listCut.html",{'user1':User,'touxiang':getTouxiang(User['touxiang'])})
+        tasks = getTasks(User['username'])
+        return render(request,"videoCenter_listCut.html",{'user1':User,'touxiang':getTouxiang(User['touxiang']),'tasks':tasks})
+
+# 获取用户的切片任务队列
+def getTasks(tasker):
+    tasks = dict()
+    sql = "select `id`,`tasker`,`task_name`,`created_time`,`expired_time`,`others`  from `yjy_mp4_cutTask` where status=0"
+    try:
+        rs = executeSql(sql)
+        t = []
+        for r in rs:
+            t1 = dict()
+            t1['id'] = r[0]
+            t1['tasker'] = r[1]
+            t1['task_name'] = r[2]
+            t1['created_time'] = r[3]
+            t1['expired'] = r[4]
+            t1['others'] = r[5]
+            t.append(t1)
+        tasks['count'] = len(rs)
+        tasks['list'] = t
+    except Exception,e:
+        tasks['list'] = 'None'
+        tasks['count'] = 0
+    return tasks
 
 @csrf_exempt
 def cutCenterList(request):
@@ -1216,3 +1240,45 @@ def cutCenterList(request):
           }
           ]}
         return HttpResponse(json.dumps(res))
+
+@csrf_exempt
+@login_required(login_url="/")
+def checkTaskName(request):
+    res = dict()
+    if request.method == 'GET':
+        new_task_name = request.GET.get('new_task_name',None)
+        if new_task_name:
+            try:
+                sql = "select task_name from `yjy_mp4_cutTask` where task_name='%s'"%(new_task_name)
+                rs = executeSql(sql)
+                if len(rs) > 1:
+                    res['code'] = '202'
+                    res['data'] = '任务名已存在'
+                else:
+                    res['code'] = '200'
+                    res['data'] = '任务名不存在'
+                return  HttpResponse(json.dumps(res))
+            except:
+                res['code'] = '555'
+                res['data'] = new_task_name
+                return  HttpResponse(json.dumps(res))
+
+@csrf_exempt
+@login_required(login_url="/")
+def task_add(request):
+    if request.method == 'POST':
+        task_name = request.POST.get("task_name",None)
+        task_expired_time = request.POST.get("task_expired_time",None)
+        task_input_infos = request.POST.get("task_input_infos",None)
+        if task_name and task_expired_time and task_input_infos:
+            try:
+                sql = "insert into `yjy_mp4_cutTask`(`tasker`,`task_name`,`created_time`,`expired_time`,`others`) values('%s','%s','%s','%s','%s','%s')"%(request.user.username,task_name,time.time(),time.time()+task_expired_time*86400,task_input_infos)
+                rs = executeSql(sql)
+                if not rs:
+                    return HttpResponse(json.dumps({'data':"ok","code":"200"}))
+                else:
+                    return HttpResponse(json.dumps({'data':sql,"code":"500"}))
+            except Exception,e:
+                return HttpResponse(json.dumps({'data':sql,"code":"500"}))
+        else:
+            return HttpResponse(json.dumps({'data':"not ok","code":"500"}))

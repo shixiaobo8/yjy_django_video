@@ -7,12 +7,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>{% block title %}{% endblock %}</title>
 <link rel="stylesheet" href="{% static "layui/css/layui.css" %}">
-<script src="{% static "layui/layui.js" %}"></script>
+<!-- Bootstrap -->
+	<link rel="stylesheet" type=text/css href="{% static "css/bootstrap.min.css" %}" >
+
+	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+     <script src='{% static "js/jquery-3.1.1.min.js" %}' ></script>
+     <!-- <script src='{% static "js/ajax.js" %}' ></script> -->
+     <!-- Include all compiled plugins (below), or include individual files as needed -->
+     <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <link rel="stylesheet" type=text/css href="{% static "css/bootstrap.min.css" %}" >
+    <script src="{% static "layui/layui.js" %}"></script>
 <script>
 //JavaScript代码区域
 layui.use('element', function(){
   var element = layui.element;
-
 });
 </script>
 </head>
@@ -62,10 +75,12 @@ layui.use('element', function(){
     </div>
   </div>
 
-  <div class="layui-body">
-    {% block content %}
-      {% endblock %}
-  </div>
+  <body>
+      <div style="padding-left: 13%;">
+        {% block content %}
+          {% endblock %}
+      </div>
+  </body>
 
   <div class="layui-footer">
     <!-- 底部固定区域 -->

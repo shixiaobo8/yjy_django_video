@@ -4,50 +4,166 @@
 {% block title %}hi {{ user.username }} 的视频切片页面 {% endblock %}
 {% block content %}
     <script>
-        layui.use('table', function () {
-            var table = layui.table;
-            table.render({
-                elem:'#cutList',
-                height:315,
-                url:"cutCenterList",
-                method:"POST",
-                request:{'page':2,'limit':30},
-                where:{ "apptype":"{{ user1.apptype }}"},
-                cols:  [[ //标题栏
-                        {checkbox: true}
-                        ,{field: 'id', title: 'ID', width: 80}
-                        ,{field: 'username', title: '用户名', width: 120}
-                      ]]
+        $(function () {
+            $("[data-toggle='task-popover']").popover();
+        });
+
+        $(function () {
+            $('#task_name_input').blur(function () {  // #id_captcha_1为输入框的id，当该输入框失去焦点是触发函数
+                var new_task_name = $('#task_name_input').val();
+                if (!new_task_name) {
+                    alert("请输入要创建的任务名称");
+                    return;
+                }
+                json_data = {
+                    'new_task_name': new_task_name,  // 获取输入框和隐藏字段id_captcha_0的数值
+                }
+                $.getJSON('/video/task/checkTaskName', json_data, function (data) { //ajax发送
+                    $('#task_name_ajax').empty();
+                    if (data['code'] == '200') { //status返回1为验证码正确， status返回0为验证码错误， 在输入框的后面写入提示信息
+                        $('#task_name_ajax').text('任务名称正确');
+                        $("#task_name_ajax").removeAttr("style");
+                        $('#task_name_ajax').css("color", "green");
+                    } else if (data['code'] == '202') {
+                        $('#task_name_ajax').text('任务名称已存在');
+                        $("#task_name_ajax").removeAttr("style");
+                        $('#task_name_ajax').css("color", "yellow");
+                    } else {
+                        alert("参数错误,请将改错误联系给管理员");
+                    }
+                });
             });
         });
+        function create_task() {
+            var task_name = $("#task_name_input").val();
+            var task_input_infos = $("#task_input_infos").val();
+            var task_expired_time = $("#task_expired_time").val();
+            if ($('#task_name_ajax').text() != '任务名称正确') {
+                alert("请先确认任务名正确再提交!");
+                return;
+            } else {
+                $.post("/video/task/add", {
+                    "new_task_new": task_name,
+                    "task_input_infos": task_input_infos,
+                    "task_expired_time": task_expired_time
+                }, function (res) {
+                    var res = JSON.parse(res);
+                    if (res['code'] == '200') {
+                        window.location.href = "{{ request.get_full_path }}"
+                    } else {
+                        alert("参数错误,请将改错误联系给管理员");
+                    }
+                })
+            }
+        }
     </script>
-    <table  id="cutList">
-    <table class="layui-table">
-  <colgroup>
-    <col width="150">
-    <col width="200">
-    <col>
-  </colgroup>
-  <thead>
-    <tr>
-      <th>昵称</th>
-      <th>加入时间</th>
-      <th>签名</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>贤心</td>
-      <td>2016-11-29</td>
-      <td>人生就像是一场修行</td>
-    </tr>
-    <tr>
-      <td>许闲心</td>
-      <td>2016-11-28</td>
-      <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-    </tr>
-  </tbody>
-</table>
+    <div class="row">
+        <div class="form-inline">
+            <div class="col-lg-10">
+                <a align="center" class="bg-success">{{ user1.username }}的切片任务队列</a>
+            </div>
+            <div class="col-lg-2">
+                <button class="btn btn-info" data-toggle="modal" id="chinese_name{{ video.id }}"
+                        data-target="#chvideoname{{ video.id }}">创建新的队列
+                </button>
+                <div class="modal fade" id="chvideoname{{ video.id }}" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel"
+                     aria-hidden="true" style="margin-top:100px;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    创建新的切片队列
+                                    <button type="button" class="btn btn-warning" title="任务队列说明"
+                                            data-container="body" data-toggle="task-popover" data-placement="right"
+                                            data-content="1.建议一个学科一个任务队列 2.一个mp4只能同时在一个切片队列中切片 3.任务队列时间结束该任务失效">
+                                        查看任务队列使用说明
+                                    </button>
+                                </h4>
+                            </div>
+                            <div class="modal-body" style="padding-left: 12%">
+                                <div class="row">
+                                    <div class="form-inline">
+                                        <div class="col-sm-3">
+                                            <label>任务名称:</label>
+                                        </div>
+                                        <div class="col-sm-2s">
+                                            <input type="text" class="form-control" id="task_name_input"
+                                                   placeholder="输入切片队列名(支持中文)"><span
+                                                id="task_name_ajax"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-inline">
+                                        <div class="col-sm-4">
+                                            <label>请选择任务有效期:</label>
+                                        </div>
+                                        <div class="col-sm-2s">
+                                            <select class="form-control" id="task_expired_time">
+                                                <option value="1">1天</option>
+                                                <option value="2">2天</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-inline">
+                                        <div class="col-sm-4">
+                                            <label>请填写任务备注信息:</label>
+                                        </div>
+                                        <div class="col-sm-2s">
+                                            <textarea class="form-control" rows="3" id="task_input_infos"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="create_task" onclick="create_task()">
+                                    创建任务
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+        <thead>
+        <tr class="success">
+            <th>切片任务Id</th>
+            <th>创建者</th>
+            <th>任务名称</th>
+            <th>创建时间</th>
+            <th>任务有效期</th>
+            <th>备注信息</th>
+        </tr>
+        </thead>
+
+        {% if tasks.count > 0 %}
+            {% for task in tasks.list %}
+                <tbody>
+                <tr>
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.tasker }}</td>
+                    <td>{{ task.task_name }}</td>
+                    <td>{{ task.crated_time }}</td>
+                    <td>{{ task.others }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+        {% endif %}
     </table>
+    {% if tasks.count == 0 %}
+        由于之前所有的任务队列已全部失效,暂时没有可用的切片任务队列,请先创建新的任务队列
+    {% endif %}
+    <div>
+
+    </div>
+    {#    </div>#}
 
 {% endblock %}
