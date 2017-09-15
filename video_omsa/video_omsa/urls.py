@@ -55,7 +55,7 @@ urlpatterns = [
     url(r'^video/delete_video',video_views.delete_video,name='delete_video'),
     url(r'^video/recovery_video',video_views.recovery_video,name='recovery_video'),
     url(r'^video/chVideoSection',video_views.chVideoSection,name='chVideoSection'),
-    url(r'^video/cutCenter',video_views.cutCenter,name='cutCenter'),
+    url(r'^video/VideoCenter',video_views.VideoCenter,name='VideoCenter'),
     url(r'^video/cutCenterList',video_views.cutCenterList,name='cutCenterList'),
 
 ]
