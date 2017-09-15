@@ -529,7 +529,7 @@
             }
         // 查看我的切片任务表
         function  list_MyCutSchedules(){
-               var new_url = "/video/cutCenter";
+               var new_url = "/video/Center";
                window.location.href = new_url;
         }
 
@@ -656,6 +656,7 @@
                         </tr>
                         </thead>
                         <tbody>
+                        {{ MyVideos.list }}
                         {% for video in MyVideos %}
                             <tr style="text-align: center">
                                 <td>{{ video.id }}</td>
@@ -784,6 +785,76 @@
                                     {% endif %}
                                     {% if video.parent_id.id %}
                                         <a href="?parent_id={{ video.parent_id.id }}">{{ video.parent_id.name }}</a>
+                                        <button class="btn btn-default" data-toggle="modal"
+                                                data-target="#category_mp4{{ video.id }}">重新给这个视频分类
+                                        </button>
+                                        <div class="modal fade" id="category_mp4{{ video.id }}" tabindex="-1"
+                                             role="dialog"
+                                             aria-labelledby="myModalLabel"
+                                             aria-hidden="true" style="margin-top:100px;">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-hidden="true">×
+                                                        </button>
+                                                        <h4 class="modal-title" id="myModalLabel">
+                                                            视频分类
+                                                        </h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="form-inline">
+                                                            <div class="col-lg-5" style="width: 100%;">
+                                                                app类型:&nbsp;&nbsp;<select class="form-control"
+                                                                                          id="id_app_type{{ video.id }}"
+                                                                                          name="app_type{{ video.id }}"
+                                                                                          onChange="getCategorys1(this,{{ video.id }})"
+                                                                                          required>
+                                                                <option value="yjy_xiyizonghe">西医综合</option>
+                                                                <option value="tcmsq">中医执业医师</option>
+                                                                <option value="yjy_zhongyizonghe">中医综合</option>
+                                                                <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
+                                                            </select>
+                                                                科目:&nbsp;&nbsp;<select class="form-control"
+                                                                                       id="id_parent_id{{ video.id }}"
+                                                                                       name="parent_id{{ video.id }}"
+                                                                                       onChange="getChapters1(this,{{ video.id }})"
+                                                                                       required>
+                                                            </select>
+                                                            </div>
+                                                            <div class="col-lg-5" style="width: 100%;">
+                                                                章节名称:&nbsp;&nbsp;<select class="form-control"
+                                                                                         id="id_chapter_id{{ video.id }}"
+                                                                                         name="chapter_id{{ video.id }}"
+                                                                                         onChange="getSections1(this,{{ video.id }})"
+                                                                                         required>
+                                                            </select>
+                                                                章篇名称:&nbsp;&nbsp;<select class="form-control"
+                                                                                         id="id_section_id{{ video.id }}"
+                                                                                         name="section_id{{ video.id }}"
+                                                                                         required>
+                                                            </select>
+                                                            </div>
+                                                            <div class="col-lg-5" style="width: 100%;">
+                                                                视频名称:&nbsp;&nbsp;<input class="form-control"
+                                                                                        id="id_name{{ video.id }}"
+                                                                                        name="name{{ video.id }}"
+                                                                                        placeholder="请输入中文名称"
+                                                                                        type="text"
+                                                                                        required/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary"
+                                                                id="CategoryMp4{{ video.id }}"
+                                                                onclick="CategoryMp4({{ video.id }})">
+                                                            提交更改
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {% endif %}
                                 </td>
                                 <td>

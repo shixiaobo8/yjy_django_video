@@ -1183,7 +1183,7 @@ def chVideoSection(request):
 
 @login_required(login_url="/")
 @csrf_exempt
-def cutCenter(request):
+def VideoCenter(request):
     User = getUserProperties(request.user.username)
     if request.method == 'POST':
         res={'code': 0,
