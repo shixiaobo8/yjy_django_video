@@ -1267,18 +1267,20 @@ def checkTaskName(request):
 @login_required(login_url="/")
 def task_add(request):
     if request.method == 'POST':
+        sql =''
         task_name = request.POST.get("task_name",None)
         task_expired_time = request.POST.get("task_expired_time",None)
         task_input_infos = request.POST.get("task_input_infos",None)
         if task_name and task_expired_time and task_input_infos:
             try:
-                sql = "insert into `yjy_mp4_cutTask`(`tasker`,`task_name`,`created_time`,`expired_time`,`others`) values('%s','%s','%s','%s','%s','%s')"%(request.user.username,task_name,time.time(),time.time()+task_expired_time*86400,task_input_infos)
+                sql = "insert into `yjy_mp4_cutTask`(`tasker`,`task_name`,`created_time`,`expired_time`,`others`) values('%s','%s','%s','%s','%s')"%(request.user.username,task_name,str(int(time.time())),str((int(time.time())+int(task_expired_time)*86400)),task_input_infos)
                 rs = executeSql(sql)
                 if not rs:
                     return HttpResponse(json.dumps({'data':"ok","code":"200"}))
                 else:
                     return HttpResponse(json.dumps({'data':sql,"code":"500"}))
             except Exception,e:
+                print e
                 return HttpResponse(json.dumps({'data':sql,"code":"500"}))
         else:
-            return HttpResponse(json.dumps({'data':"not ok","code":"500"}))
+            return HttpResponse(json.dumps({'data':"not ok","code":"502"}))

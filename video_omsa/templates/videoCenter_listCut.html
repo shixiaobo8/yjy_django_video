@@ -43,7 +43,7 @@
                 return;
             } else {
                 $.post("/video/task/add", {
-                    "new_task_new": task_name,
+                    "task_name": task_name,
                     "task_input_infos": task_input_infos,
                     "task_expired_time": task_expired_time
                 }, function (res) {
