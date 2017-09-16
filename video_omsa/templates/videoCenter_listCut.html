@@ -63,10 +63,10 @@
                 <a align="center" class="bg-success">{{ user1.username }}的切片任务队列</a>
             </div>
             <div class="col-lg-2">
-                <button class="btn btn-info" data-toggle="modal" id="chinese_name{{ video.id }}"
-                        data-target="#chvideoname{{ video.id }}">创建新的队列
+                <button class="btn btn-info" data-toggle="modal" id="addTaskBtn"
+                        data-target="#addTask">创建新的队列
                 </button>
-                <div class="modal fade" id="chvideoname{{ video.id }}" tabindex="-1" role="dialog"
+                <div class="modal fade" id="addTask" tabindex="-1" role="dialog"
                      aria-labelledby="myModalLabel"
                      aria-hidden="true" style="margin-top:100px;">
                     <div class="modal-dialog">
@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover"  style="text-align: center;">
         <thead>
         <tr class="success">
             <th>切片任务Id</th>
@@ -145,13 +145,32 @@
         </thead>
 
         {% if tasks.count > 0 %}
-            {% for task in tasks.list %}
-                <tbody>
+            {% for task in tasks.list_able %}
+                <tbody style="text-align: center;">
                 <tr>
                     <td>{{ task.id }}</td>
                     <td>{{ task.tasker }}</td>
                     <td>{{ task.task_name }}</td>
-                    <td>{{ task.crated_time }}</td>
+                    <td>{{ task.created_time }}</td>
+                    <td>{{ task.expired_time }}</td>
+                    <td>{{ task.others }}</td>
+                </tr>
+                </tbody>
+            {% endfor %}
+            {% for task in tasks.list_disable %}
+                <tbody style="text-align: center;">
+                <tr >
+                    <td>{{ task.id }}</td>
+                    <td>{{ task.tasker }}</td>
+                    <td>{{ task.task_name }}</td>
+                    <td>{{ task.created_time }}</td>
+                    <td>
+                            <button type="button" class="btn btn-danger" title=""
+                                            data-container="body" data-toggle="task-popover" data-placement="bottom"
+                                            data-content="1.过期时间:{{ task.expired_time }} 2.失效一天后系统将自动逻辑删除该任务">
+                                        已失效
+                                    </button>
+                    </td>
                     <td>{{ task.others }}</td>
                 </tr>
                 </tbody>
@@ -162,8 +181,5 @@
         由于之前所有的任务队列已全部失效,暂时没有可用的切片任务队列,请先创建新的任务队列
     {% endif %}
     <div>
-
     </div>
-    {#    </div>#}
-
 {% endblock %}

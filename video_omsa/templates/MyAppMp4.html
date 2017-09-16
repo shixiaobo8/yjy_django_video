@@ -366,21 +366,21 @@
             // 搜索url
             function getSearchUrl(apptype, parent_id, chapter_id, section_id, search_key) {
                 var new_url = "{{ request.get_full_path }}".replace(/&amp;/, '').split('?')[0] + '?';
-                    if (!( !apptype && typeof(apptype) != "undefined" && apptype != 0) && apptype!= 'null') {
-                        new_url += 'app_type=' + apptype;
-                    }
-                    if (!(!parent_id && typeof(parent_id) != "undefined" && parent_id != 0) && parent_id!= 'null') {
-                        new_url += '&parent_id=' + parent_id;
-                    }
-                    if (!(!chapter_id && typeof(chapter_id) != "undefined" && chapter_id != 0) && chapter_id!= 'null') {
-                        new_url += '&chapter_id=' + chapter_id;
-                    }
-                    if (!(!section_id && typeof(section_id) != "undefined" && section_id != 0) && section_id!= 'null') {
-                        new_url += '&section_id=' + section_id;
-                    }
-                    if (search_key) {
-                        new_url += '&search_key=' + search_key.replace(/\*/g,'');
-                    }
+                if (!( !apptype && typeof(apptype) != "undefined" && apptype != 0) && apptype != 'null') {
+                    new_url += 'app_type=' + apptype;
+                }
+                if (!(!parent_id && typeof(parent_id) != "undefined" && parent_id != 0) && parent_id != 'null') {
+                    new_url += '&parent_id=' + parent_id;
+                }
+                if (!(!chapter_id && typeof(chapter_id) != "undefined" && chapter_id != 0) && chapter_id != 'null') {
+                    new_url += '&chapter_id=' + chapter_id;
+                }
+                if (!(!section_id && typeof(section_id) != "undefined" && section_id != 0) && section_id != 'null') {
+                    new_url += '&section_id=' + section_id;
+                }
+                if (search_key) {
+                    new_url += '&search_key=' + search_key.replace(/\*/g, '');
+                }
                 return new_url;
             }
             // 按章节搜索视频
@@ -390,7 +390,7 @@
                 var chapter_id = $("#id_chapter_id_S").val();
                 var section_id = $("#id_section_id_S").val();
                 var search_key = $("#mp4-search").val();
-                var search_url = getSearchUrl(apptype, parent_id, chapter_id, section_id,search_key);
+                var search_url = getSearchUrl(apptype, parent_id, chapter_id, section_id, search_key);
                 $.ajax({
                     url: search_url,
                     type: 'GET',
@@ -466,6 +466,33 @@
                     })
                 });
             }
+            // 将mp4加入到切片队列
+            function start_cut(selected,video_id) {
+                var task_id = $("#"+selected+video_id).val();
+                $.post("/video/addMp4ToCut",{"video_id":video_id,"task_id":task_id}, function (res) {
+                    var data = JSON.parse(res);
+                    if (data['code'] == '200') {
+                        alert("已添加到要求队列，点击确定一秒后自动刷新");
+                        setTimeout("location.href='{{ request.get_full_path }}'", 1000);
+                    } else {
+                        alert('出错了，请来联系管理员'+data['data']);
+                    }
+                })
+            }
+            // 选择任务加入任务队列
+            function selectTask(btn, select_id_pre, video_id) {
+                $.post("/video/cutCenterList", function (res) {
+                    var data = JSON.parse(res);
+                    if (data['list_able'].length > 0) {
+                        for (i = 0; i < data['list_able'].length; i++) {
+                            $("#"+select_id_pre+video_id).append("<option value=" + data['list_able'][i]['id'] + ">" +  data['list_able'][i]['task_name'] + "</option>");
+                        }
+                    } else {
+                        alert("没有可用的任务队列，请前往任务队列中心添加");
+                    }
+                })
+            }
+
             $(function () {
                 function initTableCheckbox() {
                     var $thr = $('table thead tr');
@@ -514,24 +541,25 @@
             // 按命令规则搜索
             function searchByName() {
                 var search_key = $("#mp4-search").val();
-                search_key = search_key.replace(/\*/g,'');
-                if(!search_key){
-                    alert('输入的命令代号不能为空且不能为中文');return;
+                search_key = search_key.replace(/\*/g, '');
+                if (!search_key) {
+                    alert('输入的命令代号不能为空且不能为中文');
+                    return;
                 }
                 var old_url = "{{ request.get_full_path }}";
                 var new_url = old_url.replace(/&amp;/g, '');
-                if (new_url.indexOf('?') >= 0){
+                if (new_url.indexOf('?') >= 0) {
                     new_url += "&search_key=" + search_key;
-                }else{
+                } else {
                     new_url += "?search_key=" + search_key;
                 }
                 window.location.href = new_url;
             }
-        // 查看我的切片任务表
-        function  list_MyCutSchedules(){
-               var new_url = "/video/Center";
-               window.location.href = new_url;
-        }
+            // 查看我的切片任务表
+            function list_MyCutSchedules() {
+                var new_url = "/video/Center";
+                window.location.href = new_url;
+            }
 
         </script>
         <div class="panel-group">
@@ -623,7 +651,8 @@
                     </div>
                     <table class="table table-bordered table-hover">
                         <caption align="center">
-                            <h4><span style="color: #761c19"><b>{{ apptype }}</b></span>下共找到<span style="color:indianred;"><b>{{ count }}</b></span>个文件</h4>
+                            <h4><span style="color: #761c19"><b>{{ apptype }}</b></span>下共找到<span
+                                    style="color:indianred;"><b>{{ count }}</b></span>个文件</h4>
                             每页显示条目数量<select id="pager_nums" class="form-inline"
                                             onchange="refreshByPageNums(this.value)">
                             <option value="{{ page_nums }}">{{ page_nums }}</option>
@@ -638,8 +667,8 @@
                             <option value="30" {% ifequal "30" page_nums %} disabled="disabled" {% endifequal %} >30
                             </option>
                         </select>
-                        <a type="button" style="padding-left: 60%;" class="btn btn-group-xs" id='MyApp-mp4'
-                                                   href="/video/project?app_type={{ user1.apptype }}">查看{{ user_apptype_v }}的视频更新进度</a>
+                            <a type="button" style="padding-left: 60%;" class="btn btn-group-xs" id='MyApp-mp4'
+                               href="/video/project?app_type={{ user1.apptype }}">查看{{ user_apptype_v }}的视频更新进度</a>
                         </caption>
                         <thead>
                         <tr class="success">
@@ -915,11 +944,58 @@
                                 </td>
                                 <td>
                                     {% if video.cut_id == 0 %}
-                                        <a type="button" class="btn btn-info"
-                                           href="start_cut?id={{ video.id }}">加入到切片队列</a>
+                                        <button class="btn btn-info" data-toggle="modal"
+                                                id="addVideoToTaskBtn{{ video.id }}"
+                                                onclick="selectTask('addVideoToTaskBtn','cutTask_S',{{ video.id }})"
+                                                data-target="#addVideoToTask{{ video.id }}">加入到切片队列
+                                        </button>
+                                        <div class="modal fade" id="addVideoToTask{{ video.id }}" tabindex="-1" role="dialog"
+                                             aria-labelledby="myModalLabel"
+                                             aria-hidden="true" style="margin-top:100px;">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">×
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    将{{ video.chinese_name }}添加到已有的任务队列
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body" style="padding-left: 12%">
+                                                <div class="row">
+                                                    <div class="form-inline">
+                                                        <div class="col-sm-4">
+                                                            <label>请选择任务:</label>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <select class="form-control" id="cutTask_S{{ video.id }}">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="row">
+                                                    <div class="form-inline">
+                                                        <div class="col-sm-6">
+                                                            <a href="/video/Center" style="padding-left: 1%;">没有合适的任务队列?先去添加</a>
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <button type="button" class="btn btn-primary"
+                                                                    id="create_task"
+                                                                    onclick="start_cut('cutTask_S',{{ video.id }})">
+                                                                提交
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     {% endif %}
                                     {% if video.cut_id != 0 %}
-                                        {{ video.id }} 查看切片详情
+                                        <a type="button" class="btn btn-info"
+                                           href="/video/center/cutDetail?id={{ video.id }}">查看切片详情</a>
                                     {% endif %}
                                 </td>
                                 <td>{{ video.upload_save_time }}</td>
@@ -929,25 +1005,25 @@
                     </table>
                     <div class="panel-footer">
                         <nav>
-                                    <div class="row">
-                                        <div class="form-inline">
-                                            <div class="col-lg-8" id="list_MyAppMp4">
-                                                <a type="button" class="btn btn-warning" id='MyApp-mp4'
-                                                   href="/video/getMyAppMp4.html?app_type={{ user1.apptype }}">返回查看服务器{{ user_apptype_v }}上所有mp4资源</a>
-                                            </div>
-                                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <div class="col-lg-2" id="list_MyAppMp4">
-                                                <button class="btn btn-primary" data-toggle="modal"
-                                                        data-target="#new-uploads" >
-                                                    上传新的视频资源请点击这里
-                                                </button>
-                                            </div>
-                                            <div class="col-lg-1" id="list_MyCutSchedules">
-                                                <a type="button" class="btn btn-success" id='MyCutSchedules'
-                                                   onclick="list_MyCutSchedules()">查看{{ user1.username }}的切片任务队列表</a>
-                                            </div>
-                                        </div>
+                            <div class="row">
+                                <div class="form-inline">
+                                    <div class="col-lg-8" id="list_MyAppMp4">
+                                        <a type="button" class="btn btn-warning" id='MyApp-mp4'
+                                           href="/video/getMyAppMp4.html?app_type={{ user1.apptype }}">返回查看服务器{{ user_apptype_v }}上所有mp4资源</a>
                                     </div>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <div class="col-lg-2" id="list_MyAppMp4">
+                                        <button class="btn btn-primary" data-toggle="modal"
+                                                data-target="#new-uploads">
+                                            上传新的视频资源请点击这里
+                                        </button>
+                                    </div>
+                                    <div class="col-lg-1" id="list_MyCutSchedules">
+                                        <a type="button" class="btn btn-success" id='MyCutSchedules'
+                                           onclick="list_MyCutSchedules()">查看{{ user1.username }}的切片任务队列表</a>
+                                    </div>
+                                </div>
+                            </div>
                         </nav>
                         <hr/>
                         <nav>

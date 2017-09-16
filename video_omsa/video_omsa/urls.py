@@ -59,6 +59,7 @@ urlpatterns = [
     url(r'^video/cutCenterList',video_views.cutCenterList,name='cutCenterList'),
     url(r'^video/task/checkTaskName',video_views.checkTaskName,name='checkTaskName'),
     url(r'^video/task/add',video_views.task_add,name='task_add'),
+    url(r'^video/addMp4ToCut',video_views.addMp4ToCut,name='addMp4ToCut'),
 
 ]
 handler404 = video_views.page_not_found

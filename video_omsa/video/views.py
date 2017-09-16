@@ -931,7 +931,7 @@ def getAppMp4(apptype, where,search_key,search_time_range,sort):
     for i in range(0, len(rs)):
         tmp = dict()
         tmp['id'] = rs[i][0]
-        tmp['original_save_path'] = rs[i][1].replace(settings.MP4_SERVER_DIR,'')
+        tmp['original_save_path'] = rs[i][1].replace(settings.MP4_SERVER_DIR,'').split('/')[-1]
         tmp['upload_save_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(rs[i][2]))
         tmp['chapter_id'] = {"id": rs[i][3], "name": getAppTitle(rs[i][4], rs[i][3])}
         tmp['apptype'] = getApptypeName(rs[i][4])
@@ -1186,40 +1186,60 @@ def chVideoSection(request):
 def VideoCenter(request):
     User = getUserProperties(request.user.username)
     if request.method == 'POST':
-        res={'code': 0,
-          'msg': "",
-          'count': 1000,
-          'data': [{
-              'id':1,
-              'username':'bobo'
-          },{
-              'id':2,
-              'username':'admin'
-          }
-          ]}
-        return HttpResponse(json.dumps(res))
+        tasks = getTasks(User['username'])
+        return HttpResponse(json.dumps(tasks))
     elif request.method == 'GET':
         tasks = getTasks(User['username'])
         return render(request,"videoCenter_listCut.html",{'user1':User,'touxiang':getTouxiang(User['touxiang']),'tasks':tasks})
 
+def TimeFormat(timestamp):
+    return time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(timestamp))
+
+
+def checkTaskStauts():
+    sql = "select `id`,`created_time`,`expired_time` from `yjy_mp4_cutTask` where `status`=0"
+    rs = executeSql(sql)
+    if len(rs) > 0:
+        for r in rs:
+            if int(r[2]) - (r[1]) < 0:
+                sql1 = "update yjy_mp4_cutTask set status=1 where id='%s'"%(r[0])
+                executeSql(sql1)
+            if abs(int(r[2]) - (r[1])) < 86400:
+                sql2 = "update yjy_mp4_cutTask set is_del=1 where id='%s'"%(r[0])
+                executeSql(sql2)
+
 # 获取用户的切片任务队列
 def getTasks(tasker):
     tasks = dict()
-    sql = "select `id`,`tasker`,`task_name`,`created_time`,`expired_time`,`others`  from `yjy_mp4_cutTask` where status=0"
+    # 先扫描并标记过期的任务队列
+    checkTaskStauts()
+    sql = "select `id`,`tasker`,`task_name`,`created_time`,`expired_time`,`others`,`status`  from `yjy_mp4_cutTask` where `is_del`=0 order by status"
     try:
         rs = executeSql(sql)
         t = []
+        m = []
         for r in rs:
-            t1 = dict()
-            t1['id'] = r[0]
-            t1['tasker'] = r[1]
-            t1['task_name'] = r[2]
-            t1['created_time'] = r[3]
-            t1['expired'] = r[4]
-            t1['others'] = r[5]
-            t.append(t1)
+            if r[6] == 0:
+                t1 = dict()
+                t1['id'] = r[0]
+                t1['tasker'] = r[1]
+                t1['task_name'] = r[2]
+                t1['created_time'] = TimeFormat(int(r[3]))
+                t1['expired_time'] = TimeFormat(int(r[4]))
+                t1['others'] = r[5]
+                t.append(t1)
+            if r[6] == 1:
+                t1 = dict()
+                t1['id'] = r[0]
+                t1['tasker'] = r[1]
+                t1['task_name'] = r[2]
+                t1['created_time'] = TimeFormat(int(r[3]))
+                t1['expired_time'] = TimeFormat(int(r[4]))
+                t1['others'] = r[5]
+                m.append(t1)
         tasks['count'] = len(rs)
-        tasks['list'] = t
+        tasks['list_able'] = t
+        tasks['list_disable'] = m
     except Exception,e:
         tasks['list'] = 'None'
         tasks['count'] = 0
@@ -1228,18 +1248,9 @@ def getTasks(tasker):
 @csrf_exempt
 def cutCenterList(request):
     if request.method == 'POST':
-        res={'code': 0,
-          'msg': "",
-          'count': 1000,
-          'data': [{
-              'id':1,
-              'username':'bobo'
-          },{
-              'id':2,
-              'username':'admin'
-          }
-          ]}
-        return HttpResponse(json.dumps(res))
+        User = getUserProperties(request.user.username)
+        tasks = getTasks(User['username'])
+        return HttpResponse(json.dumps(tasks))
 
 @csrf_exempt
 @login_required(login_url="/")
@@ -1284,3 +1295,26 @@ def task_add(request):
                 return HttpResponse(json.dumps({'data':sql,"code":"500"}))
         else:
             return HttpResponse(json.dumps({'data':"not ok","code":"502"}))
+
+
+def addMp4ToCut(request):
+    res = dict()
+    if request.method == 'POST':
+        video_id = request.POST.get('video_id',None)
+        task_id = request.POST.get('video_id',None)
+        if video_id and task_id:
+            sql = "update `yjy_mp4` set `cut_id`='%s' where id='%s'"%(task_id,video_id)
+            try:
+                rs = executeSql(sql)
+                res['code'] = '200'
+                res['data'] = 'ok'
+            except Exception,e:
+                print e
+                res['code'] = '500'
+                res['data'] = e
+            finally:
+                return HttpResponse(json.dumps(res))
+        else:
+            res['code'] = '555'
+            res['data'] = '参数错误'
+            return HttpResponse(json.dumps(res))
