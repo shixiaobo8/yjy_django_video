@@ -1197,15 +1197,15 @@ def TimeFormat(timestamp):
 
 
 def checkTaskStauts():
-    sql = "select `id`,`created_time`,`expired_time` from `yjy_mp4_cutTask` where `status`=0"
+    sql = "select `id`,`created_time`,`expired_time` from `yjy_mp4_cuttask` where `status`=0"
     rs = executeSql(sql)
     if len(rs) > 0:
         for r in rs:
             if int(r[2]) - (r[1]) < 0:
-                sql1 = "update yjy_mp4_cutTask set status=1 where id='%s'"%(r[0])
+                sql1 = "update yjy_mp4_cuttask set status=1 where id='%s'"%(r[0])
                 executeSql(sql1)
             if abs(int(r[2]) - (r[1])) < 86400:
-                sql2 = "update yjy_mp4_cutTask set is_del=1 where id='%s'"%(r[0])
+                sql2 = "update yjy_mp4_cuttask set is_del=1 where id='%s'"%(r[0])
                 executeSql(sql2)
 
 # 获取用户的切片任务队列
@@ -1213,7 +1213,7 @@ def getTasks(tasker):
     tasks = dict()
     # 先扫描并标记过期的任务队列
     checkTaskStauts()
-    sql = "select `id`,`tasker`,`task_name`,`created_time`,`expired_time`,`others`,`status`  from `yjy_mp4_cutTask` where `is_del`=0 order by status"
+    sql = "select `id`,`tasker`,`task_name`,`created_time`,`expired_time`,`others`,`status`  from `yjy_mp4_cuttask` where `is_del`=0 order by status"
     try:
         rs = executeSql(sql)
         t = []
@@ -1260,7 +1260,7 @@ def checkTaskName(request):
         new_task_name = request.GET.get('new_task_name',None)
         if new_task_name:
             try:
-                sql = "select task_name from `yjy_mp4_cutTask` where task_name='%s'"%(new_task_name)
+                sql = "select task_name from `yjy_mp4_cuttask` where task_name='%s'"%(new_task_name)
                 rs = executeSql(sql)
                 if len(rs) > 1:
                     res['code'] = '202'
@@ -1284,7 +1284,7 @@ def task_add(request):
         task_input_infos = request.POST.get("task_input_infos",None)
         if task_name and task_expired_time and task_input_infos:
             try:
-                sql = "insert into `yjy_mp4_cutTask`(`tasker`,`task_name`,`created_time`,`expired_time`,`others`) values('%s','%s','%s','%s','%s')"%(request.user.username,task_name,str(int(time.time())),str((int(time.time())+int(task_expired_time)*86400)),task_input_infos)
+                sql = "insert into `yjy_mp4_cuttask`(`tasker`,`task_name`,`created_time`,`expired_time`,`others`) values('%s','%s','%s','%s','%s')"%(request.user.username,task_name,str(int(time.time())),str((int(time.time())+int(task_expired_time)*86400)),task_input_infos)
                 rs = executeSql(sql)
                 if not rs:
                     return HttpResponse(json.dumps({'data':"ok","code":"200"}))
