@@ -20,3 +20,6 @@ zabbix_api
 django-simple-captcha
 django-redis == 4.7.0
 simplejson
+celery == 4.0
+django-celery
+django-celery-results

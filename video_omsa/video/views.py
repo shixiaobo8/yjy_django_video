@@ -23,7 +23,7 @@ import MySQLdb as mdb
 from django.http import StreamingHttpResponse
 from collections import OrderedDict
 import urllib
-
+import logging
 
 # navs = list(Nav.objects.all())
 
@@ -1198,17 +1198,20 @@ def TimeFormat(timestamp):
 
 def checkTaskStauts():
     sql = "select `id`,`created_time`,`expired_time` from `yjy_mp4_cuttask` where `status`=0"
+    # logger = logging.getLogger('django')
+    # logger = logging.getLogger('django.request')
     rs = executeSql(sql)
     if len(rs) > 0:
         for r in rs:
-            if int(r[2]) - (r[1]) < 0:
+            logging.debug(abs(int(time.time()) - int(r[2])))
+            if int(r[2]) - int(time.time()) < 0:
                 sql1 = "update yjy_mp4_cuttask set status=1 where id='%s'"%(r[0])
-                executeSql(sql1)
-            if abs(int(r[2]) - (r[1])) < 86400:
+                rs1 = executeSql(sql1)
+            if abs(int(time.time()) - int(r[2])) > 86400:
                 sql2 = "update yjy_mp4_cuttask set is_del=1 where id='%s'"%(r[0])
-                executeSql(sql2)
+                rs2 =  executeSql(sql2)
 
-# 获取用户的切片任务队列
+# 获取用户的切片任务队
 def getTasks(tasker):
     tasks = dict()
     # 先扫描并标记过期的任务队列
