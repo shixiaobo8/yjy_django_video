@@ -937,7 +937,7 @@
                                 </td>
                                 <td>{{ video.original_save_path }}</td>
                                 <td>
-                                    <a href="mp4_file_download?id={{ video.id }}">点击下载</a>&nbsp;&nbsp;&nbsp;|
+                                    <a href="mp4_file_download?id={{ video.id }}">点击下载</a><span>({{ video.file_size }})</span>&nbsp;&nbsp;&nbsp;|
                                     <a class="btn btn-file"
                                        href="http://lubo.letiku.net:18989{{ video.original_save_path }}" target="_blank"
                                        role="button" style="color:#a94442;">在线预览这个视频</a>

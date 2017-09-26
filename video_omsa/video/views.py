@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 # -*- coding:utf8 -*-
+from __future__ import division
 from django.http import HttpResponseRedirect
 from django.template.context import RequestContext
 from django.shortcuts import render, redirect
@@ -932,13 +933,15 @@ def getAppMp4(apptype, where,search_key,search_time_range,sort):
     for i in range(0, len(rs)):
         tmp = dict()
         tmp['id'] = rs[i][0]
-        tmp['original_save_path'] = rs[i][1].replace(settings.MP4_SERVER_DIR,'').split('/')[-1]
+        #tmp['original_save_path'] = rs[i][1].replace(settings.MP4_SERVER_DIR,'').split('/')[-1]
+        tmp['original_save_path'] = rs[i][1].replace(settings.MP4_SERVER_DIR,'')
         tmp['upload_save_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(rs[i][2]))
         tmp['chapter_id'] = {"id": rs[i][3], "name": getAppTitle(rs[i][4], rs[i][3])}
         tmp['apptype'] = getApptypeName(rs[i][4])
         tmp['cut_status'] = rs[i][5]
         tmp['is_del'] = rs[i][6]
         tmp['cut_id'] = rs[i][7]
+        tmp['file_size'] = getMp4Size(rs[i][1])
         tmp['video_name'] = rs[i][8]
         tmp['mp4_download_url'] = rs[i][9]
         tmp['section_id'] = {"id":rs[i][10],"name":getAppSectionOneTitle(rs[i][4],rs[i][10])}
@@ -948,6 +951,13 @@ def getAppMp4(apptype, where,search_key,search_time_range,sort):
         tmp['parent_id'] = {"id": rs[i][14], "name": getAppTitle(rs[i][4], rs[i][14])}
         res['list'].append(tmp)
     return res
+
+# 获取文件大小
+def getMp4Size(filename):
+	if os.path.exists(filename):
+		return str(round(os.path.getsize(filename)/1024/1024,2)) + 'M'
+	else:
+		return '文件可能已删除'
 
 
 # 获取章节名称
