@@ -23,4 +23,4 @@ simplejson
 celery == 4.0
 django-celery
 django-celery-results
-Crypto
+pycrypto
