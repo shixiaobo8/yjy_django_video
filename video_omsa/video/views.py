@@ -25,7 +25,8 @@ from django.http import StreamingHttpResponse
 from collections import OrderedDict
 import urllib
 import logging
-from .tasks import sleep
+from .tasks import sleep,cut_video
+from ffmpeg import ffmpeg,Aes
 
 # navs = list(Nav.objects.all())
 
@@ -1264,7 +1265,6 @@ def cutCenterList(request):
     if request.method == 'POST':
         User = getUserProperties(request.user.username)
         tasks = getTasks(User['username'])
-        sleep.delay(60)
         return HttpResponse(json.dumps(tasks))
 
 @csrf_exempt
