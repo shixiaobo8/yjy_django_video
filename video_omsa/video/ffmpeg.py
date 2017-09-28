@@ -325,24 +325,24 @@ class ffmpeg(object):
                             self.logging_cut("切片完毕!")
                             # self.push_to_cdn()
 
+                        else:
+                            self.logging_cut(str(ts_status[1]) + "生成切片失败!")
+                            sys.exit(1)
+
                     else:
-                        self.logging_cut(str(ts_status[1]) + "生成切片失败!")
+                        self.logging_cut("生成ts失败!")
                         sys.exit(1)
 
                 else:
-                    self.logging_cut("生成ts失败!")
+                    self.logging_cut("获取视频时长失败!")
                     sys.exit(1)
-
             else:
-                self.logging_cut("获取视频时长失败!")
+                self.logging_cut("生成缩略图失败!")
                 sys.exit(1)
         else:
-            self.logging_cut("生成缩略图失败!")
-            sys.exit(1)
-    else:
-        self.logging_cut(c_status[1])
-        self.logging_cut('转码尺寸失败')
-        sys.exit(1)  # # 脚本测试
+            self.logging_cut(c_status[1])
+            self.logging_cut('转码尺寸失败')
+            sys.exit(1)  # # 脚本测试
 # if __name__ == '__main__':
 #     fg = ffmpeg(1,1,'/root/shell/demo/20170925/zyys_1.mp4')
 #     fg.start_cut()
