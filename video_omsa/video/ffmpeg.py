@@ -339,11 +339,10 @@ class ffmpeg(object):
         else:
             self.logging_cut("生成缩略图失败!")
             sys.exit(1)
-
     else:
-    self.logging_cut(c_status[1])
-    self.logging_cut('转码尺寸失败')
-    sys.exit(1)  # # 脚本测试
+        self.logging_cut(c_status[1])
+        self.logging_cut('转码尺寸失败')
+        sys.exit(1)  # # 脚本测试
 # if __name__ == '__main__':
 #     fg = ffmpeg(1,1,'/root/shell/demo/20170925/zyys_1.mp4')
 #     fg.start_cut()
