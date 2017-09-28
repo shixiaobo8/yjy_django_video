@@ -292,8 +292,8 @@ def getDates(his_month):
     today = time.strftime('%Y_%m_%d', time.localtime(time.time()))
     c_year = int(today.split('_')[0])
     c_month = int(today.split('_')[1][1])
-    start_month = getcalendar(c_year, c_month, his_month)['month']
-    start_year = getcalendar(c_year, c_month, his_month)['year']
+    start_month = int(getcalendar(c_year, c_month, his_month)['month'])
+    start_year = int(getcalendar(c_year, c_month, his_month)['year'])
     for year in range(start_year, c_year + 1):
         if year == c_year and start_month > c_month:
             start_month = 1
