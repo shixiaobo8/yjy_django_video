@@ -958,7 +958,10 @@ def getAppMp4(apptype, where,search_key,search_time_range,sort):
 def getTaskName(task_id):
     sql = "select `task_name` from `yjy_mp4_cuttask` where id='%s'"%(task_id)
     rs = executeSql(sql)
-    return rs[0][0]
+    if not rs:
+        return ''
+    else:
+        return rs[0][0]
 
 # 获取文件大小
 def getMp4Size(filename):
