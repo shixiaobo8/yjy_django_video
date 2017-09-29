@@ -1,0 +1,150 @@
+{% extends "base/videoCenter_frame.html" %}
+{% load staticfiles %}
+{% load static %}
+{% block title %}{{ task_name }} 的预切片MP4管理 {% endblock %}
+{% block content %}
+    <script>
+        $(function () {
+            $("[data-toggle='task-popover']").popover();
+        });
+
+        $(function () {
+            $('#task_name_input').blur(function () {  // #id_captcha_1为输入框的id，当该输入框失去焦点是触发函数
+                var new_task_name = $('#task_name_input').val();
+                if (!new_task_name) {
+                    alert("请输入要创建的任务名称");
+                    return;
+                }
+                json_data = {
+                    'new_task_name': new_task_name,  // 获取输入框和隐藏字段id_captcha_0的数值
+                }
+                $.getJSON('/video/task/checkTaskName', json_data, function (data) { //ajax发送
+                    $('#task_name_ajax').empty();
+                    if (data['code'] == '200') { //status返回1为验证码正确， status返回0为验证码错误， 在输入框的后面写入提示信息
+                        $('#task_name_ajax').text('任务名称正确');
+                        $("#task_name_ajax").removeAttr("style");
+                        $('#task_name_ajax').css("color", "green");
+                    } else if (data['code'] == '202') {
+                        $('#task_name_ajax').text('任务名称已存在');
+                        $("#task_name_ajax").removeAttr("style");
+                        $('#task_name_ajax').css("color", "yellow");
+                    } else {
+                        alert("参数错误,请将改错误联系给管理员");
+                    }
+                });
+            });
+        });
+        function start_task() {
+            bootbox.confirm({
+                message: "你已经确定要开始切片了吗？一旦开始切片给该任务后续不能再次添加新的MP4（但是你可以重新再创建任务切片）！确定吗？？",
+                buttons: {
+                    confirm: {
+                        label: '确定',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: '我再检查下',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if(result){
+                        $.post("/video/start_task", {
+                            "task_id": {{ task_id }}
+                        }, function (res) {
+                            var res = JSON.parse(res);
+                            if (res['code'] == '200') {
+                                window.location.href = "{{ request.get_full_path }}"
+                            } else {
+                                alert("参数错误,请将改错误联系给管理员");
+                            }
+                        })}
+                    else{
+                        return;
+                    }
+                }
+            });}
+    </script>
+    <div class="row">
+        <div class="form-inline">
+            <div class="col-lg-9">
+                <h4>{{ task_name }} 的预切片MP4管理</h4>
+            </div>
+            <div class="col-lg-3">
+                <a type="button" class="btn btn-next" style="border:1px solid red;" onclick="start_task()"><h5>
+                    我已确认所有任务开始切片</h5></a>
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <table class="table table-bordered table-hover" style="text-align: center;">
+        <thead>
+        <tr class="success">
+            <th>app类型</th>
+            <th>章节类型</th>
+            <th>章节名称</th>
+            <th>章篇名称</th>
+            <th>中文名称</th>
+            <th>切片状态</th>
+            <th>切片id</th>
+        </tr>
+        </thead>
+        {% for video in task_videos %}
+            <tbody style="text-align: center;">
+            <tr>
+                <td>{{ video.app_type }}</td>
+                <td>{{ video.parent_id }}</td>
+                <td>{{ video.chapter_id }}</td>
+                <td>{{ video.section_id }}</td>
+                <td>{{ video.chinese_name }}</td>
+                <td>
+                    {% ifequal video.cut_status 1 %}
+                        <a type="button" class="btn btn-info">已就绪</a>
+                    {% endifequal %}
+                    {% ifequal video.cut_status 2 %}
+                        <a type="button" class="btn btn-success"
+                           disabled="disabled">请耐心等候...正在切片...</a>
+                    {% endifequal %}
+                    {% ifequal video.cut_status 3 %}
+                        <a type="button" class="btn btn-info"
+                           href="/video/center/cutDetail?id={{ video.id }}">已完成切片</a>
+                    {% endifequal %}
+                    {% ifequal video.cut_status 4 %}
+                        <a type="button" class="btn btn-info"
+                           href="/video/center/cutDetail?id={{ video.id }}">已到预上线</a>
+                    {% endifequal %}
+                    {% ifequal video.cut_status 5 %}
+                        <a type="button" class="btn btn-info"
+                           href="/video/center/cutDetail?id={{ video.id }}">已上线</a>
+                    {% endifequal %}
+                </td>
+                <td>{{ video.cut_id }}</td>
+            </tr>
+            </tbody>
+        {% endfor %}
+    </table>
+    <hr/>
+    <span class="step-links">
+                {% if task_videos.has_previous %}
+                    {% ifnotequal 1 task_videos.number|add:-1 %}
+                        <a type="button" class="btn btn-info" id='prePage'
+                           href="{{ request.get_full_path }}&page=1">首页</a>
+                    {% endifnotequal %}
+                    <a type="button" class="btn btn-info" id='prePage'
+                       href="{{ request.get_full_path }}&page={{ task_videos.number|add:-1}}">上一页</a>
+                {% endif %}
+                </span>
+
+    <span class="current">
+                    当前页： {{ task_videos.number }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总页数: {{ task_videos.paginator.num_pages }}
+                </span>
+
+    {% if task_videos.has_next %}
+        <a type="button" class="btn btn-info" id='prePage'
+           href="{{ request.get_full_path }}&page={{ task_videos.number|add:1}}">下一页</a>
+        {% ifnotequal task_videos.paginator.num_pages task_videos.number|add:1 %}
+            <a type="button" class="btn btn-info" id='prePage'
+               href="{{ request.get_full_path }}&page={{ task_videos.paginator.num_pages }}">尾页</a>
+        {% endifnotequal %}
+    {% endif %}
+{% endblock %}
