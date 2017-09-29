@@ -99,6 +99,7 @@
             <th>中文名称</th>
             <th>切片状态</th>
             <th>切片id</th>
+            <th>服务器存储名称</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -132,6 +133,7 @@
                     {% endifequal %}
                 </td>
                 <td>{{ video.cut_id }}</td>
+                <td>{{ video.original_sava_path }}</td>
                 <td><a type="button" class="btn bg-danger" onclick="DelMp4ToCut({{ video.id }})">从任务中移除该mp4</a></td>
             </tr>
             </tbody>

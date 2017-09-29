@@ -1350,7 +1350,7 @@ def task_detail(request):
     if request.method == 'GET':
         task_id = request.GET.get('id',None)
         task_name = getTaskName(task_id)
-        sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id`,`id` from `yjy_mp4` where task_id='%s' order by `apptype`"%(task_id)
+        sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id`,`id`,`original_sava_path` from `yjy_mp4` where task_id='%s' order by `apptype`"%(task_id)
         rs = executeSql(sql)
         tmp = []
         for r in rs:
@@ -1363,6 +1363,7 @@ def task_detail(request):
             tmp1['cut_status'] = r[5]
             tmp1['cut_id'] = r[6]
             tmp1['id'] = r[7]
+            tmp1['original_sava_path'] = r[8].split('/')[-1]
             tmp.append(tmp1)
         paginator = Paginator(tmp, 15)
         try:
