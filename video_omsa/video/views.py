@@ -1350,7 +1350,7 @@ def task_detail(request):
     if request.method == 'GET':
         task_id = request.GET.get('id',None)
         task_name = getTaskName(task_id)
-        sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id` from `yjy_mp4` where task_id='%s' order by `apptype`"%(task_id)
+        sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id`,`id` from `yjy_mp4` where task_id='%s' order by `apptype`"%(task_id)
         rs = executeSql(sql)
         tmp = []
         for r in rs:
@@ -1362,6 +1362,7 @@ def task_detail(request):
             tmp1['chinese_name'] = r[4]
             tmp1['cut_status'] = r[5]
             tmp1['cut_id'] = r[6]
+            tmp1['id'] = r[7]
             tmp.append(tmp1)
         paginator = Paginator(tmp, 15)
         try:
@@ -1375,7 +1376,7 @@ def task_detail(request):
         except EmptyPage:
             task_videos = paginator.page(paginator.num_pages)
 
-        return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id})
+        return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id,"videos_nums":len(tmp)})
 
 
 # 批量任务切片
@@ -1389,3 +1390,15 @@ def start_task(request):
         for video in videos:
             cut_video(video[0],task_id,video[1])
         return HttpResponse(json.dumps({"code":"200","videos":videos}))
+
+# 删除任务切片MP4
+@csrf_exempt
+def DelteMp4ToCut(request):
+    if request.method == 'POST':
+        video_id = request.POST.get('video_id',None)
+        sql = "update yjy_mp4 set task_id='0',cut_staus='0' where id='%s'"%(video_id)
+        try:
+            rs = executeSql(sql)
+            return HttpResponse(json.dumps({"code":"200","mess":"ok"}))
+        except Exception,e:
+            return HttpResponse(json.dumps({"code":"500","mess":e}))

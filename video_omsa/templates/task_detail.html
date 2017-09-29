@@ -4,36 +4,6 @@
 {% block title %}{{ task_name }} 的预切片MP4管理 {% endblock %}
 {% block content %}
     <script>
-        $(function () {
-            $("[data-toggle='task-popover']").popover();
-        });
-
-        $(function () {
-            $('#task_name_input').blur(function () {  // #id_captcha_1为输入框的id，当该输入框失去焦点是触发函数
-                var new_task_name = $('#task_name_input').val();
-                if (!new_task_name) {
-                    alert("请输入要创建的任务名称");
-                    return;
-                }
-                json_data = {
-                    'new_task_name': new_task_name,  // 获取输入框和隐藏字段id_captcha_0的数值
-                }
-                $.getJSON('/video/task/checkTaskName', json_data, function (data) { //ajax发送
-                    $('#task_name_ajax').empty();
-                    if (data['code'] == '200') { //status返回1为验证码正确， status返回0为验证码错误， 在输入框的后面写入提示信息
-                        $('#task_name_ajax').text('任务名称正确');
-                        $("#task_name_ajax").removeAttr("style");
-                        $('#task_name_ajax').css("color", "green");
-                    } else if (data['code'] == '202') {
-                        $('#task_name_ajax').text('任务名称已存在');
-                        $("#task_name_ajax").removeAttr("style");
-                        $('#task_name_ajax').css("color", "yellow");
-                    } else {
-                        alert("参数错误,请将改错误联系给管理员");
-                    }
-                });
-            });
-        });
         function start_task() {
             bootbox.confirm({
                 message: "你已经确定要开始切片了吗？一旦开始切片给该任务后续不能再次添加新的MP4（但是你可以重新再创建任务切片）！确定吗？？",
@@ -48,7 +18,7 @@
                     }
                 },
                 callback: function (result) {
-                    if(result){
+                    if (result) {
                         $.post("/video/start_task", {
                             "task_id": {{ task_id }}
                         }, function (res) {
@@ -58,12 +28,47 @@
                             } else {
                                 alert("参数错误,请将改错误联系给管理员");
                             }
-                        })}
-                    else{
+                        })
+                    }
+                    else {
                         return;
                     }
                 }
-            });}
+            });
+        }
+
+        function DelMp4ToCut(video_id) {
+            bootbox.confirm({
+                message: "确定要移除该视频",
+                buttons: {
+                    confirm: {
+                        label: '确定',
+                        className: 'btn-success'
+                    },
+                    cancel: {
+                        label: '算了,就这样吧！',
+                        className: 'btn-danger'
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        $.post("/video/DelteMp4ToCut", {
+                            "video_id": video_id
+                        }, function (res) {
+                            var res = JSON.parse(res);
+                            if (res['code'] == '200') {
+                                window.location.href = "{{ request.get_full_path }}"
+                            } else {
+                                alert(res['mess']);
+                            }
+                        })
+                    }
+                    else {
+                        return;
+                    }
+                }
+            })
+        }
     </script>
     <div class="row">
         <div class="form-inline">
@@ -71,8 +76,15 @@
                 <h4>{{ task_name }} 的预切片MP4管理</h4>
             </div>
             <div class="col-lg-3">
-                <a type="button" class="btn btn-next" style="border:1px solid red;" onclick="start_task()"><h5>
-                    我已确认所有任务开始切片</h5></a>
+                {% ifequal videos_nums 0 %}
+                    <a type="button" class="btn btn-next" target="_blank" href="/video/getMyAppMp4.html"
+                    "><h5>
+                    该任务没有预切片,请先去mp4页面添加</h5></a>
+                {% endifequal %}
+                {% ifnotequal videos_nums 0 %}
+                    <a type="button" class="btn btn-next" style="border:1px solid red;" onclick="start_task()"><h5>
+                        我已确认所有任务开始切片</h5></a>
+                {% endifnotequal %}
             </div>
         </div>
     </div>
@@ -87,6 +99,7 @@
             <th>中文名称</th>
             <th>切片状态</th>
             <th>切片id</th>
+            <th>操作</th>
         </tr>
         </thead>
         {% for video in task_videos %}
@@ -119,6 +132,7 @@
                     {% endifequal %}
                 </td>
                 <td>{{ video.cut_id }}</td>
+                <td><a type="button" class="btn bg-danger" onclick="DelMp4ToCut({{ video.id }})">从任务中移除该mp4</a></td>
             </tr>
             </tbody>
         {% endfor %}
