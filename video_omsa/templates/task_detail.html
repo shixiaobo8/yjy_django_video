@@ -163,4 +163,9 @@
                href="{{ request.get_full_path }}&page={{ task_videos.paginator.num_pages }}">尾页</a>
         {% endifnotequal %}
     {% endif %}
+    <div>
+        <blockquote>
+            <footer>注:因为mp4内容太多,该页面暂不支持MP4添加，请前往<a style="color: #985f0d;" href="/video/getMyAppMp4.html" target="_blank">我的视频</a>上传页面添加</footer>
+        </blockquote>
+    </div>
 {% endblock %}
