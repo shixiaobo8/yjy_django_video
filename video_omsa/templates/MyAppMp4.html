@@ -997,8 +997,7 @@
                                     {% endif %}
                                     {% if video.cut_id != 0 %}
                                         {% ifequal video.cut_status 1 %}
-                                            <a type="button" class="btn btn-success" disabled="disabled" style="background-color: @brand-primary;"
-                                           href="/video/center/cutDetail?id={{ video.id }}">请耐心等候...正在切片...</a>
+                                            <a type="button" class="btn btn-success" disabled="disabled">请耐心等候...正在切片...</a>
                                         {% endifequal %}
                                         {% ifequal video.cut_status 2 %}
                                             <a type="button" class="btn btn-info"
