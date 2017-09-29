@@ -917,7 +917,7 @@ def getUserProperties(username):
 def getAppMp4(apptype, where,search_key,search_time_range,sort):
     res = dict()
     # sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id` from yjy_mp4 where original_sava_path like '%" + apptype + "%'"
-    sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id` from yjy_mp4 where apptype='" + apptype + "'"
+    sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id`,`task_id` from yjy_mp4 where apptype='" + apptype + "'"
     if where:
         for k, v in where.items():
             sql += " and " + k + "=" + v
@@ -950,8 +950,15 @@ def getAppMp4(apptype, where,search_key,search_time_range,sort):
         tmp['is_category'] = rs[i][12]
         tmp['chinese_name'] = rs[i][13]
         tmp['parent_id'] = {"id": rs[i][14], "name": getAppTitle(rs[i][4], rs[i][14])}
+        tmp['task_id'] = {"id":rs[i][15],"name":getTaskName(rs[i][15])}
         res['list'].append(tmp)
     return res
+
+# 获取任务名称
+def getTaskName(task_id):
+    sql = "select `task_name` from `yjy_mp4_cuttask` where id='%s'"%(task_id)
+    rs = executeSql(sql)
+    return rs[0][0]
 
 # 获取文件大小
 def getMp4Size(filename):
@@ -1316,9 +1323,9 @@ def addMp4ToCut(request):
     res = dict()
     if request.method == 'POST':
         video_id = request.POST.get('video_id',None)
-        task_id = request.POST.get('video_id',None)
+        task_id = request.POST.get('task_id',None)
         if video_id and task_id:
-            sql = "update `yjy_mp4` set `cut_id`='%s' where id='%s'"%(task_id,video_id)
+            sql = "update `yjy_mp4` set `task_id`='%s',cut_staus=1 where id='%s'"%(task_id,video_id)
             try:
                 rs = executeSql(sql)
                 res['code'] = '200'
@@ -1333,3 +1340,49 @@ def addMp4ToCut(request):
             res['code'] = '555'
             res['data'] = '参数错误'
             return HttpResponse(json.dumps(res))
+
+# 任务队列详情
+def task_detail(request):
+    res = ''
+    if request.method == 'GET':
+        task_id = request.GET.get('id',None)
+        task_name = getTaskName(task_id)
+        sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id` from `yjy_mp4` where task_id='%s' order by `apptype`"%(task_id)
+        rs = executeSql(sql)
+        tmp = []
+        for r in rs:
+            tmp1 = dict()
+            tmp1['app_type'] = getApptypeName(r[0])
+            tmp1['parent_id'] = getAppTitle(r[0],r[1])
+            tmp1['chapter_id'] = getAppTitle(r[0],r[2])
+            tmp1['section_id'] =  getAppSectionOneTitle(r[0],r[3])
+            tmp1['chinese_name'] = r[4]
+            tmp1['cut_status'] = r[5]
+            tmp1['cut_id'] = r[6]
+            tmp.append(tmp1)
+        paginator = Paginator(tmp, 15)
+        try:
+            page = request.GET.get('page')
+        except:
+            page = 1
+        try:
+            task_videos = paginator.page(page)
+        except PageNotAnInteger:
+            task_videos = paginator.page(1)
+        except EmptyPage:
+            task_videos = paginator.page(paginator.num_pages)
+
+        return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id})
+
+
+# 批量任务切片
+@csrf_exempt
+def start_task(request):
+    if request.method == 'POST':
+        task_id = request.POST.get('task_id',None)
+        task_name = getTaskName(task_id)
+        sql = "select `id`,`original_sava_path` from yjy_mp4 where task_id='%s'"%(task_id)
+        videos = executeSql(sql)
+        for video in videos:
+            cut_video(video[0],task_id,video[1])
+        return HttpResponse(json.dumps({"code":"200","videos":videos}))

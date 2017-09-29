@@ -150,7 +150,7 @@
                 <tr>
                     <td>{{ task.id }}</td>
                     <td>{{ task.tasker }}</td>
-                    <td>{{ task.task_name }}</td>
+                    <td><a href="task_detail?id={{ task.id }}">{{ task.task_name }}</a></td>
                     <td>{{ task.created_time }}</td>
                     <td>{{ task.expired_time }}</td>
                     <td>{{ task.others }}</td>
@@ -162,7 +162,7 @@
                 <tr >
                     <td>{{ task.id }}</td>
                     <td>{{ task.tasker }}</td>
-                    <td>{{ task.task_name }}</td>
+                    <td><a href="task_detail?id={{ task.id }}">{{ task.task_name }}</a></td>
                     <td>{{ task.created_time }}</td>
                     <td>
                             <button type="button" class="btn btn-danger" title=""

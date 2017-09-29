@@ -944,7 +944,7 @@
                                        role="button" style="color:#a94442;">在线预览这个视频</a>
                                 </td>
                                 <td>
-                                    {% if video.cut_id == 0 %}
+                                    {% if video.cut_status == 0 %}
                                         <button class="btn btn-info" data-toggle="modal"
                                                 id="addVideoToTaskBtn{{ video.id }}"
                                                 onclick="selectTask('addVideoToTaskBtn','cutTask_S',{{ video.id }})"
@@ -965,8 +965,8 @@
                                                 </h4>
                                             </div>
                                             <div class="modal-body" style="padding-left: 12%">
-                                                <div class="row">
-                                                    <div class="form-inline">
+                                                <div class="form-inline">
+                                                    <div class="row">
                                                         <div class="col-sm-4">
                                                             <label>请选择任务:</label>
                                                         </div>
@@ -995,21 +995,26 @@
                                             </div>
                                         </div>
                                     {% endif %}
-                                    {% if video.cut_id != 0 %}
+                                    {% if video.cut_status != 0 %}
                                         {% ifequal video.cut_status 1 %}
-                                            <a type="button" class="btn btn-success" disabled="disabled">请耐心等候...正在切片...</a>
+                                            <a type="button" class="btn btn-info"
+                                               href="task_detail?id={{ video.task_id.id }}">已加入<b style="color:chartreuse;">{{ video.task_id.name }}</b>任务</a>
                                         {% endifequal %}
                                         {% ifequal video.cut_status 2 %}
-                                            <a type="button" class="btn btn-info"
-                                           href="/video/center/cutDetail?id={{ video.id }}">已完成切片</a>
+                                            <a type="button" class="btn btn-success"
+                                               disabled="disabled">请耐心等候...正在切片...</a>
                                         {% endifequal %}
                                         {% ifequal video.cut_status 3 %}
                                             <a type="button" class="btn btn-info"
-                                           href="/video/center/cutDetail?id={{ video.id }}">已到预上线</a>
+                                               href="/video/center/cutDetail?id={{ video.id }}">已完成切片</a>
                                         {% endifequal %}
                                         {% ifequal video.cut_status 4 %}
                                             <a type="button" class="btn btn-info"
-                                           href="/video/center/cutDetail?id={{ video.id }}">已上线</a>
+                                               href="/video/center/cutDetail?id={{ video.id }}">已到预上线</a>
+                                        {% endifequal %}
+                                        {% ifequal video.cut_status 5 %}
+                                            <a type="button" class="btn btn-info"
+                                               href="/video/center/cutDetail?id={{ video.id }}">已上线</a>
                                         {% endifequal %}
                                     {% endif %}
                                 </td>
