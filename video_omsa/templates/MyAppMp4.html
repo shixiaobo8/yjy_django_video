@@ -467,15 +467,15 @@
                 });
             }
             // 将mp4加入到切片队列
-            function start_cut(selected,video_id) {
-                var task_id = $("#"+selected+video_id).val();
-                $.post("/video/addMp4ToCut",{"video_id":video_id,"task_id":task_id}, function (res) {
+            function start_cut(selected, video_id) {
+                var task_id = $("#" + selected + video_id).val();
+                $.post("/video/addMp4ToCut", {"video_id": video_id, "task_id": task_id}, function (res) {
                     var data = JSON.parse(res);
                     if (data['code'] == '200') {
                         alert("已添加到要求队列，点击确定一秒后自动刷新");
                         setTimeout("location.href='{{ request.get_full_path }}'", 1000);
                     } else {
-                        alert('出错了，请来联系管理员'+data['data']);
+                        alert('出错了，请来联系管理员' + data['data']);
                     }
                 })
             }
@@ -485,7 +485,7 @@
                     var data = JSON.parse(res);
                     if (data['list_able'].length > 0) {
                         for (i = 0; i < data['list_able'].length; i++) {
-                            $("#"+select_id_pre+video_id).append("<option value=" + data['list_able'][i]['id'] + ">" +  data['list_able'][i]['task_name'] + "</option>");
+                            $("#" + select_id_pre + video_id).append("<option value=" + data['list_able'][i]['id'] + ">" + data['list_able'][i]['task_name'] + "</option>");
                         }
                     } else {
                         alert("没有可用的任务队列，请前往任务队列中心添加");
@@ -939,7 +939,8 @@
                                 <td>
                                     <a href="mp4_file_download?id={{ video.id }}">点击下载</a><span>({{ video.file_size }})</span>&nbsp;&nbsp;&nbsp;|
                                     <a class="btn btn-file"
-                                       href="http://lubo.letiku.net:18989{{ video.original_save_path }}" target="_blank"
+                                       href="http://lubo.letiku.net:18989/{{ video.original_save_path }}"
+                                       target="_blank"
                                        role="button" style="color:#a94442;">在线预览这个视频</a>
                                 </td>
                                 <td>
@@ -949,7 +950,8 @@
                                                 onclick="selectTask('addVideoToTaskBtn','cutTask_S',{{ video.id }})"
                                                 data-target="#addVideoToTask{{ video.id }}">加入到切片队列
                                         </button>
-                                        <div class="modal fade" id="addVideoToTask{{ video.id }}" tabindex="-1" role="dialog"
+                                        <div class="modal fade" id="addVideoToTask{{ video.id }}" tabindex="-1"
+                                             role="dialog"
                                              aria-labelledby="myModalLabel"
                                              aria-hidden="true" style="margin-top:100px;">
                                         <div class="modal-dialog">
@@ -994,8 +996,22 @@
                                         </div>
                                     {% endif %}
                                     {% if video.cut_id != 0 %}
-                                        <a type="button" class="btn btn-info"
-                                           href="/video/center/cutDetail?id={{ video.id }}">查看切片详情</a>
+                                        {% ifequal video.cut_status 1 %}
+                                            <a type="button" class="btn btn-success" disabled="disabled" style="background-color: @brand-primary;"
+                                           href="/video/center/cutDetail?id={{ video.id }}">请耐心等候...正在切片...</a>
+                                        {% endifequal %}
+                                        {% ifequal video.cut_status 2 %}
+                                            <a type="button" class="btn btn-info"
+                                           href="/video/center/cutDetail?id={{ video.id }}">已完成切片</a>
+                                        {% endifequal %}
+                                        {% ifequal video.cut_status 3 %}
+                                            <a type="button" class="btn btn-info"
+                                           href="/video/center/cutDetail?id={{ video.id }}">已到预上线</a>
+                                        {% endifequal %}
+                                        {% ifequal video.cut_status 4 %}
+                                            <a type="button" class="btn btn-info"
+                                           href="/video/center/cutDetail?id={{ video.id }}">已上线</a>
+                                        {% endifequal %}
                                     {% endif %}
                                 </td>
                                 <td>{{ video.upload_save_time }}</td>
