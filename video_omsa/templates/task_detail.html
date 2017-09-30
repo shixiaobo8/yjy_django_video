@@ -4,7 +4,7 @@
 {% block title %}{{ task_name }} 的预切片MP4管理 {% endblock %}
 {% block content %}
     <script>
-        function start_task() {
+        function start_task(task_id,,cut_status) {
             bootbox.confirm({
                 message: "你已经确定要开始切片了吗？一旦开始切片给该任务后续不能再次添加新的MP4（但是你可以重新再创建任务切片）！确定吗？？",
                 buttons: {
@@ -19,9 +19,8 @@
                 },
                 callback: function (result) {
                     if (result) {
-                        alert(cut_status);return;
-                        if (cut_status == 1){
-                            $.post("/video/start_task", {
+                        checkStatus()
+                        $.post("/video/start_task", {
                                 "task_id": {{ task_id }}
                             }, function (res) {
                                 var res = JSON.parse(res);
@@ -31,9 +30,6 @@
                                     alert("参数错误,请将改错误联系给管理员");
                                 }
                             })
-                        }else{
-                            alert("请确保所有任务中视频的状态都准备就绪!");
-                        }
                     } else {
                         return;
                     }
@@ -41,7 +37,13 @@
             });
         }
 
-        function DelMp4ToCut(video_id,cut_status) {
+        function checkStatus(){
+            video_status = $(".cut_status").text();
+            alert(video_status);
+            return;
+        }
+
+        function DelMp4ToCut(video_id) {
             bootbox.confirm({
                 message: "确定要移除该视频",
                 buttons: {
@@ -114,7 +116,7 @@
                 <td>{{ video.chapter_id }}</td>
                 <td>{{ video.section_id }}</td>
                 <td>{{ video.chinese_name }}</td>
-                <td>
+                <td class="cut_status">
                     {% ifequal video.cut_status 1 %}
                         <a type="button" class="btn btn-info">已就绪</a>
                     {% endifequal %}
