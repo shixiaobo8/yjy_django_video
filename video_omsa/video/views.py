@@ -1391,6 +1391,7 @@ def checkMp4Status():
         sql1 = "select `result` from `django_celery_results_taskresult` where `task_id`='%s'"%(r[1])
         result = executeSql(sql1)[0]
         sql2 = "update `yjy_mp4` set `cut_status`='7' where id='%s'"%(r[0])
+        executeSql(sql2)
 
 
 # 批量任务切片
