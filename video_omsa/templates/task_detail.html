@@ -140,7 +140,7 @@
                     {% ifnotequal video.cut_id 0  %}
                         <a href="http://101.201.31.40:5555/task/{{ video.cut_id }}">{{ video.cut_id }}</a>
                     {% endifnotequal %}
-                    {% ifequal   %}
+                    {% ifequal video.cut_id 0  %}
                         {{ video.cut_id }}
                     {% endifequal %}
                 </td>
