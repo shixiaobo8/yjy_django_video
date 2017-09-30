@@ -8,7 +8,7 @@ import sys, os, time, commands, hashlib, logging, random, shutil
 from Crypto.Cipher import AES
 from binascii import b2a_hex, a2b_hex
 from Crypto import Random
-import types
+import types,json
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -323,26 +323,29 @@ class ffmpeg(object):
                             self.recoder_to_db()
                             self.recoder_to_file("all done !! and ok")
                             self.logging_cut("切片完毕!")
+                            return json.dumps({"code":"ok","mess":"切片顺利完成!"})
                             # self.push_to_cdn()
 
                         else:
                             self.logging_cut(str(ts_status[1]) + "生成切片失败!")
-                            sys.exit(1)
+                            return json.dumps(str(ts_status[1]) + "生成切片失败!")
 
                     else:
                         self.logging_cut("生成ts失败!")
-                        sys.exit(1)
+                        return json.dumps("生成ts失败!"+str(ts_status[1]))
 
                 else:
                     self.logging_cut("获取视频时长失败!")
-                    sys.exit(1)
+                    return json.dumps("获取视频时长失败!"+str(d_status[1]))
             else:
                 self.logging_cut("生成缩略图失败!")
-                sys.exit(1)
+                return json.dumps("生成缩略图失败!"+str(t_status[1]))
         else:
             self.logging_cut(c_status[1])
             self.logging_cut('转码尺寸失败')
-            sys.exit(1)  # # 脚本测试
+            return json.dumps("转码尺寸失败!"+str(c_status[1]))
+
+# # 脚本测试
 # if __name__ == '__main__':
 #     fg = ffmpeg(1,1,'/root/shell/demo/20170925/zyys_1.mp4')
 #     fg.start_cut()

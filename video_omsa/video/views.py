@@ -1392,6 +1392,7 @@ def start_task(request):
             res = cut_video.delay(video[0],task_id,video[1])
             res_id = res.id
             sql1 = "update yjy_mp4 set `cut_id`='%s' where id='%s'"%(res_id,video[0])
+            executeSql(sql1)
         return HttpResponse(json.dumps({"code":"200","videos":videos}))
 
 # 删除任务切片MP4
