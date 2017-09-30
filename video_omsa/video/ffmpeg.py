@@ -287,9 +287,9 @@ class ffmpeg(object):
 
     def recoder_to_file(self, mess):
         with open(self.Log, 'ab+') as f:
-            for name, value in vars(self).items():
-                f.write(str(name) + " = " + str(value))
-                f.write('\n')
+            # for name, value in vars(self).items():
+            #     f.write(str(name) + " = " + str(value))
+            #     f.write('\n')
             f.write(mess)
 
     def change_mp4_cutStatus(self):
@@ -338,7 +338,7 @@ class ffmpeg(object):
                             self.recoder_to_file("all done !! and ok")
                             self.change_mp4_cutStatus()
                             self.logging_cut("切片完毕!")
-                            return json.dumps({"code":"ok","mess":"切片顺利完成!"})
+                            return "切片顺利完成!"
                             # self.push_to_cdn()
 
                         else:
@@ -347,18 +347,17 @@ class ffmpeg(object):
 
                     else:
                         self.logging_cut("生成ts失败!")
-                        return json.dumps("生成ts失败!"+str(ts_status[1]))
+                        return "生成ts失败!"+str(ts_status[1])
 
                 else:
                     self.logging_cut("获取视频时长失败!")
-                    return json.dumps("获取视频时长失败!"+str(d_status[1]))
+                    return "获取视频时长失败!"+str(d_status[1])
             else:
                 self.logging_cut("生成缩略图失败!")
-                return json.dumps("生成缩略图失败!"+str(t_status[1]))
+                return "生成缩略图失败!"+str(t_status[1])
         else:
-            self.logging_cut(c_status[1])
-            self.logging_cut('转码尺寸失败')
-            return json.dumps("转码尺寸失败!"+str(c_status[1]))
+            self.logging_cut('转码尺寸失败'+str(c_status[1]))
+            return "转码尺寸失败!"+str(c_status[1])
 
 # # 脚本测试
 # if __name__ == '__main__':
