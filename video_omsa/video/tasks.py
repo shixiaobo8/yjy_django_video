@@ -29,4 +29,5 @@ def sleep(s):
 @shared_task
 def cut_video(task_id, video_id,mp4_path):
      fg = ffmpeg(task_id,video_id,mp4_path)
-     fg.start_cut()
+     res = fg.start_cut()
+     return res
