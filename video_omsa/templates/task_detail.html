@@ -19,18 +19,22 @@
                 },
                 callback: function (result) {
                     if (result) {
-                        $.post("/video/start_task", {
-                            "task_id": {{ task_id }}
-                        }, function (res) {
-                            var res = JSON.parse(res);
-                            if (res['code'] == '200') {
-                                window.location.href = "{{ request.get_full_path }}"
-                            } else {
-                                alert("参数错误,请将改错误联系给管理员");
-                            }
-                        })
-                    }
-                    else {
+                        alert(cut_status);return;
+                        if (cut_status == 1){
+                            $.post("/video/start_task", {
+                                "task_id": {{ task_id }}
+                            }, function (res) {
+                                var res = JSON.parse(res);
+                                if (res['code'] == '200') {
+                                    window.location.href = "{{ request.get_full_path }}"
+                                } else {
+                                    alert("参数错误,请将改错误联系给管理员");
+                                }
+                            })
+                        }else{
+                            alert("请确保所有任务中视频的状态都准备就绪!");
+                        }
+                    } else {
                         return;
                     }
                 }
@@ -52,8 +56,6 @@
                 },
                 callback: function (result) {
                     if (result) {
-                        alert(cut_status);return;
-                        if (cut_status == 1){
                             $.post("/video/DelteMp4ToCut", {
                                 "video_id": video_id
                             }, function (res) {
@@ -64,11 +66,7 @@
                                     alert(res['mess']);
                                 }
                             })
-                        }else{
-                            alert("请确保所有任务中视频的状态都准备就绪!");
-                        }
-                    }
-                    else {
+                    } else {
                         return;
                     }
                 }
