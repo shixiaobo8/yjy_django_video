@@ -303,7 +303,7 @@ class ffmpeg(object):
             db_conn.commit()
             return rs
         except Exception,e:
-            print e
+            self.logging_cut(e)
             return e
 
     # 预热到cdn(暂未实现)
