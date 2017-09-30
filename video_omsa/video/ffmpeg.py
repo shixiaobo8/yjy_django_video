@@ -292,6 +292,20 @@ class ffmpeg(object):
                 f.write('\n')
             f.write(mess)
 
+    def change_mp4_cutStatus(self):
+        try:
+            db_conn = mdb.connect('localhost', 'root', 'yjy_video@123', 'django_video')
+            cursor = db_conn.cursor()
+            sql = "update yjy_mp4 set `cut_staus`='3' where id='%s'"%(self.video_id)
+            self.logging_cut("正在修改视频MP4状态3"+sql)
+            cursor.execute(sql)
+            rs = cursor.fetchall()
+            db_conn.commit()
+            return rs
+        except Exception,e:
+            print e
+            return e
+
     # 预热到cdn(暂未实现)
     def push_to_cdn(self):
         aes_ts_files = getAllaesTsFiles()
@@ -322,6 +336,7 @@ class ffmpeg(object):
                             self.logging_cut("加密版本切片完成!开始记录将切片信息写入到文件并记录到数据库!")
                             self.recoder_to_db()
                             self.recoder_to_file("all done !! and ok")
+                            self.change_mp4_cutStatus()
                             self.logging_cut("切片完毕!")
                             return json.dumps({"code":"ok","mess":"切片顺利完成!"})
                             # self.push_to_cdn()
