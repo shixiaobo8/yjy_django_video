@@ -916,6 +916,7 @@ def getUserProperties(username):
 
 def getAppMp4(apptype, where,search_key,search_time_range,sort):
     res = dict()
+    checkMp4Status()
     # sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id` from yjy_mp4 where original_sava_path like '%" + apptype + "%'"
     sql = "select `id`,`original_sava_path`,`upload_save_time`,`chapter_id`,`apptype`,`cut_staus`,`is_del`,`cut_id`,`video_name`,`mp4_download_url`,`section_id`,`is_named`,`is_category`,`chinese_name`,`parent_id`,`task_id` from yjy_mp4 where apptype='" + apptype + "'"
     if where:
@@ -1350,6 +1351,7 @@ def task_detail(request):
     if request.method == 'GET':
         task_id = request.GET.get('id',None)
         task_name = getTaskName(task_id)
+        checkMp4Status()
         sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id`,`id`,`original_sava_path` from `yjy_mp4` where task_id='%s' order by `apptype`"%(task_id)
         rs = executeSql(sql)
         tmp = []
@@ -1378,6 +1380,17 @@ def task_detail(request):
             task_videos = paginator.page(paginator.num_pages)
 
         return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id,"videos_nums":len(tmp)})
+
+
+# 检查MP4状态
+@csrf_exempt
+def checkMp4Status():
+    sql = "select `id`,`cut_id` from yjy_mp4 where `cut_staus` not in ('0','1','2','3','4','5','6');"
+    rs = executeSql(sql)
+    for r in rs:
+        sql1 = "select `result` from `django_celery_results_taskresult` where `reult` != '切片顺利完成!' and `task_id`='%s'"%(r[1])
+        result = executeSql(sql1)[0]
+        sql2 = "update `yjy_mp4` set `cut_status`='7' where id='%s'"%(r[0])
 
 
 # 批量任务切片
