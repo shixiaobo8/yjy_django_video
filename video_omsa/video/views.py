@@ -1388,7 +1388,7 @@ def checkMp4Status():
     sql = "select `id`,`cut_id` from yjy_mp4 where `cut_staus` not in ('0','1','2','3','4','5','6');"
     rs = executeSql(sql)
     for r in rs:
-        sql1 = "select `result` from `django_celery_results_taskresult` where `reult` != '切片顺利完成!' and `task_id`='%s'"%(r[1])
+        sql1 = "select `result` from `django_celery_results_taskresult` where `task_id`='%s'"%(r[1])
         result = executeSql(sql1)[0]
         sql2 = "update `yjy_mp4` set `cut_status`='7' where id='%s'"%(r[0])
 
