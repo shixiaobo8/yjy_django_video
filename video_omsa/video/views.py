@@ -1434,7 +1434,7 @@ def DelteMp4ToCut(request):
 def mp4AferCut(request):
     if request.method == 'GET':
         res = dict()
-        video_id = request.GET.get('video_id',None)
+        video_id = request.GET.get('id',None)
         sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder`"
         rs = executeSql(sql)
         appinfos = getApptypes(video_id)
