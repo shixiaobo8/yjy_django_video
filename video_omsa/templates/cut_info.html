@@ -52,7 +52,7 @@
                 <td>{{ video.chinese_name }}</td>
                 <td>
                     {% ifequal video.status 0  %}
-                        <td><a class="btn btn-danger" onclick="toprepare({{ video.id }})">点击上到预上线环境</a></td>
+                        <a class="btn btn-danger" onclick="toprepare({{ video.id }})">点击上到预上线环境</a>
                     {% endifequal %}
                     {% ifequal video.status 1  %}
                         已上到预上线环境
