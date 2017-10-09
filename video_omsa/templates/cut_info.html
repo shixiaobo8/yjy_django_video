@@ -51,7 +51,7 @@
                 <td>{{ video.cut_time }}</td>
                 <td><a href="{{ video.m3u8_serverPath }}">点击下载使用播放器测试</a></td>
                 <td><a href="{{ video.aes_m3u8_serverPath }}">点击下载加密文件</a></td>
-                <td id="img"><img src="{{ video.thumb_url }}" height="50px" width="50px"></td>
+                <td id="img"><a class="layui-btn layui-btn-primary layer-demolist" href="javascript:;">点击查看</a><img src="{{ video.thumb_url }}" height="50px" width="50px"></td>
                 <td>{{ video.duration }}</td>
                 <td>{{ video.resolution }}</td>
             </tr>
