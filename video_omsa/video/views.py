@@ -1437,6 +1437,12 @@ def mp4AferCut(request):
         video_id = request.GET.get('video_id',None)
         sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder`"
         rs = executeSql(sql)
+        appinfos = getApptypes(video_id)
+        apptype_v = getApptypeName(appinfos[0])
+        parent_id = getAppTitle(appinfos[0],video_id)
+        chapter_id = getAppTitle(appinfos[0],video_id)
+        section_id = getAppSectionOneTitle(appinfos[0],appinfos[3])
+        chinese_name = appinfos[4]
         tmp = []
         for r in rs:
             tmp1 = dict()
@@ -1450,9 +1456,21 @@ def mp4AferCut(request):
             tmp1['file_size'] = r[7]
             tmp1['cut_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(float(r[8])))
             tmp1['status'] = r[9]
+            tmp1['apptype'] = apptype_v
+            tmp1['parent_id'] = parent_id
+            tmp1['chapter_id'] = chapter_id
+            tmp1['section_id'] = section_id
+            tmp1['chinese_name'] = chinese_name
             tmp.append(tmp1)
         res['list'] = tmp
+        return render(request,'cut_info.html',{'video_id':video_id,'videos':res})
         return HttpResponse(json.dumps(res))
+
+# 根据id获取信息
+def getApptypes(video_id):
+    sql = "select `apptype`,`parent_id`,`chapter_id`,`section_id`,`chinese_name` from yjy_mp4 where id='%s'"%(video_id)
+    rs = executeSql(sql)
+    return rs
 
 # 单个MP4上到预上线
 @csrf_exempt
