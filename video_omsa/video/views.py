@@ -1353,7 +1353,7 @@ def task_detail(request):
         task_id = request.GET.get('id',None)
         task_name = getTaskName(task_id)
         checkMp4Status()
-        sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id`,`id`,`original_sava_path` from `yjy_mp4` where task_id='%s' order by `apptype`"%(task_id)
+        sql = "select `apptype`,`chapter_id`,`parent_id`,`section_id`,`chinese_name`,`cut_staus`,`cut_id`,`id`,`original_sava_path` from `yjy_mp4` where task_id='%s' and `cut_staus` in ('1'.'2') order by `apptype`"%(task_id)
         rs = executeSql(sql)
         tmp = []
         for r in rs:
