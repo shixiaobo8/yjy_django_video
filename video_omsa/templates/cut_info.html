@@ -5,7 +5,7 @@
 {% block content %}
     <script>
         function toprepare(video_id){
-             $.post("/video/OneToPrepare", {
+             $.post("/video/toPrepare", {
                             "video_id": video_id
                         }, function (res) {
                             var res = JSON.parse(res);
