@@ -1239,7 +1239,7 @@ def getTasks(tasker):
     tasks = dict()
     # 先扫描并标记过期的任务队列
     checkTaskStauts()
-    sql = "select `id`,`tasker`,`task_name`,`created_time`,`expired_time`,`others`,`status`  from `yjy_mp4_cuttask` where `is_del`=0 order by status"
+    sql = "select `id`,`tasker`,`task_name`,`created_time`,`expired_time`,`others`,`status`  from `yjy_mp4_cuttask` where `is_del`='0' order by status"
     try:
         rs = executeSql(sql)
         t = []
