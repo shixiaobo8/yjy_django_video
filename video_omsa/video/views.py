@@ -1389,6 +1389,7 @@ def checkMp4Status():
     sql = "select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';"
     print sql
     rs = executeSql(sql)
+    print rs
     for r in rs:
         if r[1] and r[0]:
             sql1 = "select `result` from `django_celery_results_taskresult` where `task_id`='%s'"%(r[1])
