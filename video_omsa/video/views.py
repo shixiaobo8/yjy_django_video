@@ -1435,7 +1435,7 @@ def mp4AferCut(request):
     if request.method == 'GET':
         res = dict()
         video_id = request.GET.get('id',None)
-        sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder`"
+        sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status`,`file_size` from `mp4_cut_recoder`"
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').split(',')
         apptype_v = getApptypeName(appinfos[0])
@@ -1461,6 +1461,7 @@ def mp4AferCut(request):
             tmp1['chapter_id'] = chapter_id
             tmp1['section_id'] = section_id
             tmp1['chinese_name'] = chinese_name
+            tmp1['file_size'] = r[10]
             tmp.append(tmp1)
         res['list'] = tmp
         return render(request,'cut_info.html',{'video_id':video_id,'videos':res})
@@ -1481,4 +1482,22 @@ def getApptypes(video_id):
 # 单个MP4上到预上线
 @csrf_exempt
 def OneToPrepare(request):
-    return HttpResponse(111111)
+    import MySQLdb as mdb
+    if request.method == 'GET':
+        res = dict()
+        video_id = request.GET.get('id',None)
+        appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').split(',')
+        app_type = getApptypeName(appinfos[0])
+        db_conn = mdb.connect('10.26.160.177', 'django', 'django@2017', app_type)
+        cursor = db_conn.cursor()
+        data = ''
+        try:
+            sql = "select `requests` from " + date_table + "_history_data where `key`='" + domain + "' limit 1;"
+            cursor.execute(sql)
+            data = cursor.fetchall()
+            if not data:
+                data = ((('0',),))
+        except mdb.Error, e:
+            data = ((('0',),))
+            print e
+            db_conn.close()
