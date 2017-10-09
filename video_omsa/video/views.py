@@ -1470,7 +1470,7 @@ def mp4AferCut(request):
 def getApptypes(video_id):
     sql = "select `apptype`,`parent_id`,`chapter_id`,`section_id`,`chinese_name` from yjy_mp4 where id='%s'"%(video_id)
     rs = executeSql(sql)
-    return rs[0]
+    return rs
 
 # 单个MP4上到预上线
 @csrf_exempt
