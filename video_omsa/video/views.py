@@ -1438,8 +1438,7 @@ def mp4AferCut(request):
         sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder`"
         rs = executeSql(sql)
         appinfos = getApptypes(video_id)
-        print appinfos
-        return HttpResponse(list(appinfos))
+        return HttpResponse(appinfos[1])
         apptype_v = getApptypeName(appinfos[0])
         parent_id = getAppTitle(appinfos[0],video_id)
         chapter_id = getAppTitle(appinfos[0],video_id)
