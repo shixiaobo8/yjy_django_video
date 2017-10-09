@@ -1310,7 +1310,7 @@ def task_add(request):
         task_input_infos = request.POST.get("task_input_infos",None)
         if task_name and task_expired_time and task_input_infos:
             try:
-                sql = "insert into `yjy_mp4_cuttask`(`tasker`,`task_name`,`created_time`,`expired_time`,`others`) values('%s','%s','%s','%s','%s')"%(request.user.username,task_name,str(int(time.time())),str((int(time.time())+int(task_expired_time)*86400)),task_input_infos)
+                sql = "insert into `yjy_mp4_cuttask`(`tasker`,`task_name`,`created_time`,`expired_time`,`others`,`is_del`) values('%s','%s','%s','%s','%s','0')"%(request.user.username,task_name,str(int(time.time())),str((int(time.time())+int(task_expired_time)*86400)),task_input_infos)
                 rs = executeSql(sql)
                 if not rs:
                     return HttpResponse(json.dumps({'data':"ok","code":"200"}))
