@@ -1346,7 +1346,7 @@ def addMp4ToCut(request):
             return HttpResponse(json.dumps(res))
 
 # 任务队列详情
-def task_detail(request)
+def task_detail(request):
     res = ''
     if request.method == 'GET':
         checkMp4Status()
