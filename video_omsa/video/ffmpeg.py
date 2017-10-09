@@ -273,7 +273,7 @@ class ffmpeg(object):
         try:
             db_conn = mdb.connect('localhost', 'root', 'yjy_video@123', 'django_video')
             cursor = db_conn.cursor()
-            sql = "insert into `django_video`.`mp4_cut_recoder`(`task_id`,`video_id`,`thumb_url`,`resolution`,`duration`,`log`,`error_log`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`m3u8_webUrl`,`aes_m3u8_webUrl`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');" % (self.task_id, self.video_id, self.thumb_url, self.resolution, self.duration, self.Log, message,self.m3u8_serverPath, self.aes_m3u8_serverPath, self.m3u8_webUrl, self.aes_m3u8_webUrl, self.file_size)
+            sql = "insert into `django_video`.`mp4_cut_recoder`(`task_id`,`video_id`,`thumb_url`,`resolution`,`duration`,`log`,`error_log`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`m3u8_webUrl`,`aes_m3u8_webUrl`,`file_size`,`cut_time`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s');" % (self.task_id, self.video_id, self.thumb_url, self.resolution, self.duration, self.Log, message,self.m3u8_serverPath, self.aes_m3u8_serverPath, self.m3u8_webUrl, self.aes_m3u8_webUrl, self.file_size,str(time.time()))
             self.logging_cut(sql)
             cursor.execute(sql)
             rs = cursor.fetchall()

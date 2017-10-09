@@ -1348,6 +1348,7 @@ def addMp4ToCut(request):
 # 任务队列详情
 def task_detail(request):
     res = ''
+    checkMp4Status()
     if request.method == 'GET':
         task_id = request.GET.get('id',None)
         task_name = getTaskName(task_id)
