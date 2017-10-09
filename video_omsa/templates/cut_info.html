@@ -28,8 +28,7 @@
             <th>所属切片任务</th>
         </tr>
         </thead>
-    {{ videos }}
-        {% for video in videos %}
+        {% for video in videos.list %}
             <tbody style="text-align: center;">
             <tr>
                 <td>{{ video.app_type }}</td>
