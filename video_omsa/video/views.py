@@ -1438,7 +1438,6 @@ def mp4AferCut(request):
         sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder`"
         rs = executeSql(sql)
         appinfos = getApptypes(video_id)
-        return HttpResponse(appinfos)
         apptype_v = getApptypeName(appinfos[0])
         parent_id = getAppTitle(appinfos[0],video_id)
         chapter_id = getAppTitle(appinfos[0],video_id)
@@ -1471,7 +1470,7 @@ def mp4AferCut(request):
 def getApptypes(video_id):
     sql = "select `apptype`,`parent_id`,`chapter_id`,`section_id`,`chinese_name` from yjy_mp4 where id='%s'"%(video_id)
     rs = executeSql(sql)
-    return rs
+    return rs[0]
 
 # 单个MP4上到预上线
 @csrf_exempt
