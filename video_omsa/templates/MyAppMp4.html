@@ -997,7 +997,9 @@
                                     {% endif %}
                                     {% if video.cut_status != 0 %}
                                         {% ifequal video.cut_status 1 %}
-                                            <a type="button" class="btn btn-info">已就绪</a>
+                                            <a type="button" class="btn btn-info"
+                                               href="task_detail?id={{ video.task_id.id }}">已加入<b
+                                                    style="color:chartreuse;">{{ video.task_id.name }}</b>任务</a>
                                         {% endifequal %}
                                         {% ifequal video.cut_status 2 %}
                                             <a type="button" class="btn btn-success"
