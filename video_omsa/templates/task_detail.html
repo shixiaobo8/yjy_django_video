@@ -21,15 +21,15 @@
                     if (result) {
                         checkStatus()
                         $.post("/video/start_task", {
-                                "task_id": {{ task_id }}
-                            }, function (res) {
-                                var res = JSON.parse(res);
-                                if (res['code'] == '200') {
-                                    window.location.href = "{{ request.get_full_path }}"
-                                } else {
-                                    alert("参数错误,请将改错误联系给管理员");
-                                }
-                            })
+                            "task_id": {{ task_id }}
+                        }, function (res) {
+                            var res = JSON.parse(res);
+                            if (res['code'] == '200') {
+                                window.location.href = "{{ request.get_full_path }}"
+                            } else {
+                                alert("参数错误,请将改错误联系给管理员");
+                            }
+                        })
                     } else {
                         return;
                     }
@@ -37,7 +37,7 @@
             });
         }
 
-        function checkStatus(){
+        function checkStatus() {
             video_status = $(".cut_status").text();
             return;
         }
@@ -57,16 +57,16 @@
                 },
                 callback: function (result) {
                     if (result) {
-                            $.post("/video/DelteMp4ToCut", {
-                                "video_id": video_id
-                            }, function (res) {
-                                var res = JSON.parse(res);
-                                if (res['code'] == '200') {
-                                    window.location.href = "{{ request.get_full_path }}"
-                                } else {
-                                    alert(res['mess']);
-                                }
-                            })
+                        $.post("/video/DelteMp4ToCut", {
+                            "video_id": video_id
+                        }, function (res) {
+                            var res = JSON.parse(res);
+                            if (res['code'] == '200') {
+                                window.location.href = "{{ request.get_full_path }}"
+                            } else {
+                                alert(res['mess']);
+                            }
+                        })
                     } else {
                         return;
                     }
@@ -125,7 +125,7 @@
                     {% endifequal %}
                     {% ifequal video.cut_status 3 %}
                         <a type="button" class="btn btn-info"
-                           href="/video/center/cutDetail?id={{ video.id }}">已完成切片</a>
+                           href="/video/toPrepare?id={{ video.id }}">已完成切片,点击上传到预上线</a>
                     {% endifequal %}
                     {% ifequal video.cut_status 4 %}
                         <a type="button" class="btn btn-info"
@@ -135,17 +135,21 @@
                         <a type="button" class="btn btn-info"
                            href="/video/center/cutDetail?id={{ video.id }}">已上线</a>
                     {% endifequal %}
+                    {% ifequal video.cut_status 7 %}
+                        <a href="http://101.201.31.40:5555/task/{{ video.cut_id }}">切片失败,请联系服务器管理员</a>
+                    {% endifequal %}
                 </td>
                 <td>
-                    {% ifnotequal video.cut_id 0  %}
+                    {% ifnotequal video.cut_id 0 %}
                         <a href="http://101.201.31.40:5555/task/{{ video.cut_id }}">{{ video.cut_id }}</a>
                     {% endifnotequal %}
-                    {% ifequal video.cut_id 0  %}
+                    {% ifequal video.cut_id 0 %}
                         {{ video.cut_id }}
                     {% endifequal %}
                 </td>
                 <td>{{ video.original_sava_path }}</td>
-                <td><a type="button" class="btn bg-danger" onclick="DelMp4ToCut({{ video.id }},{{ video.cut_status }})">从任务中移除该mp4</a></td>
+                <td><a type="button" class="btn bg-danger" onclick="DelMp4ToCut({{ video.id }},{{ video.cut_status }})">从任务中移除该mp4</a>
+                </td>
             </tr>
             </tbody>
         {% endfor %}
@@ -176,7 +180,9 @@
     {% endif %}
     <div>
         <blockquote>
-            <footer>注:因为mp4内容太多,该页面暂不支持MP4添加，请前往<a style="color: #985f0d;" href="/video/getMyAppMp4.html" target="_blank">我的视频</a>上传页面添加</footer>
+            <footer>注:因为mp4内容太多,该页面暂不支持MP4添加，请前往<a style="color: #985f0d;" href="/video/getMyAppMp4.html"
+                                                   target="_blank">我的视频</a>上传页面添加
+            </footer>
         </blockquote>
     </div>
 {% endblock %}
