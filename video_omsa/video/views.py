@@ -1448,7 +1448,7 @@ def mp4AferCut(request):
             tmp1['m3u8_serverPath'] = r[5].replace('/data/hls/','http://m1.letiku.net/')
             tmp1['aes_m3u8_serverPath'] = r[6].replace('/data/hls/','http://m1.letiku.net/')
             tmp1['file_size'] = r[7]
-            tmp1['cut_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(r[8]))
+            tmp1['cut_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(float(r[8])))
             tmp1['status'] = r[9]
             tmp.append(tmp1)
         res['list'] = tmp
