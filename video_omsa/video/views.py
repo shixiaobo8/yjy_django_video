@@ -1435,7 +1435,7 @@ def mp4AferCut(request):
     if request.method == 'GET':
         res = dict()
         video_id = request.GET.get('id',None)
-        sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status`,`file_size` from `mp4_cut_recoder` where id='%s'"%(video_id)
+        sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status`,`file_size` from `mp4_cut_recoder` where `video_id`='%s'"%(video_id)
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').split(',')
         apptype_v = getApptypeName(appinfos[0])
