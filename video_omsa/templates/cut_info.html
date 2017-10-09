@@ -3,6 +3,17 @@
 {% load static %}
 {% block title %}{{ video_id }} 切片的完成信息 {% endblock %}
 {% block content %}
+    <script>
+        layer.open({
+          type: 1,
+          title: false,
+          closeBtn: 0,
+          area: '516px',
+          skin: 'layui-layer-nobg', //没有背景色
+          shadeClose: true,
+          content: $('#img')
+});
+    </script>
     <div class="row">
         <div class="form-inline">
             <div class="col-lg-9">
@@ -40,7 +51,7 @@
                 <td>{{ video.cut_time }}</td>
                 <td><a href="{{ video.m3u8_serverPath }}">点击下载使用播放器测试</a></td>
                 <td><a href="{{ video.aes_m3u8_serverPath }}">点击下载加密文件</a></td>
-                <td><img src="{{ video.thumb_url }}" height="50px" width="50px"></td>
+                <td id="img"><img src="{{ video.thumb_url }}" height="50px" width="50px"></td>
                 <td>{{ video.duration }}</td>
                 <td>{{ video.resolution }}</td>
             </tr>
