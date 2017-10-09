@@ -1389,14 +1389,15 @@ def checkMp4Status():
     sql = "select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';"
     print sql
     rs = executeSql(sql)
-    for r in rs:
-        sql1 = "select `result` from `django_celery_results_taskresult` where `task_id`='%s'"%(r[1])
-        result = executeSql(sql1)[0]
-        print sql1,result
-        if result != '切片顺利完成!':
-            sql2 = "update `yjy_mp4` set `cut_staus`='7' where id='%s'"%(r[0])
-            print sql2
-            executeSql(sql2)
+    if rs:
+        for r in rs:
+            sql1 = "select `result` from `django_celery_results_taskresult` where `task_id`='%s'"%(r[1])
+            result = executeSql(sql1)[0]
+            print sql1,result
+            if result != '切片顺利完成!':
+                sql2 = "update `yjy_mp4` set `cut_staus`='7' where id='%s'"%(r[0])
+                print sql2
+                executeSql(sql2)
 
 
 # 批量任务切片
