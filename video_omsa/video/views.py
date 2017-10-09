@@ -1469,8 +1469,14 @@ def mp4AferCut(request):
 # 根据id获取信息
 def getApptypes(video_id):
     sql = "select `apptype`,`parent_id`,`chapter_id`,`section_id`,`chinese_name` from yjy_mp4 where id='%s'"%(video_id)
-    rs = executeSql(sql)
-    return list(rs)
+    try:
+        cursor = connection.cursor()
+        cursor.execute(sql)
+        data = cursor.fetchall()
+        res = data
+        return res
+    except Exception, e:
+        print e
 
 # 单个MP4上到预上线
 @csrf_exempt
