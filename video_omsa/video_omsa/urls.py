@@ -63,6 +63,8 @@ urlpatterns = [
     url(r'^video/task_detail',video_views.task_detail,name='task_detail'),
     url(r'^video/start_task',video_views.start_task,name='start_task'),
     url(r'^video/DelteMp4ToCut',video_views.DelteMp4ToCut,name='DelteMp4ToCut'),
+    url(r'^video/toPrepare',video_views.OneToPrepare,name='OneToPrepare'),
+    url(r'^video/mp4AferCut',video_views.mp4AferCut,name='mp4AferCut'),
 ]
 handler404 = video_views.page_not_found
 handler500 = video_views.page_error

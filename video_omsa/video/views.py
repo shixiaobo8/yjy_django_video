@@ -1428,3 +1428,33 @@ def DelteMp4ToCut(request):
             return HttpResponse(json.dumps({"code":"200","mess":"ok"}))
         except Exception,e:
             return HttpResponse(json.dumps({"code":"500","mess":e}))
+
+# 查看MP4切片后的记录
+@csrf_exempt
+def mp4AferCut(request):
+    if request.method == 'GET':
+        res = dict()
+        video_id = request.GET.get('video_id',None)
+        sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder`"
+        rs = executeSql(sql)
+        tmp = []
+        for r in rs:
+            tmp1 = dict()
+            tmp1['id'] = r[0]
+            tmp1['video_id'] = r[1]
+            tmp1['thumb_url'] = r[2].replace('/data/hls/','http://m1.letiku.net/')
+            tmp1['resolution'] = r[3]
+            tmp1['duration'] = r[4]
+            tmp1['m3u8_serverPath'] = r[5].replace('/data/hls/','http://m1.letiku.net/')
+            tmp1['aes_m3u8_serverPath'] = r[6].replace('/data/hls/','http://m1.letiku.net/')
+            tmp1['file_size'] = r[7]
+            tmp1['cut_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(r[8]))
+            tmp1['status'] = r[9]
+            tmp.append(tmp1)
+        res['list'] = tmp
+        return HttpResponse(json.dumps(res))
+
+# 单个MP4上到预上线
+@csrf_exempt
+def OneToPrepare(request):
+    return HttpResponse(111111)
