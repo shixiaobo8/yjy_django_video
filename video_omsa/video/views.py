@@ -1397,7 +1397,7 @@ def checkMp4Status():
             result = executeSql(sql1)
             print result
             print sql1,result
-            if result != '切片顺利完成!':
+            if result != '切片顺利完成!' and result:
                 sql2 = "update `yjy_mp4` set `cut_staus`='7' where id='%s'"%(r[0])
                 print sql2
                 executeSql(sql2)
