@@ -4,9 +4,9 @@
 {% block title %}{{ video_id }} 切片的完成信息 {% endblock %}
 {% block content %}
     <script>
-        function toprepare(video_id){
+        function toprepare(recoder_id){
              $.post("/video/toPrepare", {
-                            "video_id": video_id
+                            "recoder_id": recoder_id
                         }, function (res) {
                             var res = JSON.parse(res);
                             if (res['code'] == '200') {
@@ -65,7 +65,6 @@
                 <td id="img"><a href="{{ video.thumb_url }}" target="_blank"><img src="{{ video.thumb_url }}" height="50px" width="50px"></a></td>
                 <td>{{ video.duration }}</td>
                 <td>{{ video.resolution }}</td>
-                <td>{{ video.file_size }}</td>
             </tr>
             </tbody>
         {% endfor %}

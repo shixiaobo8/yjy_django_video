@@ -25,3 +25,4 @@ django-celery
 django-celery-results
 pycrypto
 flower
+paramiko
