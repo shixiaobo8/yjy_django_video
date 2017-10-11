@@ -41,7 +41,7 @@
             <th>缩略图</th>
             <th>时长</th>
             <th>分辨率</th>
-            <th>视频下载大小</th>
+            <th>切片总大小</th>
         </tr>
         </thead>
         {% for video in videos.list %}
@@ -70,6 +70,7 @@
                 <td id="img"><a href="{{ video.thumb_url }}" target="_blank"><img src="{{ video.thumb_url }}" height="50px" width="50px"></a></td>
                 <td>{{ video.duration }}</td>
                 <td>{{ video.resolution }}</td>
+                <td>{{ video.file_size }}</td>
             </tr>
             </tbody>
         {% endfor %}
