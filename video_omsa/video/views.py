@@ -1442,7 +1442,7 @@ def mp4AferCut(request):
         apptype_v = getApptypeName(appinfos[0])
         parent = {'id':int(appinfos[1]),'name':getAppTitle(appinfos[0],appinfos[1])}
         chapter = {'id':int(appinfos[2]),'name':getAppTitle(appinfos[0],appinfos[2])}
-        section = {'id':int(appinfos[3]),'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
+        section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
         chinese_name = appinfos[4]
         print chinese_name
         tmp = []
