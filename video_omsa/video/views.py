@@ -1528,11 +1528,11 @@ def OneToPrepare(request):
                         print sql3
                         db_conn.commit()
                         # 更改MP4状态
-                        sql4 = "update yjy_mp4 set `staus`=4 where id='%s'"%(recoders[1])
+                        sql4 = "update yjy_mp4 set `cut_staus`=4 where id='%s'"%(recoders[1])
                         print sql4
                         executeSql(sql4)
                         # 更改切片记录状态
-                        sql5= "update set `status`=1 where id='%s'"%(recoders[0])
+                        sql5= "update `mp4_cut_recoder` set `status`=1 where id='%s'"%(recoders[0])
                         executeSql(sql5)
                         print sql5
                         return HttpResponse(json.dumps({'code':200,'message':"已成功上到预上线!"}))
