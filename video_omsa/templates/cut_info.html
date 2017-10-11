@@ -59,7 +59,50 @@
                         {% endif %}
 
                         {% if video.parent_id.id < 1995 %}
-                            <a class="btn btn-danger" onclick="toprepare({{ video.id }})">点击上到预上线环境</a>
+                            <button class="btn btn-info" data-toggle="modal"
+                                                id="toPrepare" data-target="#toPrepare{{ video.id }}">点击上到预上线环境
+                                        </button>
+                                        <div class="modal fade" id="toPrepare{{ video.id }}" tabindex="-1"
+                                             role="dialog"
+                                             aria-labelledby="myModalLabel"
+                                             aria-hidden="true" style="margin-top:100px;">
+                                        <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">×
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    请填写上线的类别
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body" style="padding-left: 12%">
+                                                <div class="form-inline">
+                                                    <div class="row">
+                                                        <div class="col-sm-4">
+                                                            <label>请选择任务:</label>
+                                                        </div>
+                                                        <div class="col-sm-2">
+                                                            <select class="form-control" id="cutTask_S{{ video.id }}">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="row">
+                                                    <div class="form-inline">
+                                                        <div class="col-sm-6">
+                                                            <button type="button" class="btn btn-primary"
+                                                                    id="create_task"
+                                                                    onclick="toprepare({{ video.id }})">
+                                                                提交
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                         {% endif %}
                     {% endifequal %}
                     {% ifequal video.status 1  %}
