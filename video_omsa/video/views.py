@@ -1523,7 +1523,7 @@ def OneToPrepare(request):
                     print sql2
                     db_conn.commit()
                     if 'xiyizonghe' in app_type:
-                        sql3 = "insert into `yjy_im_chat_aes_new`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`,`app_type`,`category_id`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,section_id_id,recoders[4],sort,download_url,recoders[7].replace('M',''),apptypeset,chapter_id)
+                        sql3 = "insert into `yjy_im_chat_aes_new`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`,`app_type`,`category_id`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,section_id,recoders[4],sort,download_url,recoders[7].replace('M',''),apptypeset,chapter_id)
                         cursor.execute(sql3)
                         print sql3
                         db_conn.commit()
