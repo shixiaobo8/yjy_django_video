@@ -48,9 +48,9 @@
             <tbody style="text-align: center;">
             <tr>
                 <td>{{ video.apptype }}</td>
-                <td>{{ video.parent_id }}</td>
-                <td>{{ video.chapter_id }}</td>
-                <td>{{ video.section_id }}</td>
+                <td>{{ video.parent_id.name }}</td>
+                <td>{{ video.chapter_id.name }}</td>
+                <td>{{ video.section_id.name }}</td>
                 <td>{{ video.chinese_name }}</td>
                 <td>
                     {% ifequal video.status 0  %}
