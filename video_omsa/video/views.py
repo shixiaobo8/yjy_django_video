@@ -1521,7 +1521,7 @@ def OneToPrepare(request):
                         cursor.execute(sql3)
                         db_conn.commit()
                         # 更改MP4状态
-                        sql4 = "update yjy_mp4 set `status`=4 where id='%s'"%(recoders[1])
+                        sql4 = "update yjy_mp4 set `staus`=4 where id='%s'"%(recoders[1])
                         executeSql(sql4)
                         # 更改切片记录状态
                         sql5= "update set `status`=1 where id='%s'"%(recoders[0])
