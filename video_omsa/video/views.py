@@ -1146,6 +1146,7 @@ def getAppSectionOneTitle(apptype, section_id):
     sql = "select `id`,`title` from `%s`.yjy_im_chapter where id='%s'" % (apptype, section_id)
     try:
         rs = executeSql(sql)
+        print sql
         return rs[0][1]
     except Exception,e:
         return 'None'
@@ -1441,8 +1442,8 @@ def mp4AferCut(request):
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
         apptype_v = getApptypeName(appinfos[0])
-        parent = {'id':appinfos[1],'name':getAppTitle(appinfos[0],video_id)}
-        chapter = {'id':appinfos[2],'name':getAppTitle(appinfos[0],video_id)}
+        parent = {'id':appinfos[1],'name':getAppTitle(appinfos[0],appinfos[1])}
+        chapter = {'id':appinfos[2],'name':getAppTitle(appinfos[0],appinfos[2])}
         section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
         chinese_name = appinfos[4]
         print appinfos
