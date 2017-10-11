@@ -1444,6 +1444,7 @@ def mp4AferCut(request):
         chapter_id = getAppTitle(appinfos[0],video_id)
         section_id = getAppSectionOneTitle(appinfos[0],appinfos[3])
         chinese_name = appinfos[4]
+        print appinfos
         tmp = []
         for r in rs:
             tmp1 = dict()
