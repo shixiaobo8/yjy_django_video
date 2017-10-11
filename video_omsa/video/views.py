@@ -1440,9 +1440,9 @@ def mp4AferCut(request):
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
         apptype_v = getApptypeName(appinfos[0])
-        parent_name = {'id':appinfos[1],'name':getAppTitle(appinfos[0],video_id)}
-        chapter_name = {'id':appinfos[2],'name':getAppTitle(appinfos[0],video_id)}
-        section_name = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
+        parent = {'id':appinfos[1],'name':getAppTitle(appinfos[0],video_id)}
+        chapter = {'id':appinfos[2],'name':getAppTitle(appinfos[0],video_id)}
+        section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
         chinese_name = appinfos[4]
         print appinfos
         tmp = []
@@ -1459,9 +1459,9 @@ def mp4AferCut(request):
             tmp1['cut_time'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(float(r[8])))
             tmp1['status'] = r[9]
             tmp1['apptype'] = apptype_v
-            tmp1['parent_id'] = parent_id
-            tmp1['chapter_id'] = chapter_id
-            tmp1['section_id'] = section_id
+            tmp1['parent_id'] = parent
+            tmp1['chapter_id'] = chapter
+            tmp1['section_id'] = section
             tmp1['chinese_name'] = chinese_name
             tmp1['file_size'] = r[10]
             tmp.append(tmp1)
