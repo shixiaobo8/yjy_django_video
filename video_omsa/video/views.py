@@ -1436,7 +1436,7 @@ def mp4AferCut(request):
     if request.method == 'GET':
         res = dict()
         video_id = request.GET.get('id',None)
-        sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status`,`file_size` from `mp4_cut_recoder` where `video_id`='%s'"%(video_id)
+        sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder` where `video_id`='%s'"%(video_id)
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
         apptype_v = getApptypeName(appinfos[0])
@@ -1444,7 +1444,6 @@ def mp4AferCut(request):
         chapter = {'id':appinfos[2],'name':getAppTitle(appinfos[0],appinfos[2])}
         section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
         chinese_name = appinfos[4]
-        print appinfos
         tmp = []
         for r in rs:
             tmp1 = dict()
@@ -1463,7 +1462,6 @@ def mp4AferCut(request):
             tmp1['chapter_id'] = chapter
             tmp1['section_id'] = section
             tmp1['chinese_name'] = chinese_name
-            tmp1['file_size'] = r[10]
             tmp.append(tmp1)
         res['list'] = tmp
         return render(request,'cut_info.html',{'video_id':video_id,'videos':res})
