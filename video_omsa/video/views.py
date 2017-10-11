@@ -1445,7 +1445,7 @@ def mp4AferCut(request):
         parent = {'id':int(appinfos[1]),'name':getAppTitle(appinfos[0],appinfos[1])}
         chapter = {'id':int(appinfos[2]),'name':getAppTitle(appinfos[0],appinfos[2])}
         section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
-        chinese_name = appinfos[4]
+        chinese_name = getApptypes(video_id)[0][4]
         print getApptypes(video_id)
         tmp = []
         for r in rs:
