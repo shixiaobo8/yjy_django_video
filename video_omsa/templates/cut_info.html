@@ -58,7 +58,7 @@
                             <a class="btn btn-next" disabled="disabled">真题视频暂不支持上线</a>
                         {% endif %}
 
-                        {% if video.parent_id.id > 1995 %}
+                        {% if video.parent_id.id < 1995 %}
                             <a class="btn btn-danger" onclick="toprepare({{ video.id }})">点击上到预上线环境</a>
                         {% endif %}
                     {% endifequal %}
