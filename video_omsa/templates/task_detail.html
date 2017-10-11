@@ -25,7 +25,8 @@
                         }, function (res) {
                             var res = JSON.parse(res);
                             if (res['code'] == '200') {
-                                window.location.href = "{{ request.get_full_path }}"
+                                alert("视频已经开始切片，请耐心等候，为您跳转到首页");
+                                window.location.href = "/video/getMyAppMp4.html"
                             } else {
                                 alert("参数错误,请将改错误联系给管理员");
                             }
