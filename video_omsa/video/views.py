@@ -1488,55 +1488,62 @@ def OneToPrepare(request):
         recoder_id = request.POST.get('recoder_id',None)
         if recoder_id:
             sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`status` from `mp4_cut_recoder` where id='%s'"%(recoder_id)
-            recoders = executeSql(sql)
-            appinfos = str(getApptypes(recoders)[1]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').split(',')
-            app_type = getApptypeName(appinfos[0])
+            recoders = executeSql(sql)[0]
+            appinfos = str(getApptypes(recoders[1])[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').split(',')
+            app_type = appinfos[0]
             parent_id = appinfos[1]
             chapter_id = appinfos[2]
             section_id = appinfos[3]
             video_name = appinfos[4]
-            db_conn = mdb.connect(settings.PREPARE_SERVER_IP, 'django', 'django@2017', app_type)
-            cursor = db_conn.cursor()
-            data = ''
-            try:
-                prepare_thumb_path = syncThumbToPrepare(settings.PREPARE_SERVER_IP,recoders[2].replace('http://m1.letiku.net/','/data/hls/'))
-                sql1 = "insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6])
-                cursor.execute(sql1)
-                db_conn.commit()
-                sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6],recoders[7])
-                cursor.execute(sql2)
-                db_conn.commit()
-                if 'xiyizonghe' in app_type:
-                    sql3 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6],recoders[7])
-                    cursor.execute(sql3)
+            if int(parend_id) > 1995:
+                return HttpResponse(json.dumps({"code":200,"message":"真题视频暂不支持上线!"}))
+            else:
+                print app_type,parent_id,chapter_id,section_id,video_name
+                goods_id = getGoodsId(app_type,parent_id,'goods_id')
+                service_id = getGoodsId(app_type,parent_id,'service_id')
+                db_conn = mdb.connect(settings.PREPARE_SERVER_IP, 'django', 'django@2017', app_type)
+                cursor = db_conn.cursor()
+                data = ''
+                try:
+                    prepare_thumb_path = syncThumbToPrepare(settings.PREPARE_SERVER_IP,recoders[2].replace('http://m1.letiku.net/','/data/hls/'))
+                    sql1 = "insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6])
+                    cursor.execute(sql1)
                     db_conn.commit()
-                # 更改MP4状态
-                sql4 = "update yjy_mp4 set `status`=4 where id='%s'"%(recoders[1])
-                executeSql(sql4)
-                # 更改切片记录状态
-                sql5= "update set `status`=1 where id='%s'"%(recoders[0])
-                executeSql(sql5)
-                return HttpResponse(json.dumps({'cod`e':200,'message':"已成功上到预上线!"}))
-            except mdb.Error, e:
-                print e
-                return HttpResponse(json.dumps({'code':500,'message':e}))
-                db_conn.close()
+                    sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6],recoders[7])
+                    cursor.execute(sql2)
+                    db_conn.commit()
+                    if 'xiyizonghe' in app_type:
+                        sql3 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6],recoders[7])
+                        cursor.execute(sql3)
+                        db_conn.commit()
+                        # 更改MP4状态
+                        sql4 = "update yjy_mp4 set `status`=4 where id='%s'"%(recoders[1])
+                        executeSql(sql4)
+                        # 更改切片记录状态
+                        sql5= "update set `status`=1 where id='%s'"%(recoders[0])
+                        executeSql(sql5)
+                        return HttpResponse(json.dumps({'code':200,'message':"已成功上到预上线!"}))
+                except mdb.Error, e:
+                    print e
+                    return HttpResponse(json.dumps({'code':500,'message':e}))
+                    db_conn.close()
         else:
             return HttpResponse(json.dumps({'code':500,'message':'参数错误'}))
 
+
 # 将视频服务器上的切片略缩图图片传送给预上线或者线上
 def syncThumbToPrepare(server,client_thumb_path):
-        today = time.strftime('%Y-%m-%d',time.localtime(timestamp))
-        ssh = pmk.SSHClient()
-        ssh.set_missing_host_key_policy(pmk.AutoAddPolicy())
-        ssh.connect(server,2282,'root')
-        thumb_path = '/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/' + today + os.sep
-        cmd = 'mkdir -p' + thumb_path
-        stdin,stdout,stderr = ssh.exec_command(cmd)
-        cmd1 = 'scp -rp -P2282 '+ client_thumb_path +' root@prepare:' + thumb_path
-        stdin,stdout,stderr = ssh.exec_command(cmd1)
-        server_thumb_path = today + os.sep + client_thumb_path.split('/')[-1]
-        return server_thumb_path
+    today = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+    ssh = pmk.SSHClient()
+    ssh.set_missing_host_key_policy(pmk.AutoAddPolicy())
+    ssh.connect(server,2282,'root')
+    thumb_path = '/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/' + today + os.sep
+    cmd = 'mkdir -p ' + thumb_path
+    stdin,stdout,stderr = ssh.exec_command(cmd)
+    cmd1 = 'scp -rp -P2282 '+ client_thumb_path +' root@' + server + ':' + thumb_path
+    stdin,stdout,stderr = ssh.exec_command(cmd1)
+    server_thumb_path = today + os.sep + client_thumb_path.split('/')[-1]
+    return server_thumb_path
 
 # 获取视频的service_id  goods_id   res_type 分为两种类型 goods_id 和sevices_id
 def getGoodsId(apptype,parent_id,res_type):
