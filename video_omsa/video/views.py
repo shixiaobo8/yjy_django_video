@@ -1440,13 +1440,12 @@ def mp4AferCut(request):
         video_id = request.GET.get('id',None)
         sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status` from `mp4_cut_recoder` where `video_id`='%s'"%(video_id)
         rs = executeSql(sql)
-        appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
+        appinfos = getApptypes(video_id)[0]
         apptype_v = getApptypeName(appinfos[0])
         parent = {'id':int(appinfos[1]),'name':getAppTitle(appinfos[0],appinfos[1])}
         chapter = {'id':int(appinfos[2]),'name':getAppTitle(appinfos[0],appinfos[2])}
         section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
         chinese_name = getApptypes(video_id)[0][4]
-        print getApptypes(video_id)
         tmp = []
         for r in rs:
             tmp1 = dict()
