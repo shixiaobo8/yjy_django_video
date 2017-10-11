@@ -1440,9 +1440,9 @@ def mp4AferCut(request):
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
         apptype_v = getApptypeName(appinfos[0])
-        parent_id = getAppTitle(appinfos[0],video_id)
-        chapter_id = getAppTitle(appinfos[0],video_id)
-        section_id = getAppSectionOneTitle(appinfos[0],appinfos[3])
+        parent_name = {'id':appinfos[1],'name':getAppTitle(appinfos[0],video_id)}
+        chapter_name = {'id':appinfos[2],'name':getAppTitle(appinfos[0],video_id)}
+        section_name = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
         chinese_name = appinfos[4]
         print appinfos
         tmp = []
@@ -1490,7 +1490,7 @@ def OneToPrepare(request):
         if recoder_id:
             sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`status` from `mp4_cut_recoder` where id='%s'"%(recoder_id)
             recoders = executeSql(sql)[0]
-            appinfos = str(getApptypes(recoders[1])[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').split(',')
+            appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
             app_type = appinfos[0]
             parent_id = appinfos[1]
             chapter_id = appinfos[2]
