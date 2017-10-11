@@ -1506,9 +1506,8 @@ def OneToPrepare(request):
                 sort = 0
                 db_conn = mdb.connect(settings.PREPARE_SERVER_IP, 'django', 'django@2017', app_type)
                 cursor = db_conn.cursor()
-                db_conn.set_character_set('utf8')
-                db_conn.execute('SET NAMES utf8;')
-                db_conn.execute('SET character_set_connection=utf8;')
+                cursor.execute('SET NAMES utf8;')
+                cursor.execute('SET character_set_connection=utf8;')
                 data = ''
                 try:
                     download_url = recoders[6].replace('/data/hls','http://m1.letiku.net')
