@@ -1548,4 +1548,5 @@ def syncThumbToPrepare(server,client_thumb_path):
 
 # 获取视频的service_id  goods_id   res_type 分为两种类型 goods_id 和sevices_id
 def getServiceGoodsId(apptype,parent_id,res_type):
+    print res_type
     return settings.APP_GOOD_SERVICE_IDS[apptype][res_type][parent_id]
