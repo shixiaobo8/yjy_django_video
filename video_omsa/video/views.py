@@ -976,7 +976,6 @@ def getMp4Size(filename):
 # 获取章节名称
 def getAppTitle(apptype, id):
     sql = "select title from " + apptype + ".yjy_im_category where id='" + str(id) + "'"
-    print sql
     rs = executeSql(sql)
     if not rs:
         return ''
@@ -1146,7 +1145,6 @@ def getAppSectionOneTitle(apptype, section_id):
     sql = "select `id`,`title` from `%s`.yjy_im_chapter where id='%s'" % (apptype, section_id)
     try:
         rs = executeSql(sql)
-        print sql
         return rs[0][1]
     except Exception,e:
         return 'None'
