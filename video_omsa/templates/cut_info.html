@@ -5,7 +5,7 @@
 {% block content %}
     <script>
         function toprepare(recoder_id){
-            var apptypeset = $("#selectAppType").val();
+            var apptypeset = $("#selectAppType"+recoder_id).val();
              $.post("/video/toPrepare", {
                             "recoder_id": recoder_id,
                             "apptypeset":apptypeset
