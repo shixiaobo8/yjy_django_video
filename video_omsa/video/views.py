@@ -1439,11 +1439,11 @@ def mp4AferCut(request):
         sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`cut_time`,`status`,`file_size` from `mp4_cut_recoder` where `video_id`='%s'"%(video_id)
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').strip(' ').split(',')
-        apptype_v = getApptypeName(appinfos[0])
-        parent_id = getAppTitle(appinfos[0],video_id)
-        chapter_id = getAppTitle(appinfos[0],video_id)
-        section_id = getAppSectionOneTitle(appinfos[0],appinfos[3])
-        chinese_name = appinfos[4]
+        apptype_v = getApptypeName(int(appinfos[0].strip(' ')))
+        parent_id = getAppTitle(int(appinfos[0].strip(' ')),video_id)
+        chapter_id = getAppTitle(int(appinfos[0].strip(' ')),video_id)
+        section_id = getAppSectionOneTitle(appinfos[0].strip(' ')),int(appinfos[3].strip(' '))
+        chinese_name = appinfos[4].replace(' ','')
         print appinfos
         tmp = []
         for r in rs:
