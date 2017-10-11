@@ -1433,6 +1433,8 @@ def DelteMp4ToCut(request):
 # 查看MP4切片后的记录
 @csrf_exempt
 def mp4AferCut(request):
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
     if request.method == 'GET':
         res = dict()
         video_id = request.GET.get('id',None)
@@ -1443,7 +1445,7 @@ def mp4AferCut(request):
         parent = {'id':int(appinfos[1]),'name':getAppTitle(appinfos[0],appinfos[1])}
         chapter = {'id':int(appinfos[2]),'name':getAppTitle(appinfos[0],appinfos[2])}
         section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
-        chinese_name = "u'" + appinfos[4].replace("\\\\","\\")
+        chinese_name = "u'" + appinfos[4].replace("\\\\","\\") + "'"
         print appinfos[4]
         tmp = []
         for r in rs:
