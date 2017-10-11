@@ -1524,6 +1524,7 @@ def OneToPrepare(request):
                         # 更改切片记录状态
                         sql5= "update set `status`=1 where id='%s'"%(recoders[0])
                         executeSql(sql5)
+                        print sql1,sql2,sql3,sql4,sql5
                         return HttpResponse(json.dumps({'code':200,'message':"已成功上到预上线!"}))
                 except mdb.Error, e:
                     print e
