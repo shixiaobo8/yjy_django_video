@@ -1440,9 +1440,9 @@ def mp4AferCut(request):
         rs = executeSql(sql)
         appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
         apptype_v = getApptypeName(appinfos[0])
-        parent = {'id':appinfos[1],'name':getAppTitle(appinfos[0],appinfos[1])}
-        chapter = {'id':appinfos[2],'name':getAppTitle(appinfos[0],appinfos[2])}
-        section = {'id':appinfos[3],'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
+        parent = {'id':int(appinfos[1]),'name':getAppTitle(appinfos[0],appinfos[1])}
+        chapter = {'id':int(appinfos[2]),'name':getAppTitle(appinfos[0],appinfos[2])}
+        section = {'id':int(appinfos[3]),'name':getAppSectionOneTitle(appinfos[0],appinfos[3])}
         chinese_name = appinfos[4]
         print chinese_name
         tmp = []
@@ -1491,9 +1491,9 @@ def OneToPrepare(request):
             recoders = executeSql(sql)[0]
             appinfos = str(getApptypes(video_id)[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
             app_type = appinfos[0]
-            parent_id = appinfos[1]
-            chapter_id = appinfos[2]
-            section_id = appinfos[3]
+            parent_id = int(appinfos[1])
+            chapter_id = int(appinfos[2])
+            section_id = int(appinfos[3])
             video_name = appinfos[4]
             if int(parent_id) > 1995:
                 return HttpResponse(json.dumps({"code":200,"message":"真题视频暂不支持上线!"}))
