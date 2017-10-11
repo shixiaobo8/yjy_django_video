@@ -12,10 +12,10 @@
                         }, function (res) {
                             var res = JSON.parse(res);
                             if (res['code'] == '200') {
-                                console.log(res);
-{#                                window.location.href = "{{ request.get_full_path }}"#}
+                                alert(res['message']);
+                                window.location.href = "{{ request.get_full_path }}"
                             } else {
-                                alert(res['mess']);
+                                alert(res['message']);
                             }
                         })
         }
