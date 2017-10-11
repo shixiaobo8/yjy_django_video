@@ -1502,6 +1502,7 @@ def OneToPrepare(request):
                 print app_type,parent_id,chapter_id,section_id,video_name
                 goods_id = getServiceGoodsId(app_type,parent_id,'goods_id')
                 service_id = getServiceGoodsId(app_type,parent_id,'service_id')
+                sort = 0
                 db_conn = mdb.connect(settings.PREPARE_SERVER_IP, 'django', 'django@2017', app_type)
                 cursor = db_conn.cursor()
                 data = ''
