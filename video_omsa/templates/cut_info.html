@@ -5,8 +5,10 @@
 {% block content %}
     <script>
         function toprepare(recoder_id){
+            var apptypeset = $("#selectAppType").val();
              $.post("/video/toPrepare", {
-                            "recoder_id": recoder_id
+                            "recoder_id": recoder_id,
+                            "apptypeset":apptypeset
                         }, function (res) {
                             var res = JSON.parse(res);
                             if (res['code'] == '200') {
@@ -80,10 +82,13 @@
                                                 <div class="form-inline">
                                                     <div class="row">
                                                         <div class="col-sm-4">
-                                                            <label>请选择任务:</label>
+                                                            <label>请选择学员类型:</label>
                                                         </div>
                                                         <div class="col-sm-2">
-                                                            <select class="form-control" id="cutTask_S{{ video.id }}">
+                                                            <select class="form-control" id="selectAppType{{ video.id }}">
+                                                                <option value="zhuan">专硕</option>
+                                                                <option value="zhuan">学硕</option>
+                                                                <option value="zhuan,xue">学硕+学硕</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -96,7 +101,7 @@
                                                             <button type="button" class="btn btn-primary"
                                                                     id="create_task"
                                                                     onclick="toprepare({{ video.id }})">
-                                                                提交
+                                                                上到预上线
                                                             </button>
                                                         </div>
                                                     </div>
