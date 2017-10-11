@@ -1500,8 +1500,8 @@ def OneToPrepare(request):
                 return HttpResponse(json.dumps({"code":200,"message":"真题视频暂不支持上线!"}))
             else:
                 print app_type,parent_id,chapter_id,section_id,video_name
-                goods_id = getGoodsId(app_type,parent_id,'goods_id')
-                service_id = getGoodsId(app_type,parent_id,'service_id')
+                goods_id = getServiceGoodsId(app_type,parent_id,'goods_id')
+                service_id = getServiceGoodsId(app_type,parent_id,'service_id')
                 db_conn = mdb.connect(settings.PREPARE_SERVER_IP, 'django', 'django@2017', app_type)
                 cursor = db_conn.cursor()
                 data = ''
@@ -1547,5 +1547,5 @@ def syncThumbToPrepare(server,client_thumb_path):
     return server_thumb_path
 
 # 获取视频的service_id  goods_id   res_type 分为两种类型 goods_id 和sevices_id
-def getGoodsId(apptype,parent_id,res_type):
-    return settings.APP_GOOD_SERVICE_IDS[apptype]['service_id'][parent_id]
+def getServiceGoodsId(apptype,parent_id,res_type):
+    return settings.APP_GOOD_SERVICE_IDS[apptype][res_type][parent_id]
