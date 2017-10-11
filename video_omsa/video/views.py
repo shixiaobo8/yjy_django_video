@@ -1511,22 +1511,26 @@ def OneToPrepare(request):
                     media_url = download_url
                     prepare_thumb_path = syncThumbToPrepare(settings.PREPARE_SERVER_IP,recoders[2].replace('http://m1.letiku.net/','/data/hls/'))
                     sql1 = "insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,chapter_id,recoders[4],sort,download_url)
+                    print sql1
                     cursor.execute(sql1)
                     db_conn.commit()
                     sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,chapter_id,recoders[4],sort,download_url,recoders[7].replace('M',''))
                     cursor.execute(sql2)
+                    print sql2
                     db_conn.commit()
                     if 'xiyizonghe' in app_type:
                         sql3 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,chapter_id,recoders[4],sort,download_url,recoders[7].replace('M',''))
                         cursor.execute(sql3)
+                        print sql3
                         db_conn.commit()
                         # 更改MP4状态
                         sql4 = "update yjy_mp4 set `staus`=4 where id='%s'"%(recoders[1])
+                        print sql4
                         executeSql(sql4)
                         # 更改切片记录状态
                         sql5= "update set `status`=1 where id='%s'"%(recoders[0])
                         executeSql(sql5)
-                        print sql1,sql2,sql3,sql4,sql5
+                        print sql5
                         return HttpResponse(json.dumps({'code':200,'message':"已成功上到预上线!"}))
                 except mdb.Error, e:
                     print e
