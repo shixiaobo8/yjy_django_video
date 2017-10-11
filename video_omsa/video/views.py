@@ -1490,7 +1490,7 @@ def OneToPrepare(request):
         if recoder_id:
             sql = "select `id`,`video_id`,`thumb_url`,`resolution`,`duration`,`m3u8_serverPath`,`aes_m3u8_serverPath`,`file_size`,`status` from `mp4_cut_recoder` where id='%s'"%(recoder_id)
             recoders = executeSql(sql)[0]
-            appinfos = str(getApptypes(recoders[1])[0]).replace('(','').replace(')','').replace("u'",'').replace('L','').replace("'",'').replace(' ','').split(',')
+            appinfos = getApptypes(recoders[1])[0]
             app_type = appinfos[0]
             parent_id = int(appinfos[1])
             chapter_id = int(appinfos[2])
@@ -1507,15 +1507,17 @@ def OneToPrepare(request):
                 cursor = db_conn.cursor()
                 data = ''
                 try:
+                    download_url = recoders[6].replace('/data/hls','http://m1.letiku.net')
+                    media_url = download_url
                     prepare_thumb_path = syncThumbToPrepare(settings.PREPARE_SERVER_IP,recoders[2].replace('http://m1.letiku.net/','/data/hls/'))
-                    sql1 = "insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6])
+                    sql1 = "insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,chapter_id,recoders[4],sort,download_url)
                     cursor.execute(sql1)
                     db_conn.commit()
-                    sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6],recoders[7])
+                    sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,chapter_id,recoders[4],sort,download_url,recoders[7].replace('M',''))
                     cursor.execute(sql2)
                     db_conn.commit()
                     if 'xiyizonghe' in app_type:
-                        sql3 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,recoders[6],0,chapter_id,recoders[4],sort,recoders[6],recoders[7])
+                        sql3 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,0,chapter_id,recoders[4],sort,download_url,recoders[7].replace('M',''))
                         cursor.execute(sql3)
                         db_conn.commit()
                         # 更改MP4状态
