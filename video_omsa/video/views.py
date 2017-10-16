@@ -305,6 +305,7 @@ def getDates(his_month):
         if year != c_year:
             end_month = 13
         for mon in range(start_month, end_month):
+            print mon
             m_days = ''
             if mon == c_month:
                 m_days = int(today.split('_')[2])
