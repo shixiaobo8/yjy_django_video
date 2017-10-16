@@ -268,7 +268,7 @@ def History_inters(request):
 
 def getcalendar(c_year, c_mon, month):
     res = dict()
-    print c_mon,month,month
+    print c_year,c_mon,month
     res['year'] = c_year
     res['month'] = int(month)
     if int(c_mon) == int(month):
