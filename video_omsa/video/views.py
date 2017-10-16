@@ -308,8 +308,10 @@ def getDates(his_month):
             m_days = ''
             if mon == c_month:
                 m_days = int(today.split('_')[2])
+            elif mon < 0:
+                mon = 12 + mon
+                m_days = calendar.monthrange(year, mon)[1]
             else:
-                print year,mon,his_month,start_year,start_month
                 m_days = calendar.monthrange(year, mon)[1]
             for d in range(1, m_days):
                 if d < 10:
