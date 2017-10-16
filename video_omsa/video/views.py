@@ -293,7 +293,7 @@ def getDates(his_month):
     dates = []
     today = time.strftime('%Y_%m_%d', time.localtime(time.time()))
     c_year = int(today.split('_')[0])
-    c_month = int(today.split('_')[1][1])
+    c_month = int(today.split('_')[1])
     start_month = int(getcalendar(c_year, c_month, his_month)['month'])
     start_year = int(getcalendar(c_year, c_month, his_month)['year'])
     for year in range(start_year, c_year + 1):
