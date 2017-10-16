@@ -268,6 +268,7 @@ def History_inters(request):
 
 def getcalendar(c_year, c_mon, month):
     res = dict()
+    print c_mon,month,month
     res['year'] = c_year
     res['month'] = int(month)
     if int(c_mon) == int(month):
@@ -275,7 +276,6 @@ def getcalendar(c_year, c_mon, month):
         res['year'] = c_year - 1
     # 查询月份数小于当前月份数
     if int(c_mon) > int(month):
-        print c_mon,month
         res['month'] = int(c_mon) - int(month)
     # 查询月份数大于当前月份数
     if int(c_mon) < int(month):
@@ -297,7 +297,6 @@ def getDates(his_month):
     c_month = int(today.split('_')[1])
     start_month = int(getcalendar(c_year, c_month, his_month)['month'])
     start_year = int(getcalendar(c_year, c_month, his_month)['year'])
-    print start_month
     for year in range(start_year, c_year + 1):
         if year == c_year and start_month > c_month:
             start_month = 1
