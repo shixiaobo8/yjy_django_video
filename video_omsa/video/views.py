@@ -304,14 +304,14 @@ def getDates(his_month):
             end_month = c_month + 1
         if year != c_year:
             end_month = 13
+        if start_month < 0:
+            start_month = 12 + start_month
+            end_month = 13
         for mon in range(start_month, end_month):
             print mon
             m_days = ''
             if mon == c_month:
                 m_days = int(today.split('_')[2])
-            elif mon < 0:
-                mon = 12 + mon
-                m_days = calendar.monthrange(year, mon)[1]
             else:
                 m_days = calendar.monthrange(year, mon)[1]
             for d in range(1, m_days):
