@@ -309,6 +309,7 @@ def getDates(his_month):
             if mon == c_month:
                 m_days = int(today.split('_')[2])
             else:
+                print year,mon
                 m_days = calendar.monthrange(year, mon)[1]
             for d in range(1, m_days):
                 if d < 10:
