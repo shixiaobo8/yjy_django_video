@@ -280,7 +280,7 @@ def getcalendar(c_year, c_mon, month):
     if int(c_mon) < int(month):
         if int(month) / 12 > 0:
             res['year'] -= int(month) / 12
-            res['month'] = 12 - ( int(c_mon) - int(month) % 12 )
+            res['month'] = int(c_mon) - int(month) % 12
         if int(month) / 12 == 0:
             res['month'] = 12 - (int(month) - int(c_mon))
             res['year'] -= 1
@@ -309,7 +309,7 @@ def getDates(his_month):
             if mon == c_month:
                 m_days = int(today.split('_')[2])
             else:
-                print year,mon,c_month,c_year,today,his_month,start_year,start_month
+                print year,mon,his_month,start_year,start_month
                 m_days = calendar.monthrange(year, mon)[1]
             for d in range(1, m_days):
                 if d < 10:
