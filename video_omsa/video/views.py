@@ -107,8 +107,12 @@ def login(request):
         data = form.data
         username = data['username']
         password = data['password']
-        captcha_1 = data['captcha_1']
-        if captcha_1 != '':
+        # login_mess = request.POST.get("login_mess","aaa")
+        # captcha = request.POST.get("captcha","aaa")
+        captcha_0 = data['captcha_0']
+        if captcha_0 != '':
+            print form.data
+            print form.errors.as_data()
             if form.is_valid():
                 human = True
                 user = authenticate(username=username, password=password)
@@ -118,6 +122,8 @@ def login(request):
                 else:
                     login_mess = '用户名或者密码不正确'
                     return render(request, 'login.html', {'form': form, 'login_mess': login_mess})
+            else:
+                return HttpResponse({"DATA":"表单验证失败!"})
         else:
             login_mess = '验证码不能为空!'
             return render(request, 'login.html', {'form': form, 'login_mess': login_mess})
@@ -1558,6 +1564,7 @@ def syncThumbToPrepare(server,client_thumb_path):
     cmd = 'mkdir -p ' + thumb_path
     stdin,stdout,stderr = ssh.exec_command(cmd)
     cmd1 = 'scp -rp -P2282 '+ client_thumb_path +' root@' + server + ':' + thumb_path
+    print cmd1
     stdin,stdout,stderr = ssh.exec_command(cmd1)
     server_thumb_path = today + os.sep + client_thumb_path.split('/')[-1]
     return server_thumb_path
