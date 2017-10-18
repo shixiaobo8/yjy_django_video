@@ -1565,9 +1565,16 @@ def syncThumbToPrepare(server,client_thumb_path):
     stdin,stdout,stderr = ssh.exec_command(cmd)
     cmd1 = 'scp -rp -P2282 '+ client_thumb_path +' root@' + server + ':' + thumb_path
     print cmd1
+    write_test(cmd1)
     stdin,stdout,stderr = ssh.exec_command(cmd1)
     server_thumb_path = today + os.sep + client_thumb_path.split('/')[-1]
     return server_thumb_path
+
+def write_test(mess):
+    today = time.strftime('%Y_%m_%d',time.localtime(time.time()))
+    file='/tmp/log_'+today + '.log'
+    with open(file) as f:
+        f.write(mess)
 
 # 获取视频的service_id  goods_id   res_type 分为两种类型 goods_id 和sevices_id
 def getServiceGoodsId(apptype,parent_id,res_type):
