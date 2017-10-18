@@ -1573,7 +1573,7 @@ def syncThumbToPrepare(server,client_thumb_path):
 def write_test(mess):
     today = time.strftime('%Y_%m_%d',time.localtime(time.time()))
     file='/tmp/log_'+today + '.log'
-    with open(file) as f:
+    with open(file,"a+") as f:
         f.write(mess)
 
 # 获取视频的service_id  goods_id   res_type 分为两种类型 goods_id 和sevices_id
