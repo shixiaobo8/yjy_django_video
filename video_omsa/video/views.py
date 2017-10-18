@@ -24,7 +24,7 @@ import MySQLdb as mdb
 from django.http import StreamingHttpResponse
 from collections import OrderedDict
 import urllib
-import logging
+import logging,commands
 from .tasks import sleep,cut_video
 from ffmpeg import ffmpeg,Aes
 import paramiko as pmk
@@ -1566,7 +1566,7 @@ def syncThumbToPrepare(server,client_thumb_path):
     cmd1 = 'scp -rp -P2282 '+ client_thumb_path +' root@' + server + ':' + thumb_path
     print cmd1
     write_test(cmd1)
-    stdin,stdout,stderr = ssh.exec_command(cmd1)
+    rs1 = commands.getstatusoutput(cmd1)
     server_thumb_path = today + os.sep + client_thumb_path.split('/')[-1]
     return server_thumb_path
 
