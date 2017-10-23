@@ -2,6 +2,7 @@
 # -*- coding:utf8 -*-
 from __future__ import division
 from django.http import HttpResponseRedirect
+from django.core.mail import send_mail,EmailMultiAlternatives
 from django.template.context import RequestContext
 from django.shortcuts import render, redirect
 from django.contrib import auth
@@ -1579,3 +1580,44 @@ def write_test(mess):
 # 获取视频的service_id  goods_id   res_type 分为两种类型 goods_id 和sevices_id
 def getServiceGoodsId(apptype,parent_id,res_type):
     return settings.APP_GOOD_SERVICE_IDS[apptype][res_type][str(parent_id)]
+
+# 发送邮件(含任务失败和成功邮件)
+def send_mail(task_id,video_id,stauts='ok'):
+    videoInfos = getApptypes(video_id)
+    video_name = videoInfos[4]
+    apptype_v = getApptypeName(videoInfos[0])
+    parent = getAppTitle(videoInfos[0],int(videoInfos[1]))
+    chapter = getAppTitle(videoInfos[0],int(videoInfos[2]))
+    section = getAppSectionOneTitle(videoInfos[0],videoInfos[3])
+    sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
+    apptypeEmails = list(executeSql(sql))
+    userEmail = getUserProperties(username)
+    now = time.strftime('%Y年%m%d %H:%M:%S',time.localtime(time.time()))
+    if type == 'ok':
+        subject = now + ":医教园视频切片进度提醒"
+        text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+        if section:
+            text_content += '--' + section
+        text_content += video_name
+        html_content = '<h3><'+apptype_v+'组的成员们:以下视频已切片成功:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ video_id +'">点击这里可以查看切片详情并上传到<strong>预上线<strong></a></p><ul><li>注1.上到预上线后可直接通过测试app测试</li><li>2.测试环境通过后请通知后台人员上线</li></ul>'
+        msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
+        msg.attach_alternative(html_content, "text/html")
+        res = msg.send()
+        if res >=1 :
+            return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件成功"})
+        else:
+            return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件失败"})
+    else:
+        subject = now + ":医教园视频切片失败提醒"
+        text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+        if section:
+            text_content += '--' + section
+        text_content += video_name
+        html_content = '<h3><'+apptype_v+'切片失败了:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ video_id +'"></a></p>'
+        msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM,['769079707@qq.com'])
+        msg.attach_alternative(html_content, "text/html")
+        res = msg.send()
+        if res >=1 :
+            return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
+        else:
+            return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
