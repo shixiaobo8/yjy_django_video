@@ -5,12 +5,11 @@
 
 import MySQLdb as mdb
 import sys, os, time, commands, hashlib, logging, random, shutil
-# from Crypto.Cipher import AES
-# from binascii import b2a_hex, a2b_hex
-# from Crypto import Random
+from Crypto.Cipher import AES
+from binascii import b2a_hex, a2b_hex
+from Crypto import Random
 import types,json
 import views
-# from views import getAppSectionOneTitle,getApptypes,getAppTitle,getApptypeName,executeSql
 reload(sys)
 sys.setdefaultencoding('utf8')
 
