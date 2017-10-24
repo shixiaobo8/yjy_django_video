@@ -1420,13 +1420,14 @@ def start_task(request):
     if request.method == 'POST':
         task_id = request.POST.get('task_id',None)
         task_name = getTaskName(task_id)
-        sql = "select `id`,`original_sava_path` from yjy_mp4 where task_id='%s'"%(task_id)
+        sql = "select `id`,`original_sava_path`,`cut_staus` from yjy_mp4 where task_id='%s'"%(task_id)
         videos = executeSql(sql)
         for video in videos:
-            res = cut_video.delay(task_id,video[0],video[1])
-            res_id = res.id
-            sql1 = "update yjy_mp4 set `cut_id`='%s',`cut_staus`='2' where id='%s' and `cut_staus`='1'"%(res_id,video[0])
-            executeSql(sql1)
+            if video[2] == '1':
+                res = cut_video.delay(task_id,video[0],video[1])
+                res_id = res.id
+                sql1 = "update yjy_mp4 set `cut_id`='%s',`cut_staus`='2' where id='%s' and `cut_staus`='1'"%(res_id,video[0])
+                executeSql(sql1)
             # 一次task 只能用一次
             # sql2 = "update `yjy_mp4_cuttask` set `is_del`=1 where `id`='%s'"%(task_id)
             # executeSql(sql2)
