@@ -22,7 +22,7 @@
                         checkStatus()
                         $.post("/video/start_task", {
                             "task_id": {{ task_id }},
-                            "videos": JSON.stringify({{ videos }})
+                            "videos": {{ videos }}
                         }, function (res) {
                             var res = JSON.parse(res);
                             if (res['code'] == '200') {
