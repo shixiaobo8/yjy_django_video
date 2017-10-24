@@ -5,12 +5,12 @@
 
 import MySQLdb as mdb
 import sys, os, time, commands, hashlib, logging, random, shutil
-from Crypto.Cipher import AES
-from binascii import b2a_hex, a2b_hex
-from Crypto import Random
+# from Crypto.Cipher import AES
+# from binascii import b2a_hex, a2b_hex
+# from Crypto import Random
 import types,json
-# from .tasks import send_Mail
-
+import views
+# from views import getAppSectionOneTitle,getApptypes,getAppTitle,getApptypeName,executeSql
 reload(sys)
 sys.setdefaultencoding('utf8')
 
@@ -307,6 +307,49 @@ class ffmpeg(object):
             self.logging_cut(e)
             return e
 
+    # 发送邮件(含任务失败和成功邮件)
+    def sendMail(self,stauts='ok'):
+        videoInfos = views.getApptypes(self.video_id)
+        video_name = videoInfos[4]
+        apptype_v = views.getApptypeName(videoInfos[0])
+        parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
+        chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
+        section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
+        sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
+        # 给app部门组发送邮件
+        apptypeEmails = [ r[0] for r in views.executeSql(sql)]
+        # 给执行人发邮件
+        # userEmail = views.getUserProperties(username)
+        now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
+        if type == 'ok':
+            subject = now + ":医教园视频切片进度提醒"
+            text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+            if section:
+                text_content += '--' + section
+            text_content += video_name
+            html_content = '<h3><'+apptype_v+'组的成员们:以下视频已切片成功:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ self.video_id +'">点击这里可以查看切片详情并上传到<strong>预上线<strong></a></p><ul><li>注1.上到预上线后可直接通过测试app测试</li><li>2.测试环境通过后请通知后台人员上线</li></ul>'
+            msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
+            msg.attach_alternative(html_content, "text/html")
+            res = msg.send()
+            if res >=1 :
+                return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件成功"})
+            else:
+                return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件失败"})
+        else:
+            subject = now + ":医教园视频切片失败提醒"
+            text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+            if section:
+                text_content += '--' + section
+            text_content += video_name
+            html_content = '<h3><'+apptype_v+'切片失败了:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ self.video_id +'"></a></p>'
+            msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM,['769079707@qq.com'])
+            msg.attach_alternative(html_content, "text/html")
+            res = msg.send()
+            if res >=1 :
+                return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
+            else:
+                return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
+
     # 预热到cdn(暂未实现)
     def push_to_cdn(self):
         aes_ts_files = getAllaesTsFiles()
@@ -339,30 +382,30 @@ class ffmpeg(object):
                             self.recoder_to_file("all done !! and ok")
                             self.change_mp4_cutStatus()
                             self.logging_cut("切片完毕!")
-                            send_Mail(self.task_id,self.video_id,status='ok')
+                            self.sendMail(status='ok')
                             return "切片顺利完成!"
                             # self.push_to_cdn()
 
                         else:
                             self.logging_cut(str(ts_status[1]) + "生成切片失败!")
-                            # send_Mail(self.task_id,self.video_id,status='not ok')
+                            self.sendMail(status='not ok')
                             return json.dumps(str(ts_status[1]) + "生成切片失败!")
                     else:
                         self.logging_cut("生成ts失败!")
-                        # send_Mail(self.task_id,self.video_id,status='not ok')
+                        self.sendMail(status='not ok')
                         return "生成ts失败!"+str(ts_status[1])
 
                 else:
                     self.logging_cut("获取视频时长失败!")
-                    # send_Mail(self.task_id,self.video_id,status='not ok')
+                    self.sendMail(status='not ok')
                     return "获取视频时长失败!"+str(d_status[1])
             else:
                 self.logging_cut("生成缩略图失败!")
-                # send_Mail(self.task_id,self.video_id,status='not ok')
+                self.sendMail(status='not ok')
                 return "生成缩略图失败!"+str(t_status[1])
         else:
             self.logging_cut('转码尺寸失败'+str(c_status[1]))
-            # send_Mail(self.task_id,self.video_id,status='not ok')
+            self.sendMail(status='not ok')
             return "转码尺寸失败!"+str(c_status[1])
 
 # # 脚本测试
