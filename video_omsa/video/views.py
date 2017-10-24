@@ -1506,7 +1506,10 @@ def OneToPrepare(request):
             app_type = appinfos[0]
             parent_id = int(appinfos[1])
             chapter_id = int(appinfos[2])
-            section_id = int(appinfos[3])
+            if appinfos[3]:
+                section_id = int(appinfos[3])
+            else:
+                section_id = 'None'
             video_name = appinfos[4]
             if int(parent_id) > 1995:
                 return HttpResponse(json.dumps({"code":200,"message":"真题视频暂不支持上线!"}))
