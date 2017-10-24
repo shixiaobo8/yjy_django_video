@@ -310,13 +310,20 @@ class ffmpeg(object):
     def sendMail(self,stauts='ok'):
         try:
             videoInfos = views.getApptypes(self.video_id)
+            print 111
             video_name = videoInfos[4]
+            print 1112
             apptype_v = views.getApptypeName(videoInfos[0])
+            print 1133
             parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
+            print 114
             chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
+            print 115
             section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
+            print 116
             sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
             # 给app部门组发送邮件
+            print 117
             apptypeEmails = [ r[0] for r in views.executeSql(sql)]
             # 给执行人发邮件
             # userEmail = views.getUserProperties(username)
