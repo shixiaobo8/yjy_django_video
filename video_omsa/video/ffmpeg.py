@@ -310,71 +310,72 @@ class ffmpeg(object):
     # 发送邮件(含任务失败和成功邮件)
     def sendMail(self,stauts='ok'):
         self.logging_cut('start...')
-        try:
-            videoInfos = views.getApptypes(self.video_id)
-            self.logging_cut('111')
-            video_name = videoInfos[4]
-            self.logging_cut('2222')
-            apptype_v = views.getApptypeName(videoInfos[0])
-            self.logging_cut('3333')
-            parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
-            self.logging_cut('4444')
-            chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
-            self.logging_cut('5555')
-            section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
-            self.logging_cut('666')
-            sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
-            # 给app部门组发送邮件
-            self.logging_cut('777')
-            apptypeEmails = [ r[0] for r in views.executeSql(sql)]
-            self.logging_cut('888')
-            # 给执行人发邮件
-            # userEmail = views.getUserProperties(username)
-            now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
-        except Exception,e:
-            print e
-            self.logging_cut('999')
-            self.logging_cut(e)
-        if stauts == 'ok':
-            self.logging_cut('101010')
-            subject = now + ":医教园视频切片进度提醒"
-            text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
-            if section:
-                text_content += '--' + section
-            text_content += video_name
-            html_content = '<h3><'+apptype_v+'组的成员们:以下视频已切片成功:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ self.video_id +'">点击这里可以查看切片详情并上传到<strong>预上线<strong></a></p><ul><li>注1.上到预上线后可直接通过测试app测试</li><li>2.测试环境通过后请通知后台人员上线</li></ul>'
-            msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
-            msg.attach_alternative(html_content, "text/html")
-            res = msg.send()
-            self.logging_cut('aaaa')
-            print "邮件发送数量:"+str(res)
-            if res >=1 :
-                rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件成功"})
-                self.logging_cut(rs)
-                return rs
-            else:
-                rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件失败"})
-                self.logging_cut(rs)
-                return rs
-        else:
-            subject = now + ":医教园视频切片失败提醒"
-            text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
-            if section:
-                text_content += '--' + section
-            text_content += video_name
-            html_content = '<h3><'+apptype_v+'切片失败了:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ self.video_id +'"></a></p>'
-            msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM,['769079707@qq.com'])
-            msg.attach_alternative(html_content, "text/html")
-            res = msg.send()
-            print "邮件发送数量:"+str(res)
-            if res >=1 :
-                rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
-                self.logging_cut(rs)
-                return rs
-            else:
-                rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
-                self.logging_cut(rs)
-                return rs
+        return 111
+        # try:
+        #     videoInfos = views.getApptypes(self.video_id)
+        #     self.logging_cut('111')
+        #     video_name = videoInfos[4]
+        #     self.logging_cut('2222')
+        #     apptype_v = views.getApptypeName(videoInfos[0])
+        #     self.logging_cut('3333')
+        #     parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
+        #     self.logging_cut('4444')
+        #     chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
+        #     self.logging_cut('5555')
+        #     section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
+        #     self.logging_cut('666')
+        #     sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
+        #     # 给app部门组发送邮件
+        #     self.logging_cut('777')
+        #     apptypeEmails = [ r[0] for r in views.executeSql(sql)]
+        #     self.logging_cut('888')
+        #     # 给执行人发邮件
+        #     # userEmail = views.getUserProperties(username)
+        #     now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
+        # except Exception,e:
+        #     print e
+        #     self.logging_cut('999')
+        #     self.logging_cut(e)
+        # if stauts == 'ok':
+        #     self.logging_cut('101010')
+        #     subject = now + ":医教园视频切片进度提醒"
+        #     text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+        #     if section:
+        #         text_content += '--' + section
+        #     text_content += video_name
+        #     html_content = '<h3><'+apptype_v+'组的成员们:以下视频已切片成功:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ self.video_id +'">点击这里可以查看切片详情并上传到<strong>预上线<strong></a></p><ul><li>注1.上到预上线后可直接通过测试app测试</li><li>2.测试环境通过后请通知后台人员上线</li></ul>'
+        #     msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
+        #     msg.attach_alternative(html_content, "text/html")
+        #     res = msg.send()
+        #     self.logging_cut('aaaa')
+        #     print "邮件发送数量:"+str(res)
+        #     if res >=1 :
+        #         rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件成功"})
+        #         self.logging_cut(rs)
+        #         return rs
+        #     else:
+        #         rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件失败"})
+        #         self.logging_cut(rs)
+        #         return rs
+        # else:
+        #     subject = now + ":医教园视频切片失败提醒"
+        #     text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+        #     if section:
+        #         text_content += '--' + section
+        #     text_content += video_name
+        #     html_content = '<h3><'+apptype_v+'切片失败了:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ self.video_id +'"></a></p>'
+        #     msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM,['769079707@qq.com'])
+        #     msg.attach_alternative(html_content, "text/html")
+        #     res = msg.send()
+        #     print "邮件发送数量:"+str(res)
+        #     if res >=1 :
+        #         rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
+        #         self.logging_cut(rs)
+        #         return rs
+        #     else:
+        #         rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
+        #         self.logging_cut(rs)
+        #         return rs
 
     # 预热到cdn(暂未实现)
     def push_to_cdn(self):
