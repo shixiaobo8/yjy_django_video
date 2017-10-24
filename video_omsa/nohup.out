@@ -1,0 +1,2091 @@
+Performing system checks...
+
+Starting logging
+Starting logging
+Using simplejson library
+Using simplejson library
+[24/Oct/2017 08:36:13] "GET /video/mp4AferCut?id=1562 HTTP/1.1" 200 26091
+[24/Oct/2017 08:36:19] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 26091
+starting thread (client mode): 0x785e7fd0L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1054, "Unknown column 'is_del' in 'field list'") is not JSON serializable
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1054, "Unknown column 'is_del' in 'field list'") is not JSON serializable
+[24/Oct/2017 08:36:26] "POST /video/toPrepare HTTP/1.1" 500 18277
+starting thread (client mode): 0x78203b90L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1054, "Unknown column 'is_del' in 'field list'") is not JSON serializable
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1054, "Unknown column 'is_del' in 'field list'") is not JSON serializable
+[24/Oct/2017 08:37:58] "POST /video/toPrepare HTTP/1.1" 500 18277
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+System check identified no issues (0 silenced).
+October 24, 2017 - 08:36:02
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学1
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/bcdc8d8fda0fc2c6.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508805386','1508805386','1508805386','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','0','23','3455.43','0','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','xiyao')
+(1054, "Unknown column 'is_del' in 'field list'")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学1
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/bcdc8d8fda0fc2c6.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`download_url`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508805478','1508805478','1508805478','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','0','23','3455.43','0','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','xiyao')
+(1054, "Unknown column 'is_del' in 'field list'")
+EOF in transport thread
+Performing system checks...
+
+Starting logging
+Starting logging
+Using simplejson library
+Using simplejson library
+[24/Oct/2017 08:42:28] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 26091
+starting thread (client mode): 0x185fbd10L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1054, "Unknown column 'download_url' in 'field list'") is not JSON serializable
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1054, "Unknown column 'download_url' in 'field list'") is not JSON serializable
+[24/Oct/2017 08:42:37] "POST /video/toPrepare HTTP/1.1" 500 18289
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+System check identified no issues (0 silenced).
+October 24, 2017 - 08:42:20
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学1
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/bcdc8d8fda0fc2c6.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`download_url`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508805757','1508805757','1508805757','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','23','3455.43','0','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','xiyao')
+(1054, "Unknown column 'download_url' in 'field list'")
+EOF in transport thread
+Performing system checks...
+
+Starting logging
+Starting logging
+Using simplejson library
+Using simplejson library
+[24/Oct/2017 08:44:56] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 26091
+starting thread (client mode): 0x5998ad10L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: ProgrammingError(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','1.5G','xiyao')' at line 1") is not JSON serializable
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: ProgrammingError(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','1.5G','xiyao')' at line 1") is not JSON serializable
+[24/Oct/2017 08:45:02] "POST /video/toPrepare HTTP/1.1" 500 18525
+System check identified no issues (0 silenced).
+October 24, 2017 - 08:44:48
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学1
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/bcdc8d8fda0fc2c6.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508805902','1508805902','1508805902','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','23','3455.43','0','xiyao')
+(1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '','1.5G','xiyao')' at line 1")
+EOF in transport thread
+Performing system checks...
+
+Starting logging
+Starting logging
+Using simplejson library
+Using simplejson library
+[24/Oct/2017 08:47:03] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 26091
+[24/Oct/2017 08:47:06] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 26091
+starting thread (client mode): 0xa8a64550L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1136, "Column count doesn't match value count at row 1") is not JSON serializable
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1555, in OneToPrepare
+    return HttpResponse(json.dumps({'code':500,'message':e}))
+  File "/usr/local/lib/python2.7/json/__init__.py", line 244, in dumps
+    return _default_encoder.encode(obj)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 207, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 270, in iterencode
+    return _iterencode(o, 0)
+  File "/usr/local/lib/python2.7/json/encoder.py", line 184, in default
+    raise TypeError(repr(o) + " is not JSON serializable")
+TypeError: OperationalError(1136, "Column count doesn't match value count at row 1") is not JSON serializable
+[24/Oct/2017 08:47:12] "POST /video/toPrepare HTTP/1.1" 500 18293
+System check identified no issues (0 silenced).
+October 24, 2017 - 08:47:01
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学1
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/bcdc8d8fda0fc2c6.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508806032','1508806032','1508806032','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','23','3455.43','0','xiyao')
+(1136, "Column count doesn't match value count at row 1")
+EOF in transport thread
+Performing system checks...
+
+Starting logging
+Starting logging
+Using simplejson library
+Using simplejson library
+[24/Oct/2017 08:48:23] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 26091
+starting thread (client mode): 0xe85b1c50L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1535, in OneToPrepare
+    sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`,`app_type`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,chapter_id,recoders[4],sort,recoders[7].replace('M',''),apptypeset)
+TypeError: not enough arguments for format string
+Internal Server Error: /video/toPrepare
+Traceback (most recent call last):
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 149, in get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/core/handlers/base.py", line 147, in get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/www/web/video_env/lib/python2.7/site-packages/django/views/decorators/csrf.py", line 58, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/www/web/yjy_django_video/video_omsa/video/views.py", line 1535, in OneToPrepare
+    sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`,`app_type`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,chapter_id,recoders[4],sort,recoders[7].replace('M',''),apptypeset)
+TypeError: not enough arguments for format string
+[24/Oct/2017 08:48:28] "POST /video/toPrepare HTTP/1.1" 500 18116
+System check identified no issues (0 silenced).
+October 24, 2017 - 08:48:21
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学1
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/bcdc8d8fda0fc2c6.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508806108','1508806108','1508806108','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','23','3455.43','0','xiyao')
+EOF in transport thread
+Performing system checks...
+
+Starting logging
+Starting logging
+Using simplejson library
+Using simplejson library
+[24/Oct/2017 08:50:05] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 26091
+starting thread (client mode): 0x9c8f7cd0L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+[24/Oct/2017 08:50:13] "POST /video/toPrepare HTTP/1.1" 200 77
+[24/Oct/2017 08:50:15] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 22767
+[24/Oct/2017 08:50:18] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 22767
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 09:02:06] "GET /video/mp4AferCut?id=1562 HTTP/1.1" 200 26091
+System check identified no issues (0 silenced).
+October 24, 2017 - 08:50:02
+Django version 1.9, using settings 'video_omsa.settings'
+Starting development server at http://0.0.0.0:88/
+Quit the server with CONTROL-C.
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学1
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/bcdc8d8fda0fc2c6.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508806213','1508806213','1508806213','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','23','3455.43','0','xiyao')
+insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`file_size`,`app_type`) values('医学伦理学1','2017-10-24/bcdc8d8fda0fc2c6.jpg','1','1508806213','1508806213','1508806213','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll01.mp4/2017_10_24/4521eda754870751_aes.m3u8','23','3455.43','0','1.5G','xiyao')
+update yjy_mp4 set `cut_staus`=4 where id='1561'
+update `mp4_cut_recoder` set `status`=1 where id='118'
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi[24/Oct/2017 09:02:13] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&page=1 HTTP/1.1" 200 192558
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 09:02:16] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 22767
+[24/Oct/2017 09:02:50] "GET /video/mp4AferCut?id=1562 HTTP/1.1" 200 26091
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 09:06:41] "GET /video/mp4AferCut?id=1552 HTTP/1.1" 200 16777
+[24/Oct/2017 09:06:49] "GET /video/mp4AferCut?id=1561 HTTP/1.1" 200 22767
+[24/Oct/2017 09:07:10] "GET /inters_data HTTP/1.1" 200 10972
+[24/Oct/2017 09:07:13] "GET /Hisinters?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&action=imge&data%5Bd%5D=2016_01_01&data%5Btop%5D=&data%5Bhistory%5D=1 HTTP/1.1" 200 6973
+[24/Oct/2017 09:07:37] "GET /Hisinters?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&action=imge&data%5Bd%5D=2016_01_01&data%5Btop%5D=&data%5Bhistory%5D=11 HTTP/1.1" 200 36911
+[24/Oct/2017 09:07:48] "GET /Hisinters?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&action=imge&data%5Bd%5D=2016_01_01&data%5Btop%5D=&data%5Bhistory%5D=9 HTTP/1.1" 200 32576
+[24/Oct/2017 09:08:01] "GET /inters_data HTTP/1.1" 200 10972
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 09:09:47] "POST /inters_data HTTP/1.1" 200 14276
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7101745
+[24/Oct/2017 09:12:10] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2527
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7104842
+[24/Oct/2017 09:12:19] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2618
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7112485
+[24/Oct/2017 09:12:34] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2500
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7113047
+[24/Oct/2017 09:12:35] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2546
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7113381
+[24/Oct/2017 09:12:37] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2534
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7113364
+[24/Oct/2017 09:12:38] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2531
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7113837
+[24/Oct/2017 09:12:40] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2517
+Starting new HTTP connection (1): api.letiku.net
+http://api.letiku.net:888 "GET /yjy_req_status HTTP/1.1" 200 7116441
+[24/Oct/2017 09:12:50] "GET /inters_info?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 2515
+[24/Oct/2017 09:13:12] "GET /inters_data HTTP/1.1" 200 10972
+[24/Oct/2017 09:13:40] "POST /inters_data HTTP/1.1" 200 14276
+[24/Oct/2017 09:13:59] "GET /inters_data?csrfmiddlewaretoken=sI97klls2WbfY4i5g2aRQN9ipHakhmD2&action=imge&data%5Bd%5D=2017_10_23&data%5Btop%5D=55&data%5Bhistory%5D=1 HTTP/1.1" 200 3534
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 09:14:26] "POST /inters_data HTTP/1.1" 200 14276
+[24/Oct/2017 09:14:34] "GET /inters_data?action=pagination&page=%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%202&data[d]=2017_10_23&data[top]=55 HTTP/1.1" 200 14476
+[24/Oct/2017 09:14:51] "GET /inters_data?action=pagination&page=%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%201&data[d]=2017_10_23&data[top]=55 HTTP/1.1" 200 14185
+.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+9
+10
+11
+12
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn'[24/Oct/2017 09:15:00] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192476
+[24/Oct/2017 09:15:02] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192476
+t exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146,[24/Oct/2017 09:15:11] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&page=2 HTTP/1.1" 200 192900
+ "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'y[24/Oct/2017 09:15:21] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&page=3 HTTP/1.1" 200 193307
+20373
+[24/Oct/2017 09:15:26] "GET /video/Center HTTP/1.1" 200 14694
+[24/Oct/2017 09:15:28] "GET /video/task_detail?id=4 HTTP/1.1" 200 10253
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 09:43:10] "GET /inters_data HTTP/1.1" 200 10972
+[24/Oct/2017 09:43:10] "GET /static/js/jquery_file_download.js HTTP/1.1" 200 16983
+[24/Oct/2017 09:43:10] "GET /static/js/bootstrap.min.js HTTP/1.1" 200 37045
+[24/Oct/2017 09:43:10] "GET /inters_data HTTP/1.1" 200 10972
+[24/Oct/2017 09:43:10] "GET /static/js/jquery-3.1.1.min.js HTTP/1.1" 200 86709
+[24/Oct/2017 09:43:10] "GET /static/css/bootstrap.min.css HTTP/1.1" 200 123366
+[24/Oct/2017 09:43:11] "GET /static/js/highcharts.js HTTP/1.1" 200 200047
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+jy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_[24/Oct/2017 10:17:00] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&page=4 HTTP/1.1" 200 193011
+im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter[24/Oct/2017 10:17:23] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&page=1 HTTP/1.1" 200 192558
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:25:48] "GET /video/getMyAppMp4.html HTTP/1.1" 200 196320
+- Broken pipe from ('115.33.72.80', 2425)
+[24/Oct/2017 10:25:51] "GET /video/getMyAppMp4.html HTTP/1.1" 200 196320
+[24/Oct/2017 10:25:52] "GET /getCategorys?apptype=yjy_xiyizonghe&csrfmiddlewaretoken=FNpfv0ub0SMsUpjnlVdlQS39YSeMIoMg HTTP/1.1" 200 1125
+[24/Oct/2017 10:25:53] "GET /getCategorys?apptype=yjy_xiyizhiyeyishi&csrfmiddlewaretoken=FNpfv0ub0SMsUpjnlVdlQS39YSeMIoMg HTTP/1.1" 200 1153
+[24/Oct/2017 10:25:54] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&csrfmiddlewaretoken=FNpfv0ub0SMsUpjnlVdlQS39YSeMIoMg HTTP/1.1" 200 193040
+' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Ta[24/Oct/2017 10:26:01] "GET /video/mp4AferCut?id=1562 HTTP/1.1" 200 26091
+[24/Oct/2017 10:26:02] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192470
+- Broken pipe from ('115.33.72.80', 2434)
+ble 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_x[24/Oct/2017 10:26:05] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192470
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:29:31] "GET /video/getMyAppMp4.html HTTP/1.1" 200 196320
+- Broken pipe from ('115.33.72.80', 2507)
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:38:07] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&page=3 HTTP/1.1" 302 0
+[24/Oct/2017 10:38:07] "GET /?next=/video/getMyAppMp4.html%3Fapp_type%3Dyjy_xiyizhiyeyishi%26page%3D3 HTTP/1.1" 200 5464
+[24/Oct/2017 10:38:07] "GET /static/image/banner.jpg HTTP/1.1" 304 0
+[24/Oct/2017 10:38:07] "GET /captcha/image/530f7af8cc27c14b88a99780c52ac72b4cb36804/ HTTP/1.1" 200 4368
+[24/Oct/2017 10:38:08] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&page=2 HTTP/1.1" 302 0
+[24/Oct/2017 10:38:08] "GET /?next=/video/getMyAppMp4.html%3Fapp_type%3Dyjy_xiyizhiyeyishi%26page%3D2 HTTP/1.1" 200 5464
+[24/Oct/2017 10:38:08] "GET /captcha/image/81b78a87b81e2460c6893c844143c8fd5562a220/ HTTP/1.1" 200 3840
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:38:29] "GET /ajax_val?response=LYCNR&hashkey=81b78a87b81e2460c6893c844143c8fd5562a220 HTTP/1.1" 200 13
+[24/Oct/2017 10:38:30] "POST /login HTTP/1.1" 302 0
+[24/Oct/2017 10:38:30] "GET /im_list.html HTTP/1.1" 200 6359
+[24/Oct/2017 10:38:38] "GET /video/list.html HTTP/1.1" 200 71089
+[24/Oct/2017 10:38:47] "GET /getCategorys?apptype=yjy_xiyizonghe HTTP/1.1" 200 1125
+[24/Oct/2017 10:38:47] "GET /video/getMyAppMp4.html HTTP/1.1" 200 196326
+[24/Oct/2017 10:38:48] "GET /getCategorys?apptype=yjy_xiyizhiyeyishi&csrfmiddlewaretoken=zraiThzNMe1PvXB4SfyXxauJB34dx8rP HTTP/1.1" 200 1153
+iyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+<QueryDict: {u'username': [u'shipinbu'], u'csrfmiddlewaretoken': [u'NZfbsDkdhIYDntLYemk9Tzxp7L0fazKI'], u'password': [u'123456'], u'captcha_0': [u'81b78a87b81e2460c6893c844143c8fd5562a220'], u'captcha_1': [u'LYCNR']}>
+{}
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_[24/Oct/2017 10:38:51] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi&csrfmiddlewaretoken=zraiThzNMe1PvXB4SfyXxauJB34dx8rP HTTP/1.1" 200 193046
+xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyey[24/Oct/2017 10:38:57] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192476
+[24/Oct/2017 10:40:08] "GET /video/mp4AferCut?id=1562 HTTP/1.1" 200 26097
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+starting thread (client mode): 0x94ed6a90L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+[24/Oct/2017 10:40:23] "POST /video/toPrepare HTTP/1.1" 200 77
+[24/Oct/2017 10:40:26] "GET /video/mp4AferCut?id=1562 HTTP/1.1" 200 22777
+15239
+[24/Oct/2017 10:41:00] "GET /video/Center HTTP/1.1" 200 14694
+[24/Oct/2017 10:41:03] "GET /video/task_detail?id=4 HTTP/1.1" 200 10253
+ishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学2
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll02.mp4/2017_10_24/033350dc9a071c2d.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('医学伦理学2','2017-10-24/033350dc9a071c2d.jpg','1','1508812823','1508812823','1508812823','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll02.mp4/2017_10_24/3d4741e06e1f5c2d_aes.m3u8','23','3015.22','0','xiyao')
+insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`file_size`,`app_type`) values('医学伦理学2','2017-10-24/033350dc9a071c2d.jpg','1','1508812823','1508812823','1508812823','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll02.mp4/2017_10_24/3d4741e06e1f5c2d_aes.m3u8','23','3015.22','0','333','xiyao')
+update yjy_mp4 set `cut_staus`=4 where id='1562'
+update `mp4_cut_recoder` set `status`=1 where id='89'
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiy[24/Oct/2017 10:41:20] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192448
+[24/Oct/2017 10:41:24] "GET /video/mp4AferCut?id=1563 HTTP/1.1" 200 26097
+starting thread (client mode): 0x9c0c7f10L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+[24/Oct/2017 10:41:32] "POST /video/toPrepare HTTP/1.1" 200 77
+[24/Oct/2017 10:41:35] "GET /video/mp4AferCut?id=1563 HTTP/1.1" 200 22777
+[24/Oct/2017 10:41:40] "GET /video/mp4AferCut?id=1563 HTTP/1.1" 200 22777
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+eyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 23 None 医学伦理学3
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_10_18_xyzy_jcll03.mp4/2017_10_24/52bdb52c5272beb4.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('医学伦理学3','2017-10-24/52bdb52c5272beb4.jpg','1','1508812892','1508812892','1508812892','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll03.mp4/2017_10_24/712912e94d397011_aes.m3u8','23','3274.59','0','xiyao')
+insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`file_size`,`app_type`) values('医学伦理学3','2017-10-24/52bdb52c5272beb4.jpg','1','1508812892','1508812892','1508812892','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_23/aes_shipinbu_2017_10_23_14_10_18_xyzy_jcll03.mp4/2017_10_24/712912e94d397011_aes.m3u8','23','3274.59','0','347','xiyao')
+update yjy_mp4 set `cut_staus`=4 where id='1563'
+update `mp4_cut_recoder` set `status`=1 where id='91'
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table[24/Oct/2017 10:42:56] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192414
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+ 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyi[24/Oct/2017 10:44:57] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192414
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+zhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishiReceived global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:48:11] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192420
+[24/Oct/2017 10:48:12] "GET /video/mp4AferCut?id=1549 HTTP/1.1" 200 16761
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:49:32] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192414
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+starting thread (client mode): 0x94987f50L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 12 None 第一章 绪论
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_17_03_xyzy_jcxl01.mp4/2017_10_23/eb4935b5f2efe911.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('第一章 绪论','2017-10-24/eb4935b5f2efe911.jpg','1','1508813386','1508813386','1508813386','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_12/aes_shipinbu_2017_10_23_14_17_03_xyzy_jcxl01.mp4/2017_10_23/da12c0b38f33bfe9_aes.m3u8','12','1080.22','0','xiyao')
+insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`e[24/Oct/2017 10:49:46] "POST /video/toPrepare HTTP/1.1" 200 77
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:52:56] "GET /video/mp4AferCut?id=1549 HTTP/1.1" 200 13441
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:55:47] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192392
+[24/Oct/2017 10:55:49] "GET /video/mp4AferCut?id=1550 HTTP/1.1" 200 16795
+starting thread (client mode): 0x9457eb90L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+nded`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`file_size`,`app_type`) values('第一章 绪论','2017-10-24/eb4935b5f2efe911.jpg','1','1508813386','1508813386','1508813386','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_12/aes_shipinbu_2017_10_23_14_17_03_xyzy_jcxl01.mp4/2017_10_23/da12c0b38f33bfe9_aes.m3u8','12','1080.22','0','120','xiyao')
+update yjy_mp4 set `cut_staus`=4 where id='1549'
+update `mp4_cut_recoder` set `status`=1 where id='68'
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 12 None 第二章 心理学的生物基础
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_17_03_xyzy_jcxl02.mp4/2017_10_23/bce805a7e064fb84.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyi[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+[24/Oct/2017 10:55:56] "POST /video/toPrepare HTTP/1.1" 200 77
+[24/Oct/2017 10:55:58] "GET /video/mp4AferCut?id=1550 HTTP/1.1" 200 13475
+[24/Oct/2017 10:56:17] "GET /video/mp4AferCut?id=1551 HTTP/1.1" 200 16783
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+starting thread (client mode): 0x9456c0d0L
+Local version/idstring: SSH-2.0-paramiko_2.3.1
+Remote version/idstring: SSH-2.0-OpenSSH_5.3
+Connected (version 2.0, client OpenSSH_5.3)
+kex algos:[u'diffie-hellman-group-exchange-sha256', u'diffie-hellman-group-exchange-sha1', u'diffie-hellman-group14-sha1', u'diffie-hellman-group1-sha1'] server key:[u'ssh-rsa', u'ssh-dss'] client encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] server encrypt:[u'aes128-ctr', u'aes192-ctr', u'aes256-ctr', u'arcfour256', u'arcfour128', u'aes128-cbc', u'3des-cbc', u'blowfish-cbc', u'cast128-cbc', u'aes192-cbc', u'aes256-cbc', u'arcfour', u'rijndael-cbc@lysator.liu.se'] client mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] server mac:[u'hmac-md5', u'hmac-sha1', u'umac-64@openssh.com', u'hmac-sha2-256', u'hmac-sha2-512', u'hmac-ripemd160', u'hmac-ripemd160@openssh.com', u'hmac-sha1-96', u'hmac-md5-96'] client compress:[u'none', u'zlib@openssh.com'] server compress:[u'none', u'zlib@openssh.com'] client lang:[u''] server lang:[u''] kex follows?False
+Kex agreed: diffie-hellman-group-exchange-sha256
+HostKey agreed: ssh-rsa
+Cipher agreed: aes128-ctr
+MAC agreed: hmac-sha2-256
+Compression agreed: none
+Got server p (2048 bits)
+kex engine KexGexSHA256 specified hash_algo <built-in function openssl_sha256>
+Switch to new keys ...
+Adding ssh-rsa host key for [10.26.160.177]:2282: 221974cdd513e8c77ccff59bd5276bf8
+Trying discovered key 4259a10f934c51463d7f2a756d97bfc4 in /root/.ssh/id_rsa
+userauth is OK
+Authentication (publickey) successful!
+[chan 0] Max packet in: 32768 bytes
+[chan 0] Max packet out: 32768 bytes
+Secsh channel 0 opened.
+[chan 0] Sesch channel 0 request ok
+[chan 0] EOF received (0)
+[chan 0] EOF sent (0)
+[24/Oct/2017 10:56:22] "POST /video/toPrepare HTTP/1.1" 200 77
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+[24/Oct/2017 10:56:32] "GET /video/mp4AferCut?id=1551 HTTP/1.1" 200 13463
+zonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('第二章 心理学的生物基础','2017-10-24/bce805a7e064fb84.jpg','1','1508813756','1508813756','1508813756','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_12/aes_shipinbu_2017_10_23_14_17_03_xyzy_jcxl02.mp4/2017_10_23/db2dd99d77d98d85_aes.m3u8','12','883.31','0','xiyao')
+insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`file_size`,`app_type`) values('第二章 心理学的生物基础','2017-10-24/bce805a7e064fb84.jpg','1','1508813756','1508813756','1508813756','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_12/aes_shipinbu_2017_10_23_14_17_03_xyzy_jcxl02.mp4/2017_10_23/db2dd99d77d98d85_aes.m3u8','12','883.31','0','105','xiyao')
+update yjy_mp4 set `cut_staus`=4 where id='1550'
+update `mp4_cut_recoder` set `status`=1 where id='75'
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+yjy_xiyizhiyeyishi 2 12 None 第三章 感觉与知觉
+scp -rp -P2282 /data/hls/thumb/new/shipinbu_2017_10_23_14_17_03_xyzy_jcxl03.mp4/2017_10_23/c0c02b31114835c0.jpg root@10.26.160.177:/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/2017-10-24/
+insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('第三章 感觉与知觉','2017-10-24/c0c02b31114835c0.jpg','1','1508813782','1508813782','1508813782','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_12/aes_shipinbu_2017_10_23_14_17_03_xyzy_jcxl03.mp4/2017_10_23/ede98313d5cbcaf9_aes.m3u8','12','1206.15','0','xiyao')
+insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`file_size`,`app_type`) values('第三章 感觉与知觉','2017-10-24/c0c02b31114835c0.jpg','1','1508813782','1508813782','1508813782','113','113','http://m1.letiku.net/new/original_new_yjy_xiyizhiyeyishi_2_12/aes_shipinbu_2017_10_23_14_17_03_xyzy_jcxl03.mp4/2017_10_23/ede98313d5cbcaf9_aes.m3u8','12','1206.15','0','149','xiyao')
+update yjy_mp4 set `cut_staus`=4 where id='1551'
+update `mp4_cut_recoder` set `status`=1 where id='77'
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+select `id`,`cut_id` from yjy_mp4 where `cut_staus`='2';
+()
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_cha[24/Oct/2017 10:56:54] "GET /video/getMyAppMp4.html?app_type=yjy_xiyizhiyeyishi HTTP/1.1" 200 192336
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+Received global request "keepalive@openssh.com"
+Rejecting "keepalive@openssh.com" global request from server.
+pter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+(1146, "Table 'yjy_xiyizhiyeyishi.yjy_im_chapter' doesn't exist")
+EOF in transport thread
+EOF in transport thread
+EOF in transport thread
+Performing system checks...
+
+Starting logging
+Starting logging
+Using simplejson library
+Using simplejson library
