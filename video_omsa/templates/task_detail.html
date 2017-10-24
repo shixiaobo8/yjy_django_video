@@ -21,7 +21,8 @@
                     if (result) {
                         checkStatus()
                         $.post("/video/start_task", {
-                            "task_id": {{ task_id }}
+                            "task_id": {{ task_id }},
+                            "videos": {{ task_videos }}
                         }, function (res) {
                             var res = JSON.parse(res);
                             if (res['code'] == '200') {
