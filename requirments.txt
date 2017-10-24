@@ -26,3 +26,4 @@ django-celery-results
 pycrypto
 flower
 paramiko
+dnspython
