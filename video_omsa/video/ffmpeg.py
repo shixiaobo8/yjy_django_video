@@ -349,7 +349,7 @@ class ffmpeg(object):
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
             if res >=1 :
-                rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"}
+                rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
                 self.logging_cut(rs)
                 return rs
             else:
