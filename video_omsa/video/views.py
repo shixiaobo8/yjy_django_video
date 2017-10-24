@@ -2,7 +2,7 @@
 # -*- coding:utf8 -*-
 from __future__ import division
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail,EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.context import RequestContext
 from django.shortcuts import render, redirect
 from django.contrib import auth
@@ -1585,7 +1585,7 @@ def getServiceGoodsId(apptype,parent_id,res_type):
     return settings.APP_GOOD_SERVICE_IDS[apptype][res_type][str(parent_id)]
 
 # 发送邮件(含任务失败和成功邮件)
-def send_mail(task_id,video_id,stauts='ok'):
+def sendMail(task_id,video_id,stauts='ok'):
     videoInfos = getApptypes(video_id)
     video_name = videoInfos[4]
     apptype_v = getApptypeName(videoInfos[0])

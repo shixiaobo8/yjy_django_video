@@ -9,7 +9,7 @@ from Crypto.Cipher import AES
 from binascii import b2a_hex, a2b_hex
 from Crypto import Random
 import types,json
-from tasks import send_mail
+from .tasks import send_Mail
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -339,30 +339,30 @@ class ffmpeg(object):
                             self.recoder_to_file("all done !! and ok")
                             self.change_mp4_cutStatus()
                             self.logging_cut("切片完毕!")
-                            send_mail(self.task_id,self.video_id,status='ok')
+                            send_Mail(self.task_id,self.video_id,status='ok')
                             return "切片顺利完成!"
                             # self.push_to_cdn()
 
                         else:
                             self.logging_cut(str(ts_status[1]) + "生成切片失败!")
-                            send_mail(self.task_id,self.video_id,status='not ok')
+                            send_Mail(self.task_id,self.video_id,status='not ok')
                             return json.dumps(str(ts_status[1]) + "生成切片失败!")
                     else:
                         self.logging_cut("生成ts失败!")
-                        send_mail(self.task_id,self.video_id,status='not ok')
+                        send_Mail(self.task_id,self.video_id,status='not ok')
                         return "生成ts失败!"+str(ts_status[1])
 
                 else:
                     self.logging_cut("获取视频时长失败!")
-                    send_mail(self.task_id,self.video_id,status='not ok')
+                    send_Mail(self.task_id,self.video_id,status='not ok')
                     return "获取视频时长失败!"+str(d_status[1])
             else:
                 self.logging_cut("生成缩略图失败!")
-                send_mail(self.task_id,self.video_id,status='not ok')
+                send_Mail(self.task_id,self.video_id,status='not ok')
                 return "生成缩略图失败!"+str(t_status[1])
         else:
             self.logging_cut('转码尺寸失败'+str(c_status[1]))
-            send_mail(self.task_id,self.video_id,status='not ok')
+            send_Mail(self.task_id,self.video_id,status='not ok')
             return "转码尺寸失败!"+str(c_status[1])
 
 # # 脚本测试
