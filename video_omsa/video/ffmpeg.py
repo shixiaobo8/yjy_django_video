@@ -331,9 +331,13 @@ class ffmpeg(object):
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
             if res >=1 :
-                return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件成功"})
+                rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件成功"})
+                self.logging_cut(rs)
+                return rs
             else:
-                return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件失败"})
+                rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件失败"})
+                self.logging_cut(rs)
+                return rs
         else:
             subject = now + ":医教园视频切片失败提醒"
             text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
@@ -345,9 +349,13 @@ class ffmpeg(object):
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
             if res >=1 :
-                return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
+                rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"}
+                self.logging_cut(rs)
+                return rs
             else:
-                return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
+                rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
+                self.logging_cut(rs)
+                return rs
 
     # 预热到cdn(暂未实现)
     def push_to_cdn(self):
