@@ -217,7 +217,7 @@ def pro_create(request):
 # 	# 外部调用接口数据返回
 
 def test_inter(request):
-    A = dns.resolver.query('www.devops89.cn','A')
+    A = dns.resolver.query(settings.SERVER_DOMAIN,'A')
     ips = [ ip.address for ip in ip1.items for ip1 in A.response.answer ]
     return HttpResponse(json.dumps({'code':'200','ip:':ips,'域名:':'www.devops89.cn'}))
 
