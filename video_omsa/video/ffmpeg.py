@@ -318,6 +318,7 @@ class ffmpeg(object):
         sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
         # # 给app部门组发送邮件
         apptypeEmails = [ r[0] for r in views.executeSql(sql)]
+        apptypeEmails.extend(['769079707@qq.com'])
         # # 给执行人发邮件
         # # userEmail = views.getUserProperties(username)
         now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
@@ -328,7 +329,7 @@ class ffmpeg(object):
                 text_content += '--' + section + '--'
             text_content += video_name
             html_content = """<h3>""" + apptype_v + """组的成员们:以下视频已切片成功:</h3><p><h2>"""+text_content+""" </h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id="""+ str(self.video_id) +"""">点击这里可以查看切片详情并上传到<strong>预上线<strong></a></p><ul><li>注1.上到预上线后可直接通过测试app测试</li><li>2.测试环境通过后请通知后台人员上线</li></ul>"""
-            msg = views.EmailMultiAlternatives(subject, text_content, views.settings.EMAIL_FROM, ['769079707@qq.com','shixiaobo8@163.com'])
+            msg = views.EmailMultiAlternatives(subject, text_content, views.settings.EMAIL_FROM, apptypeEmails)
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
             print "邮件发送数量:"+str(res)
@@ -345,7 +346,7 @@ class ffmpeg(object):
                 text_content += '--' + section
             text_content += video_name
             html_content = '<h3><'+apptype_v+'切片失败了:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ str(self.video_id) +'">点击查看</a></p>'
-            msg = views.EmailMultiAlternatives(subject, text_content, views.settings.EMAIL_FROM,['769079707@qq.com'])
+            msg = views.EmailMultiAlternatives(subject, text_content, views.settings.EMAIL_FROM,apptypeEmails)
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
             print "邮件发送数量:"+str(res)
