@@ -9,7 +9,7 @@ from Crypto.Cipher import AES
 from binascii import b2a_hex, a2b_hex
 from Crypto import Random
 import types,json
-from .tasks import send_mail
+from tasks import send_mail
 
 reload(sys)
 sys.setdefaultencoding('utf8')
