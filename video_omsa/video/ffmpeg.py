@@ -309,6 +309,7 @@ class ffmpeg(object):
 
     # 发送邮件(含任务失败和成功邮件)
     def sendMail(self,stauts='ok'):
+        self.logging_cut('start')
         try:
             videoInfos = views.getApptypes(self.video_id)
             self.logging_cut('111')
