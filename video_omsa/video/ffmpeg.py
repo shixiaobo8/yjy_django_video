@@ -320,6 +320,7 @@ class ffmpeg(object):
         # 给执行人发邮件
         # userEmail = views.getUserProperties(username)
         now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
+        print videoInfos,video_name,apptype_v,parent,chapter,section,sql,apptypeEmails
         if type == 'ok':
             subject = now + ":医教园视频切片进度提醒"
             text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
@@ -330,6 +331,7 @@ class ffmpeg(object):
             msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
+            print "邮件发送数量:"+str(res)
             if res >=1 :
                 rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件成功"})
                 self.logging_cut(rs)
@@ -348,6 +350,7 @@ class ffmpeg(object):
             msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM,['769079707@qq.com'])
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
+            print "邮件发送数量:"+str(res)
             if res >=1 :
                 rs = json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
                 self.logging_cut(rs)
