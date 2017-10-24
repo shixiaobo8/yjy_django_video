@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'zabbix',
    # 'verifycode',
     'captcha',
+    'django_celery_results',
 # xadmin 项目配置
 #    'xadmin',
 #    'crispy_forms',
@@ -96,7 +97,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'django_video',
 	'USER': 'root',
-	'PASSWORD':'123456',
+	'PASSWORD':'yjy_video@123',
 	'HOST':'localhost',
 	'PORT':'3306',
     },
@@ -104,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'yjy_xiyizhiyeyishi',
 	'USER': 'root',
-	'PASSWORD':'123456',
+	'PASSWORD':'yjy_video@123',
 	'HOST':'localhost',
 	'PORT':'3306',
     },
@@ -112,7 +113,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'tcmsq',
 	'USER': 'root',
-	'PASSWORD':'123456',
+	'PASSWORD':'yjy_video@123',
 	'HOST':'localhost',
 	'PORT':'3306',
     },
@@ -120,7 +121,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'yjy_xiyizonghe',
 	'USER': 'root',
-	'PASSWORD':'123456',
+	'PASSWORD':'yjy_video@123',
 	'HOST':'localhost',
 	'PORT':'3306',
     },
@@ -128,7 +129,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'yjy_zhongyizonghe',
 	'USER': 'root',
-	'PASSWORD':'123456',
+	'PASSWORD':'yjy_video@123',
 	'HOST':'localhost',
 	'PORT':'3306',
     },
@@ -204,7 +205,7 @@ CAPTCHA_TIMEOUT = 1 # 超时(minutes)
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/2",
+        "LOCATION": "redis://:yjy_video@123@127.0.0.1:18669/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -216,5 +217,85 @@ NEVER_REDIS_TIMEOUT=365*24*60*60
 
 #### 全局配置文件 #####
 ## mp4 服务器视频上传资源位置
-MP4_SERVER_DIR = "H:/" + u"盈佳科技视频资源" + "/J005-SSH_MP4"
-MP4_UPLOAD_DIR = "E:/www/yjy_django_video/UPLOADS"
+MP4_SERVER_DIR = "/data/original/"
+MP4_UPLOAD_DIR = "/data/original/new/"
+
+## celery 配置项 ###
+# Celery settings
+#: Only add pickle to this list if your broker is secured
+#: from unwanted access (see userguide/security.html)
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_URL = 'redis://:yjy_video@123@127.0.0.1:18669/5'
+
+# 上线和预上线的ip
+PREPARE_SERVER_IP = '10.26.160.177'
+ONLINE_SERVER_IP = '10.24.203.239'
+
+# 各学科商品的goods_service_id
+APP_GOOD_SERVICE_IDS = {
+        'yjy_xiyizonghe':{
+            'goods_id':{
+                '1':99, #  直播课
+                '2':99, #  基础课
+                '3':99, #  强化课
+                '4':99, #  冲刺课
+                '5':99  #  专题课
+            },
+            'service_id':{
+                '1':99, #  直播课
+                '2':99, #  基础课
+                '3':99, #  强化课
+                '4':99, #  冲刺课
+                '5':99  #  专题课
+            }
+        },
+        'yjy_xiyizhiyeyishi':{
+            'goods_id':{
+                '2':113, # 基础
+                '3':115, # 技能
+                '4':114, # 冲刺
+            },
+            'service_id':{
+                '2':113, # 基础
+                '3':115, # 技能
+                '4':114, # 冲刺
+            }
+        },
+        'tcmsq':{
+            'goods_id':{
+                '2':144, # 精讲
+                '3':142, # 技能
+                '4':145  # 冲刺
+            },
+            'service_id':{
+                '2':144, # 精讲
+                '3':142, # 技能
+                '4':145  # 冲刺
+            }
+        },
+        'yjy_zhongyizonghe':{
+            'goods_id':{
+                '2':136, # 精讲
+                '3':136, # 冲刺
+                '4':136  # 技能
+            },
+            'service_id':{
+                '2':136, # 精讲
+                '3':136, # 冲刺
+                '4':136  # 技能
+            }
+        }
+    }
+
+# 邮件配置
+EMAIL_HOST = "smtp.163.com"
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "shixiaobo8@163.com"
+EMAIL_HOST_PASSWORD = 'My163code89'
+EMAIL_FROM = "shixiaobo8@163.com"
+# EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  #email后端
+EMAIL_USE_TLS = False   #是否使用TLS安全传输协议
+EMAIL_USE_SSL = True    #是否使用SSL加密，qq企业邮箱要求使用
