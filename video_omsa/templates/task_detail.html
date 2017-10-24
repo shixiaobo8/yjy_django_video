@@ -20,6 +20,7 @@
                 callback: function (result) {
                     if (result) {
                         checkStatus()
+                        alert(typeof({{ videos }}));
                         $.post("/video/start_task", {
                             "task_id": {{ task_id }},
                             "videos": {{ videos }}
