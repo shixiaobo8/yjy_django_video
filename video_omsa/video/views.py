@@ -1392,7 +1392,7 @@ def task_detail(request):
         except EmptyPage:
             task_videos = paginator.page(paginator.num_pages)
 
-        return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id,"videos_nums":len(tmp),"videos":tmp})
+        return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id,"videos_nums":len(tmp),"videos":json.dumps(tmp)})
 
 
 # 检查MP4状态
