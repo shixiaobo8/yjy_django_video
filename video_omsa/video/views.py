@@ -219,7 +219,10 @@ def pro_create(request):
 def test_inter(request):
     if request.method == 'GET' or request.method == 'POST':
         A = dns.resolver.query(settings.SERVER_DOMAIN,'A')
-        ips = [ ip.address for ip in ip1.items for ip1 in A.response.answer ]
+        ips = ''
+        for ip1 in A.response.answer:
+            for ip in ip1.items:
+                ips = ip.address
         return HttpResponse(json.dumps({'code':'200','ip:':ips,'域名:':'www.devops89.cn'}))
 
 def inters_info(request):
