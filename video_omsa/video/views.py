@@ -1392,7 +1392,7 @@ def task_detail(request):
         except EmptyPage:
             task_videos = paginator.page(paginator.num_pages)
 
-        return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id,"videos_nums":len(tmp)})
+        return render(request,'task_detail.html',{'task_videos':task_videos,'task_name':task_name,'task_id':task_id,"videos_nums":len(tmp),"videos":tmp})
 
 
 # 检查MP4状态
@@ -1427,6 +1427,9 @@ def start_task(request):
             res_id = res.id
             sql1 = "update yjy_mp4 set `cut_id`='%s',`cut_staus`='2' where id='%s' and `cut_staus`='1'"%(res_id,video[0])
             executeSql(sql1)
+            # 一次task 只能用一次
+            # sql2 = "update `yjy_mp4_cuttask` set `is_del`=1 where `id`='%s'"%(task_id)
+            # executeSql(sql2)
         return HttpResponse(json.dumps({"code":"200","videos":videos}))
 
 # 删除任务切片MP4
