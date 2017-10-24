@@ -5,7 +5,6 @@
 {% block content %}
     <script>
         function start_task() {
-            v = typeof({{ videos }});
             bootbox.confirm({
                 message: "你已经确定要开始切片了吗？一旦开始切片给该任务后续不能再次添加新的MP4（但是你可以重新再创建任务切片）！确定吗？？",
                 buttons: {
@@ -99,7 +98,6 @@
     <hr/>
     <table class="table table-bordered table-hover" style="text-align: center;">
         <thead>
-{#        {{ videos }}#}
         <tr class="success">
             <th>app类型</th>
             <th>章节类型</th>
