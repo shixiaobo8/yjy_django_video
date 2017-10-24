@@ -291,6 +291,7 @@ class ffmpeg(object):
             #     f.write(str(name) + " = " + str(value))
             #     f.write('\n')
             f.write(mess)
+            f.write('\n')
 
     def change_mp4_cutStatus(self):
         try:
