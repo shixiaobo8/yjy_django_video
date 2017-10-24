@@ -1532,7 +1532,7 @@ def OneToPrepare(request):
                     print sql1
                     cursor.execute(sql1)
                     db_conn.commit()
-                    sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`,`app_type`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s',%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,chapter_id,recoders[4],sort,recoders[7].replace('M',''),apptypeset)
+                    sql2 = "insert into `yjy_im_chat_aes`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`download_url`,`file_size`,`app_type`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,chapter_id,recoders[4],sort,recoders[7].replace('M',''),apptypeset)
                     cursor.execute(sql2)
                     print sql2
                     db_conn.commit()
