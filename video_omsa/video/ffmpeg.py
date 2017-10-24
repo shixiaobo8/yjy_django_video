@@ -309,7 +309,7 @@ class ffmpeg(object):
 
     # 发送邮件(含任务失败和成功邮件)
     def sendMail(self,stauts='ok'):
-        self.logging_cut('start')
+        self.logging_cut('start...')
         try:
             videoInfos = views.getApptypes(self.video_id)
             self.logging_cut('111')
@@ -335,7 +335,7 @@ class ffmpeg(object):
             print e
             self.logging_cut('999')
             self.logging_cut(e)
-        if type == 'ok':
+        if stauts == 'ok':
             self.logging_cut('101010')
             subject = now + ":医教园视频切片进度提醒"
             text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
