@@ -311,28 +311,31 @@ class ffmpeg(object):
     def sendMail(self,stauts='ok'):
         try:
             videoInfos = views.getApptypes(self.video_id)
-            print 111
+            self.logging_cut('111')
             video_name = videoInfos[4]
-            print 1112
+            self.logging_cut('2222')
             apptype_v = views.getApptypeName(videoInfos[0])
-            print 1133
+            self.logging_cut('3333')
             parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
-            print 114
+            self.logging_cut('4444')
             chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
-            print 115
+            self.logging_cut('5555')
             section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
-            print 116
+            self.logging_cut('666')
             sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
             # 给app部门组发送邮件
-            print 117
+            self.logging_cut('777')
             apptypeEmails = [ r[0] for r in views.executeSql(sql)]
+            self.logging_cut('888')
             # 给执行人发邮件
             # userEmail = views.getUserProperties(username)
             now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
         except Exception,e:
             print e
+            self.logging_cut('999')
             self.logging_cut(e)
         if type == 'ok':
+            self.logging_cut('101010')
             subject = now + ":医教园视频切片进度提醒"
             text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
             if section:
@@ -342,6 +345,7 @@ class ffmpeg(object):
             msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
             msg.attach_alternative(html_content, "text/html")
             res = msg.send()
+            self.logging_cut('aaaa')
             print "邮件发送数量:"+str(res)
             if res >=1 :
                 rs = json.dumps({"date":now,"code":200,'mess':"给"+apptype_v+"组成员发送邮件成功"})
