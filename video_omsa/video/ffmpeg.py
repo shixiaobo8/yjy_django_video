@@ -308,19 +308,22 @@ class ffmpeg(object):
 
     # 发送邮件(含任务失败和成功邮件)
     def sendMail(self,stauts='ok'):
-        videoInfos = views.getApptypes(self.video_id)
-        video_name = videoInfos[4]
-        apptype_v = views.getApptypeName(videoInfos[0])
-        parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
-        chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
-        section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
-        sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
-        # 给app部门组发送邮件
-        apptypeEmails = [ r[0] for r in views.executeSql(sql)]
-        # 给执行人发邮件
-        # userEmail = views.getUserProperties(username)
-        now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
-        print videoInfos,video_name,apptype_v,parent,chapter,section,sql,apptypeEmails
+        try:
+            videoInfos = views.getApptypes(self.video_id)
+            video_name = videoInfos[4]
+            apptype_v = views.getApptypeName(videoInfos[0])
+            parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
+            chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
+            section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
+            sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
+            # 给app部门组发送邮件
+            apptypeEmails = [ r[0] for r in views.executeSql(sql)]
+            # 给执行人发邮件
+            # userEmail = views.getUserProperties(username)
+            now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
+        except Exception,e:
+            print e
+            self.logging_cut(e)
         if type == 'ok':
             subject = now + ":医教园视频切片进度提醒"
             text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
