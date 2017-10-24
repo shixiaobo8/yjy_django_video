@@ -407,6 +407,7 @@ class ffmpeg(object):
                             self.recoder_to_file("all done !! and ok")
                             self.change_mp4_cutStatus()
                             self.logging_cut("切片完毕!")
+                            self.logging_cut("开始发送邮件!")
                             r1 = self.sendMail(status='ok')
                             self.logging_cut(r1)
                             return "切片顺利完成!"
