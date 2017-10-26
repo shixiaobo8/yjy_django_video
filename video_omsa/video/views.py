@@ -1541,7 +1541,7 @@ def OneToPrepare(request):
                 try:
                     download_url = recoders[6].replace('/data/hls','http://m1.letiku.net')
                     media_url = download_url
-                    prepare_thumb_path = syncThumbToPrepare(settings.PREPARE_SERVER_IP,recoders[2].replace('http://m1.letiku.net/','/data/hls/'))
+                    prepare_thumb_path = syncThumbToPrepare(app_type,settings.PREPARE_SERVER_IP,recoders[2].replace('http://m1.letiku.net/','/data/hls/'))
                     sql1 = "insert into `yjy_im_chat`(`name`,`thumb`,`status`,`started`,`ended`,`created`,`service_id`,`goods_id`,`media_url`,`chapter_id`,`duration`,`sort`,`app_type`) values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(video_name,prepare_thumb_path,1,int(time.time()),int(time.time()),int(time.time()),service_id,goods_id,media_url,chapter_id,recoders[4],sort,apptypeset)
                     print sql1
                     cursor.execute(sql1)
@@ -1573,12 +1573,21 @@ def OneToPrepare(request):
 
 
 # 将视频服务器上的切片略缩图图片传送给预上线或者线上
-def syncThumbToPrepare(server,client_thumb_path):
+def syncThumbToPrepare(app_type,server,client_thumb_path):
     today = time.strftime('%Y-%m-%d',time.localtime(time.time()))
     ssh = pmk.SSHClient()
     ssh.set_missing_host_key_policy(pmk.AutoAddPolicy())
     ssh.connect(server,2282,'root')
-    thumb_path = '/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/' + today + os.sep
+    thumb_path =''
+    if 'xiyizonghe' in app_type:
+        thumb_path = '/www/pre_social_web/sandbox.xiyizonghe.letiku.net/Uploads/Admin/' + today + os.sep
+    else:
+        if app_type == 'tcmsq':
+            thumb_path = '/www/pre_social_web/sandbox.social/tcmsq/Uploads/Admin/' + today + os.sep
+        if app_type == 'tcms':
+            thumb_path = '/www/pre_social_web/sandbox.social/zhongyizonghe_new/Uploads/Admin/' + today + os.sep
+        if 'xiyizhiyeyishi' in app_type:
+            thumb_path = '/www/pre_social_web/sandbox.social/xiyizhiyeyishi/Uploads/Admin/' + today + os.sep
     cmd = 'mkdir -p ' + thumb_path
     stdin,stdout,stderr = ssh.exec_command(cmd)
     cmd1 = 'scp -rp -P2282 '+ client_thumb_path +' root@' + server + ':' + thumb_path
