@@ -124,6 +124,9 @@ class registerForm(forms.Form):
                  ('yjy_xiyizhiyeyishi', '西医执业医师')], label='app类型',
         widget=forms.Select(attrs={'class': 'form-control', 'required': True}))
 
+    user_type = forms.ChoiceField(
+        choices=[('contents_department', '内容编辑部门'), ('videos_department', '视频制作部门')], label='部门选择',
+        widget=forms.Select(attrs={'class': 'form-control', 'required': True}))
 
 class intersForm(forms.Form):
     date = forms.DateField(label='请选择日期', widget=SelectDateWidget(years=YEARS_CHOICES))
