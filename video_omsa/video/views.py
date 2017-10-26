@@ -150,7 +150,7 @@ def register(request):
                 user.save()
                 try:
                     cursor = connection.cursor()
-                    sql = "update auth_user set apptype='" + data['app_type'] + "' where username='" + data[
+                    sql = "update auth_user set `apptype`='" + data['app_type'] + "',`department`='" + data['user_type'] + "' where username='" + data[
                         'username'] + "'"
                     cursor.execute(sql)
                     rs = cursor.fetchall()
