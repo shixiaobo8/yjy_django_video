@@ -311,11 +311,12 @@ class ffmpeg(object):
     def sendMail(self,status='ok'):
         videoInfos = views.getApptypes(self.video_id)[0]
         video_name = videoInfos[4]
+        apptype = views.executeSql("select `apptype` from `yjy_mp4` where id='%s'"%(self.video_id))[0]
         apptype_v = views.getApptypeName(videoInfos[0])
         parent = views.getAppTitle(videoInfos[0],int(videoInfos[1]))
         chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
         section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
-        sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
+        sql = "select `email` from `auth_user` where apptype='%s'"%(apptype)
         # # 给app部门组发送邮件
         apptypeEmails = [ r[0] for r in views.executeSql(sql)]
         apptypeEmails.extend(['769079707@qq.com'])
