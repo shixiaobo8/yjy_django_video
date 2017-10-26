@@ -916,7 +916,7 @@ def executeSql(sql):
 
 def getUserProperties(username):
     res = dict()
-    sql = "select `id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`,`apptype`,`touxiang` from auth_user where username='%s'" % (
+    sql = "select `id`,`password`,`last_login`,`is_superuser`,`username`,`first_name`,`last_name`,`email`,`is_staff`,`is_active`,`date_joined`,`apptype`,`touxiang`,`department` from auth_user where username='%s'" % (
         username)
     rs = executeSql(sql)
     if rs:
@@ -933,6 +933,7 @@ def getUserProperties(username):
         res['date_joined'] = rs[0][10]
         res['apptype'] = rs[0][11]
         res['touxiang'] = rs[0][12]
+        res['department'] = rs[0][13]
     return res
 
 
@@ -1019,6 +1020,7 @@ def getApptypeName(apptype):
 def getMyAppMp4(request):
     if request.method == 'GET':
         User = getUserProperties(request.user.username)
+        department = User['department']
         where = dict()
         form = videoForm(request.GET)
         page_nums = request.GET.get('page_nums', '10')
@@ -1059,7 +1061,7 @@ def getMyAppMp4(request):
         except EmptyPage:
             MyVideos = paginator.page(paginator.num_pages)
         return render(request, 'MyAppMp4.html',
-                      {'form': form, 'user1': User, 'MyVideos': MyVideos, "count": t_MyVideos['count'],
+                      {'form': form, 'user1': User,'department':department ,'MyVideos': MyVideos, "count": t_MyVideos['count'],
                        "apptype": getApptypeName(search_app_type), "c_url": c_url,"page_nums":page_nums,"apptype_v":search_app_type,"user_apptype_v": getApptypeName(User['apptype'])})
     else:
         return HttpResponse(json.dumps({'code': '555', 'data': '参数错误'}))
