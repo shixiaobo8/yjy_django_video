@@ -584,11 +584,17 @@
                                             app类型:&nbsp;&nbsp;<select class="form-control" id="id_app_type_S"
                                                                       name="app_type"
                                                                       onclick="getCategorys_S(this.value)" required>
-                                            <option value="{{ apptype_v }}">{{ apptype }}</option>
-                                            <option value="yjy_xiyizonghe">西医综合</option>
-                                            <option value="tcmsq">中医执业医师</option>
-                                            <option value="yjy_zhongyizonghe">中医综合</option>
-                                            <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
+                                            {% ifequal department "videos_department"  %}
+                                                <option value="{{ apptype_v }}">{{ apptype }}</option>
+                                                <option value="yjy_xiyizonghe">西医综合</option>
+                                                <option value="tcmsq">中医执业医师</option>
+                                                <option value="yjy_zhongyizonghe">中医综合</option>
+                                                <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
+                                            {% endifequal %}
+                                            {% ifequal department "contents_department"  %}
+                                                <option value="{{ apptype_v }}">{{ apptype }}</option>
+                                                <option value="{{ apptype_v }}">{{ apptype }}</option>
+                                            {% endifequal %}
                                         </select>
                                             科目:&nbsp;&nbsp;<select class="form-control" id="id_parent_id_S"
                                                                    name="parent_id"
