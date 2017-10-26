@@ -817,7 +817,7 @@ class dbUtil():
     reload(sys)
     sys.setdefaultencoding('utf8')
 
-    def __init__(self, dbname):
+    def __init__(self,host,port,user,passwd,dbname):
         try:
             self.dbname = dbname
             self.conn = mdb.connect(host='localhost', port=3306, user='root', passwd='123456', db=self.dbname,
@@ -825,6 +825,9 @@ class dbUtil():
             self.cursor = self.conn.cursor()
         except Exception, e:
             print e
+
+    def close(self):
+        self.conn.close()
 
 
 def getSqls(request):
@@ -1608,6 +1611,95 @@ def write_test(mess):
 # 获取视频的service_id  goods_id   res_type 分为两种类型 goods_id 和sevices_id
 def getServiceGoodsId(apptype,parent_id,res_type):
     return settings.APP_GOOD_SERVICE_IDS[apptype][res_type][str(parent_id)]
+
+
+def video_online(request):
+    return  render(request,'video_preare.html',{})
+
+def getPrepareList(apptype, where,search_key,search_time_range,sort):
+    res = dict()
+    prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
+    sql = "select `id`,`name`,`thumb`,`status`,`created`,`service_id`,`goods_id`," \
+                  "`app_type`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`file_size` from "\
+                  + apptype + ".yjy_im_chat_aes where `is_del`=0"
+    if where:
+        for k, v in where.items():
+            sql += " and " + k + "=" + v
+    if search_key != 'None':
+        sql += search_key
+    if search_time_range != 'None':
+        sql += search_time_range
+    if sort:
+        sql += sort
+    prepare_db.cursor.execute(sql)
+    res = prepare_db.cursor.fetchall()
+    prepare_db.close()
+    return res
+
+def video_prepare(request):
+    if request.method == 'GET':
+        User = getUserProperties(request.user.username)
+        apptype = User['apptype']
+        apptype_v = getApptypeName(apptype)
+        department = User['department']
+        page_nums = request.GET.get('page_nums', '10')
+        page = request.GET.get('page', 'None')
+        chapter_id = request.GET.get('chapter_id', 'None')
+        search_time_range = request.GET.get('search_time_range', 'None')
+        search_time_sort = request.GET.get('search_time_sort', '0')
+        search_app_type = request.GET.get('app_type', User['apptype'])
+        search_key = request.GET.get('search_key', 'None')
+        where = dict()
+        if chapter_id != 'None':
+            where['chapter_id'] = chapter_id
+        # parent_id = request.GET.get('parent_id', 'None')
+        # if parent_id != 'None':
+        #     where['parent_id'] = parent_id
+        section_id = request.GET.get('section_id', 'None')
+        if section_id != 'None':
+            where['category_id'] = section_id
+        if search_key != 'None':
+            search_key.strip('\\*')
+            search_key = " and `original_sava_path` like '%" + search_key + "%'"
+        if search_time_range != 'None':
+            search_time_range = ' and `created` in ('+ search_time_range +')'
+        if search_time_sort == '0':
+            search_time_sort = ' order by `created` desc'
+        if search_time_sort == '1':
+            search_time_sort = ' order by `created` asc'
+        MyVideos = ''
+        tmp = getPrepareList(apptype,where,search_key,search_time_range,search_time_sort)
+        videos = []
+        for t in tmp:
+            t1 = dict()
+            t1['id'] = t[0]
+            t1['name'] = t[1]
+            t1['thumb'] = t[2]
+            t1['status'] = t[3]
+            t1['created'] = TimeFormat(t[4])
+            t1['service_id'] = t[5]
+            t1['goods_id'] = t[6]
+            t1['app_type'] = t[7]
+            t1['media_url'] = {'m3u8':t[8],'value':(t[8].split('/')[-1])}
+            t1['chapter_id'] = t[9]
+            t1['duration'] = t[11]
+            t1['sort'] = t[12]
+            t1['file_size'] = t[13]
+            # t1['parent'] = getAppTitle(t[7],)
+            videos.append(t1)
+        paginator = Paginator(videos, page_nums)
+        c_url = getUniqUrl(request.get_full_path(), page)
+        try:
+            page = request.GET.get('page')
+        except:
+            page = 1
+        try:
+            MyVideos = paginator.page(page)
+        except PageNotAnInteger:
+            MyVideos = paginator.page(1)
+        except EmptyPage:
+            MyVideos = paginator.page(paginator.num_pages)
+        return  render(request,'video_prepare.html',{"videos":MyVideos,'c_url':c_url,'count':len(videos),'department':department,'apptype':apptype_v,'apptype_v':apptype})
 
 # 发送邮件(含任务失败和成功邮件)
 # def sendMail(task_id,video_id,stauts='ok'):
