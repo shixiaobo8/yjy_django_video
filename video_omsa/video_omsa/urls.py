@@ -14,7 +14,7 @@ urlpatterns = [
  
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', video_views.index,name='index'),
-    url(r'^getIp$', video_views.test_inter,name='ip_inter'),
+    url(r'^logine$', video_views.test_inter,name='logine'),
     url(r'^register$', video_views.register),
     url(r'^login$', video_views.login),
     url(r'^logout$', video_views.logout),
