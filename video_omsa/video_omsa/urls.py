@@ -67,6 +67,9 @@ urlpatterns = [
     url(r'^video/toPrepare',video_views.OneToPrepare,name='OneToPrepare'),
     url(r'^video/mp4AferCut',video_views.mp4AferCut,name='mp4AferCut'),
     url(r'^video/prepare',video_views.video_prepare,name='video_prepare'),
+    url(r'^video/p_chvideoname',video_views.p_chvideoname,name='p_chvideoname'),
+    url(r'^video/p_show_video',video_views.p_show_video,name='p_show_video'),
+    url(r'^video/p_hide_video',video_views.p_hide_video,name='p_hide_video'),
     url(r'^video/online',video_views.video_online,name='video_online'),
 ]
 handler404 = video_views.page_not_found

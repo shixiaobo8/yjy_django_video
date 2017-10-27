@@ -5,12 +5,13 @@
 {% block privi_check %}
     {% if user.is_authenticated %}
         <style>
-            .panel-primary>.panel-heading {
-                            color: #a1abff;
-                            background-color: #447e9b;
-                            border-color: #c9302c;
-                        }
-            tr{
+            .panel-primary > .panel-heading {
+                color: #a1abff;
+                background-color: #447e9b;
+                border-color: #c9302c;
+            }
+
+            tr {
                 background-color: #b2dba1;
                 border-color: #b2dba1;
             }
@@ -23,14 +24,16 @@
 
             });
             // 删除视频
-            function delete_videoById(id) {
+            function p_hide_video(id) {
+                var apptype = $("#real_apptype").text();
                 $.ajax({
-                    url: "delete_video?id=" + id,
-                    type: 'GET',
+                    url: "p_hide_video",
+                    type: 'POST',
+                    data: {'video_id':id,'apptype':apptype},
                     dataType: 'json',
                     success: function (data, textStatus) {
                         if (data.code == '200') {
-                            alert('已成功逻辑删除该视频 1秒后自动跳转返回');
+                            alert('已成功关闭该视频 1秒后自动跳转返回');
                             setTimeout("location.href='{{ request.get_full_path }}'", 1000);
                         } else {
                             alert(data.data);
@@ -39,14 +42,16 @@
                 });
             }
             // 恢复视频
-            function recovery_videoById(id) {
+            function p_show_video(id) {
+                var apptype = $("#real_apptype").text();
                 $.ajax({
-                    url: "recovery_video?id=" + id,
-                    type: 'GET',
+                    url: "p_show_video",
+                    type: 'POST',
+                    data: {'video_id':id,'apptype':apptype},
                     dataType: 'json',
                     success: function (data, textStatus) {
                         if (data.code == '200') {
-                            alert('已成功恢复该视频 1秒后自动跳转返回');
+                            alert('已成功显示该视频 1秒后自动跳转返回');
                             setTimeout("location.href='{{ request.get_full_path }}'", 1000);
                         } else {
                             alert(data.data);
@@ -169,9 +174,14 @@
                     }
                 });
             }
+            // 修改视频服务id
+            function chVideoServiceId(bt_id, old_cname, text_id) {
+                return;
+            }
             // 修改视频中文名chSectionById
             function chVideoNameById(bt_id, old_cname, text_id) {
                 $(document).ready(function () {
+                    var apptype = $("#real_apptype").text();
                     var new_videoname = $("#" + text_id.id).val();
                     var old_videoname = $("#" + old_cname.id).text();
                     var video_id = $("#" + text_id.id).attr("name");
@@ -183,9 +193,10 @@
                         alert("视频名称相同了，请重新填写！！");
                         return;
                     }
-                    $.post("chvideoname", {
+                    $.post("p_chvideoname", {
                         "new_videoname": new_videoname,
-                        "video_id": video_id
+                        "video_id": video_id,
+                        "apptype":apptype
                     }, function (res) {
                         var data = JSON.parse(res);
                         if (data['code'] == '200') {
@@ -561,14 +572,14 @@
                                             app类型:&nbsp;&nbsp;<select class="form-control" id="id_app_type_S"
                                                                       name="app_type"
                                                                       onclick="getCategorys_S(this.value)" required>
-                                            {% ifequal department "videos_department"  %}
+                                            {% ifequal department "videos_department" %}
                                                 <option value="{{ apptype_v }}">{{ apptype }}</option>
                                                 <option value="yjy_xiyizonghe">西医综合</option>
                                                 <option value="tcmsq">中医执业医师</option>
                                                 <option value="yjy_zhongyizonghe">中医综合</option>
                                                 <option value="yjy_xiyizhiyeyishi">西医执业医师</option>
                                             {% endifequal %}
-                                            {% ifequal department "contents_department"  %}
+                                            {% ifequal department "contents_department" %}
                                                 <option value="{{ apptype_v }}">{{ apptype }}</option>
                                                 <option value="{{ apptype_v }}">{{ apptype }}</option>
                                             {% endifequal %}
@@ -595,143 +606,255 @@
                                 </div>
                             </div>
                         </div>
-                        </div>
                     </div>
-                    <table class="table table-bordered table-hover">
-                        <caption align="center">
-                            <h4><span style="color: #761c19"><b>{{ apptype }}</b></span>下共找到<span
-                                    style="color:indianred;"><b>{{ count }}</b></span>个文件</h4>
-                            每页显示条目数量<select id="pager_nums" class="form-inline"
-                                            onchange="refreshByPageNums(this.value)">
-                            <option value="{{ page_nums }}">{{ page_nums }}</option>
-                            <option value="10" {% ifequal "10" page_nums %} disabled="disabled" {% endifequal %} >10
-                            </option>
-                            <option value="15" {% ifequal "15" page_nums %} disabled="disabled" {% endifequal %} >15
-                            </option>
-                            <option value="20" {% ifequal "20" page_nums %} disabled="disabled" {% endifequal %} >20
-                            </option>
-                            <option value="25" {% ifequal "25" page_nums %} disabled="disabled" {% endifequal %} >25
-                            </option>
-                            <option value="30" {% ifequal "30" page_nums %} disabled="disabled" {% endifequal %} >30
-                            </option>
-                        </select>
-                            <a type="button" style="padding-left: 40%;color: red;font-weight: bold;">提示:视频分类或排序,请先选择章节（默认是显示所有切片视频）</a>
-                        </caption>
-                        <thead>
-                        <tr class="success">
-                            <th>id</th>
-                            <th>名称</th>
-{#                            <th>章节分类</th>#}
-{#                            <th>所属章节</th>#}
-{#                            <th>章篇名称</th>#}
-{#                            <th>略缩图</th>#}
-                            <th>是否显示在app</th>
-                            <th>上线时间</th>
-                            <th>服务id</th>
-                            <th>商品id</th>
-                            <th>可观看类型学员</th>
-                            <th>点击下载pc端观看</th>
-                            <th>时长(秒)</th>
-                            <th>排序</th>
-                            <th>文件大小</th>
+                </div>
+                <table class="table table-bordered table-hover">
+                    <caption align="center">
+                        <h4><span style="color: #761c19"><b><span id="real_apptype">{{ apptype }}</span> -- {{ parent }} -- {{ chapter }}
+                            -- {{ section }} </b></span>下共找到<span
+                                style="color:indianred;"><b>{{ count }}</b></span>个切片</h4>
+                        每页显示条目数量<select id="pager_nums" class="form-inline"
+                                        onchange="refreshByPageNums(this.value)">
+                        <option value="{{ page_nums }}">{{ page_nums }}</option>
+                        <option value="10" {% ifequal "10" page_nums %} disabled="disabled" {% endifequal %} >10
+                        </option>
+                        <option value="15" {% ifequal "15" page_nums %} disabled="disabled" {% endifequal %} >15
+                        </option>
+                        <option value="20" {% ifequal "20" page_nums %} disabled="disabled" {% endifequal %} >20
+                        </option>
+                        <option value="25" {% ifequal "25" page_nums %} disabled="disabled" {% endifequal %} >25
+                        </option>
+                        <option value="30" {% ifequal "30" page_nums %} disabled="disabled" {% endifequal %} >30
+                        </option>
+                    </select>
+                        <a type="button" style="padding-left: 40%;color: red;font-weight: bold;">提示:视频分类或排序,请先选择章节（默认是显示所有切片视频）</a>
+                    </caption>
+                    <thead>
+                    <tr class="success">
+                        <th>id</th>
+                        <th>名称</th>
+                        <th>是否显示在app</th>
+                        <th>上线时间</th>
+                        <th>服务id</th>
+                        <th>商品id</th>
+                        <th>可观看类型学员</th>
+                        <th>加密链接后缀</th>
+                        <th>时长(秒)</th>
+                        <th>排序</th>
+                        <th>文件大小</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for video in videos %}
+                        <tr>
+                            <td>{{ video.id }}</td>
+                            <td>
+                                <button class="btn btn-default" data-toggle="modal" id="chinese_name{{ video.id }}"
+                                        data-target="#chvideoname{{ video.id }}">{{ video.name }}</button>
+                                <div class="modal fade" id="chvideoname{{ video.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel"
+                                     aria-hidden="true" style="margin-top:100px;">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">×
+                                                </button>
+                                                <h4 class="modal-title" id="myModalLabel">
+                                                    修改切片中文名
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="chvideonametext{{ video.id }}" value="{{ video.name }}">
+                                                    <span class="input-group-addon">视频名称</span>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chvideonamebt{{ video.id }}"
+                                                        onclick="chVideoNameById(chvideonamebt{{ video.id }},chinese_name{{ video.id }},chvideonametext{{ video.id }})">
+                                                    提交更改
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {% if video.status == 1 %}
+                                    显示&nbsp;|<a style="color: green;" type="button" onclick="p_hide_video({{ video.id }})">&nbsp;点击隐藏</a>
+                                {% else %}
+                                    已隐藏&nbsp;|<a style="color: red;" type="button" onclick="p_show_video({{ video.id }})">&nbsp;点击显示</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ video.created }}</td>
+                            <td>
+                                <!-- 按钮触发模态框 -->
+                                <button class="btn btn-default" data-toggle="modal" data-target="#service_id_"{{ video.id }}>
+                                    {{ video.service_id }}
+                                </button>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="service_id_"{{ video.id }} tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">修改视频服务id</h4>
+                                            </div>
+                                            <div class="modal-body">修改视频服务id</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary">提交更改</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </td>
+                            <td>
+                                <!-- 按钮触发模态框 -->
+                                <button class="btn btn-default" data-toggle="modal" data-target="#goods_id_"{{ video.id }}>
+                                    {{ video.goods_id }}
+                                </button>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="goods_id_"{{ video.id }} tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">修改切片商品id</h4>
+                                            </div>
+                                            <div class="modal-body">修改切片商品id</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary">提交更改</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </td>
+                            <td>{{ video.app_type }}</td>
+                            <td><a href="{{ video.media_url.m3u8 }}">{{ video.media_url.value }}</a></td>
+                            <td>
+                                <!-- 按钮触发模态框 -->
+                                <button class="btn btn-default" data-toggle="modal"
+                                        data-target="#duration_"{{ video.id }}>{{ video.duration }}</button>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="duration_"{{ video.id }} tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">修改切片播放时长</h4>
+                                            </div>
+                                            <div class="modal-body">在这里添加一些文本</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary">提交更改</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </td>
+                            <td>
+                                <!-- 按钮触发模态框 -->
+                                <button class="btn btn-default" data-toggle="modal"
+                                        data-target="#sort_"{{ video.id }}>{{ video.sort }}</button>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="sort_"{{ video.id }} tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">修改排序编号</h4>
+                                            </div>
+                                            <div class="modal-body">在这里添加一些文本</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary">提交更改</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </td>
+                            <td>
+                                <!-- 按钮触发模态框 -->
+                                <button class="btn btn-default" data-toggle="modal"
+                                        data-target="#file_size_"{{ video.id }}>{{ video.file_size }}M
+                                </button>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="file_size_"{{ video.id }} tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">修改切片大小</h4>
+                                            </div>
+                                            <div class="modal-body">在这里添加一些文本</div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                </button>
+                                                <button type="button" class="btn btn-primary">提交更改</button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </td>
                         </tr>
-                        </thead>
-                        <tbody>
-                        {% for video in videos %}
-                            <tr>
-                                <td>{{ video.id }}</td>
-                                <td>{{ video.name }}</td>
-{#                                <td>{{ video.parent }}</td>#}
-{#                                <td>{{ video.chapter }}</td>#}
-{#                                <td>{{ video.section }}</td>#}
-{#                                <td>{{ video.thumb }}</td>#}
-                                <td>{{ video.status }}</td>
-                                <td>{{ video.created }}</td>
-                                <td>{{ video.service_id }}</td>
-                                <td>{{ video.goods_id }}</td>
-                                <td>{{ video.app_type }}</td>
-                                <td><a href="{{ video.media_url.m3u8 }}">{{ video.media_url.value }}</a></td>
-                                <td>{{ video.duration }}</td>
-                                <td>{{ video.sort }}</td>
-                                <td>{{ video.file_size }}M</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    <div class="panel-footer">
-{#                        <nav>#}
-{#                            <div class="row">#}
-{#                                <div class="form-inline">#}
-{#                                    <div class="col-lg-8" id="list_MyAppMp4">#}
-{#                                        <a type="button" class="btn btn-warning" id='MyApp-mp4'#}
-{#                                           href="/video/getMyAppMp4.html?app_type={{ user1.apptype }}">返回查看服务器{{ user_apptype_v }}上所有mp4资源</a>#}
-{#                                    </div>#}
-{#                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#}
-{#                                    <div class="col-lg-2" id="list_MyAppMp4">#}
-{#                                        <button class="btn btn-primary" data-toggle="modal"#}
-{#                                                data-target="#new-uploads">#}
-{#                                            上传新的视频资源请点击这里#}
-{#                                        </button>#}
-{#                                    </div>#}
-{#                                    <div class="col-lg-1" id="list_MyCutSchedules">#}
-{#                                        <a type="button" class="btn btn-success" id='MyCutSchedules'#}
-{#                                           onclick="list_MyCutSchedules()">查看{{ user1.username }}的切片任务队列表</a>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </nav>#}
-                        <hr/>
-                        <nav>
-                            <!-- 如果当前是第一页，就不显示【上一页】链接 -->
-                        <span class="step-links">
-                            {% if videos.has_previous %}
-                                {% ifnotequal 1 videos.number|add:-1 %}
-                                    {% if '?' in c_url %}
-                                        <a type="button" class="btn btn-info" id='prePage'
-                                           href="{{ c_url }}&page=1">首页</a>
-                                    {% endif %}
-                                    {% if "?" not in c_url %}
-                                        <a type="button" class="btn btn-info" id='prePage'
-                                           href="{{ c_url }}?page=1">首页</a>
-                                    {% endif %}
-                                {% endifnotequal %}
-                                {% if '?' in c_url %}
-                                    <a type="button" class="btn btn-info" id='prePage'
-                                       href="{{ c_url }}&page={{ videos.number|add:-1}}">上一页</a>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="panel-footer">
+                    <nav>
+                        {% if videos.paginator.num_pages < 20 %}
+                            {% for page in page_list %}
+                                {% if videos.number == page %}
+                                    <a type="button" class="btn btn-primary" id='Page{{ page }}'
+                                       href="{{ c_url }}&page={{ page }}">{{ page }}</a>
+                                {% else %}
+                                    <a type="button" class="btn btn-info" id='Page{{ page }}'
+                                       href="{{ c_url }}&page={{ page }}">{{ page }}</a>
                                 {% endif %}
-                                {% if "?" not in c_url %}
-                                    <a type="button" class="btn btn-info" id='prePage'
-                                       href="{{ c_url }}?page={{ videos.number|add:-1}}">上一页</a>
-                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {% if videos.number == page %}
+                                {{ page }}
+                                <a type="button" class="btn btn-primary" id='Page{{ page }}'
+                                   href="{{ c_url }}&page={{ page }}">{{ page }}</a>
+                            {% else %}
+                                <a type="button" class="btn btn-info" id='Page{{ videos.number|add:1 }}'
+                                   href="{{ c_url }}&page={{ videos.number|add:1 }}">{{ videos.number|add:1 }}</a>
+                                <a type="button" class="btn btn-info" id='Page{{ videos.number|add:2 }}'
+                                   href="{{ c_url }}&page={{ videos.number|add:2 }}">{{ videos.number|add:2 }}</a>
+                                <a type="button" class="btn btn-info" id='Page{{ videos.number|add:3 }}'
+                                   href="{{ c_url }}&page={{ videos.number|add:3 }}">{{ videos.number|add:3 }}</a>
+                                <a type="button" class="btn btn-info" id='Page{{ videos.number|add:4 }}'
+                                   href="{{ c_url }}&page={{ videos.number|add:4 }}">{{ videos.number|add:4 }}</a>
+                                <a type="button" class="btn btn-info" id='Page{{ videos.number|add:5 }}'
+                                   href="{{ c_url }}&page={{ videos.number|add:5 }}">{{ videos.number|add:5 }}</a>
                             {% endif %}
-                                </span>
-                                <span class="current">
-                                    当前页： {{ videos.number }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 总页数: {{ videos.paginator.num_pages }}
-                        </span>
-                            {% if videos.has_next %}
-                                {% if '?' in c_url %}
-                                    <a type="button" class="btn btn-info" id='prePage'
-                                       href="{{ c_url }}&page={{ videos.number|add:1}}">下一页</a>
-                                {% endif %}
-                                {% if "?" not in c_url %}
-                                    <a type="button" class="btn btn-info" id='prePage'
-                                       href="{{ c_url }}?page={{ videos.number|add:1}}">下一页</a>
-                                {% endif %}
-                                {% ifnotequal videos.paginator.num_pages videos.number|add:1 %}
-                                    {% if "?" in c_url %}
-                                        <a type="button" class="btn btn-info" id='prePage'
-                                           href="{{ c_url }}&page={{ videos.paginator.num_pages }}">尾页</a>
-                                    {% endif %}
-                                    {% if "?" not in c_url %}
-                                        <a type="button" class="btn btn-info" id='prePage'
-                                           href="{{ c_url }}?page={{ videos.paginator.num_pages }}">尾页</a>
-                                    {% endif %}
-                                {% endifnotequal %}
-                            {% endif %}
-                        </nav>
-                    </div><!-- end of panel-footer -->
-                </div><!-- end of panel -->
-            </div>
+                        {% endif %}
+                        <a type="button" class="btn btn-warning" style="margin-left: 600px;" id='MyApp-mp4'
+                           href="/video/getMyAppMp4.html?app_type={{ user1.apptype }}">一键同步到线上</a>
+                    </nav>
+                </div><!-- end of panel-footer -->
+            </div><!-- end of panel -->
+        </div>
         </div>
     {% endif %}
 {% endblock %}

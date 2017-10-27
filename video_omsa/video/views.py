@@ -1123,6 +1123,37 @@ def chvideoname(request):
             data['data'] = '参数错误'
         return HttpResponse(json.dumps(data))
 
+@csrf_exempt
+def p_chvideoname(request):
+    if request.method == 'POST':
+        data = dict()
+        video_id = request.POST['video_id']
+        new_videoname = request.POST['new_videoname']
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        if video_id and new_videoname and apptype_v:
+            apptype = getAppTypeKey(apptype_v)
+            sql = "update `%s`.`yjy_im_chat` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
+            rs = executeSql(sql)
+            sql1 = "update `%s`.`yjy_im_chat_aes` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
+            rs1 = executeSql(sql1)
+            if apptype == 'yjy_xiyizonghe':
+                sql2 = "update `%s`.`yjy_im_chat_aes_new` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
+                rs2 = executeSql(sql2)
+            data['code'] = 200
+            data['data'] = '视频名称修改成功'
+        else:
+            data['code'] = 555
+            data['data'] = '参数错误'
+        return HttpResponse(json.dumps(data))
+
+def getAppTypeKey(apptype_v):
+    data = {
+        "西医综合":"yjy_xiyizonghe",
+        "西医执业医师":"yjy_xiyizhiyeyishi",
+        "中医执业医师":"tcmsq",
+         "中医综合":"yjy_zhongyizonghe"
+    }
+    return data[apptype_v]
 
 @csrf_exempt
 def CategoryMp4(request):
@@ -1179,6 +1210,58 @@ def getAppSectionOneTitle(apptype, section_id):
         return rs[0][1]
     except Exception,e:
         return 'None'
+
+@csrf_exempt
+def p_show_video(request):
+    res = dict()
+    res['code'] = '555'
+    res['data'] = '参数错误'
+    if request.method == 'POST':
+        id = request.POST.get('video_id',None)
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        apptype = getAppTypeKey(apptype_v)
+        if id and apptype:
+            try:
+                sql = "update `%s`.`yjy_im_chat` set `status`=1 where id='%s'"%(apptype,str(id))
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=1 where id='%s'"%(apptype,str(id))
+                rs = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=1 where id='%s'"%(apptype,str(id))
+                    rs = executeSql(sql2)
+                res['code'] = '200'
+                res['data'] = 'ok'
+            except Exception,e:
+                res['code'] = '555'
+                res['data'] = '参数错误'
+        return HttpResponse(json.dumps(res))
+
+
+@csrf_exempt
+def p_hide_video(request):
+    res = dict()
+    res['code'] = '555'
+    res['data'] = '参数错误'
+    if request.method == 'POST':
+        id = request.POST.get('video_id',None)
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        apptype = getAppTypeKey(apptype_v)
+        if id and apptype:
+            try:
+                sql = "update `%s`.`yjy_im_chat` set `status`=0 where id='%s'"%(apptype,str(id))
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=0 where id='%s'"%(apptype,str(id))
+                rs = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=0 where id='%s'"%(apptype,str(id))
+                    rs = executeSql(sql2)
+                res['code'] = '200'
+                res['data'] = 'ok'
+            except Exception,e:
+                res['code'] = '555'
+                res['data'] = '参数错误'
+        return HttpResponse(json.dumps(res))
+
 
 @csrf_exempt
 def delete_video(request):
@@ -1627,6 +1710,10 @@ def getPrepareList(apptype, where,search_key,search_time_range,sort):
     sql = "select `id`,`name`,`thumb`,`status`,`created`,`service_id`,`goods_id`," \
                   "`app_type`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`file_size` from "\
                   + apptype + ".yjy_im_chat_aes where `is_del`=0"
+    if apptype == 'yjy_xiyizonghe':
+        sql = "select `id`,`name`,`thumb`,`status`,`created`,`service_id`,`goods_id`," \
+                  "`app_type`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`file_size` from "\
+                  + apptype + ".yjy_im_chat_aes_new where `is_del`=0"
     if where:
         for k, v in where.items():
             sql += " and " + k + "=" + v
@@ -1634,8 +1721,7 @@ def getPrepareList(apptype, where,search_key,search_time_range,sort):
         sql += search_key
     if search_time_range != 'None':
         sql += search_time_range
-    if sort:
-        sql += sort
+    sql += sort
     prepare_db.cursor.execute(sql)
     res = prepare_db.cursor.fetchall()
     prepare_db.close()
@@ -1647,33 +1733,42 @@ def video_prepare(request):
         apptype = User['apptype']
         apptype_v = getApptypeName(apptype)
         department = User['department']
-        page_nums = request.GET.get('page_nums', '10')
+        page_nums = request.GET.get('page_nums', '30')
         page = request.GET.get('page', 'None')
         chapter_id = request.GET.get('chapter_id', 'None')
         search_time_range = request.GET.get('search_time_range', 'None')
-        search_time_sort = request.GET.get('search_time_sort', '0')
         search_app_type = request.GET.get('app_type', User['apptype'])
         search_key = request.GET.get('search_key', 'None')
+        sort = request.GET.get('sort','0')
         where = dict()
+        parent = ''
+        chapter = ''
+        section = ''
         if chapter_id != 'None':
-            where['chapter_id'] = chapter_id
-        # parent_id = request.GET.get('parent_id', 'None')
-        # if parent_id != 'None':
-        #     where['parent_id'] = parent_id
+            chapter = getAppTitle(apptype,chapter_id)
+            if apptype == 'yjy_xiyizonghe':
+                where['category_id'] = chapter_id
+            else:
+                where['chapter_id'] = chapter_id
+        parent_id = request.GET.get('parent_id', 'None')
+        if parent_id != 'None':
+            parent = getAppTitle(apptype,parent_id)
         section_id = request.GET.get('section_id', 'None')
         if section_id != 'None':
-            where['category_id'] = section_id
+            section = getAppTitle(apptype,section_id)
+            if apptype == 'yjy_xiyizonghe':
+                where['category_id'] = section_id
+            else:
+                where['chapter_id'] = section_id
+        if sort == '0':
+            sort = ' order by `sort` asc'
+        if sort == '1':
+            sort = ' order by `sort` desc'
         if search_key != 'None':
             search_key.strip('\\*')
             search_key = " and `original_sava_path` like '%" + search_key + "%'"
-        if search_time_range != 'None':
-            search_time_range = ' and `created` in ('+ search_time_range +')'
-        if search_time_sort == '0':
-            search_time_sort = ' order by `created` desc'
-        if search_time_sort == '1':
-            search_time_sort = ' order by `created` asc'
         MyVideos = ''
-        tmp = getPrepareList(apptype,where,search_key,search_time_range,search_time_sort)
+        tmp = getPrepareList(apptype,where,search_key,search_time_range,sort)
         videos = []
         for t in tmp:
             t1 = dict()
@@ -1708,7 +1803,7 @@ def video_prepare(request):
             MyVideos = paginator.page(1)
         except EmptyPage:
             MyVideos = paginator.page(paginator.num_pages)
-        return  render(request,'video_prepare.html',{'p_pages':p_pages,"videos":MyVideos,'c_url':c_url,'count':len(videos),'department':department,'apptype':apptype_v,'apptype_v':apptype,'page_list':page_list})
+        return  render(request,'video_prepare.html',{'chapter':chapter,'parent':parent,'section':section,'page_nums':page_nums,'p_pages':p_pages,"videos":MyVideos,'c_url':c_url,'count':len(videos),'department':department,'apptype':apptype_v,'apptype_v':apptype,'page_list':page_list})
 
 # 发送邮件(含任务失败和成功邮件)
 # def sendMail(task_id,video_id,stauts='ok'):
