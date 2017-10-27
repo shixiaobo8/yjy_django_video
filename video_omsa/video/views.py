@@ -223,7 +223,7 @@ def test_inter(request):
         # for ip1 in A.response.answer:
         #     for ip in ip1.items:
         #         ips = ip.address
-        return HttpResponse(json.dumps({'version':'1.0.0','ip':'47.92.134.87','URL':'www.yinjialeyou.com/game','post':'7070'}))
+        return HttpResponse(json.dumps({'version':'1.0.0','ip':'47.92.134.87','URL':'http://www.devops89.cn/yingjia.html','post':'7070'}))
 
 def inters_info(request):
     import types
