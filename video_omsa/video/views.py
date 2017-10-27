@@ -218,12 +218,12 @@ def pro_create(request):
 
 def test_inter(request):
     if request.method == 'GET' or request.method == 'POST':
-        A = dns.resolver.query(settings.SERVER_DOMAIN,'A')
-        ips = ''
-        for ip1 in A.response.answer:
-            for ip in ip1.items:
-                ips = ip.address
-        return HttpResponse(json.dumps({'code':'200','ip:':ips,'域名:':'www.devops89.cn'}))
+        # A = dns.resolver.query(settings.SERVER_DOMAIN,'A')
+        # ips = ''
+        # for ip1 in A.response.answer:
+        #     for ip in ip1.items:
+        #         ips = ip.address
+        return HttpResponse(json.dumps({'version':'1.0.0','ip':'47.92.134.87','URL':'www.yinjialeyou.com/game'}))
 
 def inters_info(request):
     import types
@@ -1688,9 +1688,12 @@ def video_prepare(request):
             # t1['parent'] = getAppTitle(t[7],)
             videos.append(t1)
         paginator = Paginator(videos, page_nums)
+        page_list = [ i for i in range(1,paginator.num_pages+1)]
         c_url = getUniqUrl(request.get_full_path(), page)
+        page_list = []
         try:
             page = request.GET.get('page')
+            page_list = [ i for i in range(1,paginator.num_pages+1)]
         except:
             page = 1
         try:
@@ -1699,7 +1702,7 @@ def video_prepare(request):
             MyVideos = paginator.page(1)
         except EmptyPage:
             MyVideos = paginator.page(paginator.num_pages)
-        return  render(request,'video_prepare.html',{"videos":MyVideos,'c_url':c_url,'count':len(videos),'department':department,'apptype':apptype_v,'apptype_v':apptype})
+        return  render(request,'video_prepare.html',{"videos":MyVideos,'c_url':c_url,'count':len(videos),'department':department,'apptype':apptype_v,'apptype_v':apptype,'page_list':page_list})
 
 # 发送邮件(含任务失败和成功邮件)
 # def sendMail(task_id,video_id,stauts='ok'):
