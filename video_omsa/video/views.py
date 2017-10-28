@@ -220,7 +220,7 @@ def shareGame(request):
      if request.method == 'GET':
          roomid=request.GET.get('roomid','0')
          peoples=request.GET.get('peoples','0')
-         res = {"id": "nsl",
+         res = {"id": "penghu",
           'scheme_ios': "'yinjiapenghu://?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
           'scheme_android': "'yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
           'ios_download': 'apk/YinJiaPengHu.apk',
