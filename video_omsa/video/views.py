@@ -227,7 +227,16 @@ def shareGame(request):
           'ios_download': 'apk/YinJiaPengHu.apk',
           'android_download': 'apk/YinJiaPengHu.apk',
           'timeout': 1000};
-         return HttpResponse("<input type=button onclick='window.location.href('yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "')' value='" + "房间号:"+roomid+" 人数:"+ peoples + " 请求参数:" + status + "'>")
+         href = "yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples
+         res1 = """
+                    function startAPP(){
+                        window.location = """+ href+""";
+                        }
+                    <p>
+                        <h4 onclick='startAPP()'>打开app</h4>
+                    </p>
+                """
+         return HttpResponse(res1)
 
 
 def test_inter(request):
