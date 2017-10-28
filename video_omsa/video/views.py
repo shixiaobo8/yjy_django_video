@@ -235,7 +235,7 @@ def shareGame(request):
                         }
                     </script>
                     <p>
-                        <center><h1>'银佳碰胡——欢迎你' </h1></center><center><h1 onclick='startAPP()' style="color:red;border 1px solid green;">加入房间 </h1></center>
+                        <p></p><p></p><p></p><center><h1>银佳碰胡——欢迎你 </h1></center><center><h1 onclick='startAPP()' style="color:red;border 1px solid green;">加入房间 </h1></center>
                     </p>
                 """
          return HttpResponse(res1)
