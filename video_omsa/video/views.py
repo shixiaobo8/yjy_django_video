@@ -229,9 +229,11 @@ def shareGame(request):
           'timeout': 1000};
          href = "yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples
          res1 = """
+                    <script>
                     function startAPP(){
-                        window.location = """+ href+""";
+                        window.location = '"""+ href+"""';
                         }
+                    </script>
                     <p>
                         <h4 onclick='startAPP()'>打开app</h4>
                     </p>
