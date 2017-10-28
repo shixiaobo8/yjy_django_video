@@ -221,8 +221,8 @@ def shareGame(request):
          roomid=request.GET.get('roomid','0')
          peoples=request.GET.get('peoples','0')
          res = {"id": "nsl",
-          'scheme_ios': "'yinjiapenghu://?mid=0&roomid=" + roomid + "&peoples=" + peoples + "timestamp=' + Date.parse(new Date())",
-          'scheme_android': "'yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "timestamp=' + Date.parse(new Date())",
+          'scheme_ios': "'yinjiapenghu://?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&timestamp=' + Date.parse(new Date())",
+          'scheme_android': "'yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&timestamp=' + Date.parse(new Date())",
           'ios_download': 'apk/YinJiaPengHu.apk',
           'android_download': 'apk/YinJiaPengHu.apk',
           'timeout': 1000};
