@@ -235,7 +235,7 @@ def shareGame(request):
                         }
                     </script>
                     <p>
-                        <center><h1>协议:""" + href  + """</h1></center><center><h1>  房间号:""" + roomid + """</h1></center><center><h1>  当前人数:""" + peoples + """</h1></center><center><h1 onclick='startAPP()' style="color:red;border 1px solid green;">打开app </h1></center>
+                        <center><h1>'银佳碰胡——欢迎你' </h1></center><center><h1 onclick='startAPP()' style="color:red;border 1px solid green;">加入房间 </h1></center>
                     </p>
                 """
          return HttpResponse(res1)
@@ -248,7 +248,7 @@ def test_inter(request):
         # for ip1 in A.response.answer:
         #     for ip in ip1.items:
         #         ips = ip.address
-        return HttpResponse(json.dumps({'shareURL':'http://www.devops89.cn:81/share.html?room_id=12345&peoples=4','version':'1.0.0','ip':'47.92.134.87','URL':'http://www.devops89.cn/yingjia.html','post':'7070'}))
+        return HttpResponse(json.dumps({'sharehaedURL':'https://mmbiz.qlogo.cn/mmbiz_png/YGE76YBu7064VpxGrEYzhfx2yLlwib2PgUQMQ6YkBaviawicFSpUpwfFZRP9jdMFWXJKhoRCck36CfY1YPYGqqknA/0?wx_fmt=png','Kefulist':'123456','Tipmsg':'欢迎大家','shareURL':'http://www.devops89.cn:81/share.html','version':'1.0.0','ip':'47.92.134.87','URL':'http://www.devops89.cn/yingjia.html','post':'7070'}))
 
 def inters_info(request):
     import types
