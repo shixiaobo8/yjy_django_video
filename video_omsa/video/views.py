@@ -235,7 +235,7 @@ def shareGame(request):
                         }
                     </script>
                     <p>
-                        <p></p><p></p><p></p><center><h1>银佳碰胡——欢迎你 </h1></center><center><h1 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'>加入房间 </b></h1></center>
+                        <p></p><p></p><p></p><center><h1>银佳碰胡——欢迎你 </h1></center><center><h1 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'><img src='http://www.devops89.cn/jionRoomBtn.png' alt='加入房间'/> </b></h1></center>
                     </p>
                 """
          return HttpResponse(res1)
