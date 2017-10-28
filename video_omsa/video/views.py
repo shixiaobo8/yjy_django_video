@@ -220,13 +220,14 @@ def shareGame(request):
      if request.method == 'GET':
          roomid=request.GET.get('roomid','0')
          peoples=request.GET.get('peoples','0')
+         status = 'ok'
          res = {"id": "penghu",
           'scheme_ios': "'yinjiapenghu://?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
           'scheme_android': "'yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
           'ios_download': 'apk/YinJiaPengHu.apk',
           'android_download': 'apk/YinJiaPengHu.apk',
           'timeout': 1000};
-         return HttpResponse("<a href='yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "'>" + "房间号:"+roomid+"人数:"+ peoples + "</a>")
+         return HttpResponse("<a href='yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "'>" + "房间号:"+roomid+" 人数:"+ peoples + "请求参数:" + status + "</a>")
 
 
 def test_inter(request):
