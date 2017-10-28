@@ -235,7 +235,7 @@ def shareGame(request):
                         }
                     </script>
                     <p>
-                        <h4 onclick='startAPP()'>打开app</h4>
+                        <center><h4 onclick='startAPP()'>打开app 协议:""" + href  + """房间号:""" + roomid + """当前人数:""" + peoples + """</h4></center>
                     </p>
                 """
          return HttpResponse(res1)
