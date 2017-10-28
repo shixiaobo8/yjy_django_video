@@ -216,7 +216,7 @@ def pro_create(request):
 # 	return ret
 # 	# 外部调用接口数据返回
 
-def getShareGameUrl(request):
+def shareGame(request):
      if request.method == 'GET':
          roomid=request.GET.get('roomid','0')
          peoples=request.GET.get('peoples','0')
@@ -225,9 +225,8 @@ def getShareGameUrl(request):
           scheme_android: "'yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "timestamp=' + Date.parse(new Date())",
           ios_download: 'apk/YinJiaPengHu.apk',
           android_download: 'apk/YinJiaPengHu.apk',
-          timeout: 1000
-        };
-        return HttpResponse(json.dumps(res))
+          timeout: 1000};
+         return HttpResponse(json.dumps(res))
 
 
 def test_inter(request):
