@@ -240,10 +240,10 @@ def shareGame(request):
                 <style type="text/css">
                 *{margin:0; padding:0;}
                 img{max-width: 100%; height: auto;}
-                .test{height: 600px; max-width: 600px; font-size: 40px;}
+                .test{height: 600px; max-width: 600px; font-size: 18px;}
                 </style>
             <div class="test">
-                <center><h1>银佳碰胡——欢迎你 </h1></center><h1><center> 房间号: """ + roomid +  """</h1></center><h1><center> 当前人数: """ + peoples +  """</h1></center><center><h1 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'><img src='http://www.devops89.cn/jionRoomBtn.png' alt='加入房间'/> </b></h1></center>
+                <center><h4>银佳碰胡——欢迎你 </h4></center><h4><center> 房间号: """ + roomid +  """</h4></center><h4><center> 当前人数: """ + peoples +  """</h4></center><center><h4 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'><img src='http://www.devops89.cn/jionRoomBtn.png' alt='加入房间'/> </b></h4></center>
                 </div>
                 <script>
                                 function startAPP(){
