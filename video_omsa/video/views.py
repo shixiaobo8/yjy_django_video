@@ -893,11 +893,12 @@ def video_toonline(request):
 class dbUtil():
     reload(sys)
     sys.setdefaultencoding('utf8')
+    import MySQLdb as mdb
 
     def __init__(self,host,port,user,passwd,dbname):
         try:
             self.dbname = dbname
-            self.conn = mdb.connect(host='localhost', port=3306, user='root', passwd='123456', db=self.dbname,
+            self.conn = mdb.connect(host=host, port=port, user=user, passwd=passwd, db=self.dbname,
                                     charset="utf8")
             self.cursor = self.conn.cursor()
         except Exception, e:
@@ -1964,6 +1965,7 @@ def video_online(request):
 def getPrepareList(apptype, where,search_key,search_time_range,sort):
     res = dict()
     prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
+    print settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype
     sql = "select `id`,`name`,`thumb`,`status`,`created`,`service_id`,`goods_id`," \
                   "`app_type`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`file_size` from "\
                   + apptype + ".yjy_im_chat_aes where `is_del`=0"
