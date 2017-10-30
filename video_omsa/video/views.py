@@ -30,6 +30,7 @@ from .tasks import sleep,cut_video
 from ffmpeg import ffmpeg,Aes
 import paramiko as pmk
 import dns.resolver
+from .video_update import updateDbTool
 
 # navs = list(Nav.objects.all())
 
@@ -1965,7 +1966,6 @@ def video_online(request):
 def getPrepareList(apptype, where,search_key,search_time_range,sort):
     res = dict()
     prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
-    print settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype
     sql = "select `id`,`name`,`thumb`,`status`,`created`,`service_id`,`goods_id`," \
                   "`app_type`,`media_url`,`is_del`,`chapter_id`,`duration`,`sort`,`file_size` from "\
                   + apptype + ".yjy_im_chat_aes where `is_del`=0"
@@ -2039,7 +2039,7 @@ def video_prepare(request):
             t1['service_id'] = t[5]
             t1['goods_id'] = t[6]
             t1['app_type'] = t[7]
-            t1['media_url'] = {'m3u8':t[8],'value':(t[8].split('/')[-1])}
+            t1['media_url'] = {'m3u8':t[8].replace('aes_','').replace('_aes',''),'value':(t[8].split('/')[-1])}
             t1['chapter_id'] = t[9]
             t1['duration'] = t[11]
             t1['sort'] = t[12]
@@ -2065,43 +2065,57 @@ def video_prepare(request):
         return  render(request,'video_prepare.html',{'chapter':chapter,'parent':parent,'section':section,'page_nums':page_nums,'p_pages':p_pages,"videos":MyVideos,'c_url':c_url,'count':len(videos),'department':department,'apptype':apptype_v,'apptype_v':apptype,'page_list':page_list})
 
 # 发送邮件(含任务失败和成功邮件)
-# def sendMail(task_id,video_id,stauts='ok'):
-#     videoInfos = getApptypes(video_id)
-#     video_name = videoInfos[4]
-#     apptype_v = getApptypeName(videoInfos[0])
-#     parent = getAppTitle(videoInfos[0],int(videoInfos[1]))
-#     chapter = getAppTitle(videoInfos[0],int(videoInfos[2]))
-#     section = getAppSectionOneTitle(videoInfos[0],videoInfos[3])
-#     sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
-#     # 给app部门组发送邮件
-#     apptypeEmails = [ r[0] for r in executeSql(sql)]
-#     userEmail = getUserProperties(username)
-#     now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
-#     if type == 'ok':
-#         subject = now + ":医教园视频切片进度提醒"
-#         text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
-#         if section:
-#             text_content += '--' + section
-#         text_content += video_name
-#         html_content = '<h3><'+apptype_v+'组的成员们:以下视频已切片成功:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ video_id +'">点击这里可以查看切片详情并上传到<strong>预上线<strong></a></p><ul><li>注1.上到预上线后可直接通过测试app测试</li><li>2.测试环境通过后请通知后台人员上线</li></ul>'
-#         msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
-#         msg.attach_alternative(html_content, "text/html")
-#         res = msg.send()
-#         if res >=1 :
-#             return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件成功"})
-#         else:
-#             return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件失败"})
-#     else:
-#         subject = now + ":医教园视频切片失败提醒"
-#         text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
-#         if section:
-#             text_content += '--' + section
-#         text_content += video_name
-#         html_content = '<h3><'+apptype_v+'切片失败了:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ video_id +'"></a></p>'
-#         msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM,['769079707@qq.com'])
-#         msg.attach_alternative(html_content, "text/html")
-#         res = msg.send()
-#         if res >=1 :
-#             return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
-#         else:
-#             return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
+def sendMail(task_id,video_id,stauts='ok'):
+    videoInfos = getApptypes(video_id)
+    video_name = videoInfos[4]
+    apptype_v = getApptypeName(videoInfos[0])
+    parent = getAppTitle(videoInfos[0],int(videoInfos[1]))
+    chapter = getAppTitle(videoInfos[0],int(videoInfos[2]))
+    section = getAppSectionOneTitle(videoInfos[0],videoInfos[3])
+    sql = "select `email` from `auth_user` where apptype='%s'"%(videoInfos[0])
+    # 给app部门组发送邮件
+    apptypeEmails = [ r[0] for r in executeSql(sql)]
+    userEmail = getUserProperties(username)
+    now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
+    if type == 'ok':
+        subject = now + ":医教园视频切片进度提醒"
+        text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+        if section:
+            text_content += '--' + section
+        text_content += video_name
+        html_content = '<h3><'+apptype_v+'组的成员们:以下视频已切片成功:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ video_id +'">点击这里可以查看切片详情并上传到<strong>预上线<strong></a></p><ul><li>注1.上到预上线后可直接通过测试app测试</li><li>2.测试环境通过后请通知后台人员上线</li></ul>'
+        msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM, apptypeEmails)
+        msg.attach_alternative(html_content, "text/html")
+        res = msg.send()
+        if res >=1 :
+            return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件成功"})
+        else:
+            return json.dumps({"date":now,"code":200,'mess':"给"+userEmail+"发送邮件失败"})
+    else:
+        subject = now + ":医教园视频切片失败提醒"
+        text_content = now + ':切片视频:' + apptype_v + '--' + parent + '--' + chapter
+        if section:
+            text_content += '--' + section
+        text_content += video_name
+        html_content = '<h3><'+apptype_v+'切片失败了:'+'</h3><p><h2>'+text_content+'</h2></p><p><a href="http://101.201.31.40:88/video/mp4AferCut?id='+ video_id +'"></a></p>'
+        msg = EmailMultiAlternatives(subject, text_content, settings.EMAIL_FROM,['769079707@qq.com'])
+        msg.attach_alternative(html_content, "text/html")
+        res = msg.send()
+        if res >=1 :
+            return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件成功"})
+        else:
+            return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
+
+def p_toonline(request):
+    if request.method == 'GET':
+        res = dict()
+        apptype = request.GET.get('apptype','None')
+        if apptype:
+            udb = updateDbTool(apptype)
+            mess = udb.update_to_online()
+            res['code'] = 200
+            res['data'] = mess
+        else:
+            res['code'] = 555
+            res['data'] = '参数错误!'
+        return HttpResponse(json.dumps(res))

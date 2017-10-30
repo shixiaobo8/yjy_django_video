@@ -76,6 +76,7 @@ urlpatterns = [
     url(r'^video/p_chDuration',video_views.p_chDuration,name='p_chDuration'),
     url(r'^video/p_chSort',video_views.p_chSort,name='p_chSort'),
     url(r'^video/p_chFileSize',video_views.p_chFileSize,name='p_chFileSize'),
+    url(r'^video/p_toonline',video_views.p_toonline,name='p_toonline'),
     url(r'^video/online',video_views.video_online,name='video_online'),
 ]
 handler404 = video_views.page_not_found
