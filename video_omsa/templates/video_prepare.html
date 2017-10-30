@@ -151,6 +151,22 @@
                 });
             }
 
+            function toonline(){
+                var apptype = $("#real_apptype").text();
+                $.post("p_toonline", {
+                        "apptype":apptype
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("服务id修改成功！点击确认1秒后自动刷新页面");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
+
             function getChapters_S() {
                 var parentId = $("#id_parent_id_S").val();
                 var apptype = $("#id_app_type_S").val();
@@ -1041,8 +1057,8 @@
                                    href="{{ c_url }}&page={{ videos.number|add:5 }}">{{ videos.number|add:5 }}</a>
                             {% endif %}
                         {% endif %}
-                        <a type="button" class="btn btn-warning" style="margin-left: 600px;" id='MyApp-mp4'
-                           href="/video/p_toonline?app_type={{ user1.apptype }}">一键同步到线上请</a>
+                        <a type="button" class="btn btn-warning" disabled="disabled" style="margin-left: 600px;" id='MyApp-mp4'
+                           onclick="toonline()" href="/video/p_toonline?app_type={{ user1.apptype }}">一键同步到线上</a>
                     </nav>
                 </div><!-- end of panel-footer -->
             </div><!-- end of panel -->

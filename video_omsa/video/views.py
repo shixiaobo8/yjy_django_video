@@ -2107,9 +2107,9 @@ def sendMail(task_id,video_id,stauts='ok'):
             return json.dumps({"date":now,"code":200,'mess':"给运维负责人发送邮件失败"})
 
 def p_toonline(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         res = dict()
-        apptype = request.GET.get('apptype','None')
+        apptype = request.POST.get('apptype','None')
         if apptype:
             udb = updateDbTool(apptype)
             mess = udb.update_to_online()
