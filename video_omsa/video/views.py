@@ -1211,19 +1211,25 @@ def p_chgoodsId(request):
         if video_id and new_goodsId and apptype_v:
             apptype = getAppTypeKey(apptype_v)
             try:
+                prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
                 sql = "update `%s`.`yjy_im_chat` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
-                rs = executeSql(sql)
+                prepare_db.cursor.execute(sql)
+                rs = prepare_db.cursor.fetchall()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
-                rs1 = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                rs1 = prepare_db.cursor.fetchall()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
-                    rs2 = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    rs2 = prepare_db.cursor.fetchall()
                 data['code'] = 200
                 data['data'] = '视频名称修改成功'
+                prepare_db.close()
             except Exception,e:
                 data['code'] = 555
-                data['data'] = '参数错误'
-                return HttpResponse(json.dumps(e.message))
+                data['data'] = e.message
+            finally:
+                prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1240,19 +1246,24 @@ def p_chDuration(request):
         if video_id and new_duration and apptype_v:
             apptype = getAppTypeKey(apptype_v)
             try:
+                prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
                 sql = "update `%s`.`yjy_im_chat` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
-                rs = executeSql(sql)
+                prepare_db.cursor.execute(sql)
+                rs = prepare_db.cursor.fetchall()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
-                rs1 = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                rs1 = prepare_db.cursor.fetchall()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
-                    rs2 = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.fetchall()
                 data['code'] = 200
-                data['data'] = '视频名称修改成功'
+                data['data'] = '视频时长修改成功'
             except Exception,e:
                 data['code'] = 555
-                data['data'] = '参数错误'
-                return HttpResponse(json.dumps(e.message))
+                data['data'] = e.message
+            finally:
+                prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1269,19 +1280,24 @@ def p_chSort(request):
         if video_id and new_sort and apptype_v:
             apptype = getAppTypeKey(apptype_v)
             try:
+                prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
                 sql = "update `%s`.`yjy_im_chat` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
-                rs = executeSql(sql)
+                prepare_db.cursor.execute(sql)
+                rs = prepare_db.cursor.fetchall()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
-                rs1 = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                rs1 = prepare_db.cursor.fetchall()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
-                    rs2 = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.fetchall()
                 data['code'] = 200
-                data['data'] = '视频名称修改成功'
+                data['data'] = '视频分类编号修改成功'
             except Exception,e:
                 data['code'] = 555
-                data['data'] = '参数错误'
-                return HttpResponse(json.dumps(e.message))
+                data['data'] = e.message
+            finally:
+                prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1297,18 +1313,22 @@ def p_chFileSize(request):
         apptype_v = request.POST['apptype'].encode('utf-8')
         if video_id and new_filesize and apptype_v:
             apptype = getAppTypeKey(apptype_v)
+            prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
             try:
                 sql1 = "update `%s`.`yjy_im_chat_aes` set file_size='%s' where id='%s'" % (apptype,new_filesize, video_id)
-                rs1 = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                rs1 = prepare_db.cursor.fetchall()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set file_size='%s' where id='%s'" % (apptype,new_filesize, video_id)
-                    rs2 = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.fetchall()
                 data['code'] = 200
-                data['data'] = '视频名称修改成功'
+                data['data'] = '切片下载文件大小修改成功'
             except Exception,e:
                 data['code'] = 555
-                data['data'] = '参数错误'
-                return HttpResponse(json.dumps(e.message))
+                data['data'] = e.message
+            finally:
+                prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1325,19 +1345,24 @@ def p_chserviceId(request):
         if video_id and new_serviceId and apptype_v:
             apptype = getAppTypeKey(apptype_v)
             try:
+                prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
                 sql = "update `%s`.`yjy_im_chat` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
-                rs = executeSql(sql)
+                prepare_db.cursor.execute(sql)
+                rs = prepare_db.cursor.fetchall()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
-                rs1 = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                rs1 = prepare_db.cursor.fetchall()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
-                    rs2 = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.fetchall()
                 data['code'] = 200
-                data['data'] = '视频名称修改成功'
+                data['data'] = '商品服务id修改成功'
             except Exception,e:
                 data['code'] = 555
-                data['data'] = '参数错误'
-                return HttpResponse(json.dumps(e.message))
+                data['data'] = e.message
+            finally:
+                prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1353,20 +1378,25 @@ def p_chvideoname(request):
         apptype_v = request.POST['apptype'].encode('utf-8')
         if video_id and new_videoname and apptype_v:
             apptype = getAppTypeKey(apptype_v)
+            prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
             try:
                 sql = "update `%s`.`yjy_im_chat` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
-                rs = executeSql(sql)
+                prepare_db.cursor.execute(sql)
+                rs = prepare_db.cursor.close()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
-                rs1 = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                rs1 = prepare_db.cursor.fetchall()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
-                    rs2 = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    rs2 = prepare_db.cursor.fetchall()
                 data['code'] = 200
-                data['data'] = '视频名称修改成功'
+                data['data'] = '切片中文名称修改成功'
             except Exception,e:
                 data['code'] = 555
-                data['data'] = '参数错误'
-                return HttpResponse(json.dumps(e.message))
+                data['data'] = e.message
+            finally:
+                prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
