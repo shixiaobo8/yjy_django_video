@@ -176,8 +176,161 @@
             }
             // 修改视频服务id
             function chVideoServiceId(bt_id, old_cname, text_id) {
-                return;
+                 $(document).ready(function () {
+                    var apptype = $("#real_apptype").text();
+                    var new_serviceId = $("#" + text_id.id).val();
+                    var old_serviceId = $("#" + old_cname.id).text().replace(/\ +/g, "").replace(/[\r\n]/g, "");
+                    var video_id = $("#" + text_id.id).attr("name");
+                    if (new_serviceId == "") {
+                        alert("亲，服务id不能为空！！");
+                        return;
+                    }
+                    if (new_serviceId == old_serviceId) {
+                        alert("服务id和原来相同了，请重新填写！！");
+                        return;
+                    }
+                    $.post("p_chserviceId", {
+                        "new_serviceId": new_serviceId,
+                        "video_id": video_id,
+                        "apptype":apptype
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("服务id修改成功！点击确认1秒后自动刷新页面");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
             }
+
+            // 修改视频商品id
+            function chVideoGoodsId(bt_id, old_cname, text_id) {
+                 $(document).ready(function () {
+                    var apptype = $("#real_apptype").text();
+                    var new_goodsId = $("#" + text_id.id).val();
+                    var old_goodsId = $("#" + old_cname.id).text().replace(/\ +/g, "").replace(/[\r\n]/g, "");
+                    var video_id = $("#" + text_id.id).attr("name");
+                    if (new_goodsId == "") {
+                        alert("亲，商品id不能为空！！");
+                        return;
+                    }
+                    if (new_goodsId == old_goodsId) {
+                        alert("商品id和原来相同了，请重新填写！！");
+                        return;
+                    }
+                    $.post("p_chgoodsId", {
+                        "new_goodsId": new_goodsId,
+                        "video_id": video_id,
+                        "apptype":apptype
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("商品id修改成功！点击确认1秒后自动刷新页面");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
+
+
+            // 修改视频预切片时长
+            function chVideoDuration(bt_id, old_cname, text_id) {
+                 $(document).ready(function () {
+                    var apptype = $("#real_apptype").text();
+                    var new_duration = $("#" + text_id.id).val();
+                    var old_duration = $("#" + old_cname.id).text().replace(/\ +/g, "").replace(/[\r\n]/g, "");
+                    var video_id = $("#" + text_id.id).attr("name");
+                    if (new_duration == "") {
+                        alert("亲，视频时长不能为空！！");
+                        return;
+                    }
+                    if (new_duration == old_duration) {
+                        alert("视频时长和原来相同了，请重新填写！！");
+                        return;
+                    }
+                    $.post("p_chDuration", {
+                        "new_duration": new_duration,
+                        "video_id": video_id,
+                        "apptype":apptype
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("切片时长修改成功！点击确认1秒后自动刷新页面");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
+
+            // 修改视频预切片排序编号
+            function chVideoSort(bt_id, old_cname, text_id) {
+                 $(document).ready(function () {
+                    var apptype = $("#real_apptype").text();
+                    var new_sort = $("#" + text_id.id).val();
+                    var old_sort = $("#" + old_cname.id).text().replace(/\ +/g, "").replace(/[\r\n]/g, "");
+                    var video_id = $("#" + text_id.id).attr("name");
+                    if (new_sort == "") {
+                        alert("亲，切片排序编号不能为空！！");
+                        return;
+                    }
+                    if (new_sort == old_sort) {
+                        alert("视频排序编号和原来相同了，请重新填写！！");
+                        return;
+                    }
+                    $.post("p_chSort", {
+                        "new_sort": new_sort,
+                        "video_id": video_id,
+                        "apptype":apptype
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("视频排序修改成功！点击确认1秒后自动刷新页面后将自动按照排序编号排序,请在app端查看并及时作出调整");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
+
+             // 修改视频预切片下载大小
+            function chVideoFileSize(bt_id, old_cname, text_id) {
+                 $(document).ready(function () {
+                    var apptype = $("#real_apptype").text();
+                    var new_filesize = $("#" + text_id.id).val();
+                    var old_filesize = $("#" + old_cname.id).text().replace(/\ +/g, "").replace(/[\r\n]/g, "");
+                    var video_id = $("#" + text_id.id).attr("name");
+                    if (new_filesize == "") {
+                        alert("亲，新的视频下载大小不能为空！！");
+                        return;
+                    }
+                    if (new_filesize == old_filesize) {
+                        alert("视频下载大小和原来相同了，请重新填写！！");
+                        return;
+                    }
+                    $.post("p_chFileSize", {
+                        "new_filesize": new_filesize,
+                        "video_id": video_id,
+                        "apptype":apptype
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("视频下载大小修改成功！点击确认1秒后自动刷新页面!");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
+
+
             // 修改视频中文名chSectionById
             function chVideoNameById(bt_id, old_cname, text_id) {
                 $(document).ready(function () {
@@ -186,11 +339,11 @@
                     var old_videoname = $("#" + old_cname.id).text();
                     var video_id = $("#" + text_id.id).attr("name");
                     if (new_videoname == "") {
-                        alert("亲，视频中文名不能为空！！");
+                        alert("亲，服务id不能为空！！");
                         return;
                     }
                     if (new_videoname == old_videoname) {
-                        alert("视频名称相同了，请重新填写！！");
+                        alert("服务id和原来相同了，请重新填写！！");
                         return;
                     }
                     $.post("p_chvideoname", {
@@ -639,9 +792,9 @@
                         <th>商品id</th>
                         <th>可观看类型学员</th>
                         <th>加密链接后缀</th>
-                        <th>时长(秒)</th>
+                        <th>时长(单位:秒)</th>
                         <th>排序</th>
-                        <th>文件大小</th>
+                        <th>文件大小(单位:M)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -692,11 +845,11 @@
                             <td>{{ video.created }}</td>
                             <td>
                                 <!-- 按钮触发模态框 -->
-                                <button class="btn btn-default" data-toggle="modal" data-target="#service_id_"{{ video.id }}>
+                                <button class="btn btn-default" id="service_id{{ video.id }}" data-toggle="modal" data-target="#chservice_id{{ video.id }}">
                                     {{ video.service_id }}
                                 </button>
                                 <!-- 模态框（Modal） -->
-                                <div class="modal fade" id="service_id_"{{ video.id }} tabindex="-1" role="dialog"
+                                <div class="modal fade" id="chservice_id{{ video.id }}" tabindex="-1" role="dialog"
                                      aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -705,11 +858,19 @@
                                                         aria-hidden="true">&times;</button>
                                                 <h4 class="modal-title" id="myModalLabel">修改视频服务id</h4>
                                             </div>
-                                            <div class="modal-body">修改视频服务id</div>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="chserviceidtext{{ video.id }}" value="{{ video.service_id }}">
+                                                    <span class="input-group-addon">服务id</span>
+                                                </div>
+                                            </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chvideoserviceidbt{{ video.id }}"
+                                                        onclick="chVideoServiceId(chvideoserviceidbt{{ video.id }},service_id{{ video.id }},chserviceidtext{{ video.id }})">
+                                                    提交更改
                                                 </button>
-                                                <button type="button" class="btn btn-primary">提交更改</button>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->
@@ -717,11 +878,11 @@
                             </td>
                             <td>
                                 <!-- 按钮触发模态框 -->
-                                <button class="btn btn-default" data-toggle="modal" data-target="#goods_id_"{{ video.id }}>
+                                <button class="btn btn-default" data-toggle="modal" data-target="#chgoods_id{{ video.id }}" id="goods_id{{ video.id }}">
                                     {{ video.goods_id }}
                                 </button>
                                 <!-- 模态框（Modal） -->
-                                <div class="modal fade" id="goods_id_"{{ video.id }} tabindex="-1" role="dialog"
+                                <div class="modal fade" id="chgoods_id{{ video.id }}" tabindex="-1" role="dialog"
                                      aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -730,11 +891,19 @@
                                                         aria-hidden="true">&times;</button>
                                                 <h4 class="modal-title" id="myModalLabel">修改切片商品id</h4>
                                             </div>
-                                            <div class="modal-body">修改切片商品id</div>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="chgoodsidtext{{ video.id }}" value="{{ video.goods_id }}">
+                                                    <span class="input-group-addon">商品id</span>
+                                                </div>
+                                            </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chgoodsidtextbt{{ video.id }}"
+                                                        onclick="chVideoGoodsId(chgoodsidtextbt{{ video.id }},goods_id{{ video.id }},chgoodsidtext{{ video.id }})">
+                                                    提交更改
                                                 </button>
-                                                <button type="button" class="btn btn-primary">提交更改</button>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->
@@ -744,10 +913,10 @@
                             <td><a href="{{ video.media_url.m3u8 }}">{{ video.media_url.value }}</a></td>
                             <td>
                                 <!-- 按钮触发模态框 -->
-                                <button class="btn btn-default" data-toggle="modal"
-                                        data-target="#duration_"{{ video.id }}>{{ video.duration }}</button>
+                                <button class="btn btn-default" id="duration{{ video.id }}" data-toggle="modal"
+                                        data-target="#chduration{{ video.id }}">{{ video.duration }}</button>
                                 <!-- 模态框（Modal） -->
-                                <div class="modal fade" id="duration_"{{ video.id }} tabindex="-1" role="dialog"
+                                <div class="modal fade" id="chduration{{ video.id }}" tabindex="-1" role="dialog"
                                      aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -756,22 +925,29 @@
                                                         aria-hidden="true">&times;</button>
                                                 <h4 class="modal-title" id="myModalLabel">修改切片播放时长</h4>
                                             </div>
-                                            <div class="modal-body">在这里添加一些文本</div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-                                                </button>
-                                                <button type="button" class="btn btn-primary">提交更改</button>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="chdurationtext{{ video.id }}" value="{{ video.chduration }}">
+                                                    <span class="input-group-addon">时长</span>
+                                                </div>
                                             </div>
-                                        </div><!-- /.modal-content -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chdurationbt{{ video.id }}"
+                                                        onclick="chVideoDuration(chdurationbt{{ video.id }},duration{{ video.id }},chdurationtext{{ video.id }})">
+                                                    提交更改
+                                                </button>
+                                            </div>                                        </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->
                                 </div>
                             </td>
                             <td>
                                 <!-- 按钮触发模态框 -->
-                                <button class="btn btn-default" data-toggle="modal"
-                                        data-target="#sort_"{{ video.id }}>{{ video.sort }}</button>
+                                <button class="btn btn-default" data-toggle="modal" id="sort{{ video.id }}"
+                                        data-target="#chsort{{ video.id }}">{{ video.sort }}</button>
                                 <!-- 模态框（Modal） -->
-                                <div class="modal fade" id="sort_"{{ video.id }} tabindex="-1" role="dialog"
+                                <div class="modal fade" id="chsort{{ video.id }}" tabindex="-1" role="dialog"
                                      aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -780,11 +956,19 @@
                                                         aria-hidden="true">&times;</button>
                                                 <h4 class="modal-title" id="myModalLabel">修改排序编号</h4>
                                             </div>
-                                            <div class="modal-body">在这里添加一些文本</div>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="sorttext{{ video.id }}" value="{{ video.sort }}">
+                                                    <span class="input-group-addon">排序编号</span>
+                                                </div>
+                                            </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chsortbt{{ video.id }}"
+                                                        onclick="chVideoSort(chsortbt{{ video.id }},sort{{ video.id }},sorttext{{ video.id }})">
+                                                    提交更改
                                                 </button>
-                                                <button type="button" class="btn btn-primary">提交更改</button>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->
@@ -792,11 +976,11 @@
                             </td>
                             <td>
                                 <!-- 按钮触发模态框 -->
-                                <button class="btn btn-default" data-toggle="modal"
-                                        data-target="#file_size_"{{ video.id }}>{{ video.file_size }}M
+                                <button class="btn btn-default" data-toggle="modal" id="file_size{{ video.id }}"
+                                        data-target="#chfilesize{{ video.id }}">{{ video.file_size }}
                                 </button>
                                 <!-- 模态框（Modal） -->
-                                <div class="modal fade" id="file_size_"{{ video.id }} tabindex="-1" role="dialog"
+                                <div class="modal fade" id="chfilesize{{ video.id }}" tabindex="-1" role="dialog"
                                      aria-labelledby="myModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -805,11 +989,19 @@
                                                         aria-hidden="true">&times;</button>
                                                 <h4 class="modal-title" id="myModalLabel">修改切片大小</h4>
                                             </div>
-                                            <div class="modal-body">在这里添加一些文本</div>
+                                            <div class="modal-body">
+                                                <div class="input-group">
+                                                    <input type="text" name="{{ video.id }}" class="form-control"
+                                                           id="filesizetext{{ video.id }}" value="{{ video.file_size }}">
+                                                    <span class="input-group-addon">文件大小</span>
+                                                </div>
+                                            </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chfilesizebt{{ video.id }}"
+                                                        onclick="chVideoFileSize(chfilesizebt{{ video.id }},file_size{{ video.id }},filesizetext{{ video.id }})">
+                                                    提交更改
                                                 </button>
-                                                <button type="button" class="btn btn-primary">提交更改</button>
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal -->

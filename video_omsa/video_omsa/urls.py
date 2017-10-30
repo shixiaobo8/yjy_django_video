@@ -70,6 +70,11 @@ urlpatterns = [
     url(r'^video/p_chvideoname',video_views.p_chvideoname,name='p_chvideoname'),
     url(r'^video/p_show_video',video_views.p_show_video,name='p_show_video'),
     url(r'^video/p_hide_video',video_views.p_hide_video,name='p_hide_video'),
+    url(r'^video/p_chserviceId',video_views.p_chserviceId,name='p_chserviceId'),
+    url(r'^video/p_chgoodsId',video_views.p_chgoodsId,name='p_chgoodsId'),
+    url(r'^video/p_chDuration',video_views.p_chDuration,name='p_chDuration'),
+    url(r'^video/p_chSort',video_views.p_chSort,name='p_chSort'),
+    url(r'^video/p_chFileSize',video_views.p_chFileSize,name='p_chFileSize'),
     url(r'^video/online',video_views.video_online,name='video_online'),
 ]
 handler404 = video_views.page_not_found

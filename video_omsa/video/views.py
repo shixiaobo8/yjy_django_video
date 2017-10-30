@@ -1123,6 +1123,150 @@ def chvideoname(request):
             data['data'] = '参数错误'
         return HttpResponse(json.dumps(data))
 
+
+@csrf_exempt
+def p_chgoodsId(request):
+    if request.method == 'POST':
+        data = dict()
+        video_id = request.POST['video_id']
+        new_goodsId = request.POST['new_goodsId']
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        if video_id and new_goodsId and apptype_v:
+            apptype = getAppTypeKey(apptype_v)
+            try:
+                sql = "update `%s`.`yjy_im_chat` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
+                rs1 = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
+                    rs2 = executeSql(sql2)
+                data['code'] = 200
+                data['data'] = '视频名称修改成功'
+            except Exception,e:
+                data['code'] = 555
+                data['data'] = '参数错误'
+                return HttpResponse(json.dumps(e.message))
+        else:
+            data['code'] = 555
+            data['data'] = '参数错误'
+        return HttpResponse(json.dumps(data))
+
+
+@csrf_exempt
+def p_chDuration(request):
+    if request.method == 'POST':
+        data = dict()
+        video_id = request.POST['video_id']
+        new_duration = request.POST['new_duration']
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        if video_id and new_duration and apptype_v:
+            apptype = getAppTypeKey(apptype_v)
+            try:
+                sql = "update `%s`.`yjy_im_chat` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
+                rs1 = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
+                    rs2 = executeSql(sql2)
+                data['code'] = 200
+                data['data'] = '视频名称修改成功'
+            except Exception,e:
+                data['code'] = 555
+                data['data'] = '参数错误'
+                return HttpResponse(json.dumps(e.message))
+        else:
+            data['code'] = 555
+            data['data'] = '参数错误'
+        return HttpResponse(json.dumps(data))
+
+
+@csrf_exempt
+def p_chSort(request):
+    if request.method == 'POST':
+        data = dict()
+        video_id = request.POST['video_id']
+        new_sort = request.POST['new_sort']
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        if video_id and new_sort and apptype_v:
+            apptype = getAppTypeKey(apptype_v)
+            try:
+                sql = "update `%s`.`yjy_im_chat` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
+                rs1 = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
+                    rs2 = executeSql(sql2)
+                data['code'] = 200
+                data['data'] = '视频名称修改成功'
+            except Exception,e:
+                data['code'] = 555
+                data['data'] = '参数错误'
+                return HttpResponse(json.dumps(e.message))
+        else:
+            data['code'] = 555
+            data['data'] = '参数错误'
+        return HttpResponse(json.dumps(data))
+
+
+@csrf_exempt
+def p_chFileSize(request):
+    if request.method == 'POST':
+        data = dict()
+        video_id = request.POST['video_id']
+        new_filesize = request.POST['new_filesize']
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        if video_id and new_filesize and apptype_v:
+            apptype = getAppTypeKey(apptype_v)
+            try:
+                sql1 = "update `%s`.`yjy_im_chat_aes` set file_size='%s' where id='%s'" % (apptype,new_filesize, video_id)
+                rs1 = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set file_size='%s' where id='%s'" % (apptype,new_filesize, video_id)
+                    rs2 = executeSql(sql2)
+                data['code'] = 200
+                data['data'] = '视频名称修改成功'
+            except Exception,e:
+                data['code'] = 555
+                data['data'] = '参数错误'
+                return HttpResponse(json.dumps(e.message))
+        else:
+            data['code'] = 555
+            data['data'] = '参数错误'
+        return HttpResponse(json.dumps(data))
+
+
+@csrf_exempt
+def p_chserviceId(request):
+    if request.method == 'POST':
+        data = dict()
+        video_id = request.POST['video_id']
+        new_serviceId = request.POST['new_serviceId']
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        if video_id and new_serviceId and apptype_v:
+            apptype = getAppTypeKey(apptype_v)
+            try:
+                sql = "update `%s`.`yjy_im_chat` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
+                rs1 = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
+                    rs2 = executeSql(sql2)
+                data['code'] = 200
+                data['data'] = '视频名称修改成功'
+            except Exception,e:
+                data['code'] = 555
+                data['data'] = '参数错误'
+                return HttpResponse(json.dumps(e.message))
+        else:
+            data['code'] = 555
+            data['data'] = '参数错误'
+        return HttpResponse(json.dumps(data))
+
+
 @csrf_exempt
 def p_chvideoname(request):
     if request.method == 'POST':
@@ -1132,19 +1276,25 @@ def p_chvideoname(request):
         apptype_v = request.POST['apptype'].encode('utf-8')
         if video_id and new_videoname and apptype_v:
             apptype = getAppTypeKey(apptype_v)
-            sql = "update `%s`.`yjy_im_chat` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
-            rs = executeSql(sql)
-            sql1 = "update `%s`.`yjy_im_chat_aes` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
-            rs1 = executeSql(sql1)
-            if apptype == 'yjy_xiyizonghe':
-                sql2 = "update `%s`.`yjy_im_chat_aes_new` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
-                rs2 = executeSql(sql2)
-            data['code'] = 200
-            data['data'] = '视频名称修改成功'
+            try:
+                sql = "update `%s`.`yjy_im_chat` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
+                rs1 = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
+                    rs2 = executeSql(sql2)
+                data['code'] = 200
+                data['data'] = '视频名称修改成功'
+            except Exception,e:
+                data['code'] = 555
+                data['data'] = '参数错误'
+                return HttpResponse(json.dumps(e.message))
         else:
             data['code'] = 555
             data['data'] = '参数错误'
         return HttpResponse(json.dumps(data))
+
 
 def getAppTypeKey(apptype_v):
     data = {
@@ -1766,7 +1916,7 @@ def video_prepare(request):
             sort = ' order by `sort` desc'
         if search_key != 'None':
             search_key.strip('\\*')
-            search_key = " and `original_sava_path` like '%" + search_key + "%'"
+            search_key = " and `name` like '%" + search_key + "%'"
         MyVideos = ''
         tmp = getPrepareList(apptype,where,search_key,search_time_range,sort)
         videos = []
