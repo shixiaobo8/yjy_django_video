@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', video_views.index,name='index'),
     url(r'^logine$', video_views.test_inter,name='logine'),
+    url(r'^share.html$', video_views.shareGame,name='shareGame'),
     url(r'^register$', video_views.register),
     url(r'^login$', video_views.login),
     url(r'^logout$', video_views.logout),

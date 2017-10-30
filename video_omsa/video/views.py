@@ -216,6 +216,83 @@ def pro_create(request):
 # 	return ret
 # 	# 外部调用接口数据返回
 
+def shareGame(request):
+     if request.method == 'GET':
+         roomid=request.GET.get('roomid','0')
+         peoples=request.GET.get('peoples','0')
+         status = 'ok'
+         res = {"id": "penghu",
+          'scheme_ios': "'yinjiapenghu://?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
+          'scheme_android': "'yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
+          'ios_download': 'apk/YinJiaPengHu.apk',
+          'android_download': 'apk/YinJiaPengHu.apk',
+          'timeout': 1000};
+         href = "yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples
+         res1 = """
+            <!DOCTYPE html>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <title>银佳碰胡加入房间</title>
+            </head>
+            <body>
+                <style type="text/css">
+                *{margin:0; padding:0;}
+                img{max-width: 100%; height: auto;}
+                .test{height: 600px; max-width: 600px; font-size: 18px;}
+                </style>
+            <div class="test">
+                <center><h4>银佳碰胡——欢迎你 </h4></center><h4><center> 房间号: """ + roomid +  """</h4></center><h4><center> 当前人数: """ + peoples +  """</h4></center><center><h4 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'><img src='http://www.devops89.cn/jionRoomBtn.png' alt='加入房间'/> </b></h4></center>
+                </div>
+                <script>
+                                function startAPP(){
+                                    window.location = '"""+ href+"""';
+                                    }
+                                </script>
+
+                <script type="text/javascript">
+                    function is_weixin() {
+                        var ua = navigator.userAgent.toLowerCase();
+                        if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                    var isWeixin = is_weixin();
+                    var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+                    function loadHtml(){
+                        var div = document.createElement('div');
+                        div.id = 'weixin-tip';
+                        div.innerHTML = '<p><img src="http://www.devops89.cn/live_weixin.png" alt="微信打开"/></p>';
+                        document.body.appendChild(div);
+                    }
+
+                    function loadStyleText(cssText) {
+                        var style = document.createElement('style');
+                        style.rel = 'stylesheet';
+                        style.type = 'text/css';
+                        try {
+                            style.appendChild(document.createTextNode(cssText));
+                        } catch (e) {
+                            style.styleSheet.cssText = cssText; //ie9以下
+                        }
+                        var head=document.getElementsByTagName("head")[0]; //head标签之间加上style样式
+                        head.appendChild(style);
+                    }
+                    var cssText = "#weixin-tip{position: fixed; left:0; top:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=80); width: 100%; height:100%; z-index: 100;} #weixin-tip p{text-align: center; margin-top: 10%; padding:0 5%;}";
+                    if(isWeixin){
+                        loadHtml();
+                        loadStyleText(cssText);
+                    }
+                </script>
+            </body>
+            </html>
+            """
+         return HttpResponse(res1)
+
+
 def test_inter(request):
     if request.method == 'GET' or request.method == 'POST':
         # A = dns.resolver.query(settings.SERVER_DOMAIN,'A')
@@ -223,7 +300,7 @@ def test_inter(request):
         # for ip1 in A.response.answer:
         #     for ip in ip1.items:
         #         ips = ip.address
-        return HttpResponse(json.dumps({'version':'1.0.0','ip':'47.92.134.87','URL':'www.yinjialeyou.com/game','post':'7070'}))
+        return HttpResponse(json.dumps({'sharehaedURL':'https://mmbiz.qlogo.cn/mmbiz_png/YGE76YBu7064VpxGrEYzhfx2yLlwib2PgUQMQ6YkBaviawicFSpUpwfFZRP9jdMFWXJKhoRCck36CfY1YPYGqqknA/0?wx_fmt=png','Kefulist':'123456','Tipmsg':'欢迎大家','shareURL':'http://www.devops89.cn:81/share.html','version':'1.0.0','ip':'47.92.134.87','URL':'http://www.devops89.cn/yingjia.html','post':'7070'}))
 
 def inters_info(request):
     import types
