@@ -164,7 +164,7 @@
                             alert(data['data']);
                         }
                     })
-                };
+                }
 
             function getChapters_S() {
                 var parentId = $("#id_parent_id_S").val();
@@ -602,7 +602,7 @@
                     data:{'status':status},
                     dataType: 'html',
                     success: function (data, textStatus) {
-                        window.location.href = {{ request.get_full_path }};
+                        window.location.href = "{{ request.get_full_path }}";
                     }
                 });
             }
