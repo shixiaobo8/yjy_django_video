@@ -1988,15 +1988,18 @@ def getPrepareList(apptype, where,search_key,search_time_range,sort):
 
 def video_prepare(request):
     if request.method == 'GET':
+        apptype = request.GET.get('app_type',None)
         User = getUserProperties(request.user.username)
-        apptype = User['apptype']
-        apptype_v = getApptypeName(apptype)
+        apptype_v = ''
+        if not apptype:
+            apptype = User['apptype']
+            apptype_v = getApptypeName(apptype)
         department = User['department']
         page_nums = request.GET.get('page_nums', '30')
         page = request.GET.get('page', 'None')
         chapter_id = request.GET.get('chapter_id', 'None')
         search_time_range = request.GET.get('search_time_range', 'None')
-        search_app_type = request.GET.get('app_type', User['apptype'])
+        # search_app_type = request.GET.get('app_type', User['apptype'])
         search_key = request.GET.get('search_key', 'None')
         sort = request.GET.get('sort','0')
         where = dict()
