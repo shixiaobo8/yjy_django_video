@@ -244,7 +244,7 @@ def shareGame(request):
                 .test{height: 600px; max-width: 600px; font-size: 18px;}
                 </style>
             <div class="test">
-                <center><h4>银佳碰胡——欢迎你 </h4></center><h4><center> 房间号: """ + roomid +  """</h4></center><h4><center> 当前人数: """ + peoples +  """</h4></center><center><h4 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'><img src='http://www.devops89.cn/jionRoomBtn.png' alt='加入房间'/> </b></h4></center>
+                <center><h4>银佳碰胡——欢迎你 </h4></center><h4><center> 房间号: """ + roomid +  """</h4></center><h4><center> 当前人数: """ + peoples +  """</h4></center><center><h4 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'><img src='http://www.devops89.cn:56/jionRoomBtn.png' alt='加入房间'/> </b></h4></center>
                 </div>
                 <script>
                                 function startAPP(){
@@ -266,7 +266,7 @@ def shareGame(request):
                     function loadHtml(){
                         var div = document.createElement('div');
                         div.id = 'weixin-tip';
-                        div.innerHTML = '<p><img src="http://www.devops89.cn/live_weixin.png" alt="微信打开"/></p>';
+                        div.innerHTML = '<p><img src="http://www.devops89.cn:56/live_weixin.png" alt="微信打开"/></p>';
                         document.body.appendChild(div);
                     }
 
@@ -301,7 +301,7 @@ def test_inter(request):
         # for ip1 in A.response.answer:
         #     for ip in ip1.items:
         #         ips = ip.address
-        return HttpResponse(json.dumps({'sharehaedURL':'https://mmbiz.qlogo.cn/mmbiz_png/YGE76YBu7064VpxGrEYzhfx2yLlwib2PgUQMQ6YkBaviawicFSpUpwfFZRP9jdMFWXJKhoRCck36CfY1YPYGqqknA/0?wx_fmt=png','Kefulist':'123456','Tipmsg':'欢迎大家','shareURL':'http://www.devops89.cn:81/share.html','version':'1.0.1','ip':'47.92.134.87','URL':'http://www.devops89.cn/yingjia.html','post':'7070'}))
+        return HttpResponse(json.dumps({'sharehaedURL':'https://mmbiz.qlogo.cn/mmbiz_png/YGE76YBu7064VpxGrEYzhfx2yLlwib2PgUQMQ6YkBaviawicFSpUpwfFZRP9jdMFWXJKhoRCck36CfY1YPYGqqknA/0?wx_fmt=png','Kefulist':'123456','Tipmsg':'欢迎大家','shareURL':'http://www.devops89.cn:81/share.html','version':'1.0.1','ip':'47.92.134.87','URL':'http://www.devops89.cn:56/yingjia.html','post':'7070'}))
 
 def inters_info(request):
     import types
