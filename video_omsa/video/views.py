@@ -1990,10 +1990,9 @@ def video_prepare(request):
     if request.method == 'GET':
         apptype = request.GET.get('app_type',None)
         User = getUserProperties(request.user.username)
-        apptype_v = ''
         if not apptype:
             apptype = User['apptype']
-            apptype_v = getApptypeName(apptype)
+        apptype_v = getApptypeName(apptype)
         department = User['department']
         page_nums = request.GET.get('page_nums', '30')
         page = request.GET.get('page', 'None')
