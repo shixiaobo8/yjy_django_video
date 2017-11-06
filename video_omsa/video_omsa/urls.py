@@ -74,6 +74,7 @@ urlpatterns = [
     url(r'^video/p_chserviceId',video_views.p_chserviceId,name='p_chserviceId'),
     url(r'^video/p_chgoodsId',video_views.p_chgoodsId,name='p_chgoodsId'),
     url(r'^video/p_chDuration',video_views.p_chDuration,name='p_chDuration'),
+    url(r'^video/p_chapptype',video_views.p_chapptype,name='p_chapptype'),
     url(r'^video/p_chSort',video_views.p_chSort,name='p_chSort'),
     url(r'^video/p_chFileSize',video_views.p_chFileSize,name='p_chFileSize'),
     url(r'^video/p_toonline',video_views.p_toonline,name='p_toonline'),
