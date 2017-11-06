@@ -1523,6 +1523,33 @@ def p_hide_video(request):
 
 
 @csrf_exempt
+def p_chapptype(request):
+    res = dict()
+    res['code'] = '555'
+    res['data'] = '参数错误'
+    if request.method == 'POST':
+        id = request.POST.get('video_id',None)
+        apptype_v = request.POST['apptype'].encode('utf-8')
+        apptype = getAppTypeKey(apptype_v)
+        new_apptype = request.POST.get('new_apptype',None)
+        if id and apptype and new_apptype:
+            try:
+                sql = "update `%s`.`yjy_im_chat` set `app_type`='%s' where id='%s'"%(apptype,new_apptype,str(id))
+                rs = executeSql(sql)
+                sql1 = "update `%s`.`yjy_im_chat_aes` set `app_type`='%s' where id='%s'"%(apptype,new_apptype,str(id))
+                rs = executeSql(sql1)
+                if apptype == 'yjy_xiyizonghe':
+                    sql2 = "update `%s`.`yjy_im_chat_aes_new` set `app_type`='%s' where id='%s'"%(apptype,new_apptype,str(id))
+                    rs = executeSql(sql2)
+                res['code'] = '200'
+                res['data'] = 'ok'
+            except Exception,e:
+                res['code'] = '555'
+                res['data'] = '参数错误'
+        return HttpResponse(json.dumps(res))
+
+
+@csrf_exempt
 def delete_video(request):
     res = dict()
     res['code'] = '555'
