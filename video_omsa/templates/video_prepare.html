@@ -220,6 +220,38 @@
                 });
             }
 
+             // 修改视频商品id
+            function chVideoApptype(bt_id, old_cname, text_id) {
+                 $(document).ready(function () {
+                    var apptype = $("#real_apptype").text();
+                    var new_apptype = $("#" + text_id.id).val();
+                     var old_apptype = $("#" + old_cname.id).text().replace(/\ +/g, "").replace(/[\r\n]/g, "");
+                    var video_id = bt_id;
+                    if (new_apptype == "") {
+                        alert("亲，学员类型不能为空！！");
+                        return;
+                    }
+                    if (new_apptype == old_apptype) {
+                        alert("学员类型和原来相同了，请重新填写！！");
+                        return;
+                    }
+                    $.post("p_chapptype", {
+                        "new_apptype": new_apptype,
+                        "video_id": video_id,
+                        "apptype":apptype
+                    }, function (res) {
+                        var data = JSON.parse(res);
+                        if (data['code'] == '200') {
+                            alert("学员类型修改成功！点击确认1秒后自动刷新页面");
+                            setTimeout("location.href=''", 1000);
+                        } else {
+                            alert(data['data']);
+                        }
+                    })
+                });
+            }
+
+
             // 修改视频商品id
             function chVideoGoodsId(bt_id, old_cname, text_id) {
                  $(document).ready(function () {
@@ -946,7 +978,42 @@
                                     </div><!-- /.modal -->
                                 </div>
                             </td>
-                            <td>{{ video.app_type }}</td>
+                            <td>
+                                <!-- 按钮触发模态框 -->
+                                <button class="btn btn-default" data-toggle="modal" data-target="#chapptype{{ video.id }}" id="apptype{{ video.id }}">
+                                    {{ video.app_type }}
+                                </button>
+                                <!-- 模态框（Modal） -->
+                                <div class="modal fade" id="chapptype{{ video.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">修改切片学员类型</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                    <span class="input-group-addon" style="color:red;">当前学员类型:{{ video.app_type }}</span>
+                                                        请选择要更换的类型:
+                                                            <select class="form-control" id="selectAppType{{ video.id }}">
+                                                                <option value="zhuan">专硕</option>
+                                                                <option value="xue">学硕</option>
+                                                                <option value="zhuan,xue">学硕+专硕</option>
+                                                                <option value="xiyao">西药(西医执业医师)</option>
+                                                            </select>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary"
+                                                        id="chapptypetextbt{{ video.id }}"
+                                                        onclick="chVideoApptype({{ video.id }},apptype{{ video.id }},selectAppType{{ video.id }})">
+                                                    提交更改
+                                                </button>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </td>
                             <td><a href="{{ video.media_url.m3u8 }}">{{ video.media_url.value }}</a></td>
                             <td>
                                 <!-- 按钮触发模态框 -->
