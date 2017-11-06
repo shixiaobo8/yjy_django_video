@@ -386,11 +386,11 @@
                     var old_videoname = $("#" + old_cname.id).text();
                     var video_id = $("#" + text_id.id).attr("name");
                     if (new_videoname == "") {
-                        alert("亲，服务id不能为空！！");
+                        alert("亲，切片中文名不能为空！！");
                         return;
                     }
                     if (new_videoname == old_videoname) {
-                        alert("服务id和原来相同了，请重新填写！！");
+                        alert("切片中文名和原来相同了，请重新填写！！");
                         return;
                     }
                     $.post("p_chvideoname", {
@@ -400,7 +400,7 @@
                     }, function (res) {
                         var data = JSON.parse(res);
                         if (data['code'] == '200') {
-                            alert("视频修改成功！点击确认1秒后自动刷新页面");
+                            alert("切片中文名修改成功！点击确认1秒后自动刷新页面");
                             setTimeout("location.href=''", 1000);
                         } else {
                             alert(data['data']);
