@@ -2021,7 +2021,7 @@ def video_prepare(request):
             apptype = User['apptype']
         apptype_v = getApptypeName(apptype)
         department = User['department']
-        page_nums = request.GET.get('page_nums', '30')
+        page_nums = request.GET.get('page_nums', '15')
         page = request.GET.get('page', 'None')
         chapter_id = request.GET.get('chapter_id', 'None')
         search_time_range = request.GET.get('search_time_range', 'None')
