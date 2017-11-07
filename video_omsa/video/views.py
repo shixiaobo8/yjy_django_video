@@ -2026,6 +2026,7 @@ def getPrepareList(apptype, where,search_key,search_time_range,sort):
         sql += search_time_range
     sql += sort
     prepare_db.cursor.execute(sql)
+    print sql
     res = prepare_db.cursor.fetchall()
     # prepare_db.close()
     return res
@@ -2062,9 +2063,8 @@ def video_prepare(request):
         if section_id != 'None':
             section = getAppTitle(apptype,section_id)
             if apptype == 'yjy_xiyizonghe':
-                where['category_id'] = section_id
-            else:
                 where['chapter_id'] = section_id
+                del where['category_id']
         if sort == '0':
             sort = ' order by `sort` asc'
         if sort == '1':
