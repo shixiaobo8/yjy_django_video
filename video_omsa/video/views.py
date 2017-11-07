@@ -1226,12 +1226,12 @@ def p_chgoodsId(request):
                     rs2 = prepare_db.cursor.fetchall()
                 data['code'] = 200
                 data['data'] = '视频名称修改成功'
-                prepare_db.close()
+                # prepare_db.close()
             except Exception,e:
                 data['code'] = 555
                 data['data'] = e.message
-            finally:
-                prepare_db.close()
+            # finally:
+            #     prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1264,8 +1264,8 @@ def p_chDuration(request):
             except Exception,e:
                 data['code'] = 555
                 data['data'] = e.message
-            finally:
-                prepare_db.close()
+            # finally:
+            #     prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1298,8 +1298,8 @@ def p_chSort(request):
             except Exception,e:
                 data['code'] = 555
                 data['data'] = e.message
-            finally:
-                prepare_db.close()
+            # finally:
+            #     prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1329,8 +1329,8 @@ def p_chFileSize(request):
             except Exception,e:
                 data['code'] = 555
                 data['data'] = e.message
-            finally:
-                prepare_db.close()
+            # finally:
+            #     prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1363,8 +1363,8 @@ def p_chserviceId(request):
             except Exception,e:
                 data['code'] = 555
                 data['data'] = e.message
-            finally:
-                prepare_db.close()
+            # finally:
+            #     prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -1397,8 +1397,8 @@ def p_chvideoname(request):
             except Exception,e:
                 data['code'] = 555
                 data['data'] = e.message
-            finally:
-                prepare_db.close()
+            # finally:
+            #     prepare_db.close()
         else:
             data['code'] = 555
             data['data'] = '参数错误'
@@ -2010,7 +2010,7 @@ def getPrepareList(apptype, where,search_key,search_time_range,sort):
     sql += sort
     prepare_db.cursor.execute(sql)
     res = prepare_db.cursor.fetchall()
-    prepare_db.close()
+    # prepare_db.close()
     return res
 
 def video_prepare(request):
