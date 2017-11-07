@@ -23,6 +23,13 @@
                 });
 
             });
+            // 复制链接
+            function copyUrl(obj) {
+                        var url=$('#'+obj.id).attr('href');
+{#                        $('#'+obj.id).select(); // 选择对象#}
+{#                        document.execCommand("Copy"); // 执行浏览器复制命令#}
+                        alert(url);
+                    }
             // 删除视频
             function p_hide_video(id) {
                 var apptype = $("#real_apptype").text();
@@ -860,7 +867,7 @@
                         <th>服务id</th>
                         <th>商品id</th>
                         <th>可观看类型学员</th>
-                        <th>加密链接后缀(点击下载可播放)</th>
+                        <th>预览或者复制链接</th>
                         <th>时长(单位:秒)</th>
                         <th>排序</th>
                         <th>文件大小(单位:M)</th>
@@ -1014,7 +1021,7 @@
                                     </div><!-- /.modal -->
                                 </div>
                             </td>
-                            <td><a href="{{ video.media_url.m3u8 }}">点击下载播放</a></td>
+                            <td><a href="{{ video.media_url.m3u8 }}">点击下载播放</a>&nbsp;&nbsp;&nbsp;<button id='m3u8{{ video.id }}' href="{{ video.media_url.m3u8 }}" onclick='copyUrl(m3u8{{ video.id }})'>复制链接</button></td>
                             <td>
                                 <!-- 按钮触发模态框 -->
                                 <button class="btn btn-default" id="duration{{ video.id }}" data-toggle="modal"
