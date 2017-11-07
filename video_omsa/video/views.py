@@ -1502,21 +1502,22 @@ def p_show_video(request):
                 sql = "update `%s`.`yjy_im_chat` set `status`=1 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql)
                 prepare_db.cursor.fetchall()
-                prepare_db.cursor.commit()
+                prepare_db.conn.commit()
+
                 sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=1 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql1)
                 prepare_db.cursor.fetchall()
-                prepare_db.cursor.commit()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=1 where id='%s'"%(apptype,str(id))
                     prepare_db.cursor.execute(sql2)
                     prepare_db.cursor.fetchall()
-                    prepare_db.cursor.commit()
+                    prepare_db.conn.commit()
                 res['code'] = '200'
                 res['data'] = 'ok'
             except Exception,e:
                 res['code'] = '555'
-                res['data'] = '参数错误'
+                res['data'] = json.dumps(e)
         return HttpResponse(json.dumps(res))
 
 
@@ -1530,26 +1531,27 @@ def p_hide_video(request):
         apptype_v = request.POST['apptype'].encode('utf-8')
         apptype = getAppTypeKey(apptype_v)
         prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
+        return  HttpResponse(prepare_db)
         if id and apptype:
             try:
                 sql = "update `%s`.`yjy_im_chat` set `status`=0 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql)
                 prepare_db.cursor.fetchall()
-                prepare_db.cursor.commit()
+                prepare_db.conn.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=0 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql1)
                 prepare_db.cursor.fetchall()
-                prepare_db.cursor.commit()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=0 where id='%s'"%(apptype,str(id))
                     prepare_db.cursor.execute(sql2)
                     prepare_db.cursor.fetchall()
-                    prepare_db.cursor.commit()
+                    prepare_db.conn.commit()
                 res['code'] = '200'
                 res['data'] = 'ok'
             except Exception,e:
                 res['code'] = '555'
-                res['data'] = e
+                res['data'] = json.dumps(e)
         return HttpResponse(json.dumps(res))
 
 
