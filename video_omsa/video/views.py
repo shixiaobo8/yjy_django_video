@@ -1543,7 +1543,7 @@ def p_hide_video(request):
                 res['data'] = 'ok'
             except Exception,e:
                 res['code'] = '555'
-                res['data'] = '参数错误'
+                res['data'] = e
         return HttpResponse(json.dumps(res))
 
 
@@ -1570,7 +1570,7 @@ def p_chapptype(request):
                 res['data'] = 'ok'
             except Exception,e:
                 res['code'] = '555'
-                res['data'] = '参数错误'
+                res['data'] = e
         return HttpResponse(json.dumps(res))
 
 
