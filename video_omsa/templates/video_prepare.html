@@ -18,11 +18,8 @@
         </style>
         <script>
             $(document).ready(function () {
-                $(document).ready(function(){
-                $.ajaxSetup={async:false};
-                });
                 $.ajaxSetup({
-                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
                 });
 
             });
