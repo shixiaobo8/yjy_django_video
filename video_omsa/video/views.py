@@ -1501,13 +1501,16 @@ def p_show_video(request):
             try:
                 sql = "update `%s`.`yjy_im_chat` set `status`=1 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql)
+                prepare_db.cursor.fetchall()
                 prepare_db.cursor.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=1 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql1)
+                prepare_db.cursor.fetchall()
                 prepare_db.cursor.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=1 where id='%s'"%(apptype,str(id))
                     prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.fetchall()
                     prepare_db.cursor.commit()
                 res['code'] = '200'
                 res['data'] = 'ok'
@@ -1531,13 +1534,16 @@ def p_hide_video(request):
             try:
                 sql = "update `%s`.`yjy_im_chat` set `status`=0 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql)
+                prepare_db.cursor.fetchall()
                 prepare_db.cursor.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=0 where id='%s'"%(apptype,str(id))
                 prepare_db.cursor.execute(sql1)
+                prepare_db.cursor.fetchall()
                 prepare_db.cursor.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=0 where id='%s'"%(apptype,str(id))
                     prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.fetchall()
                     prepare_db.cursor.commit()
                 res['code'] = '200'
                 res['data'] = 'ok'
