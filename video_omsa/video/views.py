@@ -1217,13 +1217,16 @@ def p_chgoodsId(request):
                 sql = "update `%s`.`yjy_im_chat` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
                 prepare_db.cursor.execute(sql)
                 rs = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
                 prepare_db.cursor.execute(sql1)
                 rs1 = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set goods_id='%s' where id='%s'" % (apptype,new_goodsId, video_id)
                     prepare_db.cursor.execute(sql2)
                     rs2 = prepare_db.cursor.fetchall()
+                    prepare_db.conn.commit()
                 data['code'] = 200
                 data['data'] = '视频名称修改成功'
                 # prepare_db.close()
@@ -1252,13 +1255,16 @@ def p_chDuration(request):
                 sql = "update `%s`.`yjy_im_chat` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
                 prepare_db.cursor.execute(sql)
                 rs = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
                 prepare_db.cursor.execute(sql1)
                 rs1 = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set duration='%s' where id='%s'" % (apptype,new_duration, video_id)
                     prepare_db.cursor.execute(sql2)
                     prepare_db.cursor.fetchall()
+                    prepare_db.conn.commit()
                 data['code'] = 200
                 data['data'] = '视频时长修改成功'
             except Exception,e:
@@ -1281,18 +1287,22 @@ def p_chSort(request):
         apptype_v = request.POST['apptype'].encode('utf-8')
         if video_id and new_sort and apptype_v:
             apptype = getAppTypeKey(apptype_v)
+            print apptype
             try:
                 prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
                 sql = "update `%s`.`yjy_im_chat` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
                 prepare_db.cursor.execute(sql)
                 rs = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
                 prepare_db.cursor.execute(sql1)
                 rs1 = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set sort='%s' where id='%s'" % (apptype,new_sort, video_id)
                     prepare_db.cursor.execute(sql2)
                     prepare_db.cursor.fetchall()
+                    prepare_db.conn.commit()
                 data['code'] = 200
                 data['data'] = '视频分类编号修改成功'
             except Exception,e:
@@ -1320,10 +1330,12 @@ def p_chFileSize(request):
                 sql1 = "update `%s`.`yjy_im_chat_aes` set file_size='%s' where id='%s'" % (apptype,new_filesize, video_id)
                 prepare_db.cursor.execute(sql1)
                 rs1 = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set file_size='%s' where id='%s'" % (apptype,new_filesize, video_id)
                     prepare_db.cursor.execute(sql2)
                     prepare_db.cursor.fetchall()
+                    prepare_db.conn.commit()
                 data['code'] = 200
                 data['data'] = '切片下载文件大小修改成功'
             except Exception,e:
@@ -1351,13 +1363,16 @@ def p_chserviceId(request):
                 sql = "update `%s`.`yjy_im_chat` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
                 prepare_db.cursor.execute(sql)
                 rs = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
                 prepare_db.cursor.execute(sql1)
                 rs1 = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set service_id='%s' where id='%s'" % (apptype,new_serviceId, video_id)
                     prepare_db.cursor.execute(sql2)
                     prepare_db.cursor.fetchall()
+                    prepare_db.conn.commit()
                 data['code'] = 200
                 data['data'] = '商品服务id修改成功'
             except Exception,e:
@@ -1384,14 +1399,16 @@ def p_chvideoname(request):
             try:
                 sql = "update `%s`.`yjy_im_chat` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
                 prepare_db.cursor.execute(sql)
-                rs = prepare_db.cursor.close()
+                prepare_db.conn.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
                 prepare_db.cursor.execute(sql1)
                 rs1 = prepare_db.cursor.fetchall()
+                prepare_db.conn.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set name='%s' where id='%s'" % (apptype,new_videoname, video_id)
                     prepare_db.cursor.execute(sql2)
                     rs2 = prepare_db.cursor.fetchall()
+                    prepare_db.conn.commit()
                 data['code'] = 200
                 data['data'] = '切片中文名称修改成功'
             except Exception,e:
