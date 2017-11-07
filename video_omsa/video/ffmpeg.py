@@ -317,9 +317,12 @@ class ffmpeg(object):
         chapter = views.getAppTitle(videoInfos[0],int(videoInfos[2]))
         section = views.getAppSectionOneTitle(videoInfos[0],videoInfos[3])
         sql = "select `email` from `auth_user` where apptype='%s'"%(apptype)
+        sql1 = "select `email` from `auth_user` where `department`='videos_department'"
         # # 给app部门组发送邮件
         apptypeEmails = [ r[0] for r in views.executeSql(sql)]
-        apptypeEmails.extend(['769079707@qq.com'])
+        videEmails = [ r[0] for r in views.executeSql(sql1)]
+        apptypeEmails.extend(videEmails)
+        apptypeEmails = list(set(apptypeEmails))
         # # 给执行人发邮件
         # # userEmail = views.getUserProperties(username)
         now = time.strftime('%Y年%m月%d日 %H:%M:%S',time.localtime(time.time()))
