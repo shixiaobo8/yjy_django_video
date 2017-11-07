@@ -646,63 +646,6 @@
                 });
             }
 
-            //  给mp4分类
-            function CategoryMp4(video_id) {
-                $(document).ready(function () {
-                    var id = video_id;
-                    var v_name = $("#id_name" + video_id).val();
-                    var apptype = $("#id_app_type" + video_id).val();
-                    var parent_id = $("#id_parent_id" + video_id).val();
-                    var chapter_id = $("#id_chapter_id" + video_id).val();
-                    var section_id = $("#id_section_id" + video_id).val();
-                    if (!section_id) {
-                        section_id = '0';
-                    }
-                    $.get("CategoryMp4", {
-                        "app_type": apptype,
-                        "parent_id": parent_id,
-                        "chapter_id": chapter_id,
-                        "section_id": section_id,
-                        "id": id,
-                        "name": v_name
-                    }, function (res) {
-                        var data = JSON.parse(res);
-                        if (data['code'] == '200') {
-                            alert("视频修改成功！点击确认1秒后自动刷新页面");
-                            setTimeout("location.href=''", 1000);
-                        } else {
-                            alert(data['data']);
-                        }
-                    })
-                });
-            }
-            // 将mp4加入到切片队列
-            function start_cut(selected, video_id) {
-                var task_id = $("#" + selected + video_id).val();
-                $.post("/video/addMp4ToCut", {"video_id": video_id, "task_id": task_id}, function (res) {
-                    var data = JSON.parse(res);
-                    if (data['code'] == '200') {
-                        alert("已添加到要求队列，点击确定一秒后自动刷新");
-                        setTimeout("location.href='{{ request.get_full_path }}'", 1000);
-                    } else {
-                        alert('出错了，请来联系管理员' + data['data']);
-                    }
-                })
-            }
-            // 选择任务加入任务队列
-            function selectTask(btn, select_id_pre, video_id) {
-                $.post("/video/cutCenterList", function (res) {
-                    var data = JSON.parse(res);
-                    if (data['list_able'].length > 0) {
-                        for (i = 0; i < data['list_able'].length; i++) {
-                            $("#" + select_id_pre + video_id).append("<option value=" + data['list_able'][i]['id'] + ">" + data['list_able'][i]['task_name'] + "</option>");
-                        }
-                    } else {
-                        alert("没有可用的任务队列，请前往任务队列中心添加");
-                    }
-                })
-            }
-
             $(function () {
                 function initTableCheckbox() {
                     var $thr = $('table thead tr');
