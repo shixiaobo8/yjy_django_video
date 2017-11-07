@@ -1531,7 +1531,6 @@ def p_hide_video(request):
         apptype_v = request.POST['apptype'].encode('utf-8')
         apptype = getAppTypeKey(apptype_v)
         prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
-        return  HttpResponse(prepare_db)
         if id and apptype:
             try:
                 sql = "update `%s`.`yjy_im_chat` set `status`=0 where id='%s'"%(apptype,str(id))
