@@ -1496,15 +1496,19 @@ def p_show_video(request):
         id = request.POST.get('video_id',None)
         apptype_v = request.POST['apptype'].encode('utf-8')
         apptype = getAppTypeKey(apptype_v)
+        prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
         if id and apptype:
             try:
                 sql = "update `%s`.`yjy_im_chat` set `status`=1 where id='%s'"%(apptype,str(id))
-                rs = executeSql(sql)
+                prepare_db.cursor.execute(sql)
+                prepare_db.cursor.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=1 where id='%s'"%(apptype,str(id))
-                rs = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                prepare_db.cursor.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=1 where id='%s'"%(apptype,str(id))
-                    rs = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.commit()
                 res['code'] = '200'
                 res['data'] = 'ok'
             except Exception,e:
@@ -1522,15 +1526,19 @@ def p_hide_video(request):
         id = request.POST.get('video_id',None)
         apptype_v = request.POST['apptype'].encode('utf-8')
         apptype = getAppTypeKey(apptype_v)
+        prepare_db = dbUtil(settings.PREPARE_SERVER_IP,3306,settings.PREPARE_DB_USER,settings.PREPARE_DB_PASSWD,apptype)
         if id and apptype:
             try:
                 sql = "update `%s`.`yjy_im_chat` set `status`=0 where id='%s'"%(apptype,str(id))
-                rs = executeSql(sql)
+                prepare_db.cursor.execute(sql)
+                prepare_db.cursor.commit()
                 sql1 = "update `%s`.`yjy_im_chat_aes` set `status`=0 where id='%s'"%(apptype,str(id))
-                rs = executeSql(sql1)
+                prepare_db.cursor.execute(sql1)
+                prepare_db.cursor.commit()
                 if apptype == 'yjy_xiyizonghe':
                     sql2 = "update `%s`.`yjy_im_chat_aes_new` set `status`=0 where id='%s'"%(apptype,str(id))
-                    rs = executeSql(sql2)
+                    prepare_db.cursor.execute(sql2)
+                    prepare_db.cursor.commit()
                 res['code'] = '200'
                 res['data'] = 'ok'
             except Exception,e:
