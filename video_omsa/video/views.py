@@ -121,7 +121,7 @@ def login(request):
                 user = authenticate(username=username, password=password)
                 if user is not None and user.is_active:
                     auth.login(request, user)
-                    return redirect('im_list.html')
+                    return redirect('usercenter.html')
                 else:
                     login_mess = '用户名或者密码不正确'
                     return render(request, 'login.html', {'form': form, 'login_mess': login_mess})
