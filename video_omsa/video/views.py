@@ -245,10 +245,13 @@ def shareGame(request):
                 </style>
             <div class="test">
                 <center><h4>银佳碰胡——欢迎你 </h4></center><h4><center> 房间号: """ + roomid +  """</h4></center><h4><center> 当前人数: """ + peoples +  """</h4></center><center><h4 onclick='startAPP()' style="color:red;border 1px solid green;"><b style='font-size:100px;'><img src='http://www.devops89.cn:56/jionRoomBtn.png' alt='加入房间'/> </b></h4></center>
-                <br/>没有安装请点击下面的按钮下载<br/>
-                <center><a href="www.devops89.cn:56/apk/YinJiaPengHu.apk"><img src='http://www.devops89.cn:56/downloadBtn.png' alt='点击下载app'/></a></center>
+                <br/><center>没有安装请点击下面的按钮下载</center><br/>
+                <center><input type='iamge' src='http://www.devops89.cn:56/downloadBtn.png' onclick='downLoadApp()' alt='点击下载app'/></center>
                 </div>
                 <script>
+                                function downLoadApp(){
+                                    window.open("http://www.devops89.cn:56/apk/YinJiaPengHu.apk");
+                                };
                                 function startAPP(){
                                     window.location = '"""+ href+"""';
                                     }
