@@ -228,7 +228,7 @@ def shareGame(request):
           'ios_download': 'apk/YinJiaPengHu.apk',
           'android_download': 'apk/YinJiaPengHu.apk',
           'timeout': 1000};
-         href = "yinjiapenghu://com.yinjia.penghu?mid=0&roomid=" + roomid + "&peoples=" + peoples
+         href = "yinjiapenghu://com.yinjia.penghu?mid=0&version=1.0.3&roomid=" + roomid + "&peoples=" + peoples
          res1 = """
             <!DOCTYPE html>
             <html lang="en">
