@@ -223,12 +223,12 @@ def shareGame(request):
          peoples=request.GET.get('peoples','0')
          status = 'ok'
          res = {"id": "penghu",
-          'scheme_ios': "'yinjiapenghu://?mid=0&version=1.0.3&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
-          'scheme_android': "'yinjiapenghu://com.yinjia.penghu?mid=0&version=1.0.3&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
+          'scheme_ios': "'yinjiapenghu://?mid=0&version=1.0.4&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
+          'scheme_android': "'yinjiapenghu://com.yinjia.penghu?mid=0&version=1.0.4&roomid=" + roomid + "&peoples=" + peoples + "&amp;timestamp=' + Date.parse(new Date())",
           'ios_download': 'apk/YinJiaPengHu.apk',
           'android_download': 'apk/YinJiaPengHu.apk',
           'timeout': 1000};
-         href = "yinjiapenghu://com.yinjia.penghu?mid=0&version=1.0.3&roomid=" + roomid + "&peoples=" + peoples
+         href = "yinjiapenghu://com.yinjia.penghu?mid=0&version=1.0.4&roomid=" + roomid + "&peoples=" + peoples
          res1 = """
             <!DOCTYPE html>
             <html lang="en">
