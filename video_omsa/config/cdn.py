@@ -14,8 +14,8 @@ from optparse import OptionParser
 import ConfigParser
 import traceback
 
-access_key_id = 'LTAIK2RDYoCO2BXc';
-access_key_secret = '2rQeJMepiVRjnD78XrZFnxiTI9qJbm';
+access_key_id = 'xxxxxxxxxxxx';
+access_key_secret = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx';
 cdn_server_address = 'https://cdn.aliyuncs.com'
 CONFIGFILE = '/root/scripts/aliyun.ini'
 CONFIGSECTION = 'Credentials'
